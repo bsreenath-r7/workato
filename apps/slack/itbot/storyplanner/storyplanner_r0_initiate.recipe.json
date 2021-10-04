@@ -1,0 +1,463 @@
+{
+  "name": "storyplanner-R0-Initiate",
+  "description": "When there is a trigger event, do action",
+  "version": 108,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "slack_bot",
+    "name": "bot_command_v2",
+    "as": "6a6b2bf1",
+    "title": null,
+    "description": "New <span class=\"provider\">storyplanner start story</span> command to <span class=\"provider\">Slack Workbot</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+      "domain": "Slack"
+    },
+    "toggleCfg": {
+      "domain": false,
+      "name": false,
+      "scope": false
+    },
+    "input": {
+      "allow_dialog": "true",
+      "parameters": "[\n  {\n    \"control_type\": \"text\",\n    \"label\": \"Title\",\n    \"name\": \"Title\",\n    \"type\": \"string\",\n    \"optional\": false,\n    \"hint\": \"Add a story title.\",\n    \"sample\": \"E.g., fix logo in the website header\"\n  }\n]",
+      "description": "Start a planing poker session",
+      "slash_command": {
+        "enable": "true",
+        "name": "/storyplan"
+      },
+      "hide_from_help": "false",
+      "domain": "storyplanner",
+      "name": "start",
+      "scope": "story",
+      "dialog_title": "Size a story"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "parameters",
+        "label": "Parameters",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Title",
+            "name": "title",
+            "type": "string",
+            "optional": false,
+            "hint": "Add a story title.",
+            "sample": "E.g., fix logo in the website header"
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "slack_bot",
+            "name": "post_bot_message",
+            "as": "e7d59545",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+              "channel": true,
+              "blocks.1.actions.0.bot_command": true,
+              "blocks.1.actions.1.bot_command": true,
+              "blocks.1.actions.2.bot_command": true,
+              "blocks.1.actions.3.bot_command": true,
+              "blocks.2.actions.0.bot_command": true,
+              "blocks.2.actions.1.bot_command": true,
+              "blocks.2.actions.2.bot_command": true,
+              "blocks.2.actions.3.bot_command": true,
+              "blocks.3.actions.0.bot_command": true,
+              "blocks.3.actions.1.bot_command": true,
+              "blocks.5.actions.0.bot_command": true,
+              "blocks.5.actions.1.bot_command": true,
+              "blocks.1.actions.0.style": false,
+              "blocks.1.actions.1.style": false,
+              "blocks.1.actions.2.style": false,
+              "blocks.1.actions.3.style": false,
+              "blocks.2.actions.0.style": false,
+              "blocks.2.actions.1.style": false,
+              "blocks.2.actions.2.style": false,
+              "blocks.2.actions.3.style": false,
+              "blocks.3.actions.0.style": false,
+              "blocks.3.actions.1.style": false,
+              "blocks.5.actions.0.style": false,
+              "blocks.5.actions.1.style": false
+            },
+            "input": {
+              "blocks": [
+                {
+                  "block_type": "section_with_text",
+                  "section_text": "*#{_('data.slack_bot.6a6b2bf1.parameters.title')}*"
+                },
+                {
+                  "block_type": "actions",
+                  "actions": [
+                    {
+                      "type": "button",
+                      "button_title": "0",
+                      "style": "default",
+                      "params": "story: #{_('data.slack_bot.6a6b2bf1.parameters.title')} size:0",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r1_validate.recipe.json",
+                        "name": "storyplanner-R1-Validate",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "button_title": "1",
+                      "style": "default",
+                      "params": "story: #{_('data.slack_bot.6a6b2bf1.parameters.title')} size:1",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r1_validate.recipe.json",
+                        "name": "storyplanner-R1-Validate",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "button_title": "2",
+                      "style": "default",
+                      "params": "story: #{_('data.slack_bot.6a6b2bf1.parameters.title')} size:2",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r1_validate.recipe.json",
+                        "name": "storyplanner-R1-Validate",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "button_title": "3",
+                      "style": "default",
+                      "params": "story: #{_('data.slack_bot.6a6b2bf1.parameters.title')} size:3",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r1_validate.recipe.json",
+                        "name": "storyplanner-R1-Validate",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "block_type": "actions",
+                  "actions": [
+                    {
+                      "type": "button",
+                      "button_title": "5",
+                      "params": "story: #{_('data.slack_bot.6a6b2bf1.parameters.title')} size:5",
+                      "style": "default",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r1_validate.recipe.json",
+                        "name": "storyplanner-R1-Validate",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "button_title": "8",
+                      "params": "story: #{_('data.slack_bot.6a6b2bf1.parameters.title')} size:8",
+                      "style": "default",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r1_validate.recipe.json",
+                        "name": "storyplanner-R1-Validate",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "button_title": "13",
+                      "params": "story: #{_('data.slack_bot.6a6b2bf1.parameters.title')} size:13",
+                      "style": "default",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r1_validate.recipe.json",
+                        "name": "storyplanner-R1-Validate",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "button_title": "21",
+                      "params": "story: #{_('data.slack_bot.6a6b2bf1.parameters.title')} size:21",
+                      "style": "default",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r1_validate.recipe.json",
+                        "name": "storyplanner-R1-Validate",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "block_type": "actions",
+                  "actions": [
+                    {
+                      "type": "button",
+                      "button_title": "?",
+                      "params": "story: #{_('data.slack_bot.6a6b2bf1.parameters.title')} size:?",
+                      "style": "default",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r1_validate.recipe.json",
+                        "name": "storyplanner-R1-Validate",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "button_title": "☕",
+                      "params": "story: #{_('data.slack_bot.6a6b2bf1.parameters.title')} size:☕",
+                      "style": "default",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r1_validate.recipe.json",
+                        "name": "storyplanner-R1-Validate",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "block_type": "divider"
+                },
+                {
+                  "block_type": "actions",
+                  "section_text": "*Owner:* <@#{_('data.slack_bot.6a6b2bf1.context.user_handle')}>",
+                  "actions": [
+                    {
+                      "type": "button",
+                      "button_title": "Reveal",
+                      "params": "story: #{_('data.slack_bot.6a6b2bf1.parameters.title')}",
+                      "style": "default",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r2_reveal.recipe.json",
+                        "name": "storyplanner-R2-Reveal",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      }
+                    },
+                    {
+                      "type": "button",
+                      "button_title": "Dismiss!",
+                      "params": "story: #{_('data.slack_bot.6a6b2bf1.parameters.title')}",
+                      "style": "danger",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r3_dismiss.recipe.json",
+                        "name": "storyplanner-R3-Dismiss",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      }
+                    }
+                  ]
+                }
+              ],
+              "channel": "#{_('data.slack_bot.6a6b2bf1.context.channel')}",
+              "advanced": {
+                "ts": "#{_('data.slack_bot.6a6b2bf1.ts')}"
+              }
+            },
+            "uuid": "018b27db-dfbe-48e6-ae94-28abe2f152d9",
+            "skip": false
+          },
+          {
+            "number": 3,
+            "provider": "lookup_table",
+            "name": "add_entry",
+            "as": "23b5d8dd",
+            "title": null,
+            "description": "\n      Add\n      <span class=\"provider\">entry</span>\n      to\n      <span class=\"provider\">STORY_PLANNER</span>\n      lookup table\n    ",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "lookup_table_id": "STORY_PLANNER"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "lookup_table_id": {
+                "zip_name": "story_planner.lookup_table.json",
+                "name": "STORY_PLANNER",
+                "folder": ""
+              },
+              "parameters": {
+                "col1": "#{_('data.slack_bot.6a6b2bf1.parameters.title')}",
+                "col2": "@#{_('data.slack_bot.6a6b2bf1.context.user_handle')}",
+                "col3": "@#{_('data.slack_bot.6a6b2bf1.context.user_handle')}",
+                "col4": "☕"
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "integer",
+                "name": "id",
+                "control_type": "number",
+                "label": "Entry ID",
+                "parse_output": "integer_conversion"
+              },
+              {
+                "type": "object",
+                "name": "entry",
+                "label": "Entry",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "story",
+                    "name": "col1",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "owner",
+                    "name": "col2",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "voter",
+                    "name": "col3",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "vote",
+                    "name": "col4",
+                    "type": "string",
+                    "sticky": true
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "parameters",
+                "label": "Entry fields",
+                "hint": "Fill the fields for the new entry",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "story",
+                    "name": "col1",
+                    "type": "string",
+                    "sticky": true,
+                    "optional": true,
+                    "parent": "parameters"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "owner",
+                    "name": "col2",
+                    "type": "string",
+                    "sticky": true,
+                    "optional": true,
+                    "parent": "parameters"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "voter",
+                    "name": "col3",
+                    "type": "string",
+                    "sticky": true,
+                    "optional": true,
+                    "parent": "parameters"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "vote",
+                    "name": "col4",
+                    "type": "string",
+                    "sticky": true,
+                    "optional": true,
+                    "parent": "parameters"
+                  }
+                ]
+              }
+            ],
+            "uuid": "59baa718-3da2-4e69-bf57-b47f153a4e15"
+          },
+          {
+            "number": 4,
+            "as": "0e5fb034",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "0",
+              "retry_interval": "2"
+            },
+            "block": [
+              {
+                "number": 5,
+                "provider": "slack_bot",
+                "name": "post_bot_reply_v2",
+                "as": "05900570",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                  "ephemeral_message": true
+                },
+                "input": {
+                  "text": "Can't process when executed from DMs",
+                  "ephemeral_message": "true"
+                },
+                "uuid": "0d4be365-00c0-436f-bea2-2242ea80e802"
+              }
+            ],
+            "uuid": "b6a11d55-bbf9-4d43-8ffd-4ac910de3460"
+          }
+        ],
+        "uuid": "3e5f8f53-fcae-4202-abc8-73aaba56635d"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "story"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "owner"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.slack_bot.6a6b2bf1.parameters.title')}",
+      "custom_column_2": "#{_('data.slack_bot.6a6b2bf1.context.user_handle')}"
+    },
+    "uuid": "98825ae8-843f-4458-914f-4b8f62b12b09"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "slack_bot",
+      "account_id": {
+        "zip_name": "apps/resources/storyplanner.connection.json",
+        "name": "StoryPlanner",
+        "folder": "apps/resources"
+      },
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "lookup_table",
+      "account_id": null,
+      "skip_validation": false
+    }
+  ]
+}
