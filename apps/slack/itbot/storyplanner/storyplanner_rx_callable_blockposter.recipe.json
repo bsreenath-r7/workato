@@ -1,0 +1,909 @@
+{
+  "name": "storyplanner-Rx-Callable-BlockPoster",
+  "description": "When there is a trigger event, do action",
+  "version": 29,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "9a138e86",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">storyplanner-Rx-Callable-BlockPoster</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "service_name": "storyplanner-Rx-Callable-BlockPoster",
+      "request_schema_json": "[{\"control_type\":\"text\",\"label\":\"Title\",\"name\":\"title\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Channel or DM\",\"name\":\"channelOrDM\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Message ID\",\"name\":\"messageId\",\"type\":\"string\",\"optional\":false},{\"name\":\"userHandle\",\"type\":\"string\",\"optional\":true,\"control_type\":\"text\"},{\"name\":\"buttonType\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Title",
+            "name": "title",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Channel or DM",
+            "name": "channelOrDM",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Message ID",
+            "name": "messageId",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "User handle",
+            "name": "userHandle",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Button type",
+            "name": "buttonType",
+            "type": "string",
+            "optional": false
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "lookup_table",
+        "name": "search_entries",
+        "as": "57b5d694",
+        "title": null,
+        "description": "\n      Search\n      <span class=\"provider\">entries</span>\n      in\n      <span class=\"provider\">STORY_PLANNER</span>\n      lookup table\n    ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "lookup_table_id": "STORY_PLANNER"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "lookup_table_id": {
+            "zip_name": "story_planner.lookup_table.json",
+            "name": "STORY_PLANNER",
+            "folder": ""
+          },
+          "parameters": {
+            "col1": "#{_('data.workato_service.9a138e86.request.title')}"
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "array",
+            "name": "entries",
+            "label": "Entries",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "number",
+                "label": "Entry ID",
+                "parse_output": "integer_conversion",
+                "type": "integer",
+                "name": "id"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "story",
+                    "name": "col1",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "owner",
+                    "name": "col2",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "voter",
+                    "name": "col3",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "vote",
+                    "name": "col4",
+                    "type": "string",
+                    "sticky": true
+                  }
+                ],
+                "label": "Entry",
+                "type": "object",
+                "name": "entry"
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "parameters",
+            "label": "Search by",
+            "hint": "Provide one or more entry fields to search the entry",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "story",
+                "name": "col1",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "owner",
+                "name": "col2",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "voter",
+                "name": "col3",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "vote",
+                "name": "col4",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              }
+            ]
+          }
+        ],
+        "uuid": "d9ff1543-cc2e-4e96-a9f9-c2b8ce376384"
+      },
+      {
+        "number": 2,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "equals_to",
+              "lhs": "#{_('data.workato_service.9a138e86.request.buttonType')}",
+              "rhs": "size"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 3,
+            "provider": "workato_variable",
+            "name": "declare_variable",
+            "as": "9755aa5c",
+            "title": "  Create variable unique_voters",
+            "description": "Create variable <span class=\"provider\">unique_voters</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "variables": {
+                "schema": "[{\"name\":\"unique_voters\",\"type\":\"string\",\"optional\":true,\"label\":\"unique_voters\",\"control_type\":\"text\"}]",
+                "data": {
+                  "unique_voters": "=_('data.lookup_table.57b5d694.entries').pluck(\"entry\").pluck(\"col3\").join(\" \")"
+                }
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "string",
+                "name": "unique_voters",
+                "control_type": "text",
+                "label": "unique_voters",
+                "optional": true
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "variables",
+                "control_type": "form-schema-builder",
+                "label": "Variables",
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Schema",
+                    "extends_schema": true,
+                    "broadcast_change_event": true,
+                    "type": "string",
+                    "name": "schema"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "unique_voters",
+                        "name": "unique_voters",
+                        "type": "string",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      }
+                    ],
+                    "label": "Data",
+                    "type": "object",
+                    "name": "data"
+                  }
+                ],
+                "exclude_fields": [
+                  "hint"
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "variables.data.unique_voters"
+            ],
+            "uuid": "e87ac217-b94b-41b9-985d-3bf382836214"
+          },
+          {
+            "number": 4,
+            "provider": "slack_bot",
+            "name": "post_bot_message",
+            "as": "0236a484",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+              "channel": true,
+              "blocks.1.actions.0.bot_command": true,
+              "blocks.1.actions.1.bot_command": true,
+              "blocks.1.actions.2.bot_command": true,
+              "blocks.2.actions.0.bot_command": true,
+              "blocks.2.actions.1.bot_command": true,
+              "blocks.2.actions.2.bot_command": true,
+              "blocks.3.actions.0.bot_command": true,
+              "blocks.3.actions.1.bot_command": true,
+              "blocks.1.actions.3.bot_command": true,
+              "blocks.2.actions.3.bot_command": false,
+              "blocks.7.actions.0.bot_command": false,
+              "blocks.7.actions.1.bot_command": false
+            },
+            "input": {
+              "blocks": [
+                {
+                  "block_type": "section_with_text",
+                  "section_text": "*#{_('data.workato_service.9a138e86.request.title')}*"
+                },
+                {
+                  "block_type": "actions",
+                  "actions": [
+                    {
+                      "type": "button",
+                      "button_title": "0",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r1_validate.recipe.json",
+                        "name": "storyplanner-R1-Validate",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      },
+                      "params": "story: #{_('data.workato_service.9a138e86.request.title')} size:0",
+                      "style": "default"
+                    },
+                    {
+                      "type": "button",
+                      "button_title": "1",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r1_validate.recipe.json",
+                        "name": "storyplanner-R1-Validate",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      },
+                      "params": "story: #{_('data.workato_service.9a138e86.request.title')} size:1",
+                      "style": "default"
+                    },
+                    {
+                      "type": "button",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r1_validate.recipe.json",
+                        "name": "storyplanner-R1-Validate",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      },
+                      "style": "default",
+                      "params": "story: #{_('data.workato_service.9a138e86.request.title')} size:2",
+                      "button_title": "2"
+                    },
+                    {
+                      "type": "button",
+                      "params": "story: #{_('data.workato_service.9a138e86.request.title')} size:3",
+                      "style": "default",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r1_validate.recipe.json",
+                        "name": "storyplanner-R1-Validate",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      },
+                      "button_title": "3"
+                    }
+                  ]
+                },
+                {
+                  "block_type": "actions",
+                  "actions": [
+                    {
+                      "type": "button",
+                      "style": "default",
+                      "params": "story: #{_('data.workato_service.9a138e86.request.title')} size:5",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r1_validate.recipe.json",
+                        "name": "storyplanner-R1-Validate",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      },
+                      "button_title": "5"
+                    },
+                    {
+                      "type": "button",
+                      "params": "story: #{_('data.workato_service.9a138e86.request.title')} size:8",
+                      "style": "default",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r1_validate.recipe.json",
+                        "name": "storyplanner-R1-Validate",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      },
+                      "button_title": "8"
+                    },
+                    {
+                      "type": "button",
+                      "style": "default",
+                      "params": "story: #{_('data.workato_service.9a138e86.request.title')} size:13",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r1_validate.recipe.json",
+                        "name": "storyplanner-R1-Validate",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      },
+                      "button_title": "13"
+                    },
+                    {
+                      "type": "button",
+                      "style": "default",
+                      "params": "story: #{_('data.workato_service.9a138e86.request.title')} size:21",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r1_validate.recipe.json",
+                        "name": "storyplanner-R1-Validate",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      },
+                      "button_title": "21"
+                    }
+                  ]
+                },
+                {
+                  "block_type": "actions",
+                  "actions": [
+                    {
+                      "type": "button",
+                      "style": "default",
+                      "params": "story: #{_('data.workato_service.9a138e86.request.title')} size:?",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r1_validate.recipe.json",
+                        "name": "storyplanner-R1-Validate",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      },
+                      "button_title": "?"
+                    },
+                    {
+                      "type": "button",
+                      "params": "story: #{_('data.workato_service.9a138e86.request.title')} size:☕",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r1_validate.recipe.json",
+                        "name": "storyplanner-R1-Validate",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      },
+                      "button_title": "☕",
+                      "style": "default"
+                    }
+                  ]
+                },
+                {
+                  "block_type": "divider"
+                },
+                {
+                  "block_type": "section_with_text",
+                  "section_text": "#{_('data.workato_variable.9755aa5c.unique_voters')}"
+                },
+                {
+                  "block_type": "divider"
+                },
+                {
+                  "block_type": "actions",
+                  "actions": [
+                    {
+                      "type": "button",
+                      "style": "default",
+                      "params": "story: #{_('data.workato_service.9a138e86.request.title')}",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r2_reveal.recipe.json",
+                        "name": "storyplanner-R2-Reveal",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      },
+                      "button_title": "Reveal"
+                    },
+                    {
+                      "type": "button",
+                      "style": "danger",
+                      "params": "story: #{_('data.workato_service.9a138e86.request.title')}",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r3_dismiss.recipe.json",
+                        "name": "storyplanner-R3-Dismiss",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      },
+                      "button_title": "Dismiss!"
+                    }
+                  ]
+                }
+              ],
+              "channel": "#{_('data.workato_service.9a138e86.request.channelOrDM')}",
+              "advanced": {
+                "ts": "#{_('data.workato_service.9a138e86.request.messageId')}"
+              }
+            },
+            "uuid": "9082f319-0466-473b-99a3-680c739b009f",
+            "skip": false
+          }
+        ],
+        "uuid": "4210be13-1666-4e29-a166-71293628219e"
+      },
+      {
+        "number": 5,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "equals_to",
+              "lhs": "#{_('data.workato_service.9a138e86.request.buttonType')}",
+              "rhs": "reveal"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 6,
+            "provider": "logger",
+            "name": "log_message",
+            "as": "0b4d162c",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "message": "=_('data.lookup_table.57b5d694.entries').pluck(\"entry\").pluck('col4').uniq"
+            },
+            "comment": "unique votes",
+            "uuid": "e3d788f2-e8ef-48d1-9fc0-3269b8790e4f"
+          },
+          {
+            "number": 7,
+            "provider": "workato_list",
+            "name": "create_list",
+            "as": "3b8dedf9",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "size": "=_('data.logger.0b4d162c.message').size"
+            },
+            "uuid": "2df435c6-a53f-4825-876d-bc40353a8dc2",
+            "skip": false
+          },
+          {
+            "number": 8,
+            "provider": "workato_variable",
+            "name": "declare_variable",
+            "as": "4a355acc",
+            "title": "  Create variable result",
+            "description": "Create variable <span class=\"provider\">result</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "variables": {
+                "schema": "[{\"control_type\":\"text\",\"label\":\"result\",\"name\":\"result\",\"type\":\"string\",\"optional\":true}]",
+                "data": {
+                  "result": "=\"\\n\""
+                }
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "string",
+                "name": "result",
+                "control_type": "text",
+                "label": "result",
+                "optional": true
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "variables",
+                "control_type": "form-schema-builder",
+                "label": "Variables",
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Schema",
+                    "extends_schema": true,
+                    "broadcast_change_event": true,
+                    "type": "string",
+                    "name": "schema"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "result",
+                        "name": "result",
+                        "type": "string",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      }
+                    ],
+                    "label": "Data",
+                    "type": "object",
+                    "name": "data"
+                  }
+                ],
+                "exclude_fields": [
+                  "hint"
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "variables.data.unique_voters",
+              "variables",
+              "variables.schema",
+              "variables.data",
+              "variables.data.reveal_voters",
+              "variables.data.result"
+            ],
+            "uuid": "f0d6ec3e-30c1-4aa6-8ea7-a6adc38de21a"
+          },
+          {
+            "number": 9,
+            "as": "63ddd9bf",
+            "keyword": "foreach",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "repeat_mode": "simple",
+            "clear_scope": "false",
+            "input": {
+            },
+            "block": [
+              {
+                "number": 10,
+                "provider": "workato_variable",
+                "name": "declare_variable",
+                "as": "f0d0223c",
+                "title": "  Create variable size",
+                "description": "Create variable <span class=\"provider\">size</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "variables": {
+                    "schema": "[{\"name\":\"size\",\"type\":\"string\",\"optional\":true,\"label\":\"size\",\"control_type\":\"text\"}]",
+                    "data": {
+                      "size": "=_('data.logger.0b4d162c.message')[_('data.foreach.63ddd9bf.index', 'foreach_meta')]"
+                    }
+                  }
+                },
+                "extended_output_schema": [
+                  {
+                    "type": "string",
+                    "name": "size",
+                    "control_type": "text",
+                    "label": "size",
+                    "optional": true
+                  }
+                ],
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "variables",
+                    "control_type": "form-schema-builder",
+                    "label": "Variables",
+                    "optional": true,
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Schema",
+                        "extends_schema": true,
+                        "broadcast_change_event": true,
+                        "type": "string",
+                        "name": "schema"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "size",
+                            "name": "size",
+                            "type": "string",
+                            "optional": true,
+                            "hint": "Defaults to nil if not supplied.",
+                            "sticky": true
+                          }
+                        ],
+                        "label": "Data",
+                        "type": "object",
+                        "name": "data"
+                      }
+                    ],
+                    "exclude_fields": [
+                      "hint"
+                    ]
+                  }
+                ],
+                "visible_config_fields": [
+                  "variables.data.size"
+                ],
+                "uuid": "055a7cfe-6893-4635-8a71-a2bdd77864b8"
+              },
+              {
+                "number": 11,
+                "provider": "workato_variable",
+                "name": "update_variable",
+                "as": "b75a49a0",
+                "title": null,
+                "description": "Update variable <span class=\"provider\">result</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "name": "result (step 9)"
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "name": "f0d6ec3e-30c1-4aa6-8ea7-a6adc38de21a:4a355acc:result",
+                  "value": "=_('data.workato_variable.4a355acc.result')+\"\\n\"+\"`\"+_('data.workato_variable.f0d0223c.size')+\"` \"+_('data.lookup_table.57b5d694.entries').where(\"entry.col4\": _('data.workato_variable.f0d0223c.size')).pluck(\"entry\").pluck('col3').join(\" \")"
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "string",
+                    "name": "value",
+                    "control_type": "text",
+                    "label": "Value",
+                    "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                    "sticky": true,
+                    "optional": true,
+                    "strip_interpolation": true
+                  }
+                ],
+                "uuid": "6b5fe0b2-cfca-4ba9-8526-543b9bd3c8d9"
+              }
+            ],
+            "source": "#{_('data.workato_list.3b8dedf9.list')}",
+            "uuid": "a8598e3d-d63b-4906-b660-b6f1eb22f453"
+          },
+          {
+            "number": 12,
+            "provider": "slack_bot",
+            "name": "post_bot_message",
+            "as": "0f920629",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+              "channel": true,
+              "blocks.3.actions.0.bot_command": true
+            },
+            "input": {
+              "blocks": [
+                {
+                  "block_type": "section_with_text",
+                  "section_text": "*#{_('data.workato_service.9a138e86.request.title')}*"
+                },
+                {
+                  "block_type": "section_with_text",
+                  "section_text": "#{_('data.workato_variable.4a355acc.result')}"
+                },
+                {
+                  "block_type": "divider"
+                },
+                {
+                  "block_type": "actions",
+                  "actions": [
+                    {
+                      "type": "button",
+                      "style": "danger",
+                      "params": "story: #{_('data.workato_service.9a138e86.request.title')}",
+                      "bot_command": {
+                        "zip_name": "apps/slack/itbot/storyplanner/storyplanner_r3_dismiss.recipe.json",
+                        "name": "storyplanner-R3-Dismiss",
+                        "folder": "apps/slack/itbot/storyplanner"
+                      },
+                      "button_title": "Dismiss!"
+                    }
+                  ]
+                }
+              ],
+              "channel": "#{_('data.workato_service.9a138e86.request.channelOrDM')}",
+              "advanced": {
+                "ts": "#{_('data.workato_service.9a138e86.request.messageId')}"
+              }
+            },
+            "uuid": "8ffad61e-3bb8-453e-9bc4-3e7ea7528cb6",
+            "skip": false
+          }
+        ],
+        "uuid": "b3fb363e-3947-4827-8c7f-62af44413d45"
+      },
+      {
+        "number": 13,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "equals_to",
+              "lhs": "#{_('data.workato_service.9a138e86.request.buttonType')}",
+              "rhs": "dismiss"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 14,
+            "provider": "slack_bot",
+            "name": "post_bot_message",
+            "as": "91060b14",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+              "channel": true
+            },
+            "input": {
+              "blocks": [
+                {
+                  "block_type": "section_with_text",
+                  "section_text": "Sizing for story *#{_('data.workato_service.9a138e86.request.title')}* has been completed"
+                }
+              ],
+              "channel": "#{_('data.workato_service.9a138e86.request.channelOrDM')}",
+              "advanced": {
+                "ts": "#{_('data.workato_service.9a138e86.request.messageId')}"
+              }
+            },
+            "uuid": "d287fa35-0cd7-4533-975e-22bb1460e9ec",
+            "skip": false
+          }
+        ],
+        "uuid": "49474567-f881-4691-8e5c-d8386e573058"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "story"
+      },
+      {
+        "name": "custom_column_5",
+        "label": "messageId"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "user"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "callingRecipe"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_service.9a138e86.request.title')}",
+      "custom_column_5": "#{_('data.workato_service.9a138e86.request.messageId')}",
+      "custom_column_2": "#{_('data.workato_service.9a138e86.request.userHandle')}",
+      "custom_column_3": "#{_('data.workato_service.9a138e86.context.calling_recipe_id')}"
+    },
+    "uuid": "98825ae8-843f-4458-914f-4b8f62b12b09"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "slack_bot",
+      "account_id": {
+        "zip_name": "apps/resources/storyplanner.connection.json",
+        "name": "StoryPlanner",
+        "folder": "apps/resources"
+      },
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "account_id": null,
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "lookup_table",
+      "account_id": null,
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "account_id": null,
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "logger",
+      "account_id": null,
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_list",
+      "account_id": null,
+      "skip_validation": false
+    }
+  ]
+}
