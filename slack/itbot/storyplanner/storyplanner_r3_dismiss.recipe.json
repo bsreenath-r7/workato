@@ -1,0 +1,488 @@
+{
+  "name": "storyplanner-R3-Dismiss",
+  "description": "When there is a trigger event, do action",
+  "version": 27,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "slack_bot",
+    "name": "bot_command_v2",
+    "as": "486275a3",
+    "title": null,
+    "description": "New <span class=\"provider\">storyplanner accept dismiss</span> command to <span class=\"provider\">Slack Workbot</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+      "domain": "Slack",
+      "event_name": "View Submission (view_submission)"
+    },
+    "toggleCfg": {
+      "domain": false,
+      "name": false,
+      "scope": false
+    },
+    "input": {
+      "allow_dialog": "false",
+      "domain": "storyplanner",
+      "name": "accept",
+      "scope": "dismiss",
+      "description": "Story marked as Done!",
+      "hide_from_help": "true",
+      "parameters": "[\n  {\n    \"control_type\": \"story\",\n    \"label\": \"Story\",\n    \"name\": \"story\",\n    \"type\": \"string\",\n    \"optional\": false\n  }\n]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "parameters",
+        "label": "Parameters",
+        "properties": [
+          {
+            "control_type": "story",
+            "label": "Story",
+            "name": "story",
+            "type": "string",
+            "optional": false
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "workato_service",
+        "name": "call_service",
+        "as": "92c875c0",
+        "title": null,
+        "description": "Call recipe <span class=\"provider\">storyplanner-Rx-Callable-BlockPoster</span> ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "flow_id": "storyPlanner-Rx-Callable-BlockPoster"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "flow_id": {
+            "zip_name": "slack/itbot/storyplanner/storyplanner_rx_callable_blockposter.recipe.json",
+            "name": "storyplanner-Rx-Callable-BlockPoster",
+            "folder": "slack/itbot/storyplanner"
+          },
+          "request": {
+            "title": "#{_('data.slack_bot.486275a3.parameters.story')}",
+            "channelOrDM": "#{_('data.slack_bot.486275a3.context.channel')}",
+            "messageId": "#{_('data.slack_bot.486275a3.ts')}",
+            "userHandle": "#{_('data.slack_bot.486275a3.context.user_handle')}",
+            "buttonType": "dismiss"
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "request",
+            "label": "Recipe input",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Title",
+                "name": "title",
+                "type": "string",
+                "optional": false
+              },
+              {
+                "control_type": "text",
+                "label": "Channel or DM",
+                "name": "channelOrDM",
+                "type": "string",
+                "optional": false
+              },
+              {
+                "control_type": "text",
+                "label": "Message ID",
+                "name": "messageId",
+                "type": "string",
+                "optional": false
+              },
+              {
+                "control_type": "text",
+                "label": "User handle",
+                "name": "userHandle",
+                "type": "string",
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "Button type",
+                "name": "buttonType",
+                "type": "string",
+                "optional": false
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "flow_id",
+          "request.userHandle"
+        ],
+        "uuid": "7dc5ce1d-d873-41d0-8a0c-b0af99489aee"
+      },
+      {
+        "number": 2,
+        "provider": "lookup_table",
+        "name": "search_entries",
+        "as": "c0a452ad",
+        "title": null,
+        "description": "\n      Search\n      <span class=\"provider\">entries</span>\n      in\n      <span class=\"provider\">STORY_PLANNER</span>\n      lookup table\n    ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "lookup_table_id": "STORY_PLANNER"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "lookup_table_id": {
+            "zip_name": "story_planner.lookup_table.json",
+            "name": "STORY_PLANNER",
+            "folder": ""
+          },
+          "parameters": {
+            "col1": "#{_('data.slack_bot.486275a3.parameters.story')}",
+            "col2": "@#{_('data.slack_bot.486275a3.context.user_handle')}"
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "array",
+            "name": "entries",
+            "label": "Entries",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "number",
+                "label": "Entry ID",
+                "parse_output": "integer_conversion",
+                "type": "integer",
+                "name": "id"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "story",
+                    "name": "col1",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "owner",
+                    "name": "col2",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "voter",
+                    "name": "col3",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "vote",
+                    "name": "col4",
+                    "type": "string",
+                    "sticky": true
+                  }
+                ],
+                "label": "Entry",
+                "type": "object",
+                "name": "entry"
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "parameters",
+            "label": "Search by",
+            "hint": "Provide one or more entry fields to search the entry",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "story",
+                "name": "col1",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "owner",
+                "name": "col2",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "voter",
+                "name": "col3",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "vote",
+                "name": "col4",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              }
+            ]
+          }
+        ],
+        "uuid": "65915954-126b-4bc5-adc8-d1680d0d0ee6"
+      },
+      {
+        "number": 3,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "equals_to",
+              "lhs": "#{_('data.lookup_table.c0a452ad.entries.first.____Size', 'list_meta', '____Size', 'data.lookup_table.c0a452ad.entries')}",
+              "rhs": "0"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 4,
+            "keyword": "stop",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "stop_with_error": "false"
+            },
+            "uuid": "30ec12f8-9c55-41c9-9e21-0e71971d2643"
+          }
+        ],
+        "uuid": "0e1f7f45-83d9-4d99-bcd9-fcd6e22ad88b"
+      },
+      {
+        "number": 5,
+        "provider": "lookup_table",
+        "name": "search_entries",
+        "as": "fba47b0c",
+        "title": null,
+        "description": "\n      Search\n      <span class=\"provider\">entries</span>\n      in\n      <span class=\"provider\">STORY_PLANNER</span>\n      lookup table\n    ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "lookup_table_id": "STORY_PLANNER"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "lookup_table_id": {
+            "zip_name": "story_planner.lookup_table.json",
+            "name": "STORY_PLANNER",
+            "folder": ""
+          },
+          "parameters": {
+            "col1": "#{_('data.slack_bot.486275a3.parameters.story')}"
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "array",
+            "name": "entries",
+            "label": "Entries",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "number",
+                "label": "Entry ID",
+                "parse_output": "integer_conversion",
+                "type": "integer",
+                "name": "id"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "story",
+                    "name": "col1",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "owner",
+                    "name": "col2",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "voter",
+                    "name": "col3",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "vote",
+                    "name": "col4",
+                    "type": "string",
+                    "sticky": true
+                  }
+                ],
+                "label": "Entry",
+                "type": "object",
+                "name": "entry"
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "parameters",
+            "label": "Search by",
+            "hint": "Provide one or more entry fields to search the entry",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "story",
+                "name": "col1",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "owner",
+                "name": "col2",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "voter",
+                "name": "col3",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "vote",
+                "name": "col4",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              }
+            ]
+          }
+        ],
+        "uuid": "57062688-5576-4993-ace6-733cdb85c4eb"
+      },
+      {
+        "number": 6,
+        "as": "af4b1c95",
+        "keyword": "foreach",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "repeat_mode": "simple",
+        "clear_scope": "false",
+        "input": {
+        },
+        "block": [
+          {
+            "number": 7,
+            "provider": "lookup_table",
+            "name": "delete_entry",
+            "as": "f841007f",
+            "title": null,
+            "description": "\n      Delete\n      <span class=\"provider\">entry</span>\n      in\n      <span class=\"provider\">STORY_PLANNER</span>\n      lookup table\n    ",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "lookup_table_id": "STORY_PLANNER"
+            },
+            "toggleCfg": {
+              "ignore_not_found": true
+            },
+            "input": {
+              "ignore_not_found": "false",
+              "lookup_table_id": {
+                "zip_name": "story_planner.lookup_table.json",
+                "name": "STORY_PLANNER",
+                "folder": ""
+              },
+              "id": "#{_('data.foreach.af4b1c95.id')}"
+            },
+            "uuid": "787f498c-e235-4d1c-a977-d640b9c17a31"
+          }
+        ],
+        "source": "#{_('data.lookup_table.fba47b0c.entries')}",
+        "uuid": "99c62007-82a8-40b7-807a-cf808ca7e3f0"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_4",
+        "label": "story"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "messageId"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "user"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_4": "#{_('data.slack_bot.486275a3.parameters.story')}",
+      "custom_column_3": "#{_('data.slack_bot.486275a3.ts')}",
+      "custom_column_2": "#{_('data.slack_bot.486275a3.context.user_handle')}"
+    },
+    "uuid": "c5fc9a31-e6a8-4ee4-97c9-041af6d77fd3"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "slack_bot",
+      "account_id": {
+        "zip_name": "resources/storyplanner.connection.json",
+        "name": "StoryPlanner",
+        "folder": "resources"
+      },
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "lookup_table",
+      "account_id": null,
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "account_id": null,
+      "skip_validation": false
+    }
+  ]
+}
