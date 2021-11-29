@@ -1,0 +1,16 @@
+{
+  "name": "Update child consoles",
+  "method": "PUT",
+  "path": "update-child-consoles",
+  "legacy": false,
+  "recipe_id": {
+    "zip_name": "api/licenses/callable_update_child_consoles_in_netsuite.recipe.json",
+    "name": "Callable - Update child consoles in NetSuite",
+    "folder": "api/licenses"
+  },
+  "api_group_id": {
+    "zip_name": "licenses.api_group.json",
+    "name": "Licenses",
+    "folder": ""
+  }
+}

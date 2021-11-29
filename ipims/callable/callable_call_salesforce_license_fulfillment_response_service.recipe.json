@@ -1,0 +1,468 @@
+{
+  "name": "Callable - Call Salesforce License Fulfillment Response Service",
+  "description": "When there is a new event via HTTP webhook, do action",
+  "version": 3,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "2eca6c4e",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">Send License Fulfillment Response to Salesforce</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "service_name": "Send License Fulfillment Response to Salesforce",
+      "request_schema_json": "[{\"control_type\":\"text\",\"label\":\"Line Sequence ID\",\"name\":\"line_sequence_id\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Product key\",\"name\":\"product_key\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Product token\",\"name\":\"product_token\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Package ID\",\"name\":\"package_id\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"date\",\"label\":\"Start date\",\"render_input\":\"date_conversion\",\"parse_output\":\"date_conversion\",\"name\":\"start_date\",\"type\":\"date_time\",\"optional\":true},{\"control_type\":\"date\",\"label\":\"End date\",\"render_input\":\"date_conversion\",\"parse_output\":\"date_conversion\",\"name\":\"end_date\",\"type\":\"date_time\",\"optional\":true}]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Line Sequence ID",
+            "name": "line_sequence_id",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Product key",
+            "name": "product_key",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Product token",
+            "name": "product_token",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Package ID",
+            "name": "package_id",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "date",
+            "label": "Start date",
+            "render_input": "date_conversion",
+            "parse_output": "date_conversion",
+            "name": "start_date",
+            "type": "date_time",
+            "optional": true
+          },
+          {
+            "control_type": "date",
+            "label": "End date",
+            "render_input": "date_conversion",
+            "parse_output": "date_conversion",
+            "name": "end_date",
+            "type": "date_time",
+            "optional": true
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "salesforce",
+            "name": "__adhoc_http_action",
+            "as": "169caa30",
+            "title": "Send License Fulfillment Response from IPIMS to Salesforce",
+            "description": "Send <span class=\"provider\">License Fulfillment Response from IPIMS to Salesforce</span> in <span class=\"provider\">Salesforce</span> (Custom)",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "mnemonic": "Send License Fulfillment Response from IPIMS to Salesforce",
+              "verb": "post",
+              "path": "services/apexrest/SubscriptionAndContract",
+              "input": {
+                "schema": "[{\"control_type\":\"text\",\"label\":\"lineSequenceId\",\"name\":\"lineSequenceId\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"productKey\",\"name\":\"productKey\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"productToken\",\"name\":\"productToken\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"packageId\",\"name\":\"packageId\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"date\",\"label\":\"startDate\",\"render_input\":\"date_conversion\",\"parse_output\":\"date_conversion\",\"name\":\"startDate\",\"type\":\"date_time\",\"optional\":true},{\"control_type\":\"date\",\"label\":\"endDate\",\"render_input\":\"date_conversion\",\"parse_output\":\"date_conversion\",\"name\":\"endDate\",\"type\":\"date_time\",\"optional\":true}]",
+                "data": {
+                  "lineSequenceId": "#{_('data.workato_service.2eca6c4e.request.line_sequence_id')}",
+                  "productKey": "#{_('data.workato_service.2eca6c4e.request.product_key')}",
+                  "productToken": "#{_('data.workato_service.2eca6c4e.request.product_token')}",
+                  "startDate": "#{_('data.workato_service.2eca6c4e.request.start_date')}",
+                  "endDate": "#{_('data.workato_service.2eca6c4e.request.end_date')}",
+                  "packageId": "#{_('data.workato_service.2eca6c4e.request.package_id')}"
+                }
+              },
+              "request_headers": [
+                {
+                  "name": "content-type",
+                  "value": "application/json"
+                }
+              ],
+              "request_type": "json",
+              "response_type": "json"
+            },
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "path",
+                "control_type": "text",
+                "label": "Path",
+                "hint": "Base URI is <b>https://r7--test.my.salesforce.com/</b> - path will be appended to this URI. Use absolute URI to override this base URI.",
+                "optional": false
+              },
+              {
+                "type": "string",
+                "name": "request_type",
+                "control_type": "select",
+                "label": "Request type",
+                "default": "json",
+                "sticky": false,
+                "pick_list": [
+                  [
+                    "JSON request body",
+                    "json"
+                  ],
+                  [
+                    "URL encoded form",
+                    "urlencoded"
+                  ],
+                  [
+                    "Multipart form",
+                    "multipart"
+                  ],
+                  [
+                    "Raw request body",
+                    "raw"
+                  ]
+                ],
+                "optional": true,
+                "extends_schema": true
+              },
+              {
+                "type": "string",
+                "name": "response_type",
+                "control_type": "select",
+                "label": "Response type",
+                "default": "json",
+                "sticky": false,
+                "pick_list": [
+                  [
+                    "JSON response",
+                    "json"
+                  ],
+                  [
+                    "Raw response",
+                    "raw"
+                  ]
+                ],
+                "optional": true,
+                "extends_schema": true
+              },
+              {
+                "type": "object",
+                "name": "input",
+                "label": "Input",
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "schema-designer",
+                    "label": "Request body parameters",
+                    "extends_schema": true,
+                    "schema_neutral": true,
+                    "sample_data_type": "json_input",
+                    "sticky": true,
+                    "add_field_label": "Add request body parameter",
+                    "optional": true,
+                    "type": "string",
+                    "name": "schema",
+                    "parent": "input"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "lineSequenceId",
+                        "optional": true,
+                        "sticky": true,
+                        "type": "string",
+                        "name": "lineSequenceId",
+                        "parent": "input.data"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "productKey",
+                        "optional": true,
+                        "sticky": true,
+                        "type": "string",
+                        "name": "productKey",
+                        "parent": "input.data"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "productToken",
+                        "optional": true,
+                        "sticky": true,
+                        "type": "string",
+                        "name": "productToken",
+                        "parent": "input.data"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "packageId",
+                        "optional": true,
+                        "sticky": true,
+                        "type": "string",
+                        "name": "packageId",
+                        "parent": "input.data"
+                      },
+                      {
+                        "control_type": "date",
+                        "label": "startDate",
+                        "render_input": "date_conversion",
+                        "parse_output": "date_conversion",
+                        "optional": true,
+                        "sticky": true,
+                        "type": "date_time",
+                        "name": "startDate",
+                        "parent": "input.data"
+                      },
+                      {
+                        "control_type": "date",
+                        "label": "endDate",
+                        "render_input": "date_conversion",
+                        "parse_output": "date_conversion",
+                        "optional": true,
+                        "sticky": true,
+                        "type": "date_time",
+                        "name": "endDate",
+                        "parent": "input.data"
+                      }
+                    ],
+                    "label": "Data",
+                    "optional": true,
+                    "type": "object",
+                    "name": "data",
+                    "parent": "input"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "name": "request_headers",
+                "control_type": "key_value",
+                "label": "Request headers",
+                "optional": true,
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "optional": true,
+                    "type": "string",
+                    "name": "name",
+                    "parent": "request_headers"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Value",
+                    "optional": true,
+                    "type": "string",
+                    "name": "value",
+                    "parent": "request_headers"
+                  }
+                ]
+              },
+              {
+                "type": "string",
+                "name": "output",
+                "control_type": "schema-designer",
+                "label": "Response body",
+                "sticky": true,
+                "optional": true,
+                "extends_schema": true,
+                "schema_neutral": true
+              },
+              {
+                "type": "string",
+                "name": "response_headers",
+                "control_type": "schema-designer",
+                "label": "Response headers",
+                "sticky": false,
+                "optional": true,
+                "extends_schema": true,
+                "schema_neutral": true
+              }
+            ],
+            "visible_config_fields": [
+              "mnemonic",
+              "verb",
+              "path",
+              "input",
+              "input.schema",
+              "input.data",
+              "input.data.orderItemNumber",
+              "input.data.productKey",
+              "input.data.productToken",
+              "input.data.startDate",
+              "input.data.endDate",
+              "output",
+              "request_headers"
+            ],
+            "uuid": "3d3d4fae-8905-458d-a145-997340da456b"
+          },
+          {
+            "number": 3,
+            "as": "9ffcbe22",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "0",
+              "retry_interval": "2"
+            },
+            "block": [
+              {
+                "number": 4,
+                "provider": "workato_service",
+                "name": "send_reply",
+                "as": "6bc4bfda",
+                "title": null,
+                "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Send License Fulfillment Response to Salesforce</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "reply_type": "error",
+                  "message": "#{_('data.catch.9ffcbe22.message')}"
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "string",
+                    "name": "message",
+                    "control_type": "text",
+                    "label": "Message",
+                    "hint": "Error message"
+                  },
+                  {
+                    "type": "string",
+                    "name": "code",
+                    "control_type": "text",
+                    "label": "Error code",
+                    "hint": "Use this field to set custom HTTP error code for service replies. E.g: 404/422 etc. This field is applicable to REST service recipes.",
+                    "optional": true
+                  },
+                  {
+                    "type": "boolean",
+                    "name": "custom_error_response",
+                    "control_type": "checkbox",
+                    "label": "Custom error response?",
+                    "hint": "By default, Workato sends 'reply_type' and 'message' fields in response. When set to 'Yes', the content of the 'Message' field is sent as response body. This field is applicable to REST service recipes.",
+                    "optional": true,
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Custom error response?",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "optional": true,
+                      "hint": "By default, Workato sends 'reply_type' and 'message' fields in response. When set to 'Yes', the content of the 'Message' field is sent as response body. This field is applicable to REST service recipes.",
+                      "type": "boolean",
+                      "name": "custom_error_response"
+                    },
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    }
+                  }
+                ],
+                "uuid": "216014b6-29ed-4185-ac23-b0cb28cb150c"
+              },
+              {
+                "number": 5,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "true",
+                  "stop_reason": "#{_('data.catch.9ffcbe22.message')}"
+                },
+                "uuid": "b845fa0a-2ffa-4366-b5b5-3b0657ba7e41"
+              }
+            ],
+            "uuid": "df2effa8-2a36-476d-b369-0266d9e621ed"
+          }
+        ],
+        "uuid": "bb2e582b-1387-4166-8b95-b3a1d4f3ed37"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Key"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Token"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "Line Sequence ID"
+      },
+      {
+        "name": "custom_column_4",
+        "label": "Start/End Date"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_service.2eca6c4e.request.product_key')}",
+      "custom_column_2": "#{_('data.workato_service.2eca6c4e.request.product_token')}",
+      "custom_column_3": "#{_('data.workato_service.2eca6c4e.request.line_sequence_id')}",
+      "custom_column_4": "#{_('data.workato_service.2eca6c4e.request.start_date')}/#{_('data.workato_service.2eca6c4e.request.end_date')}"
+    },
+    "uuid": "5e1e7659-ef0a-4e8f-96f5-d570dbea92c2"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "salesforce",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/salesforce.connection.json",
+        "name": "Salesforce",
+        "folder": "connections"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

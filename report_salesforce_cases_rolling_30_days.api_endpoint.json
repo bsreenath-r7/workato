@@ -1,0 +1,16 @@
+{
+  "name": "Report - Salesforce Cases (Rolling 30 Days)",
+  "method": "GET",
+  "path": "report/support/global_cases_rolling_30_days",
+  "legacy": false,
+  "recipe_id": {
+    "zip_name": "salesforce/api/support/api_support_salesforce_cases_rolling_30_days.recipe.json",
+    "name": "API - Support - Salesforce Cases (Rolling 30 Days)",
+    "folder": "salesforce/api/support"
+  },
+  "api_group_id": {
+    "zip_name": "default.api_group.json",
+    "name": "Default",
+    "folder": ""
+  }
+}

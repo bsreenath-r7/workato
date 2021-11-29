@@ -1,0 +1,98 @@
+{
+  "name": "Scheduled Task - Workday Manager Changes",
+  "description": "When there is a trigger event, do action",
+  "version": 1,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "clock",
+    "name": "daily_task",
+    "as": "062c8cc3",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+      "sunday": true,
+      "monday": true,
+      "tuesday": true,
+      "wednesday": true,
+      "thursday": true,
+      "friday": true,
+      "saturday": true
+    },
+    "input": {
+      "sunday": "true",
+      "monday": "true",
+      "tuesday": "true",
+      "wednesday": "true",
+      "thursday": "true",
+      "friday": "true",
+      "saturday": "true",
+      "time_zone": "Eastern Time (US & Canada)",
+      "hour": "00",
+      "minute": "01"
+    },
+    "block": [
+      {
+        "number": 1,
+        "provider": "workato_service",
+        "name": "call_service_async",
+        "as": "38384477",
+        "title": null,
+        "description": "Call recipe <span class=\"provider\">Callable - Post Workday Manager Changes</span> (do not wait for response)",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "flow_id": "Callable - Post Workday Manager Changes"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "flow_id": {
+            "zip_name": "workday/manager-change/callable/callable_post_workday_manager_changes.recipe.json",
+            "name": "Callable - Post Workday Manager Changes",
+            "folder": "workday/manager-change/callable"
+          },
+          "request": {
+            "manager_change_start_date": "=_('data.clock.062c8cc3.scheduled_time')-1.days"
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "request",
+            "label": "Recipe input",
+            "properties": [
+              {
+                "control_type": "date",
+                "label": "Manager change start date",
+                "render_input": "date_conversion",
+                "parse_output": "date_conversion",
+                "name": "manager_change_start_date",
+                "type": "date_time",
+                "optional": false,
+                "hint": "Filter that will only find management changes after the specified date.",
+                "parent": "request"
+              }
+            ]
+          }
+        ],
+        "comment": "Get all the management changes that happened the previous day",
+        "uuid": "6426230b-99df-4200-bfc5-a0a853c25a48"
+      }
+    ],
+    "uuid": "cdc46a7f-6dae-4532-bfe6-a915c486e02c"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "clock",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "account_id": null
+    }
+  ]
+}

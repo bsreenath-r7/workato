@@ -1,0 +1,16 @@
+{
+  "name": "Get Salesforce or NetSuite quote details",
+  "method": "GET",
+  "path": "quotedetails",
+  "legacy": false,
+  "recipe_id": {
+    "zip_name": "api/quotes/api_quotes_get_salesforce_netsuite_quote_details.recipe.json",
+    "name": "API - Quotes- Get Salesforce/Netsuite Quote details",
+    "folder": "api/quotes"
+  },
+  "api_group_id": {
+    "zip_name": "ui_path.api_group.json",
+    "name": "UI Path",
+    "folder": ""
+  }
+}

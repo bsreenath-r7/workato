@@ -1,0 +1,50 @@
+{
+  "name": "Salesforce Case Comment - Fields Changed in Jira",
+  "schema": [
+    {
+      "control_type": "text",
+      "label": "Jira key",
+      "name": "jira_key",
+      "type": "string",
+      "optional": false
+    },
+    {
+      "control_type": "text",
+      "label": "Jira URL",
+      "name": "jira_url",
+      "type": "string",
+      "optional": false
+    },
+    {
+      "name": "changes",
+      "type": "array",
+      "of": "object",
+      "label": "Changes",
+      "optional": false,
+      "properties": [
+        {
+          "control_type": "text",
+          "label": "Field name",
+          "name": "field_name",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "control_type": "text",
+          "label": "Old value",
+          "name": "old_value",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "control_type": "text",
+          "label": "New value",
+          "name": "new_value",
+          "type": "string",
+          "optional": false
+        }
+      ]
+    }
+  ],
+  "content": "{{jira_key}} has been updated, click {{jira_url}} to view the Ticket.\n\nChange(s) below: \n{{#changes}}\n* {{field_name}} was changed from {{old_value}} to {{new_value}}\n{{/changes}}"
+}

@@ -1,0 +1,1146 @@
+{
+  "name": "Colloquium Logs",
+  "description": "When there is a new call for callable recipe, do action",
+  "version": 11,
+  "private": true,
+  "concurrency": 3,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "receive_request",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">LOG_EVENT</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+      "rest_enabled": true
+    },
+    "input": {
+      "service_name": "LOG_EVENT",
+      "request_schema_json": "[{\"control_type\":\"text\",\"label\":\"Event name\",\"name\":\"event_name\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Type\",\"name\":\"type\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"integer\",\"label\":\"Recipe ID\",\"parse_output\":\"integer_conversion\",\"name\":\"recipe_id\",\"type\":\"integer\",\"optional\":true},{\"control_type\":\"integer\",\"label\":\"Job ID\",\"parse_output\":\"integer_conversion\",\"name\":\"job_id\",\"type\":\"integer\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Job URL\",\"name\":\"job_url\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"date_time\",\"label\":\"Created at\",\"render_input\":\"date_time_conversion\",\"parse_output\":\"date_time_conversion\",\"name\":\"created_at\",\"type\":\"date_time\",\"optional\":true},{\"control_type\":\"date_time\",\"label\":\"Completed at\",\"render_input\":\"date_time_conversion\",\"parse_output\":\"date_time_conversion\",\"name\":\"completed_at\",\"type\":\"date_time\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Is Error\",\"parse_output\":\"integer_conversion\",\"name\":\"is_error\",\"type\":\"integer\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Error type\",\"name\":\"error_type\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Error msg\",\"name\":\"error_msg\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Userid\",\"name\":\"userid\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Channel\",\"name\":\"channel\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"User Handle\",\"name\":\"userhandle\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Name\",\"name\":\"name\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Email\",\"name\":\"email\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Team\",\"name\":\"team\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Command\",\"name\":\"command\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Params\",\"name\":\"params\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"integer\",\"label\":\"Sent\",\"parse_output\":\"integer_conversion\",\"name\":\"sent\",\"type\":\"integer\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Reason\",\"name\":\"reason\",\"type\":\"string\",\"optional\":true},{\"name\":\"isChannel\",\"type\":\"number\",\"optional\":true,\"control_type\":\"number\"}]",
+      "reply_schema_json": "[{\"name\":\"response\",\"type\":\"string\",\"optional\":true,\"control_type\":\"text\"}]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Event name",
+            "name": "event_name",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Type",
+            "name": "type",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "integer",
+            "label": "Recipe ID",
+            "parse_output": "integer_conversion",
+            "name": "recipe_id",
+            "type": "integer",
+            "optional": true
+          },
+          {
+            "control_type": "integer",
+            "label": "Job ID",
+            "parse_output": "integer_conversion",
+            "name": "job_id",
+            "type": "integer",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Job URL",
+            "name": "job_url",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "date_time",
+            "label": "Created at",
+            "render_input": "date_time_conversion",
+            "parse_output": "date_time_conversion",
+            "name": "created_at",
+            "type": "date_time",
+            "optional": true
+          },
+          {
+            "control_type": "date_time",
+            "label": "Completed at",
+            "render_input": "date_time_conversion",
+            "parse_output": "date_time_conversion",
+            "name": "completed_at",
+            "type": "date_time",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Is Error",
+            "parse_output": "integer_conversion",
+            "name": "is_error",
+            "type": "integer",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Error type",
+            "name": "error_type",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Error msg",
+            "name": "error_msg",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Userid",
+            "name": "userid",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Channel",
+            "name": "channel",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "User Handle",
+            "name": "userhandle",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Name",
+            "name": "name",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Email",
+            "name": "email",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Team",
+            "name": "team",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Command",
+            "name": "command",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Params",
+            "name": "params",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "integer",
+            "label": "Sent",
+            "parse_output": "integer_conversion",
+            "name": "sent",
+            "type": "integer",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Reason",
+            "name": "reason",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "number",
+            "label": "Is channel",
+            "parse_output": "float_conversion",
+            "name": "isChannel",
+            "type": "number",
+            "optional": true
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "equals_to",
+                  "lhs": "=_('data.workato_service.receive_request.request.event_name').downcase",
+                  "rhs": "recipe"
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 3,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "is_true",
+                      "lhs": "=_('data.workato_service.receive_request.request.recipe_id').blank? || _('data.workato_service.receive_request.request.type').blank? || _('data.workato_service.receive_request.request.job_id').blank? || _('data.workato_service.receive_request.request.job_url').blank? || _('data.workato_service.receive_request.request.created_at').blank? || _('data.workato_service.receive_request.request.completed_at').blank? || _('data.workato_service.receive_request.request.is_error').blank?",
+                      "rhs": null
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 4,
+                    "keyword": "stop",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "stop_with_error": "true",
+                      "stop_reason": "Error Occured While Logging the Recipe Details, Required Details Missing."
+                    },
+                    "uuid": "c17527c7-679c-45d6-a6dd-03b5e7b1a257"
+                  }
+                ],
+                "uuid": "170be382-4d9c-4df0-b721-5d08382aa9d0"
+              },
+              {
+                "number": 5,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "equals_to",
+                      "lhs": "=_('data.workato_service.receive_request.request.is_error')",
+                      "rhs": "1"
+                    },
+                    {
+                      "operand": "is_true",
+                      "lhs": "=_('data.workato_service.receive_request.request.error_type').blank? || _('data.workato_service.receive_request.request.error_msg').blank?",
+                      "rhs": null
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 6,
+                    "keyword": "stop",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "stop_with_error": "true",
+                      "stop_reason": "Error Occured While Logging the Recipe with Error Details, Required Details Missing Error Type OR Error Message"
+                    },
+                    "uuid": "3453bec0-19ed-46ca-bf89-34acc7f6ef67"
+                  }
+                ],
+                "uuid": "f206cc7a-58a8-49de-ac00-fe6adadfffd0"
+              },
+              {
+                "number": 7,
+                "provider": "mysql",
+                "name": "insert_row",
+                "as": "insert_row",
+                "title": "Insert row in wkto_colloquium_recipe_logs",
+                "description": "Insert <span class=\"provider\">row</span> in <span class=\"provider\">wkto_colloquium_recipe_logs</span> table in <span class=\"provider\">MySQL</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "table": "wkto_colloquium_recipe_logs"
+                },
+                "toggleCfg": {
+                  "table": true
+                },
+                "input": {
+                  "table": "wkto_colloquium_recipe_logs",
+                  "columns": {
+                    "type": "#{_('data.workato_service.receive_request.request.type')}",
+                    "recipe_id": "#{_('data.workato_service.receive_request.request.recipe_id')}",
+                    "job_id": "#{_('data.workato_service.receive_request.request.job_id')}",
+                    "job_url": "#{_('data.workato_service.receive_request.request.job_url')}",
+                    "created_at": "#{_('data.workato_service.receive_request.request.created_at')}",
+                    "completed_at": "#{_('data.workato_service.receive_request.request.completed_at')}",
+                    "total_time": "=_('data.workato_service.receive_request.request.completed_at') -_('data.workato_service.receive_request.request.created_at')",
+                    "is_error": "#{_('data.workato_service.receive_request.request.is_error')}",
+                    "error_type": "#{_('data.workato_service.receive_request.request.error_type')}",
+                    "error_msg": "=_('data.workato_service.receive_request.request.error_msg').slice(0,499)"
+                  }
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "columns",
+                    "label": "Columns",
+                    "properties": [
+                      {
+                        "control_type": "number",
+                        "label": "id",
+                        "parse_output": "parse_integer_output",
+                        "details": {
+                          "data_type": "int(11)",
+                          "column_name": "id"
+                        },
+                        "render_input": "parse_integer_output",
+                        "event_title": true,
+                        "optional": true,
+                        "hint": "int(11), primary key",
+                        "type": "integer",
+                        "name": "id",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "type",
+                        "details": {
+                          "data_type": "enum('command','scheduler','trigger')",
+                          "column_name": "type"
+                        },
+                        "hint": "enum('command','scheduler','trigger')",
+                        "optional": true,
+                        "type": "string",
+                        "name": "type",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "number",
+                        "label": "recipe_id",
+                        "parse_output": "parse_integer_output",
+                        "details": {
+                          "data_type": "int(11)",
+                          "column_name": "recipe_id"
+                        },
+                        "render_input": "parse_integer_output",
+                        "hint": "int(11)",
+                        "optional": true,
+                        "type": "integer",
+                        "name": "recipe_id",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "number",
+                        "label": "job_id",
+                        "parse_output": "parse_integer_output",
+                        "details": {
+                          "data_type": "int(11)",
+                          "column_name": "job_id"
+                        },
+                        "render_input": "parse_integer_output",
+                        "hint": "int(11)",
+                        "optional": true,
+                        "type": "integer",
+                        "name": "job_id",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "job_url",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "job_url"
+                        },
+                        "hint": "varchar(100)",
+                        "optional": true,
+                        "type": "string",
+                        "name": "job_url",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "date_time",
+                        "label": "created_at",
+                        "render_input": "convert_date_time",
+                        "parse_output": "convert_date_time",
+                        "details": {
+                          "data_type": "timestamp",
+                          "column_name": "created_at"
+                        },
+                        "optional": true,
+                        "hint": "timestamp",
+                        "type": "date_time",
+                        "name": "created_at",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "date_time",
+                        "label": "completed_at",
+                        "render_input": "convert_date_time",
+                        "parse_output": "convert_date_time",
+                        "details": {
+                          "data_type": "timestamp",
+                          "column_name": "completed_at"
+                        },
+                        "optional": true,
+                        "hint": "timestamp",
+                        "type": "date_time",
+                        "name": "completed_at",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "number",
+                        "label": "total_time",
+                        "parse_output": "parse_integer_output",
+                        "details": {
+                          "data_type": "smallint(6)",
+                          "column_name": "total_time"
+                        },
+                        "render_input": "parse_integer_output",
+                        "hint": "smallint(6)",
+                        "optional": true,
+                        "type": "integer",
+                        "name": "total_time",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "number",
+                        "label": "is_error",
+                        "parse_output": "parse_integer_output",
+                        "details": {
+                          "data_type": "tinyint(4)",
+                          "column_name": "is_error"
+                        },
+                        "render_input": "parse_integer_output",
+                        "optional": true,
+                        "hint": "tinyint(4)",
+                        "type": "integer",
+                        "name": "is_error",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "error_type",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "error_type"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "error_type",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "error_msg",
+                        "details": {
+                          "data_type": "varchar(500)",
+                          "column_name": "error_msg"
+                        },
+                        "optional": true,
+                        "hint": "varchar(500)",
+                        "type": "string",
+                        "name": "error_msg",
+                        "parent": "columns"
+                      }
+                    ]
+                  }
+                ],
+                "visible_config_fields": [
+                  "table",
+                  "columns.type",
+                  "columns.recipe_id",
+                  "columns.job_id",
+                  "columns.job_url",
+                  "columns.created_at",
+                  "columns.completed_at",
+                  "columns.total_time",
+                  "columns.is_error",
+                  "columns.error_type",
+                  "columns.error_msg"
+                ],
+                "uuid": "876d653d-9e98-4137-b081-93c7d89e9d7b"
+              },
+              {
+                "number": 8,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "false"
+                },
+                "uuid": "3bb70067-c5c1-45c9-a3e4-44dd8a0292fc"
+              }
+            ],
+            "uuid": "9b01950e-1f01-4cc1-ab02-42c5b716b208"
+          },
+          {
+            "number": 9,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "equals_to",
+                  "lhs": "=_('data.workato_service.receive_request.request.event_name').downcase",
+                  "rhs": "command"
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 10,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "is_true",
+                      "lhs": "=_('data.workato_service.receive_request.request.job_id').blank? || _('data.workato_service.receive_request.request.userid').blank? || _('data.workato_service.receive_request.request.channel').blank? || _('data.workato_service.receive_request.request.userhandle').blank? || _('data.workato_service.receive_request.request.name').blank? || _('data.workato_service.receive_request.request.email').blank? || _('data.workato_service.receive_request.request.command').blank?",
+                      "rhs": null
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 11,
+                    "keyword": "stop",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "stop_with_error": "true",
+                      "stop_reason": "Error Occured While Logging the Command Details"
+                    },
+                    "uuid": "d4f2731c-3740-4743-8fd5-9ce344eb10c9"
+                  }
+                ],
+                "uuid": "9a71c41b-e8f5-4beb-bb5e-14be51a51fc2"
+              },
+              {
+                "number": 12,
+                "provider": "mysql",
+                "name": "insert_row",
+                "as": "insert_row__1",
+                "title": "Insert row in wkto_colloquium_slack_command",
+                "description": "Insert <span class=\"provider\">row</span> in <span class=\"provider\">wkto_colloquium_slack_command</span> table in <span class=\"provider\">MySQL</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "table": "wkto_colloquium_slack_command"
+                },
+                "toggleCfg": {
+                  "table": true
+                },
+                "input": {
+                  "table": "wkto_colloquium_slack_command",
+                  "columns": {
+                    "job_id": "#{_('data.workato_service.receive_request.request.job_id')}",
+                    "userid": "#{_('data.workato_service.receive_request.request.userid')}",
+                    "name": "#{_('data.workato_service.receive_request.request.name')}",
+                    "email": "#{_('data.workato_service.receive_request.request.email')}",
+                    "team": "#{_('data.workato_service.receive_request.request.team')}",
+                    "command": "=_('data.workato_service.receive_request.request.command') ? _('data.workato_service.receive_request.request.command').slice(0,199) : _('data.workato_service.receive_request.request.command')",
+                    "params": "=_('data.workato_service.receive_request.request.params') ? _('data.workato_service.receive_request.request.params').slice(0,299) : _('data.workato_service.receive_request.request.params')",
+                    "channel": "#{_('data.workato_service.receive_request.request.channel')}",
+                    "userhandle": "#{_('data.workato_service.receive_request.request.userhandle')}"
+                  }
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "columns",
+                    "label": "Columns",
+                    "properties": [
+                      {
+                        "control_type": "number",
+                        "label": "id",
+                        "parse_output": "parse_integer_output",
+                        "details": {
+                          "data_type": "int(11)",
+                          "column_name": "id"
+                        },
+                        "render_input": "parse_integer_output",
+                        "event_title": true,
+                        "optional": true,
+                        "hint": "int(11), primary key",
+                        "type": "integer",
+                        "name": "id",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "number",
+                        "label": "job_id",
+                        "parse_output": "parse_integer_output",
+                        "details": {
+                          "data_type": "int(11)",
+                          "column_name": "job_id"
+                        },
+                        "render_input": "parse_integer_output",
+                        "hint": "int(11)",
+                        "optional": true,
+                        "type": "integer",
+                        "name": "job_id",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "userid",
+                        "details": {
+                          "data_type": "varchar(20)",
+                          "column_name": "userid"
+                        },
+                        "hint": "varchar(20)",
+                        "optional": true,
+                        "type": "string",
+                        "name": "userid",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "channel",
+                        "details": {
+                          "data_type": "varchar(30)",
+                          "column_name": "channel"
+                        },
+                        "hint": "varchar(30)",
+                        "optional": true,
+                        "type": "string",
+                        "name": "channel",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "userhandle",
+                        "details": {
+                          "data_type": "varchar(20)",
+                          "column_name": "userhandle"
+                        },
+                        "hint": "varchar(20)",
+                        "optional": true,
+                        "type": "string",
+                        "name": "userhandle",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "name",
+                        "details": {
+                          "data_type": "varchar(50)",
+                          "column_name": "name"
+                        },
+                        "hint": "varchar(50)",
+                        "optional": true,
+                        "type": "string",
+                        "name": "name",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "email",
+                        "details": {
+                          "data_type": "varchar(50)",
+                          "column_name": "email"
+                        },
+                        "hint": "varchar(50)",
+                        "optional": true,
+                        "type": "string",
+                        "name": "email",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "team",
+                        "details": {
+                          "data_type": "varchar(50)",
+                          "column_name": "team"
+                        },
+                        "optional": true,
+                        "hint": "varchar(50)",
+                        "type": "string",
+                        "name": "team",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "command",
+                        "details": {
+                          "data_type": "varchar(200)",
+                          "column_name": "command"
+                        },
+                        "hint": "varchar(200)",
+                        "optional": true,
+                        "type": "string",
+                        "name": "command",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "params",
+                        "details": {
+                          "data_type": "varchar(300)",
+                          "column_name": "params"
+                        },
+                        "optional": true,
+                        "hint": "varchar(300)",
+                        "type": "string",
+                        "name": "params",
+                        "parent": "columns"
+                      }
+                    ]
+                  }
+                ],
+                "visible_config_fields": [
+                  "table",
+                  "columns.job_id",
+                  "columns.userid",
+                  "columns.channel",
+                  "columns.fromid",
+                  "columns.name",
+                  "columns.email",
+                  "columns.team",
+                  "columns.command",
+                  "columns.params",
+                  "columns",
+                  "columns.userhandle"
+                ],
+                "uuid": "1caedba3-7462-4c85-992d-fdd9016b983a"
+              },
+              {
+                "number": 13,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "false"
+                },
+                "uuid": "5ba82eea-f11d-4eb9-9a60-fba22cf648f3"
+              }
+            ],
+            "uuid": "d2a62dcd-83ee-4284-98bd-f5609f567e93"
+          },
+          {
+            "number": 14,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "equals_to",
+                  "lhs": "=_('data.workato_service.receive_request.request.event_name').downcase",
+                  "rhs": "response"
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 15,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "is_true",
+                      "lhs": "=_('data.workato_service.receive_request.request.job_id').blank?",
+                      "rhs": null
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 16,
+                    "keyword": "stop",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "stop_with_error": "true",
+                      "stop_reason": "Error Occured While Logging the Response Details! Required field Email OR JOB ID is missing"
+                    },
+                    "uuid": "86717cf2-e1f3-4f25-ade4-fb9e8771e2ab"
+                  }
+                ],
+                "uuid": "6c75cf80-a12d-463f-b364-d78ece23898d"
+              },
+              {
+                "number": 17,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "equals_to",
+                      "lhs": "#{_('data.workato_service.receive_request.request.sent')}",
+                      "rhs": "0"
+                    },
+                    {
+                      "operand": "blank",
+                      "lhs": "#{_('data.workato_service.receive_request.request.reason')}",
+                      "rhs": null
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 18,
+                    "keyword": "stop",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "stop_with_error": "true",
+                      "stop_reason": "Error Occured While Logging the Response Details! Required field Reason is missing for not sent notification"
+                    },
+                    "uuid": "7f26d7bd-facf-4ea7-b078-f280776bf3e2"
+                  }
+                ],
+                "uuid": "510d5477-57a8-4147-a5eb-b7ed82999631"
+              },
+              {
+                "number": 19,
+                "provider": "mysql",
+                "name": "insert_row",
+                "as": "insert_row__2",
+                "title": "Insert row in wkto_colloquium_slack_response",
+                "description": "Insert <span class=\"provider\">row</span> in <span class=\"provider\">wkto_colloquium_slack_response</span> table in <span class=\"provider\">MySQL</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "table": "wkto_colloquium_slack_response"
+                },
+                "toggleCfg": {
+                  "table": true
+                },
+                "input": {
+                  "table": "wkto_colloquium_slack_response",
+                  "columns": {
+                    "job_id": "#{_('data.workato_service.receive_request.request.job_id')}",
+                    "userid": "#{_('data.workato_service.receive_request.request.userid')}",
+                    "email": "#{_('data.workato_service.receive_request.request.email')}",
+                    "sent": "#{_('data.workato_service.receive_request.request.sent')}",
+                    "reason": "#{_('data.workato_service.receive_request.request.reason')}",
+                    "ischannel": "#{_('data.workato_service.receive_request.request.isChannel')}",
+                    "userhandle": "#{_('data.workato_service.receive_request.request.userhandle')}"
+                  }
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "columns",
+                    "label": "Columns",
+                    "properties": [
+                      {
+                        "control_type": "number",
+                        "label": "id",
+                        "parse_output": "parse_integer_output",
+                        "details": {
+                          "data_type": "int(11)",
+                          "column_name": "id"
+                        },
+                        "render_input": "parse_integer_output",
+                        "event_title": true,
+                        "optional": true,
+                        "hint": "int(11), primary key",
+                        "type": "integer",
+                        "name": "id",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "number",
+                        "label": "job_id",
+                        "parse_output": "parse_integer_output",
+                        "details": {
+                          "data_type": "int(11)",
+                          "column_name": "job_id"
+                        },
+                        "render_input": "parse_integer_output",
+                        "hint": "int(11)",
+                        "optional": true,
+                        "type": "integer",
+                        "name": "job_id",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "userid",
+                        "details": {
+                          "data_type": "varchar(20)",
+                          "column_name": "userid"
+                        },
+                        "optional": true,
+                        "hint": "varchar(20)",
+                        "type": "string",
+                        "name": "userid",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "userhandle",
+                        "details": {
+                          "data_type": "varchar(30)",
+                          "column_name": "userhandle"
+                        },
+                        "optional": true,
+                        "hint": "varchar(30)",
+                        "type": "string",
+                        "name": "userhandle",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "number",
+                        "label": "ischannel",
+                        "parse_output": "parse_integer_output",
+                        "details": {
+                          "data_type": "tinyint(4)",
+                          "column_name": "ischannel"
+                        },
+                        "render_input": "parse_integer_output",
+                        "optional": true,
+                        "hint": "tinyint(4)",
+                        "type": "integer",
+                        "name": "ischannel",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "email",
+                        "details": {
+                          "data_type": "varchar(50)",
+                          "column_name": "email"
+                        },
+                        "optional": true,
+                        "hint": "varchar(50)",
+                        "type": "string",
+                        "name": "email",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "response",
+                        "details": {
+                          "data_type": "varchar(500)",
+                          "column_name": "response"
+                        },
+                        "optional": true,
+                        "hint": "varchar(500)",
+                        "type": "string",
+                        "name": "response",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "number",
+                        "label": "sent",
+                        "parse_output": "parse_integer_output",
+                        "details": {
+                          "data_type": "tinyint(4)",
+                          "column_name": "sent"
+                        },
+                        "render_input": "parse_integer_output",
+                        "optional": true,
+                        "hint": "tinyint(4)",
+                        "type": "integer",
+                        "name": "sent",
+                        "parent": "columns"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "reason",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "reason"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "reason",
+                        "parent": "columns"
+                      }
+                    ]
+                  }
+                ],
+                "visible_config_fields": [
+                  "table",
+                  "columns.job_id",
+                  "columns.userid",
+                  "columns.channel",
+                  "columns.email",
+                  "columns.sent",
+                  "columns.reason",
+                  "columns",
+                  "columns.ischannel",
+                  "columns.userhandle"
+                ],
+                "uuid": "11e11380-a46a-43a5-8c4a-4cf0850f0bb6"
+              },
+              {
+                "number": 20,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "false"
+                },
+                "uuid": "99d39c4b-ca1b-48a1-8530-5d65fed55031"
+              }
+            ],
+            "uuid": "da73b3c7-b8c8-4314-8120-506d0c25c0a9"
+          },
+          {
+            "number": 21,
+            "as": "catch",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "3",
+              "retry_interval": "3"
+            },
+            "filter": {
+              "conditions": [
+                {
+                  "operand": "not_equals_to",
+                  "lhs": "#{_('data.catch.catch.type')}",
+                  "rhs": "Workato::Adapters::OnException::StopProcessing"
+                }
+              ],
+              "operand": "and",
+              "type": "compound"
+            },
+            "block": [
+              {
+                "number": 22,
+                "provider": "email",
+                "name": "send_mail",
+                "as": "send_mail",
+                "title": null,
+                "description": null,
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "email_type": "html",
+                  "to": "vijay_vaidya@rapid7.com",
+                  "subject": "Error Occurred While Logging",
+                  "body": "Hello,<br/><br/>\n\n<p><b><u>Error Details</u></b><br/>\n<b>Error Type :</b> #{_('data.catch.catch.type')}<br/>\n<b>Error Message :</b> #{_('data.catch.catch.message')}<br/>\n<b>Retry Count :</b> #{_('data.catch.catch.retry_count')}<br/>\n</p>\n\n<p>\n<b><u>Job Details</u></b><br/>\n<b>Job ID :</b> #{_('data.workato_service.receive_request.context.calling_job_id')}<br/>\n<b>Recipe ID :</b> #{_('data.workato_service.receive_request.context.calling_recipe_id')}<br/>\n</p>\nThanks.",
+                  "cc": "ishu_singh@rapid7.com",
+                  "bcc": "priya_dodwad@rapid7.com"
+                },
+                "visible_config_fields": [
+                  "to",
+                  "subject",
+                  "email_type",
+                  "body",
+                  "cc",
+                  "bcc"
+                ],
+                "uuid": "10e1642a-ae6d-4c29-b5d7-ce024420cb72"
+              }
+            ],
+            "uuid": "a558e79c-5093-4eed-9b22-f7f7eb433c2a"
+          }
+        ],
+        "uuid": "17352d74-11be-4291-a38f-e9949ba1f0ba"
+      }
+    ],
+    "uuid": "3f7c9c5b-da99-4e84-83fd-c8e338b30594"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "email",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "mysql",
+      "account_id": {
+        "zip_name": "resources/mysql.connection.json",
+        "name": "MySQL",
+        "folder": "resources"
+      }
+    }
+  ]
+}

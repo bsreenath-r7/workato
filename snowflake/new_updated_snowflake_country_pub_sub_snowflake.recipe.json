@@ -1,0 +1,407 @@
+{
+  "name": "New/Updated Snowflake Country- Pub/Sub Snowflake",
+  "description": "When there is a trigger event, do action",
+  "version": 5,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "snowflake",
+    "name": "updated_row",
+    "as": "808a461a",
+    "title": "New/updated row in REFERENCE_CODES.COUNTRY",
+    "description": "New/updated <span class=\"provider\">row</span> in <span class=\"provider\">REFERENCE_CODES.COUNTRY</span> table in <span class=\"provider\">Snowflake</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+      "table": "REFERENCE_CODES.COUNTRY",
+      "primary_key": "ALPHA2",
+      "sort_column": "LAST_MODIFIED"
+    },
+    "toggleCfg": {
+      "table": true
+    },
+    "input": {
+      "table": "REFERENCE_CODES.COUNTRY",
+      "primary_key": "ALPHA2",
+      "sort_column": "LAST_MODIFIED",
+      "where": "STATUS_EMBARGOED = 'EMBARGOED' or STATUS_EMBARGOED = 'CLEARED' "
+    },
+    "extended_output_schema": [
+      {
+        "type": "string",
+        "name": "alpha2",
+        "control_type": "text",
+        "label": "ALPHA2",
+        "hint": "varchar, max length 2, primary key",
+        "optional": true,
+        "event_title": true,
+        "details": {
+          "primary_key": true,
+          "data_type": "varchar",
+          "column_name": "ALPHA2",
+          "length": 2,
+          "precision": 2,
+          "scale": null
+        }
+      },
+      {
+        "type": "string",
+        "name": "name",
+        "control_type": "text",
+        "label": "NAME",
+        "hint": "varchar, max length 500",
+        "optional": true,
+        "details": {
+          "primary_key": false,
+          "data_type": "varchar",
+          "column_name": "NAME",
+          "length": 500,
+          "precision": 500,
+          "scale": null
+        }
+      },
+      {
+        "type": "string",
+        "name": "alpha3",
+        "control_type": "text",
+        "label": "ALPHA3",
+        "hint": "varchar, max length 3",
+        "optional": true,
+        "details": {
+          "primary_key": false,
+          "data_type": "varchar",
+          "column_name": "ALPHA3",
+          "length": 3,
+          "precision": 3,
+          "scale": null
+        }
+      },
+      {
+        "type": "integer",
+        "name": "iso_numeric",
+        "control_type": "integer",
+        "label": "ISO_NUMERIC",
+        "hint": "number",
+        "optional": true,
+        "parse_output": "parse_integer_output",
+        "details": {
+          "primary_key": false,
+          "data_type": "number",
+          "column_name": "ISO_NUMERIC",
+          "length": null,
+          "precision": 38,
+          "scale": 0
+        }
+      },
+      {
+        "type": "string",
+        "name": "r7_alias",
+        "control_type": "text",
+        "label": "R7_ALIAS",
+        "hint": "varchar, max length 500",
+        "optional": true,
+        "details": {
+          "primary_key": false,
+          "data_type": "varchar",
+          "column_name": "R7_ALIAS",
+          "length": 500,
+          "precision": 500,
+          "scale": null
+        }
+      },
+      {
+        "type": "string",
+        "name": "region",
+        "control_type": "text",
+        "label": "REGION",
+        "hint": "varchar, max length 100",
+        "optional": true,
+        "details": {
+          "primary_key": false,
+          "data_type": "varchar",
+          "column_name": "REGION",
+          "length": 100,
+          "precision": 100,
+          "scale": null
+        }
+      },
+      {
+        "type": "string",
+        "name": "status_embargoed",
+        "control_type": "text",
+        "label": "STATUS_EMBARGOED",
+        "hint": "varchar, max length 50",
+        "optional": true,
+        "details": {
+          "primary_key": false,
+          "data_type": "varchar",
+          "column_name": "STATUS_EMBARGOED",
+          "length": 50,
+          "precision": 50,
+          "scale": null
+        }
+      },
+      {
+        "type": "boolean",
+        "name": "active",
+        "control_type": "checkbox",
+        "label": "ACTIVE",
+        "hint": "boolean",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "ACTIVE",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "details": {
+            "primary_key": false,
+            "data_type": "boolean",
+            "column_name": "ACTIVE",
+            "length": null,
+            "precision": null,
+            "scale": null
+          },
+          "parse_output": "parse_boolean_output",
+          "optional": true,
+          "hint": "boolean",
+          "type": "boolean",
+          "name": "active"
+        },
+        "render_input": {
+        },
+        "parse_output": "parse_boolean_output",
+        "details": {
+          "primary_key": false,
+          "data_type": "boolean",
+          "column_name": "ACTIVE",
+          "length": null,
+          "precision": null,
+          "scale": null
+        }
+      },
+      {
+        "type": "date_time",
+        "name": "last_modified",
+        "control_type": "date_time",
+        "label": "LAST_MODIFIED",
+        "hint": "timestamp_ntz, max length 3",
+        "optional": true,
+        "render_input": "convert_to_datetime",
+        "parse_output": "parse_date_time_local",
+        "details": {
+          "primary_key": false,
+          "data_type": "timestamp_ntz",
+          "column_name": "LAST_MODIFIED",
+          "length": 3,
+          "precision": 3,
+          "scale": null
+        }
+      },
+      {
+        "type": "string",
+        "name": "r7_biz_region",
+        "control_type": "text",
+        "label": "R7_BIZ_REGION",
+        "hint": "varchar, max length 500",
+        "optional": true,
+        "details": {
+          "primary_key": false,
+          "data_type": "varchar",
+          "column_name": "R7_BIZ_REGION",
+          "length": 500,
+          "precision": 500,
+          "scale": null
+        }
+      },
+      {
+        "type": "string",
+        "name": "r7_biz_subregion",
+        "control_type": "text",
+        "label": "R7_BIZ_SUBREGION",
+        "hint": "varchar, max length 500",
+        "optional": true,
+        "details": {
+          "primary_key": false,
+          "data_type": "varchar",
+          "column_name": "R7_BIZ_SUBREGION",
+          "length": 500,
+          "precision": 500,
+          "scale": null
+        }
+      },
+      {
+        "type": "string",
+        "name": "subregion",
+        "control_type": "text",
+        "label": "SUBREGION",
+        "hint": "varchar, max length 500",
+        "optional": true,
+        "details": {
+          "primary_key": false,
+          "data_type": "varchar",
+          "column_name": "SUBREGION",
+          "length": 500,
+          "precision": 500,
+          "scale": null
+        }
+      },
+      {
+        "type": "boolean",
+        "name": "off_sec_rest",
+        "control_type": "checkbox",
+        "label": "OFF_SEC_REST",
+        "hint": "boolean",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "OFF_SEC_REST",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "details": {
+            "primary_key": false,
+            "data_type": "boolean",
+            "column_name": "OFF_SEC_REST",
+            "length": null,
+            "precision": null,
+            "scale": null
+          },
+          "parse_output": "parse_boolean_output",
+          "optional": true,
+          "hint": "boolean",
+          "type": "boolean",
+          "name": "off_sec_rest"
+        },
+        "render_input": {
+        },
+        "parse_output": "parse_boolean_output",
+        "details": {
+          "primary_key": false,
+          "data_type": "boolean",
+          "column_name": "OFF_SEC_REST",
+          "length": null,
+          "precision": null,
+          "scale": null
+        }
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "workato_pub_sub",
+        "name": "publish_to_topic",
+        "as": "33c1fe9a",
+        "title": null,
+        "description": "Publish <span class=\"provider\">message</span> to <span class=\"provider\">Snowflake</span> PubSub topic",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "topic_id": "Snowflake Country Change"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "topic_id": {
+            "zip_name": "snowflake.topic.json",
+            "name": "Snowflake",
+            "folder": ""
+          },
+          "message": {
+            "filter": {
+              "value": "#{_('data.snowflake.808a461a.alpha2')}",
+              "key": "ALPHA2"
+            },
+            "type": "COUNTRY_UPDATE"
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "message",
+            "label": "Message",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Type",
+                "name": "type",
+                "type": "string",
+                "optional": false
+              },
+              {
+                "name": "filter",
+                "type": "array",
+                "of": "object",
+                "label": "Filter",
+                "optional": false,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Key",
+                    "name": "key",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Value",
+                    "name": "value",
+                    "type": "string",
+                    "optional": false
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "comment": "COUNTRY_UPDATE",
+        "uuid": "d84d83df-184d-4c93-8044-ad96fcaefecc"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "ALPHA2"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Country"
+      },
+      {
+        "name": "custom_column_5",
+        "label": "Active"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "Status Emborgoed"
+      },
+      {
+        "name": "custom_column_4",
+        "label": "Off Sec Rest"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.snowflake.808a461a.alpha2')}",
+      "custom_column_2": "#{_('data.snowflake.808a461a.name')}",
+      "custom_column_5": "#{_('data.snowflake.808a461a.active')}",
+      "custom_column_3": "#{_('data.snowflake.808a461a.status_embargoed')}",
+      "custom_column_4": "#{_('data.snowflake.808a461a.off_sec_rest')}"
+    },
+    "uuid": "b9381067-6931-4938-810b-f78aa8dd3407"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "snowflake",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "resources/snowflake_reference_data.connection.json",
+        "name": "Snowflake (Reference Data)",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_pub_sub",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

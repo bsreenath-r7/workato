@@ -1,0 +1,2846 @@
+{
+  "name": "Callable - Fetch All Coupa DynDepartments to Lookup Table",
+  "description": "When there is a new classification record in NetSuite, custom action in Coupa",
+  "version": 1,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "f30e90fc",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">Fetch All Coupa DynDepartments to Lookup Table</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "service_name": "Fetch All Coupa DynDepartments to Lookup Table",
+      "request_schema_json": "[]",
+      "reply_schema_json": "[{\"name\":\"total_dyndepartments\",\"type\":\"number\",\"optional\":false,\"control_type\":\"number\"}]"
+    },
+    "block": [
+      {
+        "number": 1,
+        "provider": "workato_variable",
+        "name": "declare_list",
+        "as": "9e8de905",
+        "title": "Create All DynDepartment Records list",
+        "description": "Create <span class=\"provider\">All DynDepartment Records</span> list",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "list_item_schema_json": "[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\"},{\"control_type\":\"text\",\"label\":\"Active\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Active\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"active\"},\"type\":\"boolean\",\"name\":\"active\"},{\"control_type\":\"text\",\"label\":\"Name\",\"type\":\"string\",\"name\":\"name\"},{\"control_type\":\"number\",\"label\":\"Lookup ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"lookup-id\",\"optional\":false},{\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"EmployeeNumber\",\"type\":\"string\",\"name\":\"employee-number\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FirstName\",\"type\":\"string\",\"name\":\"firstname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"LastName\",\"type\":\"string\",\"name\":\"lastname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FullName\",\"type\":\"string\",\"name\":\"fullname\",\"optional\":true}],\"label\":\"Finance approver\",\"name\":\"finance-approver\",\"type\":\"object\",\"of\":\"object\",\"optional\":false},{\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"EmployeeNumber\",\"type\":\"string\",\"name\":\"employee-number\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FirstName\",\"type\":\"string\",\"name\":\"firstname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"LastName\",\"type\":\"string\",\"name\":\"lastname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FullName\",\"type\":\"string\",\"name\":\"fullname\",\"optional\":true}],\"label\":\"Dept approver 1\",\"name\":\"dept-approver1\",\"type\":\"object\",\"of\":\"object\",\"optional\":false},{\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"EmployeeNumber\",\"type\":\"string\",\"name\":\"employee-number\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FirstName\",\"type\":\"string\",\"name\":\"firstname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"LastName\",\"type\":\"string\",\"name\":\"lastname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FullName\",\"type\":\"string\",\"name\":\"fullname\",\"optional\":true}],\"label\":\"Dept approver 2\",\"name\":\"dept-approver2\",\"type\":\"object\",\"of\":\"object\",\"optional\":false},{\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"EmployeeNumber\",\"type\":\"string\",\"name\":\"employee-number\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FirstName\",\"type\":\"string\",\"name\":\"firstname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"LastName\",\"type\":\"string\",\"name\":\"lastname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FullName\",\"type\":\"string\",\"name\":\"fullname\",\"optional\":true}],\"label\":\"Dept approver 3\",\"name\":\"dept-approver3\",\"type\":\"object\",\"of\":\"object\",\"optional\":false},{\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"EmployeeNumber\",\"type\":\"string\",\"name\":\"employee-number\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FirstName\",\"type\":\"string\",\"name\":\"firstname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"LastName\",\"type\":\"string\",\"name\":\"lastname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FullName\",\"type\":\"string\",\"name\":\"fullname\",\"optional\":true}],\"label\":\"Cfo approver\",\"name\":\"cfo-approver\",\"type\":\"object\",\"of\":\"object\",\"optional\":false},{\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"EmployeeNumber\",\"type\":\"string\",\"name\":\"employee-number\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FirstName\",\"type\":\"string\",\"name\":\"firstname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"LastName\",\"type\":\"string\",\"name\":\"lastname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FullName\",\"type\":\"string\",\"name\":\"fullname\",\"optional\":true}],\"label\":\"Ceo approver\",\"name\":\"ceo-approver\",\"type\":\"object\",\"of\":\"object\",\"optional\":false},{\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"EmployeeNumber\",\"type\":\"string\",\"name\":\"employee-number\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FirstName\",\"type\":\"string\",\"name\":\"firstname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"LastName\",\"type\":\"string\",\"name\":\"lastname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FullName\",\"type\":\"string\",\"name\":\"fullname\",\"optional\":true}],\"label\":\"Intl dept approver 1\",\"name\":\"intl-dept-approver1\",\"type\":\"object\",\"of\":\"object\",\"optional\":false},{\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"EmployeeNumber\",\"type\":\"string\",\"name\":\"employee-number\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FirstName\",\"type\":\"string\",\"name\":\"firstname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"LastName\",\"type\":\"string\",\"name\":\"lastname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FullName\",\"type\":\"string\",\"name\":\"fullname\",\"optional\":true}],\"label\":\"Intl dept approver 2\",\"name\":\"intl-dept-approver2\",\"type\":\"object\",\"of\":\"object\",\"optional\":false},{\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"EmployeeNumber\",\"type\":\"string\",\"name\":\"employee-number\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FirstName\",\"type\":\"string\",\"name\":\"firstname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"LastName\",\"type\":\"string\",\"name\":\"lastname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FullName\",\"type\":\"string\",\"name\":\"fullname\",\"optional\":true}],\"label\":\"Intl dept approver 3\",\"name\":\"intl-dept-approver3\",\"type\":\"object\",\"of\":\"object\",\"optional\":false},{\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"EmployeeNumber\",\"type\":\"string\",\"name\":\"employee-number\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FirstName\",\"type\":\"string\",\"name\":\"firstname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"LastName\",\"type\":\"string\",\"name\":\"lastname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FullName\",\"type\":\"string\",\"name\":\"fullname\",\"optional\":true}],\"label\":\"Buyer approval\",\"name\":\"buyer-approval\",\"type\":\"object\",\"of\":\"object\",\"optional\":false},{\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\"},{\"control_type\":\"text\",\"label\":\"Active\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Active\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"active\"},\"type\":\"boolean\",\"name\":\"active\"},{\"control_type\":\"text\",\"label\":\"Name\",\"type\":\"string\",\"name\":\"name\"}],\"label\":\"Lookup\",\"type\":\"object\",\"name\":\"lookup\"}]",
+          "name": "All DynDepartment Records"
+        },
+        "extended_output_schema": [
+          {
+            "type": "array",
+            "name": "list_items",
+            "label": "All DynDepartment Records",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "number",
+                "label": "ID",
+                "parse_output": "float_conversion",
+                "type": "number",
+                "name": "id"
+              },
+              {
+                "control_type": "text",
+                "label": "Active",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Active",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "type": "boolean",
+                  "name": "active"
+                },
+                "type": "boolean",
+                "name": "active"
+              },
+              {
+                "control_type": "text",
+                "label": "Name",
+                "type": "string",
+                "name": "name"
+              },
+              {
+                "control_type": "number",
+                "label": "Lookup ID",
+                "parse_output": "float_conversion",
+                "type": "number",
+                "name": "lookup_id",
+                "optional": false
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "ID",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "id",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "EmployeeNumber",
+                    "type": "string",
+                    "name": "employee_number",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Email",
+                    "type": "string",
+                    "name": "email",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "FirstName",
+                    "type": "string",
+                    "name": "firstname",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "LastName",
+                    "type": "string",
+                    "name": "lastname",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "FullName",
+                    "type": "string",
+                    "name": "fullname",
+                    "optional": true
+                  }
+                ],
+                "label": "Finance approver",
+                "name": "finance_approver",
+                "type": "object",
+                "of": "object",
+                "optional": false
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "ID",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "id",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "EmployeeNumber",
+                    "type": "string",
+                    "name": "employee_number",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Email",
+                    "type": "string",
+                    "name": "email",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "FirstName",
+                    "type": "string",
+                    "name": "firstname",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "LastName",
+                    "type": "string",
+                    "name": "lastname",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "FullName",
+                    "type": "string",
+                    "name": "fullname",
+                    "optional": true
+                  }
+                ],
+                "label": "Dept approver 1",
+                "name": "dept_approver1",
+                "type": "object",
+                "of": "object",
+                "optional": false
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "ID",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "id",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "EmployeeNumber",
+                    "type": "string",
+                    "name": "employee_number",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Email",
+                    "type": "string",
+                    "name": "email",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "FirstName",
+                    "type": "string",
+                    "name": "firstname",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "LastName",
+                    "type": "string",
+                    "name": "lastname",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "FullName",
+                    "type": "string",
+                    "name": "fullname",
+                    "optional": true
+                  }
+                ],
+                "label": "Dept approver 2",
+                "name": "dept_approver2",
+                "type": "object",
+                "of": "object",
+                "optional": false
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "ID",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "id",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "EmployeeNumber",
+                    "type": "string",
+                    "name": "employee_number",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Email",
+                    "type": "string",
+                    "name": "email",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "FirstName",
+                    "type": "string",
+                    "name": "firstname",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "LastName",
+                    "type": "string",
+                    "name": "lastname",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "FullName",
+                    "type": "string",
+                    "name": "fullname",
+                    "optional": true
+                  }
+                ],
+                "label": "Dept approver 3",
+                "name": "dept_approver3",
+                "type": "object",
+                "of": "object",
+                "optional": false
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "ID",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "id",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "EmployeeNumber",
+                    "type": "string",
+                    "name": "employee_number",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Email",
+                    "type": "string",
+                    "name": "email",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "FirstName",
+                    "type": "string",
+                    "name": "firstname",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "LastName",
+                    "type": "string",
+                    "name": "lastname",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "FullName",
+                    "type": "string",
+                    "name": "fullname",
+                    "optional": true
+                  }
+                ],
+                "label": "Cfo approver",
+                "name": "cfo_approver",
+                "type": "object",
+                "of": "object",
+                "optional": false
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "ID",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "id",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "EmployeeNumber",
+                    "type": "string",
+                    "name": "employee_number",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Email",
+                    "type": "string",
+                    "name": "email",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "FirstName",
+                    "type": "string",
+                    "name": "firstname",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "LastName",
+                    "type": "string",
+                    "name": "lastname",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "FullName",
+                    "type": "string",
+                    "name": "fullname",
+                    "optional": true
+                  }
+                ],
+                "label": "Ceo approver",
+                "name": "ceo_approver",
+                "type": "object",
+                "of": "object",
+                "optional": false
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "ID",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "id",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "EmployeeNumber",
+                    "type": "string",
+                    "name": "employee_number",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Email",
+                    "type": "string",
+                    "name": "email",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "FirstName",
+                    "type": "string",
+                    "name": "firstname",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "LastName",
+                    "type": "string",
+                    "name": "lastname",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "FullName",
+                    "type": "string",
+                    "name": "fullname",
+                    "optional": true
+                  }
+                ],
+                "label": "Intl dept approver 1",
+                "name": "intl_dept_approver1",
+                "type": "object",
+                "of": "object",
+                "optional": false
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "ID",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "id",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "EmployeeNumber",
+                    "type": "string",
+                    "name": "employee_number",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Email",
+                    "type": "string",
+                    "name": "email",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "FirstName",
+                    "type": "string",
+                    "name": "firstname",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "LastName",
+                    "type": "string",
+                    "name": "lastname",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "FullName",
+                    "type": "string",
+                    "name": "fullname",
+                    "optional": true
+                  }
+                ],
+                "label": "Intl dept approver 2",
+                "name": "intl_dept_approver2",
+                "type": "object",
+                "of": "object",
+                "optional": false
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "ID",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "id",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "EmployeeNumber",
+                    "type": "string",
+                    "name": "employee_number",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Email",
+                    "type": "string",
+                    "name": "email",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "FirstName",
+                    "type": "string",
+                    "name": "firstname",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "LastName",
+                    "type": "string",
+                    "name": "lastname",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "FullName",
+                    "type": "string",
+                    "name": "fullname",
+                    "optional": true
+                  }
+                ],
+                "label": "Intl dept approver 3",
+                "name": "intl_dept_approver3",
+                "type": "object",
+                "of": "object",
+                "optional": false
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "ID",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "id",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "EmployeeNumber",
+                    "type": "string",
+                    "name": "employee_number",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Email",
+                    "type": "string",
+                    "name": "email",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "FirstName",
+                    "type": "string",
+                    "name": "firstname",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "LastName",
+                    "type": "string",
+                    "name": "lastname",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "FullName",
+                    "type": "string",
+                    "name": "fullname",
+                    "optional": true
+                  }
+                ],
+                "label": "Buyer approval",
+                "name": "buyer_approval",
+                "type": "object",
+                "of": "object",
+                "optional": false
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "ID",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Active",
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Active",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "active"
+                    },
+                    "type": "boolean",
+                    "name": "active"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "type": "string",
+                    "name": "name"
+                  }
+                ],
+                "label": "Lookup",
+                "type": "object",
+                "name": "lookup"
+              }
+            ]
+          }
+        ],
+        "comment": "List of \"AllDynDepartments\"",
+        "uuid": "5f52159e-91f8-405f-95f7-dd34e4b2c5cc"
+      },
+      {
+        "number": 2,
+        "provider": "workato_list",
+        "name": "create_list",
+        "as": "322067ad",
+        "title": null,
+        "description": null,
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "size": "500"
+        },
+        "comment": "To get 50 coupa DynDepartments in each iteration",
+        "uuid": "6a22ee85-d2c8-42ad-adb3-b462e6d66874"
+      },
+      {
+        "number": 3,
+        "provider": "workato_variable",
+        "name": "declare_variable",
+        "as": "8e3e0648",
+        "title": "Create variable offset",
+        "description": "Create variable <span class=\"provider\">offset</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "integer",
+          "name": "offset",
+          "value": "0"
+        },
+        "extended_output_schema": [
+          {
+            "type": "integer",
+            "name": "value",
+            "control_type": "number",
+            "label": "offset",
+            "parse_output": "integer_conversion"
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "integer",
+            "name": "value",
+            "control_type": "number",
+            "label": "Default value",
+            "hint": "Default value for the variable",
+            "sticky": true,
+            "optional": true,
+            "parse_output": "integer_conversion",
+            "strip_interpolation": true
+          }
+        ],
+        "comment": "Pagination for the DynDepartment lookups",
+        "uuid": "ecb3df7d-91f0-48ad-af2c-a503dde549d0"
+      },
+      {
+        "number": 4,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 5,
+            "as": "1988e95b",
+            "keyword": "foreach",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "clear_scope": false,
+            "input": {
+            },
+            "block": [
+              {
+                "number": 6,
+                "provider": "coupa",
+                "name": "__adhoc_http_action",
+                "as": "04a36144",
+                "title": "Custom action",
+                "description": "Custom <span class=\"provider\">action</span> in <span class=\"provider\">Coupa</span> (Custom)",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "mnemonic": "Custom action",
+                  "verb": "get",
+                  "path": "/api/lookup_values?lookup[name]=DynDepartment&offset=#{_('data.workato_variable.8e3e0648.value')}",
+                  "output": "[{\"name\":\"array\",\"type\":\"array\",\"of\":\"object\",\"label\":\"DynDepartments\",\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\"},{\"control_type\":\"text\",\"label\":\"Active\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Active\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"active\"},\"type\":\"boolean\",\"name\":\"active\"},{\"control_type\":\"text\",\"label\":\"Name\",\"type\":\"string\",\"name\":\"name\"},{\"control_type\":\"number\",\"label\":\"Lookup ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"lookup-id\",\"optional\":false},{\"name\":\"finance-approver\",\"type\":\"object\",\"of\":\"object\",\"label\":\"Finance approver\",\"optional\":false,\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"EmployeeNumber\",\"type\":\"string\",\"name\":\"employee-number\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FirstName\",\"type\":\"string\",\"name\":\"firstname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"LastName\",\"type\":\"string\",\"name\":\"lastname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FullName\",\"type\":\"string\",\"name\":\"fullname\",\"optional\":true}]},{\"name\":\"dept-approver1\",\"type\":\"object\",\"of\":\"object\",\"label\":\"Dept approver 1\",\"optional\":false,\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"EmployeeNumber\",\"type\":\"string\",\"name\":\"employee-number\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FirstName\",\"type\":\"string\",\"name\":\"firstname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"LastName\",\"type\":\"string\",\"name\":\"lastname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FullName\",\"type\":\"string\",\"name\":\"fullname\",\"optional\":true}]},{\"name\":\"dept-approver2\",\"type\":\"object\",\"of\":\"object\",\"label\":\"Dept approver 2\",\"optional\":false,\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"EmployeeNumber\",\"type\":\"string\",\"name\":\"employee-number\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FirstName\",\"type\":\"string\",\"name\":\"firstname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"LastName\",\"type\":\"string\",\"name\":\"lastname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FullName\",\"type\":\"string\",\"name\":\"fullname\",\"optional\":true}]},{\"name\":\"dept-approver3\",\"type\":\"object\",\"of\":\"object\",\"label\":\"Dept approver 3\",\"optional\":false,\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"EmployeeNumber\",\"type\":\"string\",\"name\":\"employee-number\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FirstName\",\"type\":\"string\",\"name\":\"firstname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"LastName\",\"type\":\"string\",\"name\":\"lastname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FullName\",\"type\":\"string\",\"name\":\"fullname\",\"optional\":true}]},{\"name\":\"cfo-approver\",\"type\":\"object\",\"of\":\"object\",\"label\":\"Cfo approver\",\"optional\":false,\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"EmployeeNumber\",\"type\":\"string\",\"name\":\"employee-number\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FirstName\",\"type\":\"string\",\"name\":\"firstname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"LastName\",\"type\":\"string\",\"name\":\"lastname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FullName\",\"type\":\"string\",\"name\":\"fullname\",\"optional\":true}]},{\"name\":\"ceo-approver\",\"type\":\"object\",\"of\":\"object\",\"label\":\"Ceo approver\",\"optional\":false,\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"EmployeeNumber\",\"type\":\"string\",\"name\":\"employee-number\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FirstName\",\"type\":\"string\",\"name\":\"firstname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"LastName\",\"type\":\"string\",\"name\":\"lastname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FullName\",\"type\":\"string\",\"name\":\"fullname\",\"optional\":true}]},{\"name\":\"intl-dept-approver1\",\"type\":\"object\",\"of\":\"object\",\"label\":\"Intl dept approver 1\",\"optional\":false,\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"EmployeeNumber\",\"type\":\"string\",\"name\":\"employee-number\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FirstName\",\"type\":\"string\",\"name\":\"firstname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"LastName\",\"type\":\"string\",\"name\":\"lastname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FullName\",\"type\":\"string\",\"name\":\"fullname\",\"optional\":true}]},{\"name\":\"intl-dept-approver2\",\"type\":\"object\",\"of\":\"object\",\"label\":\"Intl dept approver 2\",\"optional\":false,\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"EmployeeNumber\",\"type\":\"string\",\"name\":\"employee-number\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FirstName\",\"type\":\"string\",\"name\":\"firstname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"LastName\",\"type\":\"string\",\"name\":\"lastname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FullName\",\"type\":\"string\",\"name\":\"fullname\",\"optional\":true}]},{\"name\":\"intl-dept-approver3\",\"type\":\"object\",\"of\":\"object\",\"label\":\"Intl dept approver 3\",\"optional\":false,\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"EmployeeNumber\",\"type\":\"string\",\"name\":\"employee-number\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FirstName\",\"type\":\"string\",\"name\":\"firstname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"LastName\",\"type\":\"string\",\"name\":\"lastname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FullName\",\"type\":\"string\",\"name\":\"fullname\",\"optional\":true}]},{\"name\":\"buyer-approval\",\"type\":\"object\",\"of\":\"object\",\"label\":\"Buyer approval\",\"optional\":false,\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"EmployeeNumber\",\"type\":\"string\",\"name\":\"employee-number\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FirstName\",\"type\":\"string\",\"name\":\"firstname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"LastName\",\"type\":\"string\",\"name\":\"lastname\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"FullName\",\"type\":\"string\",\"name\":\"fullname\",\"optional\":true}]},{\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\"},{\"control_type\":\"text\",\"label\":\"Active\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Active\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"active\"},\"type\":\"boolean\",\"name\":\"active\"},{\"control_type\":\"text\",\"label\":\"Name\",\"type\":\"string\",\"name\":\"name\"}],\"label\":\"Lookup\",\"type\":\"object\",\"name\":\"lookup\"}],\"optional\":false}]"
+                },
+                "extended_output_schema": [
+                  {
+                    "type": "array",
+                    "name": "array",
+                    "label": "DynDepartments",
+                    "optional": false,
+                    "of": "object",
+                    "properties": [
+                      {
+                        "control_type": "number",
+                        "label": "ID",
+                        "parse_output": "float_conversion",
+                        "optional": true,
+                        "type": "number",
+                        "name": "id"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Active",
+                        "parse_output": {
+                        },
+                        "render_input": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Active",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "type": "boolean",
+                          "name": "active"
+                        },
+                        "optional": true,
+                        "type": "number",
+                        "name": "active"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Name",
+                        "optional": true,
+                        "type": "string",
+                        "name": "name"
+                      },
+                      {
+                        "control_type": "number",
+                        "label": "Lookup ID",
+                        "parse_output": "float_conversion",
+                        "optional": false,
+                        "type": "number",
+                        "name": "lookup-id"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "number",
+                            "label": "ID",
+                            "parse_output": "float_conversion",
+                            "optional": true,
+                            "type": "number",
+                            "name": "id"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "EmployeeNumber",
+                            "optional": true,
+                            "type": "string",
+                            "name": "employee-number"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Email",
+                            "optional": true,
+                            "type": "string",
+                            "name": "email"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "FirstName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "firstname"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "LastName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "lastname"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "FullName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "fullname"
+                          }
+                        ],
+                        "label": "Finance approver",
+                        "of": "object",
+                        "optional": false,
+                        "type": "object",
+                        "name": "finance-approver"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "number",
+                            "label": "ID",
+                            "parse_output": "float_conversion",
+                            "optional": true,
+                            "type": "number",
+                            "name": "id"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "EmployeeNumber",
+                            "optional": true,
+                            "type": "string",
+                            "name": "employee-number"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Email",
+                            "optional": true,
+                            "type": "string",
+                            "name": "email"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "FirstName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "firstname"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "LastName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "lastname"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "FullName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "fullname"
+                          }
+                        ],
+                        "label": "Dept approver 1",
+                        "of": "object",
+                        "optional": false,
+                        "type": "object",
+                        "name": "dept-approver1"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "number",
+                            "label": "ID",
+                            "parse_output": "float_conversion",
+                            "optional": true,
+                            "type": "number",
+                            "name": "id"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "EmployeeNumber",
+                            "optional": true,
+                            "type": "string",
+                            "name": "employee-number"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Email",
+                            "optional": true,
+                            "type": "string",
+                            "name": "email"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "FirstName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "firstname"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "LastName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "lastname"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "FullName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "fullname"
+                          }
+                        ],
+                        "label": "Dept approver 2",
+                        "of": "object",
+                        "optional": false,
+                        "type": "object",
+                        "name": "dept-approver2"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "number",
+                            "label": "ID",
+                            "parse_output": "float_conversion",
+                            "optional": true,
+                            "type": "number",
+                            "name": "id"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "EmployeeNumber",
+                            "optional": true,
+                            "type": "string",
+                            "name": "employee-number"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Email",
+                            "optional": true,
+                            "type": "string",
+                            "name": "email"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "FirstName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "firstname"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "LastName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "lastname"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "FullName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "fullname"
+                          }
+                        ],
+                        "label": "Dept approver 3",
+                        "of": "object",
+                        "optional": false,
+                        "type": "object",
+                        "name": "dept-approver3"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "number",
+                            "label": "ID",
+                            "parse_output": "float_conversion",
+                            "optional": true,
+                            "type": "number",
+                            "name": "id"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "EmployeeNumber",
+                            "optional": true,
+                            "type": "string",
+                            "name": "employee-number"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Email",
+                            "optional": true,
+                            "type": "string",
+                            "name": "email"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "FirstName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "firstname"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "LastName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "lastname"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "FullName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "fullname"
+                          }
+                        ],
+                        "label": "Cfo approver",
+                        "of": "object",
+                        "optional": false,
+                        "type": "object",
+                        "name": "cfo-approver"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "number",
+                            "label": "ID",
+                            "parse_output": "float_conversion",
+                            "optional": true,
+                            "type": "number",
+                            "name": "id"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "EmployeeNumber",
+                            "optional": true,
+                            "type": "string",
+                            "name": "employee-number"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Email",
+                            "optional": true,
+                            "type": "string",
+                            "name": "email"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "FirstName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "firstname"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "LastName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "lastname"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "FullName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "fullname"
+                          }
+                        ],
+                        "label": "Ceo approver",
+                        "of": "object",
+                        "optional": false,
+                        "type": "object",
+                        "name": "ceo-approver"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "number",
+                            "label": "ID",
+                            "parse_output": "float_conversion",
+                            "optional": true,
+                            "type": "number",
+                            "name": "id"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "EmployeeNumber",
+                            "optional": true,
+                            "type": "string",
+                            "name": "employee-number"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Email",
+                            "optional": true,
+                            "type": "string",
+                            "name": "email"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "FirstName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "firstname"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "LastName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "lastname"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "FullName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "fullname"
+                          }
+                        ],
+                        "label": "Intl dept approver 1",
+                        "of": "object",
+                        "optional": false,
+                        "type": "object",
+                        "name": "intl-dept-approver1"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "number",
+                            "label": "ID",
+                            "parse_output": "float_conversion",
+                            "optional": true,
+                            "type": "number",
+                            "name": "id"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "EmployeeNumber",
+                            "optional": true,
+                            "type": "string",
+                            "name": "employee-number"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Email",
+                            "optional": true,
+                            "type": "string",
+                            "name": "email"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "FirstName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "firstname"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "LastName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "lastname"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "FullName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "fullname"
+                          }
+                        ],
+                        "label": "Intl dept approver 2",
+                        "of": "object",
+                        "optional": false,
+                        "type": "object",
+                        "name": "intl-dept-approver2"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "number",
+                            "label": "ID",
+                            "parse_output": "float_conversion",
+                            "optional": true,
+                            "type": "number",
+                            "name": "id"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "EmployeeNumber",
+                            "optional": true,
+                            "type": "string",
+                            "name": "employee-number"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Email",
+                            "optional": true,
+                            "type": "string",
+                            "name": "email"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "FirstName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "firstname"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "LastName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "lastname"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "FullName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "fullname"
+                          }
+                        ],
+                        "label": "Intl dept approver 3",
+                        "of": "object",
+                        "optional": false,
+                        "type": "object",
+                        "name": "intl-dept-approver3"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "number",
+                            "label": "ID",
+                            "parse_output": "float_conversion",
+                            "optional": true,
+                            "type": "number",
+                            "name": "id"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "EmployeeNumber",
+                            "optional": true,
+                            "type": "string",
+                            "name": "employee-number"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Email",
+                            "optional": true,
+                            "type": "string",
+                            "name": "email"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "FirstName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "firstname"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "LastName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "lastname"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "FullName",
+                            "optional": true,
+                            "type": "string",
+                            "name": "fullname"
+                          }
+                        ],
+                        "label": "Buyer approval",
+                        "of": "object",
+                        "optional": false,
+                        "type": "object",
+                        "name": "buyer-approval"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "number",
+                            "label": "ID",
+                            "parse_output": "float_conversion",
+                            "optional": true,
+                            "type": "number",
+                            "name": "id"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Active",
+                            "parse_output": {
+                            },
+                            "render_input": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Active",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "type": "boolean",
+                              "name": "active"
+                            },
+                            "optional": true,
+                            "type": "number",
+                            "name": "active"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Name",
+                            "optional": true,
+                            "type": "string",
+                            "name": "name"
+                          }
+                        ],
+                        "label": "Lookup",
+                        "optional": true,
+                        "type": "object",
+                        "name": "lookup"
+                      }
+                    ]
+                  }
+                ],
+                "extended_input_schema": [
+                  {
+                    "type": "string",
+                    "name": "path",
+                    "control_type": "text",
+                    "label": "Path",
+                    "hint": "Base URI is <b>https://rapid7-test.coupahost.com/</b> - path will be appended to this URI. Use absolute URI to override this base URI.",
+                    "optional": false
+                  },
+                  {
+                    "type": "string",
+                    "name": "response_type",
+                    "control_type": "select",
+                    "label": "Reply type",
+                    "default": "json",
+                    "sticky": false,
+                    "pick_list": [
+                      [
+                        "JSON response",
+                        "json"
+                      ],
+                      [
+                        "Raw response",
+                        "raw"
+                      ]
+                    ],
+                    "optional": true,
+                    "extends_schema": true
+                  },
+                  {
+                    "type": "object",
+                    "name": "input",
+                    "control_type": "form-schema-builder",
+                    "label": "URL parameters",
+                    "sticky": true,
+                    "optional": true,
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Schema",
+                        "extends_schema": true,
+                        "sticky": true,
+                        "optional": true,
+                        "type": "string",
+                        "name": "schema"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "array",
+                    "name": "request_headers",
+                    "control_type": "key_value",
+                    "label": "Request headers",
+                    "optional": true,
+                    "of": "object",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Name",
+                        "optional": true,
+                        "type": "string",
+                        "name": "name"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Value",
+                        "optional": true,
+                        "type": "string",
+                        "name": "value"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "name": "output",
+                    "control_type": "schema-designer",
+                    "label": "Output",
+                    "sticky": true,
+                    "optional": true,
+                    "extends_schema": true,
+                    "schema_neutral": true
+                  },
+                  {
+                    "type": "string",
+                    "name": "response_headers",
+                    "control_type": "schema-designer",
+                    "label": "Response headers",
+                    "sticky": false,
+                    "optional": true,
+                    "extends_schema": true,
+                    "schema_neutral": true
+                  }
+                ],
+                "uuid": "dd6b07e4-2881-42e2-9e6c-e1cd78ce40a4"
+              },
+              {
+                "number": 7,
+                "as": "aaed76ce",
+                "keyword": "foreach",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "clear_scope": false,
+                "input": {
+                },
+                "block": [
+                  {
+                    "number": 8,
+                    "provider": "workato_variable",
+                    "name": "insert_to_list",
+                    "as": "4e613f28",
+                    "title": "Add item to All DynDepartment Records list",
+                    "description": "Add <span class=\"provider\">item</span> to <span class=\"provider\">All DynDepartment Records</span> list",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "name": " (step 1)"
+                    },
+                    "toggleCfg": {
+                      "list_item.active": true,
+                      "list_item.lookup.active": true
+                    },
+                    "input": {
+                      "location": "end",
+                      "name": "5f52159e-91f8-405f-95f7-dd34e4b2c5cc:9e8de905",
+                      "list_item": {
+                        "id": "#{_('data.foreach.aaed76ce.id')}",
+                        "active": "#{_('data.foreach.aaed76ce.active')}",
+                        "name": "#{_('data.foreach.aaed76ce.name')}",
+                        "lookup_id": "#{_('data.foreach.aaed76ce.lookup-id')}",
+                        "finance_approver": {
+                          "id": "#{_('data.foreach.aaed76ce.finance-approver.id')}",
+                          "employee_number": "#{_('data.foreach.aaed76ce.finance-approver.employee-number')}",
+                          "email": "#{_('data.foreach.aaed76ce.finance-approver.email')}",
+                          "firstname": "#{_('data.foreach.aaed76ce.finance-approver.firstname')}",
+                          "lastname": "#{_('data.foreach.aaed76ce.finance-approver.lastname')}",
+                          "fullname": "#{_('data.foreach.aaed76ce.finance-approver.fullname')}"
+                        },
+                        "dept_approver1": {
+                          "id": "#{_('data.foreach.aaed76ce.dept-approver1.id')}",
+                          "employee_number": "#{_('data.foreach.aaed76ce.dept-approver1.employee-number')}",
+                          "email": "#{_('data.foreach.aaed76ce.dept-approver1.email')}",
+                          "firstname": "#{_('data.foreach.aaed76ce.dept-approver1.firstname')}",
+                          "lastname": "#{_('data.foreach.aaed76ce.dept-approver1.lastname')}",
+                          "fullname": "#{_('data.foreach.aaed76ce.dept-approver1.fullname')}"
+                        },
+                        "dept_approver2": {
+                          "id": "#{_('data.foreach.aaed76ce.dept-approver2.id')}",
+                          "employee_number": "#{_('data.foreach.aaed76ce.dept-approver2.employee-number')}",
+                          "email": "#{_('data.foreach.aaed76ce.dept-approver2.email')}",
+                          "firstname": "#{_('data.foreach.aaed76ce.dept-approver2.firstname')}",
+                          "lastname": "#{_('data.foreach.aaed76ce.dept-approver2.lastname')}",
+                          "fullname": "#{_('data.foreach.aaed76ce.dept-approver2.fullname')}"
+                        },
+                        "dept_approver3": {
+                          "id": "#{_('data.foreach.aaed76ce.dept-approver3.id')}",
+                          "employee_number": "#{_('data.foreach.aaed76ce.dept-approver3.employee-number')}",
+                          "email": "#{_('data.foreach.aaed76ce.dept-approver3.email')}",
+                          "firstname": "#{_('data.foreach.aaed76ce.dept-approver3.firstname')}",
+                          "lastname": "#{_('data.foreach.aaed76ce.dept-approver3.lastname')}",
+                          "fullname": "#{_('data.foreach.aaed76ce.dept-approver3.fullname')}"
+                        },
+                        "cfo_approver": {
+                          "id": "#{_('data.foreach.aaed76ce.cfo-approver.id')}",
+                          "employee_number": "#{_('data.foreach.aaed76ce.cfo-approver.employee-number')}",
+                          "email": "#{_('data.foreach.aaed76ce.cfo-approver.email')}",
+                          "firstname": "#{_('data.foreach.aaed76ce.cfo-approver.firstname')}",
+                          "lastname": "#{_('data.foreach.aaed76ce.cfo-approver.lastname')}",
+                          "fullname": "#{_('data.foreach.aaed76ce.cfo-approver.fullname')}"
+                        },
+                        "ceo_approver": {
+                          "id": "#{_('data.foreach.aaed76ce.ceo-approver.id')}",
+                          "employee_number": "#{_('data.foreach.aaed76ce.ceo-approver.employee-number')}",
+                          "email": "#{_('data.foreach.aaed76ce.ceo-approver.email')}",
+                          "firstname": "#{_('data.foreach.aaed76ce.ceo-approver.firstname')}",
+                          "lastname": "#{_('data.foreach.aaed76ce.ceo-approver.lastname')}",
+                          "fullname": "#{_('data.foreach.aaed76ce.ceo-approver.fullname')}"
+                        },
+                        "intl_dept_approver1": {
+                          "id": "#{_('data.foreach.aaed76ce.intl-dept-approver1.id')}",
+                          "employee_number": "#{_('data.foreach.aaed76ce.intl-dept-approver1.employee-number')}",
+                          "email": "#{_('data.foreach.aaed76ce.intl-dept-approver1.email')}",
+                          "firstname": "#{_('data.foreach.aaed76ce.intl-dept-approver1.firstname')}",
+                          "lastname": "#{_('data.foreach.aaed76ce.intl-dept-approver1.lastname')}",
+                          "fullname": "#{_('data.foreach.aaed76ce.intl-dept-approver1.fullname')}"
+                        },
+                        "intl_dept_approver2": {
+                          "id": "#{_('data.foreach.aaed76ce.intl-dept-approver2.id')}",
+                          "employee_number": "#{_('data.foreach.aaed76ce.intl-dept-approver2.employee-number')}",
+                          "email": "#{_('data.foreach.aaed76ce.intl-dept-approver2.email')}",
+                          "firstname": "#{_('data.foreach.aaed76ce.intl-dept-approver2.firstname')}",
+                          "lastname": "#{_('data.foreach.aaed76ce.intl-dept-approver2.lastname')}",
+                          "fullname": "#{_('data.foreach.aaed76ce.intl-dept-approver2.fullname')}"
+                        },
+                        "intl_dept_approver3": {
+                          "id": "#{_('data.foreach.aaed76ce.intl-dept-approver3.id')}",
+                          "employee_number": "#{_('data.foreach.aaed76ce.intl-dept-approver3.employee-number')}",
+                          "email": "#{_('data.foreach.aaed76ce.intl-dept-approver3.email')}",
+                          "firstname": "#{_('data.foreach.aaed76ce.intl-dept-approver3.firstname')}",
+                          "lastname": "#{_('data.foreach.aaed76ce.intl-dept-approver3.lastname')}",
+                          "fullname": "#{_('data.foreach.aaed76ce.intl-dept-approver3.fullname')}"
+                        },
+                        "buyer_approval": {
+                          "id": "#{_('data.foreach.aaed76ce.buyer-approval.id')}",
+                          "employee_number": "#{_('data.foreach.aaed76ce.buyer-approval.employee-number')}",
+                          "email": "#{_('data.foreach.aaed76ce.buyer-approval.email')}",
+                          "firstname": "#{_('data.foreach.aaed76ce.buyer-approval.firstname')}",
+                          "lastname": "#{_('data.foreach.aaed76ce.buyer-approval.lastname')}",
+                          "fullname": "#{_('data.foreach.aaed76ce.buyer-approval.fullname')}"
+                        },
+                        "lookup": {
+                          "id": "#{_('data.foreach.aaed76ce.lookup.id')}",
+                          "active": "#{_('data.foreach.aaed76ce.lookup.active')}",
+                          "name": "#{_('data.foreach.aaed76ce.lookup.name')}"
+                        }
+                      }
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "object",
+                        "name": "list_item",
+                        "label": "List item",
+                        "properties": [
+                          {
+                            "control_type": "number",
+                            "label": "ID",
+                            "parse_output": "float_conversion",
+                            "type": "number",
+                            "name": "id"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Active",
+                            "render_input": {
+                            },
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Active",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "type": "boolean",
+                              "name": "active"
+                            },
+                            "type": "boolean",
+                            "name": "active"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Name",
+                            "type": "string",
+                            "name": "name"
+                          },
+                          {
+                            "control_type": "number",
+                            "label": "Lookup ID",
+                            "parse_output": "float_conversion",
+                            "type": "number",
+                            "name": "lookup_id",
+                            "optional": false
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "number",
+                                "label": "ID",
+                                "parse_output": "float_conversion",
+                                "type": "number",
+                                "name": "id",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "EmployeeNumber",
+                                "type": "string",
+                                "name": "employee_number",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Email",
+                                "type": "string",
+                                "name": "email",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "FirstName",
+                                "type": "string",
+                                "name": "firstname",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "LastName",
+                                "type": "string",
+                                "name": "lastname",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "FullName",
+                                "type": "string",
+                                "name": "fullname",
+                                "optional": true
+                              }
+                            ],
+                            "label": "Finance approver",
+                            "name": "finance_approver",
+                            "type": "object",
+                            "of": "object",
+                            "optional": false
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "number",
+                                "label": "ID",
+                                "parse_output": "float_conversion",
+                                "type": "number",
+                                "name": "id",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "EmployeeNumber",
+                                "type": "string",
+                                "name": "employee_number",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Email",
+                                "type": "string",
+                                "name": "email",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "FirstName",
+                                "type": "string",
+                                "name": "firstname",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "LastName",
+                                "type": "string",
+                                "name": "lastname",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "FullName",
+                                "type": "string",
+                                "name": "fullname",
+                                "optional": true
+                              }
+                            ],
+                            "label": "Dept approver 1",
+                            "name": "dept_approver1",
+                            "type": "object",
+                            "of": "object",
+                            "optional": false
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "number",
+                                "label": "ID",
+                                "parse_output": "float_conversion",
+                                "type": "number",
+                                "name": "id",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "EmployeeNumber",
+                                "type": "string",
+                                "name": "employee_number",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Email",
+                                "type": "string",
+                                "name": "email",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "FirstName",
+                                "type": "string",
+                                "name": "firstname",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "LastName",
+                                "type": "string",
+                                "name": "lastname",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "FullName",
+                                "type": "string",
+                                "name": "fullname",
+                                "optional": true
+                              }
+                            ],
+                            "label": "Dept approver 2",
+                            "name": "dept_approver2",
+                            "type": "object",
+                            "of": "object",
+                            "optional": false
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "number",
+                                "label": "ID",
+                                "parse_output": "float_conversion",
+                                "type": "number",
+                                "name": "id",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "EmployeeNumber",
+                                "type": "string",
+                                "name": "employee_number",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Email",
+                                "type": "string",
+                                "name": "email",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "FirstName",
+                                "type": "string",
+                                "name": "firstname",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "LastName",
+                                "type": "string",
+                                "name": "lastname",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "FullName",
+                                "type": "string",
+                                "name": "fullname",
+                                "optional": true
+                              }
+                            ],
+                            "label": "Dept approver 3",
+                            "name": "dept_approver3",
+                            "type": "object",
+                            "of": "object",
+                            "optional": false
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "number",
+                                "label": "ID",
+                                "parse_output": "float_conversion",
+                                "type": "number",
+                                "name": "id",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "EmployeeNumber",
+                                "type": "string",
+                                "name": "employee_number",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Email",
+                                "type": "string",
+                                "name": "email",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "FirstName",
+                                "type": "string",
+                                "name": "firstname",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "LastName",
+                                "type": "string",
+                                "name": "lastname",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "FullName",
+                                "type": "string",
+                                "name": "fullname",
+                                "optional": true
+                              }
+                            ],
+                            "label": "Cfo approver",
+                            "name": "cfo_approver",
+                            "type": "object",
+                            "of": "object",
+                            "optional": false
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "number",
+                                "label": "ID",
+                                "parse_output": "float_conversion",
+                                "type": "number",
+                                "name": "id",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "EmployeeNumber",
+                                "type": "string",
+                                "name": "employee_number",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Email",
+                                "type": "string",
+                                "name": "email",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "FirstName",
+                                "type": "string",
+                                "name": "firstname",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "LastName",
+                                "type": "string",
+                                "name": "lastname",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "FullName",
+                                "type": "string",
+                                "name": "fullname",
+                                "optional": true
+                              }
+                            ],
+                            "label": "Ceo approver",
+                            "name": "ceo_approver",
+                            "type": "object",
+                            "of": "object",
+                            "optional": false
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "number",
+                                "label": "ID",
+                                "parse_output": "float_conversion",
+                                "type": "number",
+                                "name": "id",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "EmployeeNumber",
+                                "type": "string",
+                                "name": "employee_number",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Email",
+                                "type": "string",
+                                "name": "email",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "FirstName",
+                                "type": "string",
+                                "name": "firstname",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "LastName",
+                                "type": "string",
+                                "name": "lastname",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "FullName",
+                                "type": "string",
+                                "name": "fullname",
+                                "optional": true
+                              }
+                            ],
+                            "label": "Intl dept approver 1",
+                            "name": "intl_dept_approver1",
+                            "type": "object",
+                            "of": "object",
+                            "optional": false
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "number",
+                                "label": "ID",
+                                "parse_output": "float_conversion",
+                                "type": "number",
+                                "name": "id",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "EmployeeNumber",
+                                "type": "string",
+                                "name": "employee_number",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Email",
+                                "type": "string",
+                                "name": "email",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "FirstName",
+                                "type": "string",
+                                "name": "firstname",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "LastName",
+                                "type": "string",
+                                "name": "lastname",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "FullName",
+                                "type": "string",
+                                "name": "fullname",
+                                "optional": true
+                              }
+                            ],
+                            "label": "Intl dept approver 2",
+                            "name": "intl_dept_approver2",
+                            "type": "object",
+                            "of": "object",
+                            "optional": false
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "number",
+                                "label": "ID",
+                                "parse_output": "float_conversion",
+                                "type": "number",
+                                "name": "id",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "EmployeeNumber",
+                                "type": "string",
+                                "name": "employee_number",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Email",
+                                "type": "string",
+                                "name": "email",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "FirstName",
+                                "type": "string",
+                                "name": "firstname",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "LastName",
+                                "type": "string",
+                                "name": "lastname",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "FullName",
+                                "type": "string",
+                                "name": "fullname",
+                                "optional": true
+                              }
+                            ],
+                            "label": "Intl dept approver 3",
+                            "name": "intl_dept_approver3",
+                            "type": "object",
+                            "of": "object",
+                            "optional": false
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "number",
+                                "label": "ID",
+                                "parse_output": "float_conversion",
+                                "type": "number",
+                                "name": "id",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "EmployeeNumber",
+                                "type": "string",
+                                "name": "employee_number",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Email",
+                                "type": "string",
+                                "name": "email",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "FirstName",
+                                "type": "string",
+                                "name": "firstname",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "LastName",
+                                "type": "string",
+                                "name": "lastname",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "FullName",
+                                "type": "string",
+                                "name": "fullname",
+                                "optional": true
+                              }
+                            ],
+                            "label": "Buyer approval",
+                            "name": "buyer_approval",
+                            "type": "object",
+                            "of": "object",
+                            "optional": false
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "number",
+                                "label": "ID",
+                                "parse_output": "float_conversion",
+                                "type": "number",
+                                "name": "id"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Active",
+                                "render_input": {
+                                },
+                                "parse_output": {
+                                },
+                                "toggle_hint": "Select from option list",
+                                "toggle_field": {
+                                  "label": "Active",
+                                  "control_type": "text",
+                                  "toggle_hint": "Use custom value",
+                                  "type": "boolean",
+                                  "name": "active"
+                                },
+                                "type": "boolean",
+                                "name": "active"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Name",
+                                "type": "string",
+                                "name": "name"
+                              }
+                            ],
+                            "label": "Lookup",
+                            "type": "object",
+                            "name": "lookup"
+                          }
+                        ]
+                      }
+                    ],
+                    "visible_config_fields": [
+                      "name",
+                      "location",
+                      "list_item",
+                      "list_item.array",
+                      "list_item.array.DynDepartments",
+                      "list_item.array.DynDepartments.finance_approver",
+                      "list_item.array.DynDepartments.finance_approver.id",
+                      "list_item.array.DynDepartments.finance_approver.employee_number",
+                      "list_item.array.DynDepartments.finance_approver.email",
+                      "list_item.array.DynDepartments.finance_approver.firstname",
+                      "list_item.array.DynDepartments.finance_approver.lastname",
+                      "list_item.array.DynDepartments.finance_approver.fullname",
+                      "list_item.array.DynDepartments.dept_approver1",
+                      "list_item.array.DynDepartments.dept_approver1.id",
+                      "list_item.array.DynDepartments.dept_approver1.employee_number",
+                      "list_item.array.DynDepartments.dept_approver1.email",
+                      "list_item.array.DynDepartments.dept_approver1.firstname",
+                      "list_item.array.DynDepartments.dept_approver1.lastname",
+                      "list_item.array.DynDepartments.dept_approver1.fullname",
+                      "list_item.array.DynDepartments.dept_approver2",
+                      "list_item.array.DynDepartments.dept_approver2.id",
+                      "list_item.array.DynDepartments.dept_approver2.employee_number",
+                      "list_item.array.DynDepartments.dept_approver2.email",
+                      "list_item.array.DynDepartments.dept_approver2.firstname",
+                      "list_item.array.DynDepartments.dept_approver2.lastname",
+                      "list_item.array.DynDepartments.dept_approver2.fullname",
+                      "list_item.array.DynDepartments.dept_approver3",
+                      "list_item.array.DynDepartments.dept_approver3.id",
+                      "list_item.array.DynDepartments.dept_approver3.employee_number",
+                      "list_item.array.DynDepartments.dept_approver3.email",
+                      "list_item.array.DynDepartments.dept_approver3.firstname",
+                      "list_item.array.DynDepartments.dept_approver3.lastname",
+                      "list_item.array.DynDepartments.dept_approver3.fullname",
+                      "list_item.array.DynDepartments.cfo_approver",
+                      "list_item.array.DynDepartments.cfo_approver.id",
+                      "list_item.array.DynDepartments.cfo_approver.employee_number",
+                      "list_item.array.DynDepartments.cfo_approver.email",
+                      "list_item.array.DynDepartments.cfo_approver.firstname",
+                      "list_item.array.DynDepartments.cfo_approver.lastname",
+                      "list_item.array.DynDepartments.cfo_approver.fullname",
+                      "list_item.array.DynDepartments.ceo_approver",
+                      "list_item.array.DynDepartments.ceo_approver.id",
+                      "list_item.array.DynDepartments.ceo_approver.employee_number",
+                      "list_item.array.DynDepartments.ceo_approver.email",
+                      "list_item.array.DynDepartments.ceo_approver.firstname",
+                      "list_item.array.DynDepartments.ceo_approver.lastname",
+                      "list_item.array.DynDepartments.ceo_approver.fullname",
+                      "list_item.array.DynDepartments.intl_dept_approver1",
+                      "list_item.array.DynDepartments.intl_dept_approver1.id",
+                      "list_item.array.DynDepartments.intl_dept_approver1.employee_number",
+                      "list_item.array.DynDepartments.intl_dept_approver1.email",
+                      "list_item.array.DynDepartments.intl_dept_approver1.firstname",
+                      "list_item.array.DynDepartments.intl_dept_approver1.lastname",
+                      "list_item.array.DynDepartments.intl_dept_approver1.fullname",
+                      "list_item.array.DynDepartments.intl_dept_approver2",
+                      "list_item.array.DynDepartments.intl_dept_approver2.id",
+                      "list_item.array.DynDepartments.intl_dept_approver2.employee_number",
+                      "list_item.array.DynDepartments.intl_dept_approver2.email",
+                      "list_item.array.DynDepartments.intl_dept_approver2.firstname",
+                      "list_item.array.DynDepartments.intl_dept_approver2.lastname",
+                      "list_item.array.DynDepartments.intl_dept_approver2.fullname",
+                      "list_item.array.DynDepartments.intl_dept_approver3",
+                      "list_item.array.DynDepartments.intl_dept_approver3.id",
+                      "list_item.array.DynDepartments.intl_dept_approver3.employee_number",
+                      "list_item.array.DynDepartments.intl_dept_approver3.email",
+                      "list_item.array.DynDepartments.intl_dept_approver3.firstname",
+                      "list_item.array.DynDepartments.intl_dept_approver3.lastname",
+                      "list_item.array.DynDepartments.intl_dept_approver3.fullname",
+                      "list_item.array.DynDepartments.buyer_approval",
+                      "list_item.array.DynDepartments.buyer_approval.id",
+                      "list_item.array.DynDepartments.buyer_approval.employee_number",
+                      "list_item.array.DynDepartments.buyer_approval.email",
+                      "list_item.array.DynDepartments.buyer_approval.firstname",
+                      "list_item.array.DynDepartments.buyer_approval.lastname",
+                      "list_item.array.DynDepartments.buyer_approval.fullname"
+                    ],
+                    "uuid": "4a73ebe0-16a1-43fb-9f53-9e0eb84912cc"
+                  }
+                ],
+                "source": "#{_('data.coupa.04a36144.array')}",
+                "uuid": "13ae6d0e-d50d-46d8-a05f-e600cf744bdc"
+              },
+              {
+                "number": 9,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "less_than",
+                      "lhs": "#{_('data.coupa.04a36144.array.first.____Size', 'list_meta', '____Size', 'data.coupa.04a36144.array')}",
+                      "rhs": "50"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 10,
+                    "keyword": "stop",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "stop_with_error": "true",
+                      "stop_reason": "All DynDepartments fetched from Coupa"
+                    },
+                    "uuid": "8e7e0ff5-5c27-4475-a5f8-72ababb3caaa"
+                  }
+                ],
+                "uuid": "a019a6c0-a976-46fb-a0cb-6d11f927d2f6"
+              },
+              {
+                "number": 11,
+                "provider": "workato_variable",
+                "name": "update_variable",
+                "as": "5a9b22c0",
+                "title": "Update variable offset",
+                "description": "Update variable <span class=\"provider\">offset</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "name": "offset (step 3)"
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "name": "ecb3df7d-91f0-48ad-af2c-a503dde549d0:8e3e0648",
+                  "value": "=_('data.workato_variable.8e3e0648.value')+50"
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "integer",
+                    "name": "value",
+                    "control_type": "number",
+                    "label": "Value",
+                    "hint": "Provide value for the variable",
+                    "parse_output": "integer_conversion",
+                    "strip_interpolation": true
+                  }
+                ],
+                "uuid": "05084efd-5744-498b-a1f8-3be0fe986362"
+              }
+            ],
+            "source": "#{_('data.workato_list.322067ad.list')}",
+            "uuid": "9a865b7f-5251-4e6a-97f0-03952667a173"
+          },
+          {
+            "number": 12,
+            "as": "cdc88e06",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "0",
+              "retry_interval": "2"
+            },
+            "block": [
+              {
+                "number": 13,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "not_equals_to",
+                      "lhs": "#{_('data.catch.cdc88e06.message')}",
+                      "rhs": "All DynDepartments fetched from Coupa"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 14,
+                    "keyword": "stop",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "stop_with_error": "true",
+                      "stop_reason": "#{_('data.catch.cdc88e06.message')}"
+                    },
+                    "uuid": "7ee2f177-e349-400f-a43e-043a3486567f"
+                  }
+                ],
+                "uuid": "93ac723f-6ce4-4e34-856e-c71801482605"
+              }
+            ],
+            "uuid": "25496b34-edd3-4477-918a-4a2083649818"
+          }
+        ],
+        "uuid": "60a38247-d0be-4a2e-955b-464212574622"
+      },
+      {
+        "number": 15,
+        "as": "d00be2f8",
+        "keyword": "foreach",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "clear_scope": "true",
+        "input": {
+        },
+        "block": [
+          {
+            "number": 16,
+            "provider": "lookup_table",
+            "name": "add_entry",
+            "as": "8f529b55",
+            "title": null,
+            "description": "\n      Add\n      <span class=\"provider\">entry</span>\n      to\n      <span class=\"provider\">COUPA_DYN-DEPARTMENT_APPROVERS</span>\n      lookup table\n    ",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "lookup_table_id": "COUPA_DYN-DEPARTMENT_APPROVERS"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "lookup_table_id": {
+                "zip_name": "coupa_dyn_department_approvers.lookup_table.json",
+                "name": "COUPA_DYN-DEPARTMENT_APPROVERS",
+                "folder": ""
+              },
+              "parameters": {
+                "col1": "1",
+                "col2": "#{_('data.foreach.d00be2f8.name')}",
+                "col3": "#{_('data.foreach.d00be2f8.finance_approver.employee_number')};#{_('data.foreach.d00be2f8.dept_approver1.employee_number')};#{_('data.foreach.d00be2f8.dept_approver2.employee_number')};#{_('data.foreach.d00be2f8.dept_approver3.employee_number')};#{_('data.foreach.d00be2f8.cfo_approver.employee_number')};#{_('data.foreach.d00be2f8.ceo_approver.employee_number')};#{_('data.foreach.d00be2f8.intl_dept_approver1.employee_number')};#{_('data.foreach.d00be2f8.intl_dept_approver2.employee_number')};#{_('data.foreach.d00be2f8.intl_dept_approver3.employee_number')};#{_('data.foreach.d00be2f8.buyer_approval.employee_number')}"
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "integer",
+                "name": "id",
+                "control_type": "number",
+                "label": "Entry ID",
+                "parse_output": "integer_conversion"
+              },
+              {
+                "type": "object",
+                "name": "entry",
+                "label": "Entry",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "selectAll",
+                    "name": "col1",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "department_name",
+                    "name": "col2",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "approvers",
+                    "name": "col3",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "",
+                    "name": "col4",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "",
+                    "name": "col5",
+                    "type": "string",
+                    "sticky": true
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "parameters",
+                "label": "Entry fields",
+                "hint": "Fill the fields for the new entry",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "selectAll",
+                    "name": "col1",
+                    "type": "string",
+                    "sticky": true,
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "department_name",
+                    "name": "col2",
+                    "type": "string",
+                    "sticky": true,
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "approvers",
+                    "name": "col3",
+                    "type": "string",
+                    "sticky": true,
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "",
+                    "name": "col4",
+                    "type": "string",
+                    "sticky": true,
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "",
+                    "name": "col5",
+                    "type": "string",
+                    "sticky": true,
+                    "optional": true
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "lookup_table_id",
+              "parameters",
+              "parameters.col1",
+              "parameters.col2",
+              "parameters.col3"
+            ],
+            "hidden_config_fields": [
+              "parameters.col4",
+              "parameters.col5"
+            ],
+            "uuid": "996c582f-161f-4848-af37-2d9d38bf8367"
+          }
+        ],
+        "source": "#{_('data.workato_variable.9e8de905.list_items')}",
+        "uuid": "e9c93879-6089-4a7a-ac17-5b3d41435d20"
+      },
+      {
+        "number": 17,
+        "provider": "lookup_table",
+        "name": "get_entry",
+        "as": "ef5c1d80",
+        "title": null,
+        "description": "\n      Lookup\n      <span class=\"provider\">entry</span>\n      from\n      <span class=\"provider\">COUPA_VARIABLES</span>\n      lookup table\n    ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "lookup_table_id": "COUPA_VARIABLES"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "lookup_table_id": {
+            "zip_name": "coupa_variables.lookup_table.json",
+            "name": "COUPA_VARIABLES",
+            "folder": ""
+          },
+          "parameters": {
+            "col1": "inactive_approver_report.fetch_dynDepartment.status"
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "integer",
+            "name": "id",
+            "control_type": "number",
+            "label": "Entry ID",
+            "parse_output": "integer_conversion"
+          },
+          {
+            "type": "object",
+            "name": "entry",
+            "label": "Entry",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "key",
+                "name": "col1",
+                "type": "string",
+                "sticky": true
+              },
+              {
+                "control_type": "text",
+                "label": "value",
+                "name": "col2",
+                "type": "string",
+                "sticky": true
+              },
+              {
+                "control_type": "text",
+                "label": "type",
+                "name": "col3",
+                "type": "string",
+                "sticky": true
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "parameters",
+            "label": "Lookup by",
+            "hint": "Provide one or more entry fields to search the entry",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "key",
+                "name": "col1",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "value",
+                "name": "col2",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "type",
+                "name": "col3",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "lookup_table_id",
+          "parameters",
+          "parameters.col1"
+        ],
+        "hidden_config_fields": [
+          "parameters.col2",
+          "parameters.col3"
+        ],
+        "comment": "Get the \"inactive_approver_report.fetch_dynDepartment.status\" variable",
+        "uuid": "61698c12-6bbb-45cf-b7a2-75c77e94feed"
+      },
+      {
+        "number": 18,
+        "provider": "lookup_table",
+        "name": "update_entry",
+        "as": "6bf4be0e",
+        "title": null,
+        "description": "\n      Update\n      <span class=\"provider\">entry</span>\n      in\n      <span class=\"provider\">COUPA_VARIABLES</span>\n      lookup table\n    ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "lookup_table_id": "COUPA_VARIABLES"
+        },
+        "toggleCfg": {
+          "ignore_not_found": true
+        },
+        "input": {
+          "ignore_not_found": "false",
+          "lookup_table_id": {
+            "zip_name": "coupa_variables.lookup_table.json",
+            "name": "COUPA_VARIABLES",
+            "folder": ""
+          },
+          "id": "#{_('data.lookup_table.ef5c1d80.id')}",
+          "parameters": {
+            "col2": "finished"
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "integer",
+            "name": "id",
+            "control_type": "number",
+            "label": "Entry ID",
+            "parse_output": "integer_conversion"
+          },
+          {
+            "type": "object",
+            "name": "entry",
+            "label": "Entry",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "key",
+                "name": "col1",
+                "type": "string",
+                "sticky": true
+              },
+              {
+                "control_type": "text",
+                "label": "value",
+                "name": "col2",
+                "type": "string",
+                "sticky": true
+              },
+              {
+                "control_type": "text",
+                "label": "type",
+                "name": "col3",
+                "type": "string",
+                "sticky": true
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "parameters",
+            "label": "Entry fields",
+            "hint": "Fill the fields you want to update",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "key",
+                "name": "col1",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "value",
+                "name": "col2",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "type",
+                "name": "col3",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "lookup_table_id",
+          "ignore_not_found",
+          "parameters.col2"
+        ],
+        "hidden_config_fields": [
+          "parameters.col1",
+          "parameters.col3"
+        ],
+        "comment": "Update \"inactive_approver_report.fetch_dynDepartment.status\" variable to \"finished\" to indicate all DynDepartments have been fetched",
+        "uuid": "6ede8285-856a-48ab-ae27-475b168e1b37"
+      },
+      {
+        "number": 19,
+        "provider": "workato_service",
+        "name": "send_reply",
+        "as": "2ee080c8",
+        "title": null,
+        "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Fetch All Coupa DynDepartments to Lookup Table</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "reply_type": "success",
+          "reply": {
+            "total_dyndepartments": "#{_('data.workato_variable.9e8de905.list_items.first.____Size', 'list_meta', '____Size', 'data.workato_variable.9e8de905.list_items')}"
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "reply",
+            "label": "Reply",
+            "properties": [
+              {
+                "control_type": "number",
+                "label": "Total dyndepartments",
+                "parse_output": "float_conversion",
+                "name": "total_dyndepartments",
+                "type": "number",
+                "optional": false,
+                "parent": "reply"
+              }
+            ]
+          }
+        ],
+        "uuid": "74c5a3c7-a54e-48ad-b307-66bb3961cd1a"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Total DynDepartments"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "=_('data.workato_variable.9e8de905.list_items.first.____Size', 'list_meta', '____Size', 'data.workato_variable.9e8de905.list_items')"
+    },
+    "uuid": "75d87e00-32bf-471c-a27e-9dc8e000a580"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_list",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "coupa",
+      "account_id": {
+        "zip_name": "resources/coupa.connection.json",
+        "name": "Coupa",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "lookup_table",
+      "account_id": null
+    }
+  ]
+}

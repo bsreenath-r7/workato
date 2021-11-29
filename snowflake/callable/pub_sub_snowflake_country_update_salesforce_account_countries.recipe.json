@@ -1,0 +1,1425 @@
+{
+  "name": "Pub/Sub Snowflake Country Update - Salesforce Account Countries",
+  "description": "When there is a trigger event, do action",
+  "version": 6,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "workato_pub_sub",
+    "name": "subscribe_to_topic",
+    "as": "b3e95fd5",
+    "title": null,
+    "description": "New <span class=\"provider\">message</span> in <span class=\"provider\">Snowflake</span> PubSub topic",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+      "topic_id": "Snowflake Country Change"
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "since_offset": "-3600",
+      "topic_id": {
+        "zip_name": "snowflake.topic.json",
+        "name": "Snowflake",
+        "folder": ""
+      }
+    },
+    "filter": {
+      "conditions": [
+        {
+          "operand": "equals_to",
+          "lhs": "#{_('data.workato_pub_sub.b3e95fd5.message.type')}",
+          "rhs": "COUNTRY_UPDATE",
+          "uuid": "condition-8aac53b3-9384-4321-8605-245b8969b7ca"
+        }
+      ],
+      "operand": "and",
+      "type": "compound"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "message",
+        "label": "Message",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Type",
+            "name": "type",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "name": "filter",
+            "type": "array",
+            "of": "object",
+            "label": "Filter",
+            "optional": false,
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Key",
+                "name": "key",
+                "type": "string",
+                "optional": false
+              },
+              {
+                "control_type": "text",
+                "label": "Value",
+                "name": "value",
+                "type": "string",
+                "optional": false
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "snowflake",
+            "name": "search_rows",
+            "as": "0fa34d89",
+            "title": "Select rows in REFERENCE_CODES.COUNTRY",
+            "description": "Select <span class=\"provider\">rows</span> in <span class=\"provider\">REFERENCE_CODES.COUNTRY</span> table in <span class=\"provider\">Snowflake</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "table": "REFERENCE_CODES.COUNTRY"
+            },
+            "toggleCfg": {
+              "table": true
+            },
+            "input": {
+              "limit": "1",
+              "where": "ALPHA2= '#{_('data.workato_pub_sub.b3e95fd5.message.filter.first.value')}'",
+              "offset": "0",
+              "table": "REFERENCE_CODES.COUNTRY"
+            },
+            "extended_output_schema": [
+              {
+                "type": "array",
+                "name": "rows",
+                "label": "Rows",
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "checkbox",
+                    "label": "ACTIVE",
+                    "render_input": {
+                    },
+                    "parse_output": "parse_boolean_output",
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "ACTIVE",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "details": {
+                        "primary_key": false,
+                        "data_type": "boolean",
+                        "column_name": "ACTIVE",
+                        "length": null,
+                        "precision": null,
+                        "scale": null
+                      },
+                      "parse_output": "parse_boolean_output",
+                      "optional": true,
+                      "hint": "boolean",
+                      "type": "boolean",
+                      "name": "active"
+                    },
+                    "details": {
+                      "primary_key": false,
+                      "data_type": "boolean",
+                      "column_name": "ACTIVE",
+                      "length": null,
+                      "precision": null,
+                      "scale": null
+                    },
+                    "optional": true,
+                    "hint": "boolean",
+                    "type": "boolean",
+                    "name": "active"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "ALPHA2",
+                    "details": {
+                      "primary_key": true,
+                      "data_type": "varchar",
+                      "column_name": "ALPHA2",
+                      "length": 2,
+                      "precision": 2,
+                      "scale": null
+                    },
+                    "event_title": true,
+                    "hint": "varchar, max length 2, primary key",
+                    "optional": true,
+                    "type": "string",
+                    "name": "alpha2"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "ALPHA3",
+                    "details": {
+                      "primary_key": false,
+                      "data_type": "varchar",
+                      "column_name": "ALPHA3",
+                      "length": 3,
+                      "precision": 3,
+                      "scale": null
+                    },
+                    "optional": true,
+                    "hint": "varchar, max length 3",
+                    "type": "string",
+                    "name": "alpha3"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "ISO_NUMERIC",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "primary_key": false,
+                      "data_type": "number",
+                      "column_name": "ISO_NUMERIC",
+                      "length": null,
+                      "precision": 38,
+                      "scale": 0
+                    },
+                    "optional": true,
+                    "hint": "number",
+                    "type": "integer",
+                    "name": "iso_numeric"
+                  },
+                  {
+                    "control_type": "date_time",
+                    "label": "LAST_MODIFIED",
+                    "render_input": "convert_to_datetime",
+                    "parse_output": "parse_date_time_local",
+                    "details": {
+                      "primary_key": false,
+                      "data_type": "timestamp_ntz",
+                      "column_name": "LAST_MODIFIED",
+                      "length": 3,
+                      "precision": 3,
+                      "scale": null
+                    },
+                    "optional": true,
+                    "hint": "timestamp_ntz, max length 3",
+                    "type": "date_time",
+                    "name": "last_modified"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "NAME",
+                    "details": {
+                      "primary_key": false,
+                      "data_type": "varchar",
+                      "column_name": "NAME",
+                      "length": 500,
+                      "precision": 500,
+                      "scale": null
+                    },
+                    "hint": "varchar, max length 500",
+                    "optional": true,
+                    "type": "string",
+                    "name": "name"
+                  },
+                  {
+                    "control_type": "checkbox",
+                    "label": "OFF_SEC_REST",
+                    "render_input": {
+                    },
+                    "parse_output": "parse_boolean_output",
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "OFF_SEC_REST",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "details": {
+                        "primary_key": false,
+                        "data_type": "boolean",
+                        "column_name": "OFF_SEC_REST",
+                        "length": null,
+                        "precision": null,
+                        "scale": null
+                      },
+                      "parse_output": "parse_boolean_output",
+                      "optional": true,
+                      "hint": "boolean",
+                      "type": "boolean",
+                      "name": "off_sec_rest"
+                    },
+                    "details": {
+                      "primary_key": false,
+                      "data_type": "boolean",
+                      "column_name": "OFF_SEC_REST",
+                      "length": null,
+                      "precision": null,
+                      "scale": null
+                    },
+                    "optional": true,
+                    "hint": "boolean",
+                    "type": "boolean",
+                    "name": "off_sec_rest"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "R7_ALIAS",
+                    "details": {
+                      "primary_key": false,
+                      "data_type": "varchar",
+                      "column_name": "R7_ALIAS",
+                      "length": 500,
+                      "precision": 500,
+                      "scale": null
+                    },
+                    "optional": true,
+                    "hint": "varchar, max length 500",
+                    "type": "string",
+                    "name": "r7_alias"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "R7_BIZ_REGION",
+                    "details": {
+                      "primary_key": false,
+                      "data_type": "varchar",
+                      "column_name": "R7_BIZ_REGION",
+                      "length": 500,
+                      "precision": 500,
+                      "scale": null
+                    },
+                    "optional": true,
+                    "hint": "varchar, max length 500",
+                    "type": "string",
+                    "name": "r7_biz_region"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "R7_BIZ_SUBREGION",
+                    "details": {
+                      "primary_key": false,
+                      "data_type": "varchar",
+                      "column_name": "R7_BIZ_SUBREGION",
+                      "length": 500,
+                      "precision": 500,
+                      "scale": null
+                    },
+                    "optional": true,
+                    "hint": "varchar, max length 500",
+                    "type": "string",
+                    "name": "r7_biz_subregion"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "REGION",
+                    "details": {
+                      "primary_key": false,
+                      "data_type": "varchar",
+                      "column_name": "REGION",
+                      "length": 100,
+                      "precision": 100,
+                      "scale": null
+                    },
+                    "optional": true,
+                    "hint": "varchar, max length 100",
+                    "type": "string",
+                    "name": "region"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "STATUS_EMBARGOED",
+                    "details": {
+                      "primary_key": false,
+                      "data_type": "varchar",
+                      "column_name": "STATUS_EMBARGOED",
+                      "length": 50,
+                      "precision": 50,
+                      "scale": null
+                    },
+                    "optional": true,
+                    "hint": "varchar, max length 50",
+                    "type": "string",
+                    "name": "status_embargoed"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "SUBREGION",
+                    "details": {
+                      "primary_key": false,
+                      "data_type": "varchar",
+                      "column_name": "SUBREGION",
+                      "length": 500,
+                      "precision": 500,
+                      "scale": null
+                    },
+                    "optional": true,
+                    "hint": "varchar, max length 500",
+                    "type": "string",
+                    "name": "subregion"
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "parameters",
+                "control_type": "form-schema-builder",
+                "label": "Parameters",
+                "hint": "First provide the full name assigned to your bind variable in the WHERE condition. e.g. <b>id</b>\n                    Second, provide the actual parameter value. Parameter values can be static or datapills.\n                    Select the <b>closest corresponding data type</b> that your database is expecting for the bind variable\n                    ",
+                "sticky": true,
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Schema",
+                    "extends_schema": true,
+                    "type": "string",
+                    "name": "schema",
+                    "parent": "parameters"
+                  },
+                  {
+                    "properties": [
+
+                    ],
+                    "label": "Data",
+                    "optional": true,
+                    "type": "object",
+                    "name": "data",
+                    "parent": "parameters"
+                  }
+                ],
+                "override": true
+              }
+            ],
+            "visible_config_fields": [
+              "where",
+              "parameters",
+              "limit"
+            ],
+            "uuid": "485a9db2-e925-45f4-bb45-5716cceef75f"
+          },
+          {
+            "number": 3,
+            "as": "655c3286",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "2",
+              "retry_interval": "5"
+            },
+            "block": [
+              {
+                "number": 4,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "true",
+                  "stop_reason": "#{_('data.catch.655c3286.message')}"
+                },
+                "uuid": "16ab10ce-9a2c-438c-887b-962fd3bc69ed"
+              }
+            ],
+            "uuid": "ab5a2ced-3ea2-457a-ad1a-1cc31e40d478"
+          }
+        ],
+        "uuid": "48ea6a0d-7178-4d0e-9bfc-0a66795f0be8"
+      },
+      {
+        "number": 5,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 6,
+            "provider": "salesforce",
+            "name": "search_sobjects",
+            "as": "e9541ac5",
+            "title": "Search Account Countries",
+            "description": "Search for <span class=\"provider\">Account Countries</span> in <span class=\"provider\">Salesforce</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "sobject_name": "Account Country",
+              "field_list": [
+                {
+                  "label": "Record ID",
+                  "value": "Id"
+                },
+                {
+                  "label": "Name",
+                  "value": "Name"
+                },
+                {
+                  "label": "2ALPHA",
+                  "value": "ALPHA__c"
+                },
+                {
+                  "label": "Country Name",
+                  "value": "CountryName__c"
+                },
+                {
+                  "label": "Embargoed_Status",
+                  "value": "EmbargoedStatus__c"
+                },
+                {
+                  "label": "Off_Sec_Restrictions",
+                  "value": "Off_Sec_Restrictions__c"
+                }
+              ]
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "limit": "150",
+              "sobject_name": "AccountCountry__c",
+              "field_list": "Id\nName\nALPHA__c\nCountryName__c\nEmbargoedStatus__c\nOff_Sec_Restrictions__c",
+              "ALPHA__c": "#{_('data.workato_pub_sub.b3e95fd5.message.filter.first.value')}"
+            },
+            "extended_output_schema": [
+              {
+                "type": "array",
+                "name": "AccountCountry__c",
+                "label": "Account Country",
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "optional": true,
+                    "event_title": true,
+                    "custom": false,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "string",
+                    "name": "Name"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Record ID",
+                    "optional": true,
+                    "custom": false,
+                    "sfdc_createable": false,
+                    "sfdc_updateable": false,
+                    "type": "string",
+                    "name": "Id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "2ALPHA",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "string",
+                    "name": "ALPHA__c"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Country Name",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "string",
+                    "name": "CountryName__c"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Embargoed_Status",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "string",
+                    "name": "EmbargoedStatus__c"
+                  },
+                  {
+                    "control_type": "checkbox",
+                    "label": "Off_Sec_Restrictions",
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Off_Sec_Restrictions",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "optional": true,
+                      "custom": true,
+                      "sfdc_createable": true,
+                      "sfdc_updateable": true,
+                      "type": "boolean",
+                      "name": "Off_Sec_Restrictions__c"
+                    },
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "boolean",
+                    "name": "Off_Sec_Restrictions__c"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "number",
+                        "label": "Total size",
+                        "parse_output": "integer_conversion",
+                        "type": "integer",
+                        "name": "totalSize"
+                      },
+                      {
+                        "name": "records",
+                        "type": "array",
+                        "of": "object",
+                        "label": "Files",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "ID",
+                            "type": "string",
+                            "name": "Id"
+                          },
+                          {
+                            "control_type": "number",
+                            "label": "Content size",
+                            "parse_output": "integer_conversion",
+                            "type": "integer",
+                            "name": "ContentSize"
+                          },
+                          {
+                            "control_type": "url",
+                            "label": "Content URL",
+                            "type": "string",
+                            "name": "ContentUrl"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "File extension",
+                            "type": "string",
+                            "name": "FileExtension"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "File type",
+                            "type": "string",
+                            "name": "FileType"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Parent ID",
+                            "type": "string",
+                            "name": "ParentId"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Record type",
+                            "type": "string",
+                            "name": "RecordType"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Title",
+                            "type": "string",
+                            "name": "Title"
+                          }
+                        ]
+                      }
+                    ],
+                    "label": "Combined attachments",
+                    "sfdc_field_type": "CombinedAttachment",
+                    "type": "object",
+                    "name": "CombinedAttachments"
+                  }
+                ]
+              },
+              {
+                "type": "integer",
+                "name": "list_size",
+                "control_type": "number",
+                "label": "List size",
+                "parse_output": "integer_conversion"
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "CreatedById",
+                "control_type": "text",
+                "label": "Created By ID",
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": true,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "date_time",
+                "name": "CreatedDate",
+                "control_type": "date_time",
+                "label": "Created Date",
+                "optional": true,
+                "custom": false,
+                "render_input": "render_iso8601_timestamp",
+                "parse_output": "parse_iso8601_timestamp",
+                "sfdc_createable": true,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "CurrencyIsoCode",
+                "control_type": "select",
+                "label": "Currency ISO Code",
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"AccountCountry__c\""
+                },
+                "optional": true,
+                "custom": false,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Currency ISO Code",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": false,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "CurrencyIsoCode"
+                },
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "boolean",
+                "name": "IsDeleted",
+                "control_type": "checkbox",
+                "label": "Deleted",
+                "optional": true,
+                "custom": false,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Deleted",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "custom": false,
+                  "sfdc_createable": false,
+                  "sfdc_updateable": false,
+                  "type": "boolean",
+                  "name": "IsDeleted"
+                },
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "LastModifiedById",
+                "control_type": "text",
+                "label": "Last Modified By ID",
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": true,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "date_time",
+                "name": "LastModifiedDate",
+                "control_type": "date_time",
+                "label": "Last Modified Date",
+                "optional": true,
+                "custom": false,
+                "render_input": "render_iso8601_timestamp",
+                "parse_output": "parse_iso8601_timestamp",
+                "sfdc_createable": true,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "SetupOwnerId",
+                "control_type": "text",
+                "label": "Location",
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "Name",
+                "control_type": "text",
+                "label": "Name",
+                "optional": true,
+                "custom": false,
+                "event_title": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "Id",
+                "control_type": "text",
+                "label": "Record ID",
+                "sticky": true,
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "date_time",
+                "name": "SystemModstamp",
+                "control_type": "date_time",
+                "label": "System Modstamp",
+                "optional": true,
+                "custom": false,
+                "render_input": "render_iso8601_timestamp",
+                "parse_output": "parse_iso8601_timestamp",
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "ALPHA__c",
+                "control_type": "text",
+                "label": "2ALPHA",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "CountryName__c",
+                "control_type": "text",
+                "label": "Country Name",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "EmbargoedStatus__c",
+                "control_type": "text",
+                "label": "Embargoed_Status",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "boolean",
+                "name": "Off_Sec_Restrictions__c",
+                "control_type": "checkbox",
+                "label": "Off_Sec_Restrictions",
+                "optional": true,
+                "custom": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Off_Sec_Restrictions",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "custom": true,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "boolean",
+                  "name": "Off_Sec_Restrictions__c"
+                },
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "boolean",
+                "name": "include_combined_attachments",
+                "control_type": "checkbox",
+                "label": "Select combined attachments",
+                "hint": "Select <b>Yes</b> to obtain data from notes, attachments and files associated to the queried records. Default value is <b>Yes</b>.",
+                "optional": true,
+                "extends_schema": true,
+                "render_input": {
+                },
+                "parse_output": {
+                }
+              }
+            ],
+            "visible_config_fields": [
+              "sobject_name",
+              "field_list",
+              "limit",
+              "ALPHA__c"
+            ],
+            "hidden_config_fields": [
+              "Id"
+            ],
+            "uuid": "4d201574-2b8b-43a4-866a-b79bd314dab7"
+          },
+          {
+            "number": 7,
+            "as": "fdf73ddb",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "1",
+              "retry_interval": "4"
+            },
+            "block": [
+              {
+                "number": 8,
+                "provider": "logger",
+                "name": "log_message",
+                "as": "db54198b",
+                "title": null,
+                "description": null,
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "message": "#{_('data.catch.fdf73ddb.message')}"
+                },
+                "uuid": "40714020-314b-42b6-b209-c9e658916967"
+              }
+            ],
+            "uuid": "1fbad728-10d7-44d3-92db-4b8e54f798f8"
+          }
+        ],
+        "uuid": "856da5be-a248-4233-8fc0-eef02b87a449"
+      },
+      {
+        "number": 9,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "greater_than",
+              "lhs": "#{_('data.salesforce.e9541ac5.list_size')}",
+              "rhs": "0",
+              "uuid": "condition-02e48a4c-4114-4931-8bc0-dfff23f4ac1b"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 10,
+            "provider": "salesforce",
+            "name": "update_sobject",
+            "as": "fa766a38",
+            "title": "Update Account Country",
+            "description": "Update <span class=\"provider\">Account Country</span> in <span class=\"provider\">Salesforce</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "sobject_name": "Account Country",
+              "primary_key": [
+                {
+                  "label": "Record ID",
+                  "value": "Id"
+                }
+              ]
+            },
+            "toggleCfg": {
+              "Off_Sec_Restrictions__c": false
+            },
+            "input": {
+              "sobject_name": "AccountCountry__c",
+              "Name": "#{_('data.snowflake.0fa34d89.rows.first.name')}",
+              "EmbargoedStatus__c": "#{_('data.snowflake.0fa34d89.rows.first.status_embargoed')}",
+              "Off_Sec_Restrictions__c": "#{_('data.snowflake.0fa34d89.rows.first.off_sec_rest')}",
+              "id": "#{_('data.salesforce.e9541ac5.AccountCountry__c.first.Id')}",
+              "CountryName__c": "#{_('data.snowflake.0fa34d89.rows.first.name')}"
+            },
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "id",
+                "control_type": "text",
+                "label": "Account Country ID",
+                "hint": "Salesforce internal ID of Account Country to update",
+                "key_scope": "accountcountry__c"
+              },
+              {
+                "type": "string",
+                "name": "CurrencyIsoCode",
+                "control_type": "select",
+                "label": "Currency ISO Code",
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"AccountCountry__c\""
+                },
+                "optional": true,
+                "custom": false,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Currency ISO Code",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": false,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "CurrencyIsoCode"
+                },
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "SetupOwnerId",
+                "control_type": "text",
+                "label": "Location",
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "Name",
+                "control_type": "text",
+                "label": "Name",
+                "optional": true,
+                "custom": false,
+                "event_title": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "ALPHA__c",
+                "control_type": "text",
+                "label": "2ALPHA",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "CountryName__c",
+                "control_type": "text",
+                "label": "Country Name",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "EmbargoedStatus__c",
+                "control_type": "text",
+                "label": "Embargoed_Status",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "boolean",
+                "name": "Off_Sec_Restrictions__c",
+                "control_type": "checkbox",
+                "label": "Off_Sec_Restrictions",
+                "optional": true,
+                "custom": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Off_Sec_Restrictions",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "custom": true,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "boolean",
+                  "name": "Off_Sec_Restrictions__c"
+                },
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              }
+            ],
+            "visible_config_fields": [
+              "sobject_name",
+              "id",
+              "Name",
+              "EmbargoedStatus__c",
+              "Off_Sec_Restrictions__c",
+              "CountryName__c"
+            ],
+            "uuid": "47c63f18-267d-47f0-98c1-36936976bd11"
+          },
+          {
+            "number": 11,
+            "keyword": "else",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+            },
+            "block": [
+              {
+                "number": 12,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "or",
+                  "conditions": [
+                    {
+                      "operand": "equals_to",
+                      "lhs": "#{_('data.snowflake.0fa34d89.rows.first.status_embargoed')}",
+                      "rhs": "EMBARGOED",
+                      "uuid": "condition-095c8a38-86df-48a7-a8e6-03ad96b244b9"
+                    },
+                    {
+                      "operand": "equals_to",
+                      "lhs": "#{_('data.snowflake.0fa34d89.rows.first.off_sec_rest')}",
+                      "rhs": "=true",
+                      "uuid": "condition-37be57cc-a2b6-4662-b7d1-13bbdb7de251"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 13,
+                    "keyword": "try",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                    },
+                    "block": [
+                      {
+                        "number": 14,
+                        "provider": "salesforce",
+                        "name": "create_custom_object",
+                        "as": "7580df5e",
+                        "title": "Create Account Country",
+                        "description": "Create <span class=\"provider\">Account Country</span> in <span class=\"provider\">Salesforce</span>",
+                        "keyword": "action",
+                        "dynamicPickListSelection": {
+                          "sobject_name": "Account Country",
+                          "primary_key": [
+                            {
+                              "label": "Record ID",
+                              "value": "Id"
+                            }
+                          ]
+                        },
+                        "toggleCfg": {
+                          "Off_Sec_Restrictions__c": false
+                        },
+                        "input": {
+                          "sobject_name": "AccountCountry__c",
+                          "ALPHA__c": "#{_('data.snowflake.0fa34d89.rows.first.alpha2')}",
+                          "Name": "#{_('data.snowflake.0fa34d89.rows.first.name')}",
+                          "EmbargoedStatus__c": "#{_('data.snowflake.0fa34d89.rows.first.status_embargoed')}",
+                          "Off_Sec_Restrictions__c": "#{_('data.snowflake.0fa34d89.rows.first.off_sec_rest')}",
+                          "CountryName__c": "#{_('data.snowflake.0fa34d89.rows.first.name')}"
+                        },
+                        "extended_input_schema": [
+                          {
+                            "type": "string",
+                            "name": "CreatedById",
+                            "control_type": "text",
+                            "label": "Created By ID",
+                            "optional": true,
+                            "custom": false,
+                            "sfdc_createable": true,
+                            "sfdc_updateable": false
+                          },
+                          {
+                            "type": "date_time",
+                            "name": "CreatedDate",
+                            "control_type": "date_time",
+                            "label": "Created Date",
+                            "optional": true,
+                            "custom": false,
+                            "render_input": "render_iso8601_timestamp",
+                            "parse_output": "parse_iso8601_timestamp",
+                            "sfdc_createable": true,
+                            "sfdc_updateable": false
+                          },
+                          {
+                            "type": "string",
+                            "name": "CurrencyIsoCode",
+                            "control_type": "select",
+                            "label": "Currency ISO Code",
+                            "pick_list": "sobject_field_values_list",
+                            "pick_list_params": {
+                              "sobject_name": "\"AccountCountry__c\""
+                            },
+                            "optional": true,
+                            "custom": false,
+                            "toggle_hint": "Select from list",
+                            "toggle_field": {
+                              "control_type": "text",
+                              "label": "Currency ISO Code",
+                              "toggle_hint": "Enter custom value",
+                              "optional": true,
+                              "custom": false,
+                              "sfdc_createable": true,
+                              "sfdc_updateable": true,
+                              "type": "string",
+                              "name": "CurrencyIsoCode"
+                            },
+                            "sfdc_createable": true,
+                            "sfdc_updateable": true
+                          },
+                          {
+                            "type": "string",
+                            "name": "LastModifiedById",
+                            "control_type": "text",
+                            "label": "Last Modified By ID",
+                            "optional": true,
+                            "custom": false,
+                            "sfdc_createable": true,
+                            "sfdc_updateable": false
+                          },
+                          {
+                            "type": "date_time",
+                            "name": "LastModifiedDate",
+                            "control_type": "date_time",
+                            "label": "Last Modified Date",
+                            "optional": true,
+                            "custom": false,
+                            "render_input": "render_iso8601_timestamp",
+                            "parse_output": "parse_iso8601_timestamp",
+                            "sfdc_createable": true,
+                            "sfdc_updateable": false
+                          },
+                          {
+                            "type": "string",
+                            "name": "SetupOwnerId",
+                            "control_type": "text",
+                            "label": "Location",
+                            "optional": true,
+                            "custom": false,
+                            "sfdc_createable": true,
+                            "sfdc_updateable": true
+                          },
+                          {
+                            "type": "string",
+                            "name": "Name",
+                            "control_type": "text",
+                            "label": "Name",
+                            "sticky": true,
+                            "optional": true,
+                            "custom": false,
+                            "event_title": true,
+                            "sfdc_createable": true,
+                            "sfdc_updateable": true
+                          },
+                          {
+                            "type": "string",
+                            "name": "ALPHA__c",
+                            "control_type": "text",
+                            "label": "2ALPHA",
+                            "optional": true,
+                            "custom": true,
+                            "sfdc_createable": true,
+                            "sfdc_updateable": true
+                          },
+                          {
+                            "type": "string",
+                            "name": "CountryName__c",
+                            "control_type": "text",
+                            "label": "Country Name",
+                            "optional": true,
+                            "custom": true,
+                            "sfdc_createable": true,
+                            "sfdc_updateable": true
+                          },
+                          {
+                            "type": "string",
+                            "name": "EmbargoedStatus__c",
+                            "control_type": "text",
+                            "label": "Embargoed_Status",
+                            "optional": true,
+                            "custom": true,
+                            "sfdc_createable": true,
+                            "sfdc_updateable": true
+                          },
+                          {
+                            "type": "boolean",
+                            "name": "Off_Sec_Restrictions__c",
+                            "control_type": "checkbox",
+                            "label": "Off_Sec_Restrictions",
+                            "optional": true,
+                            "custom": true,
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Off_Sec_Restrictions",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "optional": true,
+                              "custom": true,
+                              "sfdc_createable": true,
+                              "sfdc_updateable": true,
+                              "type": "boolean",
+                              "name": "Off_Sec_Restrictions__c"
+                            },
+                            "render_input": {
+                            },
+                            "parse_output": {
+                            },
+                            "sfdc_createable": true,
+                            "sfdc_updateable": true
+                          }
+                        ],
+                        "uuid": "fe86d9a7-188a-4599-a176-b210dd6002a8"
+                      },
+                      {
+                        "number": 15,
+                        "as": "2673f485",
+                        "keyword": "catch",
+                        "dynamicPickListSelection": {
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                          "max_retry_count": "1",
+                          "retry_interval": "2"
+                        },
+                        "block": [
+                          {
+                            "number": 16,
+                            "keyword": "stop",
+                            "dynamicPickListSelection": {
+                            },
+                            "toggleCfg": {
+                            },
+                            "input": {
+                              "stop_with_error": "true",
+                              "stop_reason": "#{_('data.catch.2673f485.message')}"
+                            },
+                            "uuid": "738a87db-c2e3-413f-94c5-4f00bb973068"
+                          }
+                        ],
+                        "uuid": "f268a425-d244-49e4-bdbf-dbfd2e14d635"
+                      }
+                    ],
+                    "uuid": "1b2981a6-3fa4-4f03-9e36-6161546c75ca"
+                  }
+                ],
+                "uuid": "3c77d446-eb21-4681-8b60-07e7004e2354"
+              }
+            ],
+            "uuid": "888dadd1-b349-46ac-8648-58172e85e5ca"
+          }
+        ],
+        "uuid": "f0777e4b-b624-4352-80a7-c60d427a88e3"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "ALPHA2"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Name"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "Off Sec Rest"
+      },
+      {
+        "name": "custom_column_4",
+        "label": "Status Embargoed"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_pub_sub.b3e95fd5.message.filter.first.value')}",
+      "custom_column_2": "#{_('data.snowflake.0fa34d89.rows.first.name')}",
+      "custom_column_3": "#{_('data.snowflake.0fa34d89.rows.first.off_sec_rest')}",
+      "custom_column_4": "#{_('data.snowflake.0fa34d89.rows.first.status_embargoed')}"
+    },
+    "uuid": "79ef6cc5-1b47-403f-912f-c0d5d3b80ea0"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "salesforce",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/salesforce.connection.json",
+        "name": "Salesforce",
+        "folder": "connections"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "snowflake",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "resources/snowflake_reference_data.connection.json",
+        "name": "Snowflake (Reference Data)",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "logger",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_pub_sub",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

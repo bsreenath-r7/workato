@@ -1,0 +1,276 @@
+{
+  "name": "Callable - Add Slackbot Permission",
+  "description": "When there is a new call for callable recipe, do action",
+  "version": 7,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "815cd1ad",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">Callable - Add Slackbot Permission</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "service_name": "Callable - Add Slackbot Permission",
+      "request_schema_json": "[{\"name\":\"user\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"permission\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "User",
+            "name": "user",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Permission",
+            "name": "permission",
+            "type": "string",
+            "optional": false
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "workato_service",
+        "name": "call_service",
+        "as": "7da5e31e",
+        "title": null,
+        "description": "Call recipe <span class=\"provider\">Callable - Check Permission for User</span> ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "flow_id": "Callable - Check Permission for User"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "flow_id": {
+            "zip_name": "slack/util/callable_check_permission_for_user.recipe.json",
+            "name": "Callable - Check Permission for User",
+            "folder": "slack/util"
+          },
+          "request": {
+            "permission": "#{_('data.workato_service.815cd1ad.request.permission')}",
+            "user": "#{_('data.workato_service.815cd1ad.request.user')}"
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "object",
+            "name": "reply",
+            "label": "Reply",
+            "properties": [
+              {
+                "control_type": "checkbox",
+                "label": "Is authorized",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Is authorized",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "isAuthorized",
+                  "type": "boolean",
+                  "optional": false
+                },
+                "name": "isAuthorized",
+                "type": "boolean",
+                "optional": false
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "request",
+            "label": "Recipe input",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Permission",
+                "name": "permission",
+                "type": "string",
+                "optional": false,
+                "hint": "e.g. itbot.ess.searchEngines",
+                "parent": "request"
+              },
+              {
+                "control_type": "text",
+                "label": "User",
+                "name": "user",
+                "type": "string",
+                "optional": false,
+                "hint": "e.g. mflynn",
+                "parent": "request"
+              }
+            ]
+          }
+        ],
+        "uuid": "957b898b-2c8d-40d8-b2ac-80cfa4dff9c8"
+      },
+      {
+        "number": 2,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "is_not_true",
+              "lhs": "#{_('data.workato_service.7da5e31e.reply.isAuthorized')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 3,
+            "provider": "lookup_table",
+            "name": "add_entry",
+            "as": "4b61f2ca",
+            "title": null,
+            "description": "\n      Add\n      <span class=\"provider\">entry</span>\n      to\n      <span class=\"provider\">PERMISSIONS</span>\n      lookup table\n    ",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "lookup_table_id": "PERMISSIONS"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "lookup_table_id": {
+                "zip_name": "permissions.lookup_table.json",
+                "name": "PERMISSIONS",
+                "folder": ""
+              },
+              "parameters": {
+                "col1": "#{_('data.workato_service.815cd1ad.request.permission')}",
+                "col2": "#{_('data.workato_service.815cd1ad.request.user')}"
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "integer",
+                "name": "id",
+                "control_type": "number",
+                "label": "Entry ID",
+                "parse_output": "integer_conversion"
+              },
+              {
+                "type": "object",
+                "name": "entry",
+                "label": "Entry",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "permission",
+                    "name": "col1",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "user",
+                    "name": "col2",
+                    "type": "string",
+                    "sticky": true
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "parameters",
+                "label": "Entry fields",
+                "hint": "Fill the fields for the new entry",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "permission",
+                    "name": "col1",
+                    "type": "string",
+                    "sticky": true,
+                    "optional": true,
+                    "parent": "parameters"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "user",
+                    "name": "col2",
+                    "type": "string",
+                    "sticky": true,
+                    "optional": true,
+                    "parent": "parameters"
+                  }
+                ]
+              }
+            ],
+            "uuid": "6f8147b5-c7bf-4ea1-b7da-b2f589662f04"
+          }
+        ],
+        "uuid": "1c051438-ff91-4d29-a473-15f6359acb58"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "User"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Permission"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "already authorized?"
+      },
+      {
+        "name": "custom_column_4",
+        "label": "added to permission table?"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_service.815cd1ad.request.user')}",
+      "custom_column_2": "#{_('data.workato_service.815cd1ad.request.permission')}",
+      "custom_column_3": "=_('data.workato_service.7da5e31e.reply.isAuthorized').is_true? ? \"Already Authorized\" : \"Not Authorized\"",
+      "custom_column_4": "=_('data.lookup_table.4b61f2ca.id').present? ? \"Added\" : \"Not Added\""
+    },
+    "uuid": "a337c146-90a9-47b8-a0de-802d546bf01f"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "account_id": null,
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "lookup_table",
+      "account_id": null,
+      "skip_validation": false
+    }
+  ]
+}

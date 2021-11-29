@@ -1,0 +1,30 @@
+{
+  "name": "Email - PO Report Summary",
+  "schema": [
+    {
+      "name": "po_report_recipients",
+      "type": "array",
+      "of": "object",
+      "label": "PO Report Recipients",
+      "optional": false,
+      "properties": [
+        {
+          "control_type": "text",
+          "label": "Email",
+          "name": "email",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "control_type": "integer",
+          "label": "PO Count",
+          "parse_output": "integer_conversion",
+          "name": "po_count",
+          "type": "integer",
+          "optional": true
+        }
+      ]
+    }
+  ],
+  "content": "<p>Here is a summary of all the Open PO Reports that were sent out:</p>\n\n<table>\n  <tr>\n    <th style=\"padding: 0 1em; text-align: left;\">Email</th>\n    <th style=\"padding: 0 1em; text-align: left;\"># Open POs</th>\n  </tr>\n  {{#po_report_recipients}}\n  <tr>\n    <td style=\"padding: 0 1em; text-align: left;\">{{email}}</td>\n    <td style=\"padding: 0 1em; text-align: right;\">{{po_count}}</td>\n  </tr>\n  {{/po_report_recipients}}\n</table>"
+}

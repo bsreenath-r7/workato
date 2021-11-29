@@ -1,0 +1,237 @@
+{
+  "name": "Rerun Jobs",
+  "description": "When there is a new row in a table in MySQL, rerun jobs created by recipe and other actions",
+  "version": 10,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "mysql",
+    "name": "new_row_v2",
+    "as": "new_row_v2",
+    "title": "New row in wkto_rerun_jobs",
+    "description": "New <span class=\"provider\">row</span> in <span class=\"provider\">wkto_rerun_jobs</span> table in <span class=\"provider\">MySQL</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+      "table": "wkto_rerun_jobs",
+      "primary_key": "ID",
+      "output_columns": [
+        {
+          "label": "ID",
+          "value": "ID"
+        },
+        {
+          "label": "JOB_ID",
+          "value": "JOB_ID"
+        },
+        {
+          "label": "RECIPE_ID",
+          "value": "RECIPE_ID"
+        }
+      ]
+    },
+    "toggleCfg": {
+      "table": true
+    },
+    "input": {
+      "table": "wkto_rerun_jobs",
+      "primary_key": "ID",
+      "output_columns": "ID\nJOB_ID\nRECIPE_ID"
+    },
+    "extended_output_schema": [
+      {
+        "type": "integer",
+        "name": "id_66806897",
+        "control_type": "integer",
+        "label": "ID",
+        "hint": "mediumint(8) unsigned, primary key",
+        "optional": true,
+        "event_title": true,
+        "render_input": "parse_integer_output",
+        "parse_output": "parse_integer_output",
+        "details": {
+          "data_type": "mediumint(8) unsigned",
+          "column_name": "ID"
+        }
+      },
+      {
+        "type": "integer",
+        "name": "job_id_eef8f676",
+        "control_type": "integer",
+        "label": "JOB_ID",
+        "hint": "bigint(20)",
+        "optional": true,
+        "render_input": "parse_integer_output",
+        "parse_output": "parse_integer_output",
+        "details": {
+          "data_type": "bigint(20)",
+          "column_name": "JOB_ID"
+        }
+      },
+      {
+        "type": "integer",
+        "name": "recipe_id_0de771b0",
+        "control_type": "integer",
+        "label": "RECIPE_ID",
+        "hint": "bigint(20)",
+        "optional": true,
+        "render_input": "parse_integer_output",
+        "parse_output": "parse_integer_output",
+        "details": {
+          "data_type": "bigint(20)",
+          "column_name": "RECIPE_ID"
+        }
+      }
+    ],
+    "visible_config_fields": [
+      "table",
+      "primary_key",
+      "output_columns"
+    ],
+    "hidden_config_fields": [
+      "where"
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "workato_app",
+            "name": "rerun_jobs",
+            "as": "rerun_jobs",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+              "recipe_id": false
+            },
+            "input": {
+              "recipe_id": "#{_('data.mysql.new_row_v2.recipe_id_0de771b0')}",
+              "jobs": {
+                "job_id": "#{_('data.mysql.new_row_v2.job_id_eef8f676')}"
+              }
+            },
+            "uuid": "996a2018-5b5a-4c1b-be8b-4d35bcef07e7"
+          },
+          {
+            "number": 3,
+            "as": "6b3a72ea",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "0",
+              "retry_interval": "2"
+            },
+            "block": [
+              {
+                "number": 4,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "not_contains",
+                      "lhs": "#{_('data.catch.6b3a72ea.message')}",
+                      "rhs": "An attempt to repeat a job that was already repeated"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 5,
+                    "keyword": "stop",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "stop_with_error": "true",
+                      "stop_reason": "#{_('data.catch.6b3a72ea.message')}"
+                    },
+                    "uuid": "7a751e41-9215-4aee-93e9-2eb32f1737c7"
+                  }
+                ],
+                "uuid": "c96dbf14-9dba-42bc-989f-9d453933459a"
+              }
+            ],
+            "uuid": "c29458ff-6af3-464e-be74-e11da1216f77"
+          }
+        ],
+        "uuid": "5ae5689b-7e17-4a3d-8809-b9e0dd7ef015"
+      },
+      {
+        "number": 6,
+        "provider": "mysql",
+        "name": "delete_rows",
+        "as": "update_rows",
+        "title": "Delete rows in wkto_rerun_jobs",
+        "description": "Delete <span class=\"provider\">rows</span> in <span class=\"provider\">wkto_rerun_jobs</span> table in <span class=\"provider\">MySQL</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "table": "wkto_rerun_jobs"
+        },
+        "toggleCfg": {
+          "table": true
+        },
+        "input": {
+          "table": "wkto_rerun_jobs",
+          "where": "ID = #{_('data.mysql.new_row_v2.id_66806897')}"
+        },
+        "uuid": "16dcf60e-6707-4443-bb3e-a2070d21e964"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Recipe ID"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Job ID"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.mysql.new_row_v2.recipe_id_0de771b0')}",
+      "custom_column_2": "#{_('data.mysql.new_row_v2.job_id_eef8f676')}"
+    },
+    "uuid": "615ae019-3bc3-45d9-b3db-d6d924b0510a"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_app",
+      "account_id": {
+        "zip_name": "resources/recipeops.connection.json",
+        "name": "RecipeOps",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "mysql",
+      "account_id": {
+        "zip_name": "resources/mysql.connection.json",
+        "name": "MySQL",
+        "folder": "resources"
+      }
+    }
+  ]
+}

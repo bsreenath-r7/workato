@@ -1,0 +1,76 @@
+{
+  "name": "TEAM_TERRITORY_GROUP",
+  "schema": [
+    {
+      "control_type": "text",
+      "label": "sfdc_ttg_name",
+      "name": "col1",
+      "sticky": true,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "ns_ttg_ID",
+      "name": "col2",
+      "sticky": true,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 3",
+      "name": "col3",
+      "sticky": false,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 4",
+      "name": "col4",
+      "sticky": false,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 5",
+      "name": "col5",
+      "sticky": false,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 6",
+      "name": "col6",
+      "sticky": false,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 7",
+      "name": "col7",
+      "sticky": false,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 8",
+      "name": "col8",
+      "sticky": false,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 9",
+      "name": "col9",
+      "sticky": false,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 10",
+      "name": "col10",
+      "sticky": false,
+      "type": "string"
+    }
+  ],
+  "data": "APAC-ANZ-North,308\nAPAC-ANZ-South,313\nAPAC-Greater-China,73\nAPAC-India-Region,74\nAPAC-Japan,75\nAPAC-Korea,76\nAPAC-SEA,77\nCanada-Commercial,343\nCanada-Enterprise,306\nCentral Enterprise North,344\nCentral Enterprise South,345\nEast Enterprise North,353\nEast Enterprise South,354\nEMEA-Africa,78\nEMEA-BeNeLux,79\nEMEA-DACh,80\nEMEA-Eastern-Europe,81\nEMEA Mediterranean,364\nEMEA-Middle-East,82\nEMEA-Scandinavia-Nordics,83\nEMEA-Southern-Europe-France,399\nEMEA-Southern-Europe-Iberia,404\nEMEA-UK-Ireland-Mid-Market,285\nEMEA-UK-Ireland-Enterprise,286\nFederal Civilian Agencies,278\nFederal Dept of Defense,279\nFederal Intelligence,280\nGreat Lakes Commercial,349\nGreat Plains Large Account,347\nLATAM,86\nMid-Atlantic Commercial,360\nMid-Atlantic Large Account,356\nMountain Commercial,431\nMountain Large Account,429\nNorCal Commercial,430\nNorth Central Commercial,350\nNorth Central Large Account,346\nNortheast Commercial,358\nNortheast Large Account,355\nNorthwest Commercial,433\nNorthwest Large Account,427\nNY & NJ Commercial,359\nSLED-East,362\nSLED-West,363\nSoCal Commercial,432\nSouth Central 1 Commercial,351\nSouth Central 2 Commercial,352\nSoutheast Commercial,361\nSoutheast Large Account,357\nSouthwest Large Account,428\nTexas Large Accounts,348\nUnassigned,423\nUnknown,21\nWest Enterprise North,425\nWest Enterprise South,426\nEMEA-UK-Ireland-Commercial,417\n"
+}

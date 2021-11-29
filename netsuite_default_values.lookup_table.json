@@ -1,0 +1,76 @@
+{
+  "name": "NETSUITE_DEFAULT_VALUES",
+  "schema": [
+    {
+      "control_type": "text",
+      "label": "name",
+      "name": "col1",
+      "sticky": true,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "value",
+      "name": "col2",
+      "sticky": true,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "notes",
+      "name": "col3",
+      "sticky": true,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 4",
+      "name": "col4",
+      "sticky": false,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 5",
+      "name": "col5",
+      "sticky": false,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 6",
+      "sticky": false,
+      "type": "string",
+      "name": "col6"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 7",
+      "sticky": false,
+      "type": "string",
+      "name": "col7"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 8",
+      "sticky": false,
+      "type": "string",
+      "name": "col8"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 9",
+      "sticky": false,
+      "type": "string",
+      "name": "col9"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 10",
+      "sticky": false,
+      "type": "string",
+      "name": "col10"
+    }
+  ],
+  "data": "new_customer_prospect_entity_id,106,PROSPECT-Prospect\nnew_customer_customer_entity_id,107,CUSTOMER-Customer\nnew_customer_subsidiary_id,1,USD (United States)\nrestlet_export_script_id,1992,\nsaved_search_versapay_reconciliation_credits,37316,\nsaved_search_versapay_reconciliation_invoices,37315,\nrestlet_url,https://663271.restlets.api.netsuite.com/app/site/hosting/restlet.nl,\nsaved_search_xactly_commission_dataset,38669,\nxactly_commission_file_transfer_path,/inbound/,Xactly folder path where the commissions file needs to be uploaded.\nxactly_commission_file_transfer_slack_user_id,@aquattropani,User should receive a slack message about the file transfer error\nxactly_commissions_supervisor_email,commissions@rapid7.com,Email Id(s) of the Commissions Supervisor who receives the email when there is an error uploading the commissions file to Xactly\nsaved_search_netsuite_weborders,38644,\nnetsuite_salesorder_url,https://663271.app.netsuite.com/app/accounting/transactions/salesord.nl?id=,\nnetsuite_srp_survey_url,https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=1219&id=,\nnetsuite_customer_url,https://663271.app.netsuite.com/app/common/entity/custjob.nl?id=,\ness.url.github,https://api.github.com/repos/rapid7/gcp_ess/dispatches,\nnetsuite_project.lineofbusiness,\"[\"\"1\"\",\"\"2\"\",\"\"3\"\"]\",\"[\"\"Penetration Test\"\", \"\"Incident Response\"\", \"\"Advisory Services\"\"]\"\nsaved_search_netsuite_nexposelicense,39034,purchased IPs\nnetsuite_project.lineofbusiness.PenetrationTest,1,\"Used by \"\"Jira SCC Project - NetSuite Project\"\" recipe\"\nnetsuite_project.lineofbusiness.IncidentResponse,2,\"Used by \"\"Jira SCC Project - NetSuite Project\"\" recipe\"\nnetsuite_project.lineofbusiness.AdvisoryServices,3,\"Used by \"\"Jira SCC Project - NetSuite Project\"\" recipe\"\nrestlet_invoice_script_id,2633,\nrestlet_files_script_id,2337,\nnetsuite_project_url,https://663271.app.netsuite.com/app/accounting/project/project.nl?id=,\norderstatus.klarity,\"Billed,Partially Fulfilled,Pending Billing,Pending Billing/Partially Fulfilled,Pending Fulfillment\",\"Will be used by \"\"NetSuite SalesOrder - Klarity S3 Bucket\"\" recipe to filter out the orders based on their status\"\n"
+}

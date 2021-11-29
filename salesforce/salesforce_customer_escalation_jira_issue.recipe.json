@@ -1,0 +1,1591 @@
+{
+  "name": "Salesforce Customer Escalation - Jira Issue",
+  "description": "When there is a trigger event, do action",
+  "version": 3,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "salesforce",
+    "name": "updated_custom_object",
+    "as": "7c7bf92a",
+    "title": "New/updated Customer escalation",
+    "description": "New/updated <span class=\"provider\">Customer escalation</span> in <span class=\"provider\">Salesforce</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+      "sobject_name": "Customer escalation",
+      "field_list": [
+        {
+          "label": "Record ID",
+          "value": "Id"
+        },
+        {
+          "label": "Escalation name",
+          "value": "Name"
+        },
+        {
+          "label": "Related jira issues",
+          "value": "Related_Jira_Issues__c"
+        }
+      ]
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "sobject_name": "Customer_Escalation__c",
+      "field_list": "Id\nName\nRelated_Jira_Issues__c",
+      "since_offset": "-3600"
+    },
+    "filter": {
+      "conditions": [
+        {
+          "operand": "present",
+          "lhs": "#{_('data.salesforce.7c7bf92a.Related_Jira_Issues__c')}",
+          "rhs": null
+        }
+      ],
+      "operand": "and",
+      "type": "compound"
+    },
+    "extended_output_schema": [
+      {
+        "type": "date_time",
+        "name": "CreatedDate",
+        "control_type": "date_time",
+        "label": "Created Date",
+        "optional": true,
+        "custom": false,
+        "render_input": "render_iso8601_timestamp",
+        "parse_output": "parse_iso8601_timestamp",
+        "sfdc_createable": true,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "Name",
+        "control_type": "text",
+        "label": "Escalation Name",
+        "optional": true,
+        "custom": false,
+        "event_title": true,
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "date_time",
+        "name": "LastModifiedDate",
+        "control_type": "date_time",
+        "label": "Last Modified Date",
+        "optional": true,
+        "custom": false,
+        "render_input": "render_iso8601_timestamp",
+        "parse_output": "parse_iso8601_timestamp",
+        "sfdc_createable": true,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "Id",
+        "control_type": "text",
+        "label": "Record ID",
+        "optional": true,
+        "custom": false,
+        "key_scope": "Customer_Escalation__c",
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "date_time",
+        "name": "SystemModstamp",
+        "control_type": "date_time",
+        "label": "System Modstamp",
+        "optional": true,
+        "custom": false,
+        "render_input": "render_iso8601_timestamp",
+        "parse_output": "parse_iso8601_timestamp",
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "Related_Jira_Issues__c",
+        "control_type": "text-area",
+        "label": "Related Jira Issues",
+        "optional": true,
+        "custom": true,
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "object",
+        "name": "CombinedAttachments",
+        "label": "Combined attachments",
+        "properties": [
+          {
+            "control_type": "number",
+            "label": "Total size",
+            "parse_output": "integer_conversion",
+            "type": "integer",
+            "name": "totalSize"
+          },
+          {
+            "name": "records",
+            "type": "array",
+            "of": "object",
+            "label": "Files",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "ID",
+                "type": "string",
+                "name": "Id"
+              },
+              {
+                "control_type": "number",
+                "label": "Content size",
+                "parse_output": "integer_conversion",
+                "type": "integer",
+                "name": "ContentSize"
+              },
+              {
+                "control_type": "url",
+                "label": "Content URL",
+                "type": "string",
+                "name": "ContentUrl"
+              },
+              {
+                "control_type": "text",
+                "label": "File extension",
+                "type": "string",
+                "name": "FileExtension"
+              },
+              {
+                "control_type": "text",
+                "label": "File type",
+                "type": "string",
+                "name": "FileType"
+              },
+              {
+                "control_type": "text",
+                "label": "Parent ID",
+                "type": "string",
+                "name": "ParentId"
+              },
+              {
+                "control_type": "text",
+                "label": "Record type",
+                "type": "string",
+                "name": "RecordType"
+              },
+              {
+                "control_type": "text",
+                "label": "Title",
+                "type": "string",
+                "name": "Title"
+              }
+            ]
+          }
+        ],
+        "sfdc_field_type": "CombinedAttachment"
+      }
+    ],
+    "extended_input_schema": [
+      {
+        "type": "string",
+        "name": "since_offset",
+        "control_type": "select",
+        "label": "When first started, this recipe should pick up events from",
+        "hint": "When starting the recipe for the first time, picks up Salesforce records from the specified date and time. <b>Once the recipe has been run or tested, this value cannot be changed.</b>",
+        "default": -3600,
+        "pick_list": [
+          [
+            "Recipe start",
+            0
+          ],
+          [
+            "An hour ago",
+            -3600
+          ],
+          [
+            "Yesterday",
+            -86400
+          ],
+          [
+            "Last week",
+            -604800
+          ],
+          [
+            "Last month",
+            -2629746
+          ],
+          [
+            "Beginning of time",
+            "no_limit"
+          ]
+        ],
+        "toggle_hint": "Select from list",
+        "toggle_field": {
+          "control_type": "date_time",
+          "label": "When first started, this recipe should pick up events from",
+          "render_input": "convert_date_time",
+          "parse_output": "convert_date_time",
+          "toggle_hint": "Enter custom value",
+          "since_field": true,
+          "hint": "When starting the recipe for the first time, picks up Salesforce records from the specified date and time. <b>Once the recipe has been run or tested, this value cannot be changed.</b>",
+          "type": "date_time",
+          "name": "since"
+        },
+        "since_field": true
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "workato_variable",
+        "name": "declare_variable",
+        "as": "6602e8ab",
+        "title": "  Create variable status",
+        "description": "Create variable <span class=\"provider\">status</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "string",
+          "name": "status",
+          "value": "initiated..."
+        },
+        "extended_output_schema": [
+          {
+            "type": "string",
+            "name": "value",
+            "control_type": "text",
+            "label": "status"
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "string",
+            "name": "value",
+            "control_type": "text",
+            "label": "Default value",
+            "hint": "Default value for the variable",
+            "sticky": true,
+            "optional": true,
+            "strip_interpolation": true
+          }
+        ],
+        "uuid": "52f40f55-757d-4a20-aa75-c74d568604ad"
+      },
+      {
+        "number": 2,
+        "provider": "workato_variable",
+        "name": "declare_variable",
+        "as": "2916f2b6",
+        "title": "  Create variable jira_key_extracted",
+        "description": "Create variable <span class=\"provider\">jira_key_extracted</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "string",
+          "name": "jira_key_extracted"
+        },
+        "extended_output_schema": [
+          {
+            "type": "string",
+            "name": "value",
+            "control_type": "text",
+            "label": "jira_key_extracted"
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "string",
+            "name": "value",
+            "control_type": "text",
+            "label": "Default value",
+            "hint": "Default value for the variable",
+            "sticky": true,
+            "optional": true,
+            "strip_interpolation": true
+          }
+        ],
+        "uuid": "dd24579f-b933-4d42-af6e-b36c455d796d",
+        "skip": false
+      },
+      {
+        "number": 3,
+        "provider": "workato_variable",
+        "name": "declare_variable",
+        "as": "76fa1c84",
+        "title": "  Create variable related_jira_issues_count",
+        "description": "Create variable <span class=\"provider\">related_jira_issues_count</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "string",
+          "name": "related_jira_issues_count",
+          "value": "=_('data.salesforce.7c7bf92a.Related_Jira_Issues__c').match?(/,/) ? _('data.salesforce.7c7bf92a.Related_Jira_Issues__c').split(\",\").count : 1"
+        },
+        "extended_output_schema": [
+          {
+            "type": "string",
+            "name": "value",
+            "control_type": "text",
+            "label": "related_jira_issues_count"
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "string",
+            "name": "value",
+            "control_type": "text",
+            "label": "Default value",
+            "hint": "Default value for the variable",
+            "sticky": true,
+            "optional": true,
+            "strip_interpolation": true
+          }
+        ],
+        "uuid": "92af09f9-f43f-4c68-a130-cb2d0c85185d"
+      },
+      {
+        "number": 4,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "greater_than",
+              "lhs": "#{_('data.workato_variable.76fa1c84.value')}",
+              "rhs": "0"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 5,
+            "provider": "workato_list",
+            "name": "create_list",
+            "as": "25a488cf",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "size": "#{_('data.workato_variable.76fa1c84.value')}"
+            },
+            "uuid": "e82fb8b6-ced6-4e7d-90c9-76a2b71403e0"
+          },
+          {
+            "number": 6,
+            "as": "75284346",
+            "keyword": "foreach",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "repeat_mode": "simple",
+            "clear_scope": "false",
+            "input": {
+            },
+            "block": [
+              {
+                "number": 7,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "contains",
+                      "lhs": "=_('data.salesforce.7c7bf92a.Related_Jira_Issues__c').split(\",\")[_('data.foreach.75284346.index', 'foreach_meta')]",
+                      "rhs": "https://issues.corp.rapid7.com/browse/"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 8,
+                    "provider": "workato_list",
+                    "name": "accumulate_list_items",
+                    "as": "8a5f6c88",
+                    "title": "Accumulate items to URL_List list",
+                    "description": "Accumulate <span class=\"provider\">items</span> to <span class=\"provider\">URL_List</span> list",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "name": "URL_List",
+                      "list_item": {
+                        "schema": "[{\"name\":\"url\",\"type\":\"string\",\"optional\":true,\"label\":\"url\",\"control_type\":\"text\"}]",
+                        "data": {
+                          "url": "=_('data.salesforce.7c7bf92a.Related_Jira_Issues__c').split(\",\")[_('data.foreach.75284346.index', 'foreach_meta')]"
+                        }
+                      }
+                    },
+                    "extended_output_schema": [
+                      {
+                        "type": "array",
+                        "name": "list_items",
+                        "label": "Items",
+                        "of": "object",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "url",
+                            "name": "url",
+                            "type": "string",
+                            "optional": true
+                          }
+                        ]
+                      }
+                    ],
+                    "extended_input_schema": [
+                      {
+                        "type": "object",
+                        "name": "list_item",
+                        "control_type": "form-schema-builder",
+                        "label": "List item fields",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Schema",
+                            "extends_schema": true,
+                            "type": "string",
+                            "name": "schema",
+                            "parent": "list_item"
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "url",
+                                "name": "url",
+                                "type": "string",
+                                "optional": true,
+                                "parent": "list_item.data"
+                              }
+                            ],
+                            "label": "Data",
+                            "type": "object",
+                            "name": "data",
+                            "parent": "list_item"
+                          }
+                        ],
+                        "override": true
+                      }
+                    ],
+                    "visible_config_fields": [
+                      "name",
+                      "list_item.data.url"
+                    ],
+                    "uuid": "126ecd7d-9226-49e4-96ea-fb6f4bfbb9d1",
+                    "skip": false
+                  },
+                  {
+                    "number": 9,
+                    "keyword": "else",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                    },
+                    "block": [
+                      {
+                        "number": 10,
+                        "provider": "workato_variable",
+                        "name": "update_variable",
+                        "as": "b366d3ea",
+                        "title": "  Update variable status",
+                        "description": "Update variable <span class=\"provider\">status</span>",
+                        "keyword": "action",
+                        "dynamicPickListSelection": {
+                          "name": "status (step 2)"
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                          "name": "52f40f55-757d-4a20-aa75-c74d568604ad:6602e8ab",
+                          "value": "Invalid URL"
+                        },
+                        "extended_input_schema": [
+                          {
+                            "type": "string",
+                            "name": "value",
+                            "control_type": "text",
+                            "label": "Value",
+                            "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To reset the value, set the value to <b>nil</b> in formula mode.",
+                            "sticky": true,
+                            "optional": true,
+                            "strip_interpolation": true
+                          }
+                        ],
+                        "uuid": "15786ba0-0d0f-41f7-bec1-4a153678c472"
+                      },
+                      {
+                        "number": 11,
+                        "keyword": "stop",
+                        "dynamicPickListSelection": {
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                          "stop_with_error": "false"
+                        },
+                        "uuid": "7c4a8ce1-755e-4b4a-bbe3-aa46117d23b8"
+                      }
+                    ],
+                    "uuid": "479f47d3-6e39-4d2a-bde1-0b82151b0db3"
+                  }
+                ],
+                "uuid": "945b3222-9854-425e-8886-919ca006644c"
+              }
+            ],
+            "source": "#{_('data.workato_list.25a488cf.list')}",
+            "uuid": "2315de89-7839-4bd7-83ee-62ba22f40007",
+            "skip": false
+          }
+        ],
+        "uuid": "545fa1d0-f1f5-4293-83d5-e6d14e14e7b2"
+      },
+      {
+        "number": 12,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "greater_than",
+              "lhs": "#{_('data.workato_list.8a5f6c88.list_items.first.____Size', 'list_meta', '____Size', 'data.workato_list.8a5f6c88.list_items')}",
+              "rhs": "0"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 13,
+            "as": "c64b1171",
+            "keyword": "foreach",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "repeat_mode": "simple",
+            "clear_scope": "false",
+            "input": {
+            },
+            "block": [
+              {
+                "number": 14,
+                "provider": "workato_variable",
+                "name": "update_variable",
+                "as": "5544562f",
+                "title": "  Update variable jira_key_extracted",
+                "description": "Update variable <span class=\"provider\">jira_key_extracted</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "name": "jira_key_extracted (step 3)"
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "name": "dd24579f-b933-4d42-af6e-b36c455d796d:2916f2b6",
+                  "value": "=_('data.foreach.c64b1171.url').split(\"/\").last"
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "string",
+                    "name": "value",
+                    "control_type": "text",
+                    "label": "Value",
+                    "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To reset the value, set the value to <b>nil</b> in formula mode.",
+                    "sticky": true,
+                    "optional": true,
+                    "strip_interpolation": true
+                  }
+                ],
+                "uuid": "07ba05b6-c79f-4109-bb28-60737d8f1ee7"
+              },
+              {
+                "number": 15,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "present",
+                      "lhs": "#{_('data.workato_variable.2916f2b6.value')}",
+                      "rhs": null
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 16,
+                    "keyword": "try",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                    },
+                    "block": [
+                      {
+                        "number": 17,
+                        "provider": "jira",
+                        "name": "__adhoc_http_action",
+                        "as": "259e4bc6",
+                        "title": "Get Issue Links",
+                        "description": "Get <span class=\"provider\">Issue Links</span> in <span class=\"provider\">Jira</span> (Custom)",
+                        "keyword": "action",
+                        "dynamicPickListSelection": {
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                          "mnemonic": "Get Issue Links",
+                          "verb": "get",
+                          "response_type": "json",
+                          "path": "issue/#{_('data.workato_variable.2916f2b6.value')}/remotelink",
+                          "output": "[{\"name\":\"array\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Array\",\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\"},{\"control_type\":\"text\",\"label\":\"Self\",\"type\":\"string\",\"name\":\"self\"},{\"properties\":[],\"label\":\"Application\",\"type\":\"object\",\"name\":\"application\"},{\"properties\":[{\"control_type\":\"text\",\"label\":\"URL\",\"type\":\"string\",\"name\":\"url\"},{\"control_type\":\"text\",\"label\":\"Title\",\"type\":\"string\",\"name\":\"title\"},{\"properties\":[],\"label\":\"Icon\",\"type\":\"object\",\"name\":\"icon\"},{\"properties\":[{\"properties\":[],\"label\":\"Icon\",\"type\":\"object\",\"name\":\"icon\"}],\"label\":\"Status\",\"type\":\"object\",\"name\":\"status\"}],\"label\":\"Object\",\"type\":\"object\",\"name\":\"object\"}]}]"
+                        },
+                        "extended_output_schema": [
+                          {
+                            "type": "array",
+                            "name": "array",
+                            "label": "Array",
+                            "optional": true,
+                            "of": "object",
+                            "properties": [
+                              {
+                                "control_type": "number",
+                                "label": "ID",
+                                "parse_output": "float_conversion",
+                                "optional": true,
+                                "type": "number",
+                                "name": "id"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Self",
+                                "optional": true,
+                                "type": "string",
+                                "name": "self"
+                              },
+                              {
+                                "properties": [
+
+                                ],
+                                "label": "Application",
+                                "optional": true,
+                                "type": "object",
+                                "name": "application"
+                              },
+                              {
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "URL",
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "url"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Title",
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "title"
+                                  },
+                                  {
+                                    "properties": [
+
+                                    ],
+                                    "label": "Icon",
+                                    "optional": true,
+                                    "type": "object",
+                                    "name": "icon"
+                                  },
+                                  {
+                                    "properties": [
+                                      {
+                                        "properties": [
+
+                                        ],
+                                        "label": "Icon",
+                                        "optional": true,
+                                        "type": "object",
+                                        "name": "icon"
+                                      }
+                                    ],
+                                    "label": "Status",
+                                    "optional": true,
+                                    "type": "object",
+                                    "name": "status"
+                                  }
+                                ],
+                                "label": "Object",
+                                "optional": true,
+                                "type": "object",
+                                "name": "object"
+                              }
+                            ]
+                          }
+                        ],
+                        "extended_input_schema": [
+                          {
+                            "type": "string",
+                            "name": "path",
+                            "control_type": "text",
+                            "label": "Path",
+                            "hint": "Base URI is <b>https://issues.corp.rapid7.com/rest/api/2/</b> - path will be appended to this URI. Use absolute URI to override this base URI.",
+                            "optional": false
+                          },
+                          {
+                            "type": "string",
+                            "name": "response_type",
+                            "control_type": "select",
+                            "label": "Response type",
+                            "default": "json",
+                            "sticky": false,
+                            "pick_list": [
+                              [
+                                "JSON response",
+                                "json"
+                              ],
+                              [
+                                "Raw response",
+                                "raw"
+                              ]
+                            ],
+                            "optional": true,
+                            "extends_schema": true
+                          },
+                          {
+                            "type": "object",
+                            "name": "input",
+                            "control_type": "form-schema-builder",
+                            "label": "Request URL parameters",
+                            "sticky": true,
+                            "optional": true,
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Schema",
+                                "extends_schema": true,
+                                "sticky": true,
+                                "optional": true,
+                                "type": "string",
+                                "name": "schema"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "array",
+                            "name": "request_headers",
+                            "control_type": "key_value",
+                            "label": "Request headers",
+                            "optional": true,
+                            "of": "object",
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Name",
+                                "optional": true,
+                                "type": "string",
+                                "name": "name"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Value",
+                                "optional": true,
+                                "type": "string",
+                                "name": "value"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "name": "output",
+                            "control_type": "schema-designer",
+                            "label": "Response body",
+                            "sticky": true,
+                            "optional": true,
+                            "extends_schema": true,
+                            "schema_neutral": true
+                          },
+                          {
+                            "type": "string",
+                            "name": "response_headers",
+                            "control_type": "schema-designer",
+                            "label": "Response headers",
+                            "sticky": false,
+                            "optional": true,
+                            "extends_schema": true,
+                            "schema_neutral": true
+                          }
+                        ],
+                        "uuid": "586db132-12ed-4466-b647-5e5c8aa941e7",
+                        "skip": false
+                      },
+                      {
+                        "number": 18,
+                        "as": "1b65a144",
+                        "keyword": "catch",
+                        "dynamicPickListSelection": {
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                          "max_retry_count": "0",
+                          "retry_interval": "2"
+                        },
+                        "block": [
+                          {
+                            "number": 19,
+                            "provider": "workato_variable",
+                            "name": "update_variable",
+                            "as": "5bd171ce",
+                            "title": "  Update variable status",
+                            "description": "Update variable <span class=\"provider\">status</span>",
+                            "keyword": "action",
+                            "dynamicPickListSelection": {
+                              "name": "status (step 2)"
+                            },
+                            "toggleCfg": {
+                            },
+                            "input": {
+                              "name": "52f40f55-757d-4a20-aa75-c74d568604ad:6602e8ab",
+                              "value": "error"
+                            },
+                            "extended_input_schema": [
+                              {
+                                "type": "string",
+                                "name": "value",
+                                "control_type": "text",
+                                "label": "Value",
+                                "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To reset the value, set the value to <b>nil</b> in formula mode.",
+                                "sticky": true,
+                                "optional": true,
+                                "strip_interpolation": true
+                              }
+                            ],
+                            "uuid": "8113408d-10a0-4265-a6a3-754eb4c6194a",
+                            "skip": false
+                          },
+                          {
+                            "number": 20,
+                            "provider": "logger",
+                            "name": "log_message",
+                            "as": "57a41548",
+                            "title": null,
+                            "description": null,
+                            "keyword": "action",
+                            "dynamicPickListSelection": {
+                            },
+                            "toggleCfg": {
+                            },
+                            "input": {
+                              "message": "#{_('data.catch.1b65a144.message')}"
+                            },
+                            "uuid": "4e4805d1-c270-4fd7-ba50-0f4893a77a15",
+                            "skip": false
+                          },
+                          {
+                            "number": 21,
+                            "keyword": "stop",
+                            "dynamicPickListSelection": {
+                            },
+                            "toggleCfg": {
+                            },
+                            "input": {
+                              "stop_with_error": "false"
+                            },
+                            "uuid": "eb846e32-5610-45c4-a7b7-7c30c4e3d04c",
+                            "skip": false
+                          }
+                        ],
+                        "uuid": "bb8f41d0-e599-4d75-98c7-86f9666d0e36",
+                        "skip": false
+                      }
+                    ],
+                    "uuid": "df0c834f-82ad-485e-af7e-54e0095fa8f4",
+                    "skip": false
+                  },
+                  {
+                    "number": 22,
+                    "provider": "workato_variable",
+                    "name": "declare_variable",
+                    "as": "b51a927a",
+                    "title": "  Create variable isEscalationLinkPresent",
+                    "description": "Create variable <span class=\"provider\">isEscalationLinkPresent</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                      "value": true
+                    },
+                    "input": {
+                      "type": "boolean",
+                      "name": "isEscalationLinkPresent",
+                      "value": "false"
+                    },
+                    "extended_output_schema": [
+                      {
+                        "type": "boolean",
+                        "name": "value",
+                        "control_type": "checkbox",
+                        "label": "isEscalationLinkPresent",
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "isEscalationLinkPresent",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "type": "boolean",
+                          "name": "value"
+                        },
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        }
+                      }
+                    ],
+                    "extended_input_schema": [
+                      {
+                        "type": "boolean",
+                        "name": "value",
+                        "control_type": "checkbox",
+                        "label": "Default value",
+                        "hint": "Default value for the variable",
+                        "sticky": true,
+                        "optional": true,
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Default value",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "hint": "Default value for the variable",
+                          "strip_interpolation": true,
+                          "sticky": true,
+                          "optional": true,
+                          "type": "boolean",
+                          "name": "value"
+                        },
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "strip_interpolation": true
+                      }
+                    ],
+                    "uuid": "1b53b966-e825-4166-a0ff-6e130b828362",
+                    "skip": false
+                  },
+                  {
+                    "number": 23,
+                    "as": "48c93b99",
+                    "keyword": "foreach",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "repeat_mode": "simple",
+                    "clear_scope": "false",
+                    "input": {
+                    },
+                    "block": [
+                      {
+                        "number": 24,
+                        "keyword": "if",
+                        "dynamicPickListSelection": {
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                          "type": "compound",
+                          "operand": "and",
+                          "conditions": [
+                            {
+                              "operand": "equals_to",
+                              "lhs": "#{_('data.foreach.48c93b99.object.title')}",
+                              "rhs": "#{_('data.salesforce.7c7bf92a.Name')}"
+                            }
+                          ]
+                        },
+                        "block": [
+                          {
+                            "number": 25,
+                            "provider": "workato_variable",
+                            "name": "update_variable",
+                            "as": "34904f4e",
+                            "title": "  Update variable isEscalationLinkPresent",
+                            "description": "Update variable <span class=\"provider\">isEscalationLinkPresent</span>",
+                            "keyword": "action",
+                            "dynamicPickListSelection": {
+                              "name": "isEscalationLinkPresent (step 21)"
+                            },
+                            "toggleCfg": {
+                              "value": true
+                            },
+                            "input": {
+                              "name": "1b53b966-e825-4166-a0ff-6e130b828362:b51a927a",
+                              "value": "true"
+                            },
+                            "extended_input_schema": [
+                              {
+                                "type": "boolean",
+                                "name": "value",
+                                "control_type": "checkbox",
+                                "label": "Value",
+                                "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To reset the value, set the value to <b>nil</b> in formula mode.",
+                                "sticky": true,
+                                "optional": true,
+                                "toggle_hint": "Select from option list",
+                                "toggle_field": {
+                                  "label": "Value",
+                                  "control_type": "text",
+                                  "toggle_hint": "Use custom value",
+                                  "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To reset the value, set the value to <b>nil</b> in formula mode.",
+                                  "strip_interpolation": true,
+                                  "sticky": true,
+                                  "optional": true,
+                                  "type": "boolean",
+                                  "name": "value"
+                                },
+                                "render_input": {
+                                },
+                                "parse_output": {
+                                },
+                                "strip_interpolation": true
+                              }
+                            ],
+                            "uuid": "4126b42c-463a-44ee-824f-4a40816e0acf",
+                            "skip": false
+                          }
+                        ],
+                        "uuid": "eed7344c-4412-4b85-8c46-dc1f768d3fc4",
+                        "skip": false
+                      }
+                    ],
+                    "source": "#{_('data.jira.259e4bc6.array')}",
+                    "uuid": "5e4121e3-03aa-410c-8b75-34524d780e67",
+                    "skip": false
+                  },
+                  {
+                    "number": 26,
+                    "keyword": "if",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "type": "compound",
+                      "operand": "and",
+                      "conditions": [
+                        {
+                          "operand": "is_not_true",
+                          "lhs": "#{_('data.workato_variable.b51a927a.value')}",
+                          "rhs": null
+                        }
+                      ]
+                    },
+                    "block": [
+                      {
+                        "number": 27,
+                        "keyword": "try",
+                        "dynamicPickListSelection": {
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                        },
+                        "block": [
+                          {
+                            "number": 28,
+                            "provider": "jira",
+                            "name": "__adhoc_http_action",
+                            "as": "cf07c621",
+                            "title": "Create Remote Link",
+                            "description": "Create <span class=\"provider\">Remote Link</span> in <span class=\"provider\">Jira</span> (Custom)",
+                            "keyword": "action",
+                            "dynamicPickListSelection": {
+                            },
+                            "toggleCfg": {
+                            },
+                            "input": {
+                              "mnemonic": "Create Remote Link",
+                              "verb": "post",
+                              "request_type": "json",
+                              "response_type": "json",
+                              "path": "issue/#{_('data.workato_variable.2916f2b6.value')}/remotelink",
+                              "input": {
+                                "schema": "[{\"properties\":[{\"control_type\":\"text\",\"label\":\"URL\",\"type\":\"string\",\"name\":\"url\",\"details\":{\"real_name\":\"url\"}},{\"control_type\":\"text\",\"label\":\"Title\",\"type\":\"string\",\"name\":\"title\",\"details\":{\"real_name\":\"title\"}}],\"label\":\"Object\",\"type\":\"object\",\"name\":\"object\",\"details\":{\"real_name\":\"object\"}}]",
+                                "data": {
+                                  "object": {
+                                    "url": "https://r7--test.lightning.force.com/lightning/r/Customer_Escalation__c/#{_('data.salesforce.7c7bf92a.Id')}/view",
+                                    "title": "#{_('data.salesforce.7c7bf92a.Name')}"
+                                  }
+                                }
+                              },
+                              "output": "[{\"control_type\":\"text\",\"label\":\"Self\",\"type\":\"string\",\"name\":\"self\"},{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\"}]"
+                            },
+                            "extended_output_schema": [
+                              {
+                                "type": "string",
+                                "name": "self",
+                                "control_type": "text",
+                                "label": "Self",
+                                "optional": true
+                              },
+                              {
+                                "type": "number",
+                                "name": "id",
+                                "control_type": "number",
+                                "label": "ID",
+                                "optional": true,
+                                "parse_output": "float_conversion"
+                              }
+                            ],
+                            "extended_input_schema": [
+                              {
+                                "type": "string",
+                                "name": "path",
+                                "control_type": "text",
+                                "label": "Path",
+                                "hint": "Base URI is <b>https://issues.corp.rapid7.com/rest/api/2/</b> - path will be appended to this URI. Use absolute URI to override this base URI.",
+                                "optional": false
+                              },
+                              {
+                                "type": "string",
+                                "name": "request_type",
+                                "control_type": "select",
+                                "label": "Request type",
+                                "default": "json",
+                                "sticky": false,
+                                "pick_list": [
+                                  [
+                                    "JSON request body",
+                                    "json"
+                                  ],
+                                  [
+                                    "URL encoded form",
+                                    "urlencoded"
+                                  ],
+                                  [
+                                    "Multipart form",
+                                    "multipart"
+                                  ],
+                                  [
+                                    "Raw request body",
+                                    "raw"
+                                  ]
+                                ],
+                                "optional": true,
+                                "extends_schema": true
+                              },
+                              {
+                                "type": "string",
+                                "name": "response_type",
+                                "control_type": "select",
+                                "label": "Response type",
+                                "default": "json",
+                                "sticky": false,
+                                "pick_list": [
+                                  [
+                                    "JSON response",
+                                    "json"
+                                  ],
+                                  [
+                                    "Raw response",
+                                    "raw"
+                                  ]
+                                ],
+                                "optional": true,
+                                "extends_schema": true
+                              },
+                              {
+                                "type": "object",
+                                "name": "input",
+                                "label": "Input",
+                                "optional": true,
+                                "properties": [
+                                  {
+                                    "control_type": "schema-designer",
+                                    "label": "Request body parameters",
+                                    "extends_schema": true,
+                                    "schema_neutral": true,
+                                    "sample_data_type": "json_input",
+                                    "sticky": true,
+                                    "add_field_label": "Add request body parameter",
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "schema"
+                                  },
+                                  {
+                                    "properties": [
+                                      {
+                                        "properties": [
+                                          {
+                                            "control_type": "text",
+                                            "label": "URL",
+                                            "details": {
+                                              "real_name": "url"
+                                            },
+                                            "optional": true,
+                                            "type": "string",
+                                            "name": "url"
+                                          },
+                                          {
+                                            "control_type": "text",
+                                            "label": "Title",
+                                            "details": {
+                                              "real_name": "title"
+                                            },
+                                            "optional": true,
+                                            "type": "string",
+                                            "name": "title"
+                                          }
+                                        ],
+                                        "label": "Object",
+                                        "details": {
+                                          "real_name": "object"
+                                        },
+                                        "sticky": true,
+                                        "optional": true,
+                                        "type": "object",
+                                        "name": "object"
+                                      }
+                                    ],
+                                    "label": "Data",
+                                    "optional": true,
+                                    "type": "object",
+                                    "name": "data"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "array",
+                                "name": "request_headers",
+                                "control_type": "key_value",
+                                "label": "Request headers",
+                                "optional": true,
+                                "of": "object",
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "Name",
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "name"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Value",
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "value"
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "string",
+                                "name": "output",
+                                "control_type": "schema-designer",
+                                "label": "Response body",
+                                "sticky": true,
+                                "optional": true,
+                                "extends_schema": true,
+                                "schema_neutral": true
+                              },
+                              {
+                                "type": "string",
+                                "name": "response_headers",
+                                "control_type": "schema-designer",
+                                "label": "Response headers",
+                                "sticky": false,
+                                "optional": true,
+                                "extends_schema": true,
+                                "schema_neutral": true
+                              }
+                            ],
+                            "visible_config_fields": [
+                              "mnemonic",
+                              "verb",
+                              "path",
+                              "request_type",
+                              "response_type",
+                              "input",
+                              "input.schema",
+                              "input.data.object",
+                              "output",
+                              "input.data.object.url",
+                              "input.data.object.title"
+                            ],
+                            "uuid": "0e311d58-6595-4854-af47-c3b1bd1bc783",
+                            "skip": false
+                          },
+                          {
+                            "number": 29,
+                            "provider": "workato_variable",
+                            "name": "update_variable",
+                            "as": "83f44aa8",
+                            "title": "  Update variable status",
+                            "description": "Update variable <span class=\"provider\">status</span>",
+                            "keyword": "action",
+                            "dynamicPickListSelection": {
+                              "name": "status (step 2)"
+                            },
+                            "toggleCfg": {
+                            },
+                            "input": {
+                              "name": "52f40f55-757d-4a20-aa75-c74d568604ad:6602e8ab",
+                              "value": "successful"
+                            },
+                            "extended_input_schema": [
+                              {
+                                "type": "string",
+                                "name": "value",
+                                "control_type": "text",
+                                "label": "Value",
+                                "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To reset the value, set the value to <b>nil</b> in formula mode.",
+                                "sticky": true,
+                                "optional": true,
+                                "strip_interpolation": true
+                              }
+                            ],
+                            "uuid": "eeecfdd6-db04-4fbf-b49d-08c1c8381829",
+                            "skip": false
+                          },
+                          {
+                            "number": 30,
+                            "as": "11c82626",
+                            "keyword": "catch",
+                            "dynamicPickListSelection": {
+                            },
+                            "toggleCfg": {
+                            },
+                            "input": {
+                              "max_retry_count": "0",
+                              "retry_interval": "2"
+                            },
+                            "block": [
+                              {
+                                "number": 31,
+                                "provider": "workato_variable",
+                                "name": "update_variable",
+                                "as": "5ab27393",
+                                "title": "  Update variable status",
+                                "description": "Update variable <span class=\"provider\">status</span>",
+                                "keyword": "action",
+                                "dynamicPickListSelection": {
+                                  "name": "status (step 2)"
+                                },
+                                "toggleCfg": {
+                                },
+                                "input": {
+                                  "name": "52f40f55-757d-4a20-aa75-c74d568604ad:6602e8ab",
+                                  "value": "error"
+                                },
+                                "extended_input_schema": [
+                                  {
+                                    "type": "string",
+                                    "name": "value",
+                                    "control_type": "text",
+                                    "label": "Value",
+                                    "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To reset the value, set the value to <b>nil</b> in formula mode.",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "strip_interpolation": true
+                                  }
+                                ],
+                                "uuid": "4f75007b-5a8f-40ee-8cda-fd20dee8a69a",
+                                "skip": false
+                              },
+                              {
+                                "number": 32,
+                                "provider": "logger",
+                                "name": "log_message",
+                                "as": "9c7e1288",
+                                "title": null,
+                                "description": null,
+                                "keyword": "action",
+                                "dynamicPickListSelection": {
+                                },
+                                "toggleCfg": {
+                                },
+                                "input": {
+                                  "message": "#{_('data.catch.11c82626.message')}"
+                                },
+                                "uuid": "0eaa8e78-e6c7-4830-82ea-a5de0f97489f",
+                                "skip": false
+                              },
+                              {
+                                "number": 33,
+                                "keyword": "stop",
+                                "dynamicPickListSelection": {
+                                },
+                                "toggleCfg": {
+                                },
+                                "input": {
+                                  "stop_with_error": "false"
+                                },
+                                "uuid": "3fbce1d2-8c21-424d-b9f0-ec7da6e1bb55",
+                                "skip": false
+                              }
+                            ],
+                            "uuid": "91e720cd-301d-4711-97db-60d527208a2a",
+                            "skip": false
+                          }
+                        ],
+                        "uuid": "a8e3a430-a473-4d2a-bff2-c19e6992882b",
+                        "skip": false
+                      },
+                      {
+                        "number": 34,
+                        "keyword": "else",
+                        "dynamicPickListSelection": {
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                        },
+                        "block": [
+                          {
+                            "number": 35,
+                            "provider": "workato_variable",
+                            "name": "update_variable",
+                            "as": "37aee60d",
+                            "title": "  Update variable status",
+                            "description": "Update variable <span class=\"provider\">status</span>",
+                            "keyword": "action",
+                            "dynamicPickListSelection": {
+                              "name": "status (step 2)"
+                            },
+                            "toggleCfg": {
+                            },
+                            "input": {
+                              "name": "52f40f55-757d-4a20-aa75-c74d568604ad:6602e8ab",
+                              "value": "Escalation already Linked"
+                            },
+                            "extended_input_schema": [
+                              {
+                                "type": "string",
+                                "name": "value",
+                                "control_type": "text",
+                                "label": "Value",
+                                "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To reset the value, set the value to <b>nil</b> in formula mode.",
+                                "sticky": true,
+                                "optional": true,
+                                "strip_interpolation": true
+                              }
+                            ],
+                            "uuid": "d885ba8a-7623-4e57-a239-70160af9ce17",
+                            "skip": false
+                          }
+                        ],
+                        "uuid": "1a3994c1-df63-4be0-951d-9a9c71ccb514",
+                        "skip": false
+                      }
+                    ],
+                    "uuid": "ecc7db28-db23-4673-9e6e-a7caab84f179",
+                    "skip": false
+                  }
+                ],
+                "comment": "",
+                "uuid": "51095395-b774-48fa-84f4-5e5ddf5f99e9",
+                "skip": false
+              }
+            ],
+            "source": "#{_('data.workato_list.8a5f6c88.list_items')}",
+            "uuid": "e0001137-3e39-4299-aa1d-9fba4fa0bf3e",
+            "skip": false
+          }
+        ],
+        "uuid": "6e38c427-429c-4664-af2f-b356e9661900"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "status"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_variable.6602e8ab.value')}"
+    },
+    "uuid": "37dfc50f-250f-472f-95ef-6a9e36ecfbd6"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "salesforce",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/salesforce.connection.json",
+        "name": "Salesforce",
+        "folder": "connections"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "account_id": null,
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "jira",
+      "account_id": {
+        "zip_name": "resources/jira.connection.json",
+        "name": "Jira",
+        "folder": "resources"
+      },
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "logger",
+      "account_id": null,
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_list",
+      "account_id": null,
+      "skip_validation": false
+    }
+  ]
+}

@@ -1,0 +1,1183 @@
+{
+  "name": "Outbound Event",
+  "schema": [
+    {
+      "control_type": "text",
+      "label": "Salesforce ID",
+      "type": "string",
+      "name": "salesforceId"
+    },
+    {
+      "control_type": "integer",
+      "label": "Netsuite ID",
+      "parse_output": "integer_conversion",
+      "type": "integer",
+      "name": "netsuiteId",
+      "optional": false
+    },
+    {
+      "control_type": "text",
+      "label": "Use of subcontractors",
+      "render_input": {
+      },
+      "parse_output": {
+      },
+      "toggle_hint": "Select from option list",
+      "toggle_field": {
+        "label": "Use of subcontractors",
+        "control_type": "text",
+        "toggle_hint": "Use custom value",
+        "type": "boolean",
+        "name": "useOfSubcontractors"
+      },
+      "type": "boolean",
+      "name": "useOfSubcontractors"
+    },
+    {
+      "control_type": "text",
+      "label": "Upsold license key",
+      "type": "string",
+      "name": "upsoldLicenseKey"
+    },
+    {
+      "control_type": "text",
+      "label": "Training contact roles",
+      "type": "string",
+      "name": "trainingContactRoles"
+    },
+    {
+      "control_type": "text",
+      "label": "TOS",
+      "render_input": {
+      },
+      "parse_output": {
+      },
+      "toggle_hint": "Select from option list",
+      "toggle_field": {
+        "label": "TOS",
+        "control_type": "text",
+        "toggle_hint": "Use custom value",
+        "type": "boolean",
+        "name": "TOS"
+      },
+      "type": "boolean",
+      "name": "TOS"
+    },
+    {
+      "control_type": "text",
+      "label": "Third party scanning",
+      "render_input": {
+      },
+      "parse_output": {
+      },
+      "toggle_hint": "Select from option list",
+      "toggle_field": {
+        "label": "Third party scanning",
+        "control_type": "text",
+        "toggle_hint": "Use custom value",
+        "type": "boolean",
+        "name": "thirdPartyScanning"
+      },
+      "type": "boolean",
+      "name": "thirdPartyScanning"
+    },
+    {
+      "control_type": "text",
+      "label": "Terms",
+      "type": "string",
+      "name": "terms"
+    },
+    {
+      "control_type": "number",
+      "label": "Subscription term",
+      "parse_output": "float_conversion",
+      "type": "number",
+      "name": "SubscriptionTerm"
+    },
+    {
+      "control_type": "text",
+      "label": "Start date",
+      "type": "string",
+      "name": "startDate"
+    },
+    {
+      "control_type": "text",
+      "label": "Ship to entity use code",
+      "type": "string",
+      "name": "shipToEntityUseCode"
+    },
+    {
+      "properties": [
+        {
+          "control_type": "text",
+          "label": "Shipping tax code",
+          "type": "string",
+          "name": "shippingTaxCode"
+        },
+        {
+          "control_type": "text",
+          "label": "Shipping method",
+          "type": "string",
+          "name": "shippingMethod"
+        },
+        {
+          "control_type": "text",
+          "label": "Shipping cost",
+          "type": "string",
+          "name": "shippingCost"
+        },
+        {
+          "control_type": "text",
+          "label": "Shipping code",
+          "type": "string",
+          "name": "shippingCode"
+        },
+        {
+          "control_type": "text",
+          "label": "Ship date",
+          "type": "string",
+          "name": "shipDate"
+        }
+      ],
+      "label": "Shipping header",
+      "type": "object",
+      "name": "shippingHeader"
+    },
+    {
+      "properties": [
+        {
+          "control_type": "text",
+          "label": "Shipping attn",
+          "type": "string",
+          "name": "shippingAttn"
+        },
+        {
+          "control_type": "text",
+          "label": "Shipping address zip code",
+          "type": "string",
+          "name": "shippingAddressZipCode"
+        },
+        {
+          "control_type": "text",
+          "label": "Shipping address state",
+          "type": "string",
+          "name": "shippingAddressState"
+        },
+        {
+          "control_type": "text",
+          "label": "Shipping address residential",
+          "render_input": {
+          },
+          "parse_output": {
+          },
+          "toggle_hint": "Select from option list",
+          "toggle_field": {
+            "label": "Shipping address residential",
+            "control_type": "text",
+            "toggle_hint": "Use custom value",
+            "type": "boolean",
+            "name": "shippingAddressResidential"
+          },
+          "type": "boolean",
+          "name": "shippingAddressResidential"
+        },
+        {
+          "control_type": "text",
+          "label": "Shipping addressee",
+          "type": "string",
+          "name": "shippingAddressee"
+        },
+        {
+          "control_type": "text",
+          "label": "Shipping address country",
+          "type": "string",
+          "name": "shippingAddressCountry"
+        },
+        {
+          "control_type": "text",
+          "label": "Shipping address city",
+          "type": "string",
+          "name": "shippingAddressCity"
+        },
+        {
+          "control_type": "text",
+          "label": "Shipping address 2",
+          "type": "string",
+          "name": "shippingAddress2"
+        },
+        {
+          "control_type": "text",
+          "label": "Shipping address 1",
+          "type": "string",
+          "name": "shippingAddress1"
+        }
+      ],
+      "label": "Shipping address information",
+      "type": "object",
+      "name": "shippingAddressInformation"
+    },
+    {
+      "properties": [
+        {
+          "control_type": "text",
+          "label": "Salesforce ID",
+          "type": "string",
+          "name": "salesforceId"
+        },
+        {
+          "control_type": "integer",
+          "label": "Netsuite ID",
+          "parse_output": "integer_conversion",
+          "type": "integer",
+          "name": "netsuiteId"
+        },
+        {
+          "control_type": "text",
+          "label": "Last name",
+          "type": "string",
+          "name": "lastName"
+        },
+        {
+          "control_type": "text",
+          "label": "First name",
+          "type": "string",
+          "name": "firstName"
+        },
+        {
+          "control_type": "text",
+          "label": "Employee ID",
+          "type": "string",
+          "name": "employeeId"
+        }
+      ],
+      "label": "Sales rep manager",
+      "type": "object",
+      "name": "salesRepManager"
+    },
+    {
+      "properties": [
+        {
+          "control_type": "text",
+          "label": "Salesforce ID",
+          "type": "string",
+          "name": "salesforceId"
+        },
+        {
+          "control_type": "integer",
+          "label": "Netsuite ID",
+          "parse_output": "integer_conversion",
+          "type": "integer",
+          "name": "netsuiteId"
+        },
+        {
+          "control_type": "text",
+          "label": "Last name",
+          "type": "string",
+          "name": "lastName"
+        },
+        {
+          "control_type": "text",
+          "label": "First name",
+          "type": "string",
+          "name": "firstName"
+        },
+        {
+          "control_type": "text",
+          "label": "Employee ID",
+          "type": "string",
+          "name": "employeeId"
+        }
+      ],
+      "label": "Sales rep",
+      "type": "object",
+      "name": "salesRep"
+    },
+    {
+      "control_type": "text",
+      "label": "Sales order currency",
+      "type": "string",
+      "name": "salesOrderCurrency"
+    },
+    {
+      "control_type": "text",
+      "label": "Sales effective date",
+      "type": "string",
+      "name": "salesEffectiveDate"
+    },
+    {
+      "properties": [
+        {
+          "control_type": "text",
+          "label": "Salesforce ID",
+          "type": "string",
+          "name": "salesforceId"
+        },
+        {
+          "control_type": "integer",
+          "label": "Netsuite ID",
+          "parse_output": "integer_conversion",
+          "type": "integer",
+          "name": "netsuiteId"
+        },
+        {
+          "control_type": "text",
+          "label": "Last name",
+          "type": "string",
+          "name": "lastName"
+        },
+        {
+          "control_type": "text",
+          "label": "First name",
+          "type": "string",
+          "name": "firstName"
+        },
+        {
+          "control_type": "text",
+          "label": "Employee ID",
+          "type": "string",
+          "name": "employeeId"
+        }
+      ],
+      "label": "Renewal Upsell salesRep Manager",
+      "type": "object",
+      "name": "RenewalUpsellsalesRepManager"
+    },
+    {
+      "properties": [
+        {
+          "control_type": "text",
+          "label": "Salesforce ID",
+          "type": "string",
+          "name": "salesforceId"
+        },
+        {
+          "control_type": "integer",
+          "label": "Netsuite ID",
+          "parse_output": "integer_conversion",
+          "type": "integer",
+          "name": "netsuiteId"
+        },
+        {
+          "control_type": "text",
+          "label": "Last name",
+          "type": "string",
+          "name": "lastName"
+        },
+        {
+          "control_type": "text",
+          "label": "First name",
+          "type": "string",
+          "name": "firstName"
+        },
+        {
+          "control_type": "text",
+          "label": "Employee ID",
+          "type": "string",
+          "name": "employeeId"
+        }
+      ],
+      "label": "Renewal Upsell salesRep",
+      "type": "object",
+      "name": "RenewalUpsellsalesRep"
+    },
+    {
+      "control_type": "text",
+      "label": "Quote number",
+      "type": "string",
+      "name": "quoteNumber"
+    },
+    {
+      "control_type": "text",
+      "label": "Purchase order number",
+      "type": "string",
+      "name": "purchaseOrderNumber"
+    },
+    {
+      "control_type": "text",
+      "label": "Pre approved expenses",
+      "render_input": {
+      },
+      "parse_output": {
+      },
+      "toggle_hint": "Select from option list",
+      "toggle_field": {
+        "label": "Pre approved expenses",
+        "control_type": "text",
+        "toggle_hint": "Use custom value",
+        "type": "boolean",
+        "name": "preApprovedExpenses"
+      },
+      "type": "boolean",
+      "name": "preApprovedExpenses"
+    },
+    {
+      "control_type": "text",
+      "label": "Partner role",
+      "type": "string",
+      "name": "partnerRole"
+    },
+    {
+      "control_type": "text",
+      "label": "Partner deal type",
+      "type": "string",
+      "name": "partnerDealType"
+    },
+    {
+      "properties": [
+        {
+          "control_type": "text",
+          "label": "Salesforce ID",
+          "type": "string",
+          "name": "salesforceId"
+        },
+        {
+          "control_type": "integer",
+          "label": "Netsuite ID",
+          "parse_output": "integer_conversion",
+          "type": "integer",
+          "name": "netsuiteId"
+        },
+        {
+          "control_type": "text",
+          "label": "Record type",
+          "type": "string",
+          "name": "recordType"
+        },
+        {
+          "control_type": "text",
+          "label": "Name",
+          "type": "string",
+          "name": "name"
+        }
+      ],
+      "label": "Partner",
+      "type": "object",
+      "name": "partner"
+    },
+    {
+      "control_type": "text",
+      "label": "Other legal agreement",
+      "render_input": {
+      },
+      "parse_output": {
+      },
+      "toggle_hint": "Select from option list",
+      "toggle_field": {
+        "label": "Other legal agreement",
+        "control_type": "text",
+        "toggle_hint": "Use custom value",
+        "type": "boolean",
+        "name": "OtherLegalAgreement"
+      },
+      "type": "boolean",
+      "name": "OtherLegalAgreement"
+    },
+    {
+      "control_type": "text",
+      "label": "Other agreement",
+      "type": "string",
+      "name": "OtherAgreement"
+    },
+    {
+      "control_type": "text",
+      "label": "Order document type",
+      "type": "string",
+      "name": "OrderDocumentType"
+    },
+    {
+      "control_type": "text",
+      "label": "Opportunity number",
+      "type": "string",
+      "name": "opportunityNumber"
+    },
+    {
+      "control_type": "text",
+      "label": "OM reviewer employee ID",
+      "type": "string",
+      "name": "OMReviewer_employeeID"
+    },
+    {
+      "control_type": "text",
+      "label": "OM reviewer",
+      "type": "string",
+      "name": "OMReviewer"
+    },
+    {
+      "control_type": "text",
+      "label": "Oem transaction",
+      "render_input": {
+      },
+      "parse_output": {
+      },
+      "toggle_hint": "Select from option list",
+      "toggle_field": {
+        "label": "Oem transaction",
+        "control_type": "text",
+        "toggle_hint": "Use custom value",
+        "type": "boolean",
+        "name": "oemTransaction"
+      },
+      "type": "boolean",
+      "name": "oemTransaction"
+    },
+    {
+      "control_type": "text",
+      "label": "MSA",
+      "render_input": {
+      },
+      "parse_output": {
+      },
+      "toggle_hint": "Select from option list",
+      "toggle_field": {
+        "label": "MSA",
+        "control_type": "text",
+        "toggle_hint": "Use custom value",
+        "type": "boolean",
+        "name": "MSA"
+      },
+      "type": "boolean",
+      "name": "MSA"
+    },
+    {
+      "control_type": "text",
+      "label": "Memo",
+      "type": "string",
+      "name": "memo"
+    },
+    {
+      "name": "lineItems",
+      "type": "array",
+      "of": "object",
+      "label": "Line items",
+      "properties": [
+        {
+          "control_type": "text",
+          "label": "Transaction type",
+          "type": "string",
+          "name": "transactionType"
+        },
+        {
+          "control_type": "number",
+          "label": "Total ownership count",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "totalOwnershipCount",
+          "optional": false
+        },
+        {
+          "control_type": "integer",
+          "label": "Subscription term in days",
+          "parse_output": "integer_conversion",
+          "type": "integer",
+          "name": "SubscriptionTermInDays",
+          "optional": false
+        },
+        {
+          "control_type": "number",
+          "label": "Subscription term",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "SubscriptionTerm"
+        },
+        {
+          "control_type": "text",
+          "label": "Selling Motion",
+          "type": "string",
+          "name": "sellingMotion"
+        },
+        {
+          "control_type": "number",
+          "label": "Renewal upsell regular total",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "RenewalUpsellRegularTotal",
+          "optional": false
+        },
+        {
+          "control_type": "number",
+          "label": "Renewal upsell quantity",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "RenewalUpsellQuantity",
+          "optional": false
+        },
+        {
+          "control_type": "checkbox",
+          "label": "Renewal upsell",
+          "render_input": {
+          },
+          "parse_output": {
+          },
+          "toggle_hint": "Select from option list",
+          "toggle_field": {
+            "label": "Renewal upsell",
+            "control_type": "text",
+            "toggle_hint": "Use custom value",
+            "type": "boolean",
+            "name": "RenewalUpsell",
+            "optional": false
+          },
+          "type": "boolean",
+          "name": "RenewalUpsell",
+          "optional": false
+        },
+        {
+          "control_type": "number",
+          "label": "Rate",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "rate"
+        },
+        {
+          "control_type": "number",
+          "label": "Quantity",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "quantity"
+        },
+        {
+          "control_type": "number",
+          "label": "Promotion term",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "promotionTerm",
+          "optional": false
+        },
+        {
+          "control_type": "text",
+          "label": "Product token",
+          "type": "string",
+          "name": "productToken"
+        },
+        {
+          "control_type": "text",
+          "label": "Product key",
+          "type": "string",
+          "name": "productKey"
+        },
+        {
+          "control_type": "text",
+          "label": "Price level",
+          "type": "string",
+          "name": "priceLevel"
+        },
+        {
+          "control_type": "number",
+          "label": "Partner margin discount",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "partnerMarginDiscount",
+          "optional": false
+        },
+        {
+          "control_type": "text",
+          "label": "Package ID",
+          "type": "string",
+          "name": "packageId"
+        },
+        {
+          "control_type": "text",
+          "label": "Package code",
+          "type": "string",
+          "name": "packageCode"
+        },
+        {
+          "control_type": "number",
+          "label": "Original renewal quantity",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "OriginalRenewalQuantity",
+          "optional": false
+        },
+        {
+          "control_type": "number",
+          "label": "Original renewal qnty regular total",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "OriginalRenewalQntyRegularTotal",
+          "optional": false
+        },
+        {
+          "control_type": "number",
+          "label": "Monthly data limit GB",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "monthlyDataLimitGB",
+          "optional": false
+        },
+        {
+          "control_type": "text",
+          "label": "Line start date",
+          "type": "string",
+          "name": "lineStartDate"
+        },
+        {
+          "control_type": "integer",
+          "label": "Line sequence number",
+          "parse_output": "integer_conversion",
+          "type": "integer",
+          "name": "lineSequenceNumber",
+          "optional": false
+        },
+        {
+          "control_type": "integer",
+          "label": "Line sequence ID",
+          "parse_output": "integer_conversion",
+          "type": "integer",
+          "name": "lineSequenceId",
+          "optional": false
+        },
+        {
+          "control_type": "text",
+          "label": "Line end date",
+          "type": "string",
+          "name": "lineEndDate"
+        },
+        {
+          "properties": [
+            {
+              "control_type": "text",
+              "label": "Salesforce ID",
+              "type": "string",
+              "name": "salesforceId"
+            },
+            {
+              "control_type": "integer",
+              "label": "Netsuite ID",
+              "parse_output": "integer_conversion",
+              "type": "integer",
+              "name": "netsuiteId"
+            },
+            {
+              "control_type": "text",
+              "label": "Last name",
+              "type": "string",
+              "name": "lastName"
+            },
+            {
+              "control_type": "text",
+              "label": "First name",
+              "type": "string",
+              "name": "firstName"
+            },
+            {
+              "control_type": "text",
+              "label": "Email",
+              "type": "string",
+              "name": "email"
+            }
+          ],
+          "label": "Line contact",
+          "type": "object",
+          "name": "lineContact"
+        },
+        {
+          "control_type": "text",
+          "label": "Item",
+          "type": "string",
+          "name": "item"
+        },
+        {
+          "control_type": "text",
+          "label": "Fulfillment source",
+          "type": "string",
+          "name": "fulfillmentSource"
+        },
+        {
+          "control_type": "text",
+          "label": "Description",
+          "type": "string",
+          "name": "description"
+        },
+        {
+          "control_type": "text",
+          "label": "Data retention length",
+          "type": "string",
+          "name": "dataRetentionLength"
+        },
+        {
+          "control_type": "text",
+          "label": "Data center location",
+          "type": "string",
+          "name": "dataCenterLocation"
+        },
+        {
+          "control_type": "number",
+          "label": "Credit amount",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "creditAmount",
+          "optional": false
+        },
+        {
+          "control_type": "number",
+          "label": "Amount",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "amount"
+        },
+        {
+          "control_type": "number",
+          "label": "Additional discount",
+          "parse_output": "float_conversion",
+          "type": "number",
+          "name": "additionalDiscount"
+        }
+      ]
+    },
+    {
+      "control_type": "text",
+      "label": "License contact roles",
+      "type": "string",
+      "name": "licenseContactRoles"
+    },
+    {
+      "control_type": "text",
+      "label": "Invoicing contact roles",
+      "type": "string",
+      "name": "invoicingContactRoles"
+    },
+    {
+      "control_type": "text",
+      "label": "Internal reporting date",
+      "type": "string",
+      "name": "internalReportingDate"
+    },
+    {
+      "control_type": "text",
+      "label": "Internal notes",
+      "type": "string",
+      "name": "internalNotes"
+    },
+    {
+      "control_type": "text",
+      "label": "Idr rep",
+      "type": "string",
+      "name": "idrRep"
+    },
+    {
+      "control_type": "text",
+      "label": "Hardware contact roles",
+      "type": "string",
+      "name": "hardwareContactRoles"
+    },
+    {
+      "control_type": "text",
+      "label": "EULA",
+      "render_input": {
+      },
+      "parse_output": {
+      },
+      "toggle_hint": "Select from option list",
+      "toggle_field": {
+        "label": "EULA",
+        "control_type": "text",
+        "toggle_hint": "Use custom value",
+        "type": "boolean",
+        "name": "EULA"
+      },
+      "type": "boolean",
+      "name": "EULA"
+    },
+    {
+      "control_type": "text",
+      "label": "End date",
+      "type": "string",
+      "name": "endDate"
+    },
+    {
+      "properties": [
+        {
+          "control_type": "text",
+          "label": "Salesforce ID",
+          "type": "string",
+          "name": "salesforceId"
+        },
+        {
+          "control_type": "integer",
+          "label": "Netsuite ID",
+          "parse_output": "integer_conversion",
+          "type": "integer",
+          "name": "netsuiteId"
+        },
+        {
+          "control_type": "text",
+          "label": "Record type",
+          "type": "string",
+          "name": "recordType"
+        },
+        {
+          "control_type": "text",
+          "label": "Name",
+          "type": "string",
+          "name": "name"
+        }
+      ],
+      "label": "Distributor",
+      "type": "object",
+      "name": "distributor"
+    },
+    {
+      "control_type": "number",
+      "label": "Discount",
+      "parse_output": "float_conversion",
+      "type": "number",
+      "name": "discount"
+    },
+    {
+      "control_type": "text",
+      "label": "Delayed license start date",
+      "type": "string",
+      "name": "delayedLicenseStartDate"
+    },
+    {
+      "control_type": "text",
+      "label": "Date",
+      "type": "string",
+      "name": "date"
+    },
+    {
+      "properties": [
+        {
+          "control_type": "text",
+          "label": "Salesforce ID",
+          "type": "string",
+          "name": "salesforceId"
+        },
+        {
+          "control_type": "integer",
+          "label": "Netsuite ID",
+          "parse_output": "integer_conversion",
+          "type": "integer",
+          "name": "netsuiteId"
+        },
+        {
+          "control_type": "text",
+          "label": "Record type",
+          "type": "string",
+          "name": "recordType"
+        },
+        {
+          "control_type": "text",
+          "label": "Name",
+          "type": "string",
+          "name": "name"
+        }
+      ],
+      "label": "Customer",
+      "type": "object",
+      "name": "customer"
+    },
+    {
+      "control_type": "text",
+      "label": "Calculate ACV",
+      "render_input": {
+      },
+      "parse_output": {
+      },
+      "toggle_hint": "Select from option list",
+      "toggle_field": {
+        "label": "Calculate ACV",
+        "control_type": "text",
+        "toggle_hint": "Use custom value",
+        "type": "boolean",
+        "name": "calculateACV"
+      },
+      "type": "boolean",
+      "name": "calculateACV"
+    },
+    {
+      "properties": [
+        {
+          "control_type": "text",
+          "label": "Billing schedule",
+          "type": "string",
+          "name": "billingSchedule"
+        },
+        {
+          "control_type": "text",
+          "label": "Billing responsible party",
+          "type": "string",
+          "name": "billingResponsibleParty"
+        },
+        {
+          "control_type": "text",
+          "label": "Billing notes",
+          "type": "string",
+          "name": "billingNotes"
+        },
+        {
+          "properties": [
+            {
+              "control_type": "text",
+              "label": "Salesforce ID",
+              "type": "string",
+              "name": "salesforceId"
+            },
+            {
+              "control_type": "integer",
+              "label": "Netsuite ID",
+              "parse_output": "integer_conversion",
+              "type": "integer",
+              "name": "netsuiteId"
+            },
+            {
+              "control_type": "text",
+              "label": "Last name",
+              "type": "string",
+              "name": "lastName"
+            },
+            {
+              "control_type": "text",
+              "label": "First name",
+              "type": "string",
+              "name": "firstName"
+            },
+            {
+              "control_type": "text",
+              "label": "Email",
+              "type": "string",
+              "name": "email"
+            }
+          ],
+          "label": "Billing contact",
+          "type": "object",
+          "name": "billingContact"
+        }
+      ],
+      "label": "Billing header",
+      "type": "object",
+      "name": "billingHeader"
+    },
+    {
+      "properties": [
+        {
+          "control_type": "text",
+          "label": "Billing attn",
+          "type": "string",
+          "name": "billingAttn"
+        },
+        {
+          "control_type": "text",
+          "label": "Billing address zip code",
+          "type": "string",
+          "name": "billingAddressZipCode"
+        },
+        {
+          "control_type": "text",
+          "label": "Billing address state",
+          "type": "string",
+          "name": "billingAddressState"
+        },
+        {
+          "control_type": "text",
+          "label": "Billing address residential",
+          "render_input": {
+          },
+          "parse_output": {
+          },
+          "toggle_hint": "Select from option list",
+          "toggle_field": {
+            "label": "Billing address residential",
+            "control_type": "text",
+            "toggle_hint": "Use custom value",
+            "type": "boolean",
+            "name": "billingAddressResidential"
+          },
+          "type": "boolean",
+          "name": "billingAddressResidential"
+        },
+        {
+          "control_type": "text",
+          "label": "Billing addressee",
+          "type": "string",
+          "name": "billingAddressee"
+        },
+        {
+          "control_type": "text",
+          "label": "Billing address country",
+          "type": "string",
+          "name": "billingAddressCountry"
+        },
+        {
+          "control_type": "text",
+          "label": "Billing address city",
+          "type": "string",
+          "name": "billingAddressCity"
+        },
+        {
+          "control_type": "text",
+          "label": "Billing address 2",
+          "type": "string",
+          "name": "billingAddress2"
+        },
+        {
+          "control_type": "text",
+          "label": "Billing address 1",
+          "type": "string",
+          "name": "billingAddress1"
+        }
+      ],
+      "label": "Billing address information",
+      "type": "object",
+      "name": "billingAddressInformation"
+    },
+    {
+      "control_type": "text",
+      "label": "Auto renewal opt out",
+      "render_input": {
+      },
+      "parse_output": {
+      },
+      "toggle_hint": "Select from option list",
+      "toggle_field": {
+        "label": "Auto renewal opt out",
+        "control_type": "text",
+        "toggle_hint": "Use custom value",
+        "type": "boolean",
+        "name": "autoRenewalOptOut"
+      },
+      "type": "boolean",
+      "name": "autoRenewalOptOut"
+    },
+    {
+      "name": "allContactRoles",
+      "type": "array",
+      "of": "object",
+      "label": "All contact roles",
+      "properties": [
+        {
+          "control_type": "text",
+          "label": "Role",
+          "type": "string",
+          "name": "role"
+        },
+        {
+          "control_type": "integer",
+          "label": "Netsuite ID",
+          "parse_output": "integer_conversion",
+          "type": "integer",
+          "name": "netsuiteId"
+        },
+        {
+          "control_type": "text",
+          "label": "Last name",
+          "type": "string",
+          "name": "lastName"
+        },
+        {
+          "control_type": "text",
+          "label": "First name",
+          "type": "string",
+          "name": "firstName"
+        },
+        {
+          "control_type": "text",
+          "label": "Email",
+          "type": "string",
+          "name": "email"
+        }
+      ]
+    }
+  ]
+}

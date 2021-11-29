@@ -1,0 +1,1115 @@
+{
+  "name": "API - Support - Salesforce Cases (Rolling 30 Days)",
+  "description": "When there is a trigger event, do action",
+  "version": 5,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "3ecebd8b",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">API - Support - Salesforce Cases (Rolling 30 Days)</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "service_name": "API - Support - Salesforce Cases (Rolling 30 Days)",
+      "reply_schema_json": "[{\"name\":\"rows\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Rows\",\"optional\":true,\"properties\":[{\"control_type\":\"text\",\"label\":\"date_opened\",\"name\":\"date_opened\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"date_assigned\",\"name\":\"date_assigned\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"case_number\",\"name\":\"case_number\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"age\",\"name\":\"age\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"is_open\",\"name\":\"is_open\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"status\",\"name\":\"status\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Product\",\"name\":\"product\",\"type\":\"string\",\"optional\":true},{\"name\":\"owner_name\",\"type\":\"string\",\"optional\":true,\"control_type\":\"text\"},{\"name\":\"owner_id\",\"type\":\"string\",\"optional\":true,\"control_type\":\"text\"}]}]",
+      "response_type": "json",
+      "request_schema_json": "[{\"name\":\"filter_exclude_status\",\"type\":\"string\",\"optional\":true,\"hint\":\"comma separated list of statuses to ignore, if a case has one of these statuses it will not be returned (i.e. 'Closed - Trial/Prospect','Closed - Duplicate','Closed – Spam' )\",\"control_type\":\"text\"},{\"name\":\"filter_case_owner\",\"type\":\"string\",\"optional\":true,\"hint\":\"comma separated list of case owners by which to filter, only cases for these owners will be returned (i.e. 'Katie Wade','William Byrne')\",\"control_type\":\"text\"},{\"name\":\"filter_start_date\",\"type\":\"string\",\"optional\":true,\"hint\":\"return the first 2000 cases opened on/after this date (format is 2020-01-31T12:30:00-05:00).  If not specified, a date of 30 days ago will be used.  Cases are sorted by open date.\",\"control_type\":\"text\"}]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Filter exclude status",
+            "name": "filter_exclude_status",
+            "type": "string",
+            "optional": true,
+            "hint": "comma separated list of statuses to ignore, if a case has one of these statuses it will not be returned (i.e. 'Closed - Trial/Prospect','Closed - Duplicate','Closed – Spam' )"
+          },
+          {
+            "control_type": "text",
+            "label": "Filter case owner",
+            "name": "filter_case_owner",
+            "type": "string",
+            "optional": true,
+            "hint": "comma separated list of case owners by which to filter, only cases for these owners will be returned (i.e. 'Katie Wade','William Byrne')"
+          },
+          {
+            "control_type": "text",
+            "label": "Filter start date",
+            "name": "filter_start_date",
+            "type": "string",
+            "optional": true,
+            "hint": "return the first 2000 cases opened on/after this date (format is 2020-01-31T12:30:00-05:00).  If not specified, a date of 30 days ago will be used.  Cases are sorted by open date."
+          }
+        ]
+      }
+    ],
+    "visible_config_fields": [
+      "service_name",
+      "reply_schema_json",
+      "response_type"
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "workato_variable",
+        "name": "declare_variable",
+        "as": "9ea4a391",
+        "title": "Create variable filter_case_owner",
+        "description": "Create variable <span class=\"provider\">filter_case_owner</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "string",
+          "name": "filter_case_owner",
+          "value": "=_('data.workato_service.3ecebd8b.request.filter_case_owner').present? ? _('data.workato_service.3ecebd8b.request.filter_case_owner') : \"\""
+        },
+        "extended_output_schema": [
+          {
+            "type": "string",
+            "name": "value",
+            "control_type": "text",
+            "label": "filter_case_owner"
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "string",
+            "name": "value",
+            "control_type": "text",
+            "label": "Default value",
+            "hint": "Default value for the variable",
+            "sticky": true,
+            "optional": true,
+            "strip_interpolation": true
+          }
+        ],
+        "uuid": "8e99c9eb-0dcf-4b24-ab78-bf6646f25af9"
+      },
+      {
+        "number": 2,
+        "provider": "workato_variable",
+        "name": "declare_variable",
+        "as": "ebb75215",
+        "title": "Create variable filter_start_date",
+        "description": "Create variable <span class=\"provider\">filter_start_date</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "string",
+          "name": "filter_start_date",
+          "value": "=_('data.workato_service.3ecebd8b.request.filter_start_date').present? ? _('data.workato_service.3ecebd8b.request.filter_start_date').to_time.strftime(\"%Y-%m-%dT%H:%M:%S%:z\") : 29.days.ago.to_date.strftime(\"%Y-%m-%dT%H:%M:%S%:z\")"
+        },
+        "extended_output_schema": [
+          {
+            "type": "string",
+            "name": "value",
+            "control_type": "text",
+            "label": "filter_start_date"
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "string",
+            "name": "value",
+            "control_type": "text",
+            "label": "Default value",
+            "hint": "Default value for the variable",
+            "sticky": true,
+            "optional": true,
+            "strip_interpolation": true
+          }
+        ],
+        "uuid": "0c8a8198-17e0-4d65-a805-d33597561481"
+      },
+      {
+        "number": 3,
+        "provider": "workato_variable",
+        "name": "declare_variable",
+        "as": "e2aae1d8",
+        "title": "Create variable filter_exclude_status",
+        "description": "Create variable <span class=\"provider\">filter_exclude_status</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "string",
+          "name": "filter_exclude_status",
+          "value": "=_('data.workato_service.3ecebd8b.request.filter_exclude_status').present? ? _('data.workato_service.3ecebd8b.request.filter_exclude_status') : \"'RFE Under Consideration','RFE Awaiting Release','Closed - New Case','Spam or Duplicate','Closed – Duplicate','Closed - Scan Logs','Closed - Community No Action Required','Closed - Trial/Prospect','Closed - Duplicate','Closed – Spam'\""
+        },
+        "extended_output_schema": [
+          {
+            "type": "string",
+            "name": "value",
+            "control_type": "text",
+            "label": "filter_exclude_status"
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "string",
+            "name": "value",
+            "control_type": "text",
+            "label": "Default value",
+            "hint": "Default value for the variable",
+            "sticky": true,
+            "optional": true,
+            "strip_interpolation": true
+          }
+        ],
+        "uuid": "fa342be0-3ac6-4581-a08b-d3bcf77469be"
+      },
+      {
+        "number": 4,
+        "provider": "workato_variable",
+        "name": "declare_variable",
+        "as": "133d7ed6",
+        "title": "Create variable soql_query",
+        "description": "Create variable <span class=\"provider\">soql_query</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "string",
+          "name": "soql_query",
+          "value": "=\"SELECT CaseNumber,CreatedDate,ClosedDate,DateAssigned__c,IsClosed,Status,Product__c, CaseOwner__c, OwnerId FROM Case WHERE \"+ (_('data.workato_variable.9ea4a391.value').present? ? \"CaseOwner__c IN (\"+_('data.workato_variable.9ea4a391.value')+\") AND \" : \"\" ) + \"Status NOT IN (\"+_('data.workato_variable.e2aae1d8.value')+\") AND CreatedDate >= \"+_('data.workato_variable.ebb75215.value') +\" ORDER BY CreatedDate ASC\""
+        },
+        "extended_output_schema": [
+          {
+            "type": "string",
+            "name": "value",
+            "control_type": "text",
+            "label": "soql_query"
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "string",
+            "name": "value",
+            "control_type": "text",
+            "label": "Default value",
+            "hint": "Default value for the variable",
+            "sticky": true,
+            "optional": true,
+            "strip_interpolation": true
+          }
+        ],
+        "uuid": "29ef231f-d7ed-4a78-afdf-ba46da9e183b"
+      },
+      {
+        "number": 5,
+        "provider": "salesforce",
+        "name": "__adhoc_http_action",
+        "as": "827ce30f",
+        "title": "Custom action",
+        "description": "Custom <span class=\"provider\">action</span> in <span class=\"provider\">Salesforce</span> (Custom)",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "mnemonic": "Custom action",
+          "verb": "get",
+          "response_type": "json",
+          "path": "services/data/v47.0/query",
+          "input": {
+            "schema": "[{\"name\":\"q\",\"type\":\"string\",\"optional\":true,\"label\":\"q\",\"control_type\":\"text\"}]",
+            "data": {
+              "q": "#{_('data.workato_variable.133d7ed6.value')}"
+            }
+          },
+          "output": "[{\"control_type\":\"number\",\"label\":\"Total size\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"totalSize\"},{\"control_type\":\"text\",\"label\":\"Done\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Done\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"done\"},\"type\":\"boolean\",\"name\":\"done\"},{\"name\":\"records\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Records\",\"properties\":[{\"properties\":[{\"control_type\":\"text\",\"label\":\"Type\",\"type\":\"string\",\"name\":\"type\"},{\"control_type\":\"text\",\"label\":\"URL\",\"type\":\"string\",\"name\":\"url\"}],\"label\":\"Attributes\",\"type\":\"object\",\"name\":\"attributes\"},{\"control_type\":\"text\",\"label\":\"Case number\",\"type\":\"string\",\"name\":\"CaseNumber\"},{\"control_type\":\"text\",\"label\":\"Created date\",\"render_input\":\"date_time_conversion\",\"parse_output\":\"date_time_conversion\",\"type\":\"date_time\",\"name\":\"CreatedDate\"},{\"control_type\":\"text\",\"label\":\"Closed date\",\"render_input\":\"date_time_conversion\",\"parse_output\":\"date_time_conversion\",\"type\":\"date_time\",\"name\":\"ClosedDate\"},{\"control_type\":\"text\",\"label\":\"Date assigned c\",\"render_input\":\"date_time_conversion\",\"parse_output\":\"date_time_conversion\",\"type\":\"date_time\",\"name\":\"DateAssigned__c\"},{\"control_type\":\"text\",\"label\":\"Is closed\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is closed\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"IsClosed\"},\"type\":\"boolean\",\"name\":\"IsClosed\"},{\"control_type\":\"text\",\"label\":\"Status\",\"type\":\"string\",\"name\":\"Status\"},{\"control_type\":\"text\",\"label\":\"Product c\",\"type\":\"string\",\"name\":\"Product__c\"},{\"name\":\"CaseOwner__c\",\"type\":\"string\",\"optional\":true,\"control_type\":\"text\"},{\"name\":\"OwnerId\",\"type\":\"string\",\"optional\":true,\"control_type\":\"text\"}]}]"
+        },
+        "extended_output_schema": [
+          {
+            "type": "number",
+            "name": "totalSize",
+            "control_type": "number",
+            "label": "Total size",
+            "optional": true,
+            "parse_output": "float_conversion"
+          },
+          {
+            "type": "number",
+            "name": "done",
+            "control_type": "text",
+            "label": "Done",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Done",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "type": "boolean",
+              "name": "done"
+            },
+            "render_input": {
+            },
+            "parse_output": {
+            }
+          },
+          {
+            "type": "array",
+            "name": "records",
+            "label": "Records",
+            "optional": true,
+            "of": "object",
+            "properties": [
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Type",
+                    "optional": true,
+                    "type": "string",
+                    "name": "type"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "URL",
+                    "optional": true,
+                    "type": "string",
+                    "name": "url"
+                  }
+                ],
+                "label": "Attributes",
+                "optional": true,
+                "type": "object",
+                "name": "attributes"
+              },
+              {
+                "control_type": "text",
+                "label": "Case number",
+                "optional": true,
+                "type": "string",
+                "name": "CaseNumber"
+              },
+              {
+                "control_type": "text",
+                "label": "Created date",
+                "render_input": "date_time_conversion",
+                "parse_output": "date_time_conversion",
+                "optional": true,
+                "type": "date_time",
+                "name": "CreatedDate"
+              },
+              {
+                "control_type": "text",
+                "label": "Closed date",
+                "render_input": "date_time_conversion",
+                "parse_output": "date_time_conversion",
+                "optional": true,
+                "type": "date_time",
+                "name": "ClosedDate"
+              },
+              {
+                "control_type": "text",
+                "label": "Date assigned c",
+                "render_input": "date_time_conversion",
+                "parse_output": "date_time_conversion",
+                "optional": true,
+                "type": "date_time",
+                "name": "DateAssigned__c"
+              },
+              {
+                "control_type": "text",
+                "label": "Is closed",
+                "parse_output": {
+                },
+                "render_input": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Is closed",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "type": "boolean",
+                  "name": "IsClosed"
+                },
+                "optional": true,
+                "type": "number",
+                "name": "IsClosed"
+              },
+              {
+                "control_type": "text",
+                "label": "Status",
+                "optional": true,
+                "type": "string",
+                "name": "Status"
+              },
+              {
+                "control_type": "text",
+                "label": "Product c",
+                "optional": true,
+                "type": "string",
+                "name": "Product__c"
+              },
+              {
+                "control_type": "text",
+                "label": "Case owner c",
+                "optional": true,
+                "type": "string",
+                "name": "CaseOwner__c"
+              },
+              {
+                "control_type": "text",
+                "label": "Owner ID",
+                "optional": true,
+                "type": "string",
+                "name": "OwnerId"
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "string",
+            "name": "path",
+            "control_type": "text",
+            "label": "Path",
+            "hint": "Base URI is <b>https://r7.my.salesforce.com/</b> - path will be appended to this URI. Use absolute URI to override this base URI.",
+            "optional": false
+          },
+          {
+            "type": "string",
+            "name": "response_type",
+            "control_type": "select",
+            "label": "Response type",
+            "default": "json",
+            "sticky": false,
+            "pick_list": [
+              [
+                "JSON response",
+                "json"
+              ],
+              [
+                "Raw response",
+                "raw"
+              ]
+            ],
+            "optional": true,
+            "extends_schema": true
+          },
+          {
+            "type": "object",
+            "name": "input",
+            "control_type": "form-schema-builder",
+            "label": "Request URL parameters",
+            "sticky": false,
+            "optional": true,
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Schema",
+                "extends_schema": true,
+                "sticky": true,
+                "optional": true,
+                "type": "string",
+                "name": "schema",
+                "parent": "input"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "q",
+                    "optional": true,
+                    "sticky": true,
+                    "type": "string",
+                    "name": "q",
+                    "parent": "input.data"
+                  }
+                ],
+                "label": "Data",
+                "optional": true,
+                "type": "object",
+                "name": "data",
+                "parent": "input"
+              }
+            ]
+          },
+          {
+            "type": "array",
+            "name": "request_headers",
+            "control_type": "key_value",
+            "label": "Request headers",
+            "optional": true,
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Name",
+                "optional": true,
+                "type": "string",
+                "name": "name",
+                "parent": "request_headers"
+              },
+              {
+                "control_type": "text",
+                "label": "Value",
+                "optional": true,
+                "type": "string",
+                "name": "value",
+                "parent": "request_headers"
+              }
+            ]
+          },
+          {
+            "type": "string",
+            "name": "output",
+            "control_type": "schema-designer",
+            "label": "Response body",
+            "sticky": true,
+            "optional": true,
+            "extends_schema": true,
+            "schema_neutral": true
+          },
+          {
+            "type": "string",
+            "name": "response_headers",
+            "control_type": "schema-designer",
+            "label": "Response headers",
+            "sticky": false,
+            "optional": true,
+            "extends_schema": true,
+            "schema_neutral": true
+          }
+        ],
+        "visible_config_fields": [
+          "mnemonic",
+          "verb",
+          "response_type",
+          "input",
+          "input.schema",
+          "output",
+          "input.data.q",
+          "path",
+          "input.data"
+        ],
+        "uuid": "9caaec2b-985f-4a77-b622-82910eb5e1d9"
+      },
+      {
+        "number": 6,
+        "provider": "workato_service",
+        "name": "send_reply",
+        "as": "d8a12df3",
+        "title": null,
+        "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Export - Salesforce Report - Global Cases Rolling 30 Days - Export JSON</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "reply_type": "success",
+          "reply": {
+            "rows": {
+              "____source": "#{_('data.salesforce.827ce30f.records')}",
+              "date_opened": "#{_('data.salesforce.827ce30f.records.first.CreatedDate')}",
+              "date_assigned": "#{_('data.salesforce.827ce30f.records.first.DateAssigned__c')}",
+              "case_number": "#{_('data.salesforce.827ce30f.records.first.CaseNumber')}",
+              "status": "#{_('data.salesforce.827ce30f.records.first.Status')}",
+              "product": "#{_('data.salesforce.827ce30f.records.first.Product__c')}",
+              "age": "=(( _('data.salesforce.827ce30f.records.first.ClosedDate').present? ? _('data.salesforce.827ce30f.records.first.ClosedDate')-_('data.salesforce.827ce30f.records.first.CreatedDate') : now-_('data.salesforce.827ce30f.records.first.CreatedDate') )/3600).round",
+              "is_open": "=_('data.salesforce.827ce30f.records.first.IsClosed').is_not_true?",
+              "owner_name": "#{_('data.salesforce.827ce30f.records.first.CaseOwner__c')}",
+              "owner_id": "#{_('data.salesforce.827ce30f.records.first.OwnerId')}"
+            }
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "reply",
+            "label": "Reply",
+            "properties": [
+              {
+                "name": "rows",
+                "type": "array",
+                "of": "object",
+                "label": "Rows",
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "date_opened",
+                    "name": "date_opened",
+                    "type": "string",
+                    "optional": true,
+                    "parent": "reply.rows"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "date_assigned",
+                    "name": "date_assigned",
+                    "type": "string",
+                    "optional": true,
+                    "parent": "reply.rows"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "case_number",
+                    "name": "case_number",
+                    "type": "string",
+                    "optional": true,
+                    "parent": "reply.rows"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "age",
+                    "name": "age",
+                    "type": "string",
+                    "optional": true,
+                    "parent": "reply.rows"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "is_open",
+                    "name": "is_open",
+                    "type": "string",
+                    "optional": true,
+                    "parent": "reply.rows"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "status",
+                    "name": "status",
+                    "type": "string",
+                    "optional": true,
+                    "parent": "reply.rows"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Product",
+                    "name": "product",
+                    "type": "string",
+                    "optional": true,
+                    "parent": "reply.rows"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Owner name",
+                    "name": "owner_name",
+                    "type": "string",
+                    "optional": true,
+                    "parent": "reply.rows"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Owner ID",
+                    "name": "owner_id",
+                    "type": "string",
+                    "optional": true,
+                    "parent": "reply.rows"
+                  }
+                ],
+                "parent": "reply"
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "reply_type",
+          "reply",
+          "reply.rows",
+          "reply.rows.date_opened",
+          "reply.rows.date_assigned",
+          "reply.rows.case_number",
+          "reply.rows.age",
+          "reply.rows.is_open",
+          "reply.rows.status",
+          "reply.rows.product",
+          "reply.rows.owner_name",
+          "reply.rows.owner_id"
+        ],
+        "uuid": "117fc5bb-95dc-424c-a7b9-efdfd8280d59"
+      },
+      {
+        "number": 7,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "is_not_true",
+              "lhs": "true",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 8,
+            "provider": "salesforce",
+            "name": "search_sobjects_soql",
+            "as": "fb1cb89f",
+            "title": "Search Cases using SOQL",
+            "description": "Search <span class=\"provider\">Cases</span> using SOQL query in <span class=\"provider\">Salesforce</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "sobject_name": "Case",
+              "field_list": [
+                {
+                  "label": "Case number",
+                  "value": "CaseNumber"
+                },
+                {
+                  "label": "Created date",
+                  "value": "CreatedDate"
+                },
+                {
+                  "label": "Closed date",
+                  "value": "ClosedDate"
+                },
+                {
+                  "label": "Date assigned",
+                  "value": "DateAssigned__c"
+                },
+                {
+                  "label": "Closed",
+                  "value": "IsClosed"
+                },
+                {
+                  "label": "Status",
+                  "value": "Status"
+                },
+                {
+                  "label": "Product",
+                  "value": "Product__c"
+                }
+              ]
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "limit": "2000",
+              "sobject_name": "Case",
+              "field_list": "CaseNumber\nCreatedDate\nClosedDate\nDateAssigned__c\nIsClosed\nStatus\nProduct__c",
+              "query": "CaseOwner__c IN (#{_('data.workato_variable.9ea4a391.value')}) AND \nStatus NOT IN (#{_('data.workato_variable.e2aae1d8.value')}) AND \nCreatedDate >= #{_('data.workato_variable.ebb75215.value')}\nORDER BY CreatedDate ASC\n"
+            },
+            "extended_output_schema": [
+              {
+                "type": "array",
+                "name": "Case",
+                "label": "Cases",
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Case Number",
+                    "optional": true,
+                    "custom": false,
+                    "sfdc_createable": false,
+                    "sfdc_updateable": false,
+                    "type": "string",
+                    "name": "CaseNumber"
+                  },
+                  {
+                    "control_type": "checkbox",
+                    "label": "Closed",
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Closed",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "optional": true,
+                      "custom": false,
+                      "sfdc_createable": false,
+                      "sfdc_updateable": false,
+                      "type": "boolean",
+                      "name": "IsClosed"
+                    },
+                    "optional": true,
+                    "custom": false,
+                    "sfdc_createable": false,
+                    "sfdc_updateable": false,
+                    "type": "boolean",
+                    "name": "IsClosed"
+                  },
+                  {
+                    "control_type": "date_time",
+                    "label": "Closed Date",
+                    "render_input": "render_iso8601_timestamp",
+                    "parse_output": "parse_iso8601_timestamp",
+                    "optional": true,
+                    "custom": false,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": false,
+                    "type": "date_time",
+                    "name": "ClosedDate"
+                  },
+                  {
+                    "control_type": "date_time",
+                    "label": "Created Date",
+                    "render_input": "render_iso8601_timestamp",
+                    "parse_output": "parse_iso8601_timestamp",
+                    "optional": true,
+                    "custom": false,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": false,
+                    "type": "date_time",
+                    "name": "CreatedDate"
+                  },
+                  {
+                    "control_type": "select",
+                    "label": "Status",
+                    "pick_list": "sobject_field_values_list",
+                    "pick_list_params": {
+                      "sobject_name": "\"Case\""
+                    },
+                    "toggle_hint": "Select from list",
+                    "toggle_field": {
+                      "control_type": "text",
+                      "label": "Status",
+                      "toggle_hint": "Enter custom value",
+                      "optional": true,
+                      "custom": false,
+                      "sfdc_createable": true,
+                      "sfdc_updateable": true,
+                      "type": "string",
+                      "name": "Status"
+                    },
+                    "optional": true,
+                    "custom": false,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "string",
+                    "name": "Status"
+                  },
+                  {
+                    "control_type": "date_time",
+                    "label": "Date Assigned",
+                    "render_input": "render_iso8601_timestamp",
+                    "parse_output": "parse_iso8601_timestamp",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "date_time",
+                    "name": "DateAssigned__c"
+                  },
+                  {
+                    "control_type": "select",
+                    "label": "Product",
+                    "pick_list": "sobject_field_values_list",
+                    "pick_list_params": {
+                      "sobject_name": "\"Case\""
+                    },
+                    "toggle_hint": "Select from list",
+                    "toggle_field": {
+                      "control_type": "text",
+                      "label": "Product",
+                      "toggle_hint": "Enter custom value",
+                      "optional": true,
+                      "custom": true,
+                      "sfdc_createable": true,
+                      "sfdc_updateable": true,
+                      "type": "string",
+                      "name": "Product__c"
+                    },
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "string",
+                    "name": "Product__c"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "number",
+                        "label": "Total size",
+                        "parse_output": "integer_conversion",
+                        "type": "integer",
+                        "name": "totalSize"
+                      },
+                      {
+                        "name": "records",
+                        "type": "array",
+                        "of": "object",
+                        "label": "Files",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "ID",
+                            "type": "string",
+                            "name": "Id"
+                          },
+                          {
+                            "control_type": "number",
+                            "label": "Content size",
+                            "parse_output": "integer_conversion",
+                            "type": "integer",
+                            "name": "ContentSize"
+                          },
+                          {
+                            "control_type": "url",
+                            "label": "Content URL",
+                            "type": "string",
+                            "name": "ContentUrl"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "File extension",
+                            "type": "string",
+                            "name": "FileExtension"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "File type",
+                            "type": "string",
+                            "name": "FileType"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Parent ID",
+                            "type": "string",
+                            "name": "ParentId"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Record type",
+                            "type": "string",
+                            "name": "RecordType"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Title",
+                            "type": "string",
+                            "name": "Title"
+                          }
+                        ]
+                      }
+                    ],
+                    "label": "Combined attachments",
+                    "sfdc_field_type": "CombinedAttachment",
+                    "type": "object",
+                    "name": "CombinedAttachments"
+                  }
+                ]
+              },
+              {
+                "type": "integer",
+                "name": "list_size",
+                "control_type": "number",
+                "label": "List size",
+                "parse_output": "integer_conversion"
+              }
+            ],
+            "visible_config_fields": [
+              "sobject_name",
+              "field_list",
+              "limit",
+              "query"
+            ],
+            "uuid": "cda26cbd-2f93-481b-94bc-52daa50d4b5b"
+          },
+          {
+            "number": 9,
+            "provider": "workato_service",
+            "name": "send_reply",
+            "as": "ce8571ad",
+            "title": null,
+            "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Export - Salesforce Report - Global Cases Rolling 30 Days - Export JSON</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "reply_type": "success",
+              "reply": {
+                "rows": {
+                  "____source": "#{_('data.salesforce.fb1cb89f.Case')}",
+                  "date_opened": "#{_('data.salesforce.fb1cb89f.Case.first.CreatedDate')}",
+                  "date_assigned": "#{_('data.salesforce.fb1cb89f.Case.first.DateAssigned__c')}",
+                  "case_number": "#{_('data.salesforce.fb1cb89f.Case.first.CaseNumber')}",
+                  "age": "=(( _('data.salesforce.fb1cb89f.Case.first.ClosedDate').present? ? _('data.salesforce.fb1cb89f.Case.first.ClosedDate')-_('data.salesforce.fb1cb89f.Case.first.CreatedDate') : now-_('data.salesforce.fb1cb89f.Case.first.CreatedDate') )/3600).round",
+                  "is_open": "=_('data.salesforce.fb1cb89f.Case.first.IsClosed').is_not_true?",
+                  "product": "=_('data.salesforce.fb1cb89f.Case.first.Product__c')",
+                  "status": "#{_('data.salesforce.fb1cb89f.Case.first.Status')}"
+                }
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "reply",
+                "label": "Reply",
+                "properties": [
+                  {
+                    "name": "rows",
+                    "type": "array",
+                    "of": "object",
+                    "label": "Rows",
+                    "optional": true,
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "date_opened",
+                        "name": "date_opened",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "date_assigned",
+                        "name": "date_assigned",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "case_number",
+                        "name": "case_number",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "age",
+                        "name": "age",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "is_open",
+                        "name": "is_open",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "status",
+                        "name": "status",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Product",
+                        "name": "product",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Owner name",
+                        "name": "owner_name",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Owner ID",
+                        "name": "owner_id",
+                        "type": "string",
+                        "optional": true
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "reply_type",
+              "reply",
+              "reply.rows",
+              "reply.rows.date_opened",
+              "reply.rows.date_assigned",
+              "reply.rows.case_number",
+              "reply.rows.subject",
+              "reply.rows.age",
+              "reply.rows.is_open",
+              "reply.rows.is_closed",
+              "reply.rows.statuses",
+              "reply.rows.product",
+              "reply.rows.status"
+            ],
+            "uuid": "ee8a32c1-4609-40b1-907f-349917862790"
+          }
+        ],
+        "comment": "The Custom SOQL does not return a full 2000 rows.  CJ from Workato was going to talk to the product team to see what is happening.  In the mean time, we are just going to use the custom action to get the results.",
+        "uuid": "8b87ca1a-8ed7-4ba0-bc03-a8c44b33ebed"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Filter Start Date"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Custom Owner/Status Filter"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "# Results"
+      },
+      {
+        "name": "custom_column_4",
+        "label": "Last Case Date from Results"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_service.3ecebd8b.request.filter_start_date')}",
+      "custom_column_2": "=(_('data.workato_service.3ecebd8b.request.filter_case_owner').present? ? \"true\" : \"false\") +\"/\"+ (_('data.workato_service.3ecebd8b.request.filter_exclude_status').present? ? \"true\" : \"false\")",
+      "custom_column_3": "#{_('data.salesforce.827ce30f.records.first.____Size', 'list_meta', '____Size', 'data.salesforce.827ce30f.records')}",
+      "custom_column_4": "=_('data.salesforce.827ce30f.records').last[\"CreatedDate\"]"
+    },
+    "uuid": "aa82b1c1-faec-4690-9d3c-3e9e6e9d25c3"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "salesforce",
+      "account_id": {
+        "zip_name": "connections/salesforce.connection.json",
+        "name": "Salesforce",
+        "folder": "connections"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "account_id": null
+    }
+  ]
+}

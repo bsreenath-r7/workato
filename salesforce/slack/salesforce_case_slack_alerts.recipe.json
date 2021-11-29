@@ -1,0 +1,983 @@
+{
+  "name": "Salesforce Case - Slack Alerts",
+  "description": "**Trigger**: Trigger when a new case is created.\n\n**Description**: As a TAM, they  want to get notifications about the Cases so thet can serve their customers faster.\n\n**Actions**: It takes the data from Case object and send the slack alerts to channels.\n",
+  "version": 4,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "salesforce",
+    "name": "new_custom_object",
+    "as": "11b92c83",
+    "title": "New Case",
+    "description": "New <span class=\"provider\">Case</span> in <span class=\"provider\">Salesforce</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+      "sobject_name": "Case",
+      "field_list": [
+        {
+          "label": "Description",
+          "value": "Description"
+        },
+        {
+          "label": "Super Support",
+          "value": "SuperSupport__c"
+        },
+        {
+          "label": "Case Number",
+          "value": "CaseNumber"
+        },
+        {
+          "label": "Case ID",
+          "value": "Id"
+        },
+        {
+          "label": "Severity",
+          "value": "Priority"
+        },
+        {
+          "label": "Subject",
+          "value": "Subject"
+        },
+        {
+          "label": "Technical Account Manager",
+          "value": "TechnicalAccountManager__c"
+        },
+        {
+          "label": "Product",
+          "value": "Product__c"
+        },
+        {
+          "label": "Name",
+          "value": "SuppliedName"
+        },
+        {
+          "label": "Account ID",
+          "value": "AccountId"
+        },
+        {
+          "label": "Account.Account Name",
+          "value": "Account$Account ID.Name"
+        },
+        {
+          "label": "ICS Ticket Type",
+          "value": "ICSTicketType__c"
+        },
+        {
+          "label": "Feature Request - Product Feedback",
+          "value": "FeatureRequestProductFeedback__c"
+        }
+      ],
+      "table_list": [
+        {
+          "label": "Account",
+          "value": "Account"
+        }
+      ]
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "sobject_name": "Case",
+      "since_offset": "-3600",
+      "field_list": "Description\nSuperSupport__c\nCaseNumber\nId\nPriority\nSubject\nTechnicalAccountManager__c\nProduct__c\nSuppliedName\nAccountId\nAccount$Account ID.Name\nICSTicketType__c\nFeatureRequestProductFeedback__c",
+      "table_list": "Account"
+    },
+    "extended_output_schema": [
+      {
+        "type": "string",
+        "name": "AccountId",
+        "control_type": "text",
+        "label": "Account ID",
+        "optional": true,
+        "custom": false,
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "string",
+        "name": "Id",
+        "control_type": "text",
+        "label": "Case ID",
+        "optional": true,
+        "custom": false,
+        "key_scope": "Case",
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "CaseNumber",
+        "control_type": "text",
+        "label": "Case Number",
+        "optional": true,
+        "custom": false,
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "date_time",
+        "name": "CreatedDate",
+        "control_type": "date_time",
+        "label": "Created Date",
+        "optional": true,
+        "custom": false,
+        "render_input": "render_iso8601_timestamp",
+        "parse_output": "parse_iso8601_timestamp",
+        "sfdc_createable": true,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "Description",
+        "control_type": "text-area",
+        "label": "Description",
+        "optional": true,
+        "custom": false,
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "date_time",
+        "name": "LastModifiedDate",
+        "control_type": "date_time",
+        "label": "Last Modified Date",
+        "optional": true,
+        "custom": false,
+        "render_input": "render_iso8601_timestamp",
+        "parse_output": "parse_iso8601_timestamp",
+        "sfdc_createable": true,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "SuppliedName",
+        "control_type": "text",
+        "label": "Name",
+        "optional": true,
+        "custom": false,
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "string",
+        "name": "Priority",
+        "control_type": "select",
+        "label": "Severity",
+        "pick_list": "sobject_field_values_list",
+        "pick_list_params": {
+          "sobject_name": "\"Case\""
+        },
+        "optional": true,
+        "custom": false,
+        "toggle_hint": "Select from list",
+        "toggle_field": {
+          "control_type": "text",
+          "label": "Severity",
+          "toggle_hint": "Enter custom value",
+          "optional": true,
+          "custom": false,
+          "sfdc_createable": true,
+          "sfdc_updateable": true,
+          "type": "string",
+          "name": "Priority"
+        },
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "string",
+        "name": "Subject",
+        "control_type": "text",
+        "label": "Subject",
+        "optional": true,
+        "custom": false,
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "date_time",
+        "name": "SystemModstamp",
+        "control_type": "date_time",
+        "label": "System Modstamp",
+        "optional": true,
+        "custom": false,
+        "render_input": "render_iso8601_timestamp",
+        "parse_output": "parse_iso8601_timestamp",
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "FeatureRequestProductFeedback__c",
+        "control_type": "select",
+        "label": "Feature Request - Product Feedback",
+        "pick_list": "sobject_field_values_list",
+        "pick_list_params": {
+          "sobject_name": "\"Case\""
+        },
+        "optional": true,
+        "custom": true,
+        "toggle_hint": "Select from list",
+        "toggle_field": {
+          "control_type": "text",
+          "label": "Feature Request - Product Feedback",
+          "toggle_hint": "Enter custom value",
+          "optional": true,
+          "custom": true,
+          "sfdc_createable": true,
+          "sfdc_updateable": true,
+          "type": "string",
+          "name": "FeatureRequestProductFeedback__c"
+        },
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "string",
+        "name": "ICSTicketType__c",
+        "control_type": "select",
+        "label": "ICS Ticket Type",
+        "pick_list": "sobject_field_values_list",
+        "pick_list_params": {
+          "sobject_name": "\"Case\""
+        },
+        "optional": true,
+        "custom": true,
+        "toggle_hint": "Select from list",
+        "toggle_field": {
+          "control_type": "text",
+          "label": "ICS Ticket Type",
+          "toggle_hint": "Enter custom value",
+          "optional": true,
+          "custom": true,
+          "sfdc_createable": true,
+          "sfdc_updateable": true,
+          "type": "string",
+          "name": "ICSTicketType__c"
+        },
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "string",
+        "name": "Product__c",
+        "control_type": "select",
+        "label": "Product",
+        "pick_list": "sobject_field_values_list",
+        "pick_list_params": {
+          "sobject_name": "\"Case\""
+        },
+        "optional": true,
+        "custom": true,
+        "toggle_hint": "Select from list",
+        "toggle_field": {
+          "control_type": "text",
+          "label": "Product",
+          "toggle_hint": "Enter custom value",
+          "optional": true,
+          "custom": true,
+          "sfdc_createable": true,
+          "sfdc_updateable": true,
+          "type": "string",
+          "name": "Product__c"
+        },
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "string",
+        "name": "SuperSupport__c",
+        "control_type": "text",
+        "label": "Super Support",
+        "optional": true,
+        "custom": true,
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "TechnicalAccountManager__c",
+        "control_type": "text",
+        "label": "Technical Account Manager",
+        "optional": true,
+        "custom": true,
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "object",
+        "name": "Account",
+        "label": "Account",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Account Name",
+            "event_title": true,
+            "custom": false,
+            "sfdc_createable": true,
+            "sfdc_updateable": true,
+            "type": "string",
+            "name": "Name"
+          }
+        ]
+      },
+      {
+        "type": "object",
+        "name": "CombinedAttachments",
+        "label": "Combined attachments",
+        "properties": [
+          {
+            "control_type": "number",
+            "label": "Total size",
+            "parse_output": "integer_conversion",
+            "type": "integer",
+            "name": "totalSize"
+          },
+          {
+            "name": "records",
+            "type": "array",
+            "of": "object",
+            "label": "Files",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "ID",
+                "type": "string",
+                "name": "Id"
+              },
+              {
+                "control_type": "number",
+                "label": "Content size",
+                "parse_output": "integer_conversion",
+                "type": "integer",
+                "name": "ContentSize"
+              },
+              {
+                "control_type": "url",
+                "label": "Content URL",
+                "type": "string",
+                "name": "ContentUrl"
+              },
+              {
+                "control_type": "text",
+                "label": "File extension",
+                "type": "string",
+                "name": "FileExtension"
+              },
+              {
+                "control_type": "text",
+                "label": "File type",
+                "type": "string",
+                "name": "FileType"
+              },
+              {
+                "control_type": "text",
+                "label": "Parent ID",
+                "type": "string",
+                "name": "ParentId"
+              },
+              {
+                "control_type": "text",
+                "label": "Record type",
+                "type": "string",
+                "name": "RecordType"
+              },
+              {
+                "control_type": "text",
+                "label": "Title",
+                "type": "string",
+                "name": "Title"
+              }
+            ]
+          }
+        ],
+        "sfdc_field_type": "CombinedAttachment"
+      }
+    ],
+    "extended_input_schema": [
+      {
+        "type": "string",
+        "name": "since_offset",
+        "control_type": "select",
+        "label": "When first started, this recipe should pick up events from",
+        "hint": "When starting the recipe for the first time, picks up Salesforce records from the specified date and time. <b>Once the recipe has been run or tested, this value cannot be changed.</b>",
+        "default": -3600,
+        "pick_list": [
+          [
+            "Recipe start",
+            0
+          ],
+          [
+            "An hour ago",
+            -3600
+          ],
+          [
+            "Yesterday",
+            -86400
+          ],
+          [
+            "Last week",
+            -604800
+          ],
+          [
+            "Last month",
+            -2629746
+          ],
+          [
+            "Beginning of time",
+            "no_limit"
+          ]
+        ],
+        "toggle_hint": "Select from list",
+        "toggle_field": {
+          "control_type": "date_time",
+          "label": "When first started, this recipe should pick up events from",
+          "render_input": "convert_date_time",
+          "parse_output": "convert_date_time",
+          "toggle_hint": "Enter custom value",
+          "since_field": true,
+          "hint": "When starting the recipe for the first time, picks up Salesforce records from the specified date and time. <b>Once the recipe has been run or tested, this value cannot be changed.</b>",
+          "type": "date_time",
+          "name": "since"
+        },
+        "since_field": true
+      }
+    ],
+    "visible_config_fields": [
+      "sobject_name",
+      "field_list",
+      "since_offset",
+      "table_list"
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "present",
+              "lhs": "#{_('data.salesforce.11b92c83.SuperSupport__c')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "workato_service",
+            "name": "call_service_async",
+            "as": "9cd2f0f4",
+            "title": null,
+            "description": "Call recipe <span class=\"provider\">Callable - Slack alerts for Cases</span> (do not wait for response)",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "flow_id": "Callable - Slack Alert #tam_newcases channel"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "flow_id": {
+                "zip_name": "salesforce/callable/callable_slack_alerts_for_cases.recipe.json",
+                "name": "Callable - Slack alerts for Cases",
+                "folder": "salesforce/callable"
+              },
+              "request": {
+                "caseId": "#{_('data.salesforce.11b92c83.Id')}",
+                "channel": "#tam_newcases",
+                "message": "A new Case `#{_('data.salesforce.11b92c83.CaseNumber')}` has been created with `Super Support` checkbox checked."
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "request",
+                "label": "Recipe input",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Case ID",
+                    "name": "caseId",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Channel",
+                    "name": "channel",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Message",
+                    "name": "message",
+                    "type": "string",
+                    "optional": false
+                  }
+                ]
+              }
+            ],
+            "comment": "Send a slack notification to #tam_newcases when super support checkbox is marked.",
+            "uuid": "0d1017b4-08c2-4dc0-a636-c5ab341ce01a"
+          }
+        ],
+        "uuid": "0432fce3-90aa-48aa-bdc2-a03f5fb54238"
+      },
+      {
+        "number": 3,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "contains",
+              "lhs": "=lookup(\"SALESFORCE_VARIABLES\", key: \"case.tams.megapod1\")[\"value\"]",
+              "rhs": "#{_('data.salesforce.11b92c83.TechnicalAccountManager__c')}"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 4,
+            "provider": "workato_service",
+            "name": "call_service_async",
+            "as": "2b0cdc98",
+            "title": null,
+            "description": "Call recipe <span class=\"provider\">Callable - Slack alerts for Cases</span> (do not wait for response)",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "flow_id": "Callable - Slack Alert #tam_newcases channel"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "flow_id": {
+                "zip_name": "salesforce/callable/callable_slack_alerts_for_cases.recipe.json",
+                "name": "Callable - Slack alerts for Cases",
+                "folder": "salesforce/callable"
+              },
+              "request": {
+                "caseId": "#{_('data.salesforce.11b92c83.Id')}",
+                "channel": "#megapod1",
+                "message": "A new Case `#{_('data.salesforce.11b92c83.CaseNumber')}` has been opened for Account `#{_('data.salesforce.11b92c83.Account.Name')}`."
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "request",
+                "label": "Recipe input",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Case ID",
+                    "name": "caseId",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Channel",
+                    "name": "channel",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Message",
+                    "name": "message",
+                    "type": "string",
+                    "optional": false
+                  }
+                ]
+              }
+            ],
+            "comment": "Send the slack notification to #megapod1 channel if a tam is matched.",
+            "uuid": "aef63f84-c3de-4a9e-a843-fce6c9ed2699"
+          }
+        ],
+        "uuid": "25b7bb38-a6ca-4201-8064-7fb3e0dbf9bb"
+      },
+      {
+        "number": 5,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "contains",
+              "lhs": "=lookup(\"SALESFORCE_VARIABLES\", key: \"case.tams.megapod2\")[\"value\"]",
+              "rhs": "#{_('data.salesforce.11b92c83.TechnicalAccountManager__c')}"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 6,
+            "provider": "workato_service",
+            "name": "call_service_async",
+            "as": "3069643f",
+            "title": null,
+            "description": "Call recipe <span class=\"provider\">Callable - Slack alerts for Cases</span> (do not wait for response)",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "flow_id": "Callable - Slack Alert #tam_newcases channel"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "flow_id": {
+                "zip_name": "salesforce/callable/callable_slack_alerts_for_cases.recipe.json",
+                "name": "Callable - Slack alerts for Cases",
+                "folder": "salesforce/callable"
+              },
+              "request": {
+                "caseId": "#{_('data.salesforce.11b92c83.Id')}",
+                "channel": "#megapod2",
+                "message": "A new Case `#{_('data.salesforce.11b92c83.CaseNumber')}` has been opened for Account `#{_('data.salesforce.11b92c83.Account.Name')}`."
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "request",
+                "label": "Recipe input",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Case ID",
+                    "name": "caseId",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Channel",
+                    "name": "channel",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Message",
+                    "name": "message",
+                    "type": "string",
+                    "optional": false
+                  }
+                ]
+              }
+            ],
+            "comment": "Send the slack notification to #megapod2 channel if a tam is matched.",
+            "uuid": "a7981441-a17d-42a1-a263-b3c3a1323c8e"
+          }
+        ],
+        "uuid": "3cc95c33-3562-47e7-95c8-088746fe0804"
+      },
+      {
+        "number": 7,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "contains",
+              "lhs": "=lookup(\"SALESFORCE_VARIABLES\", key: \"case.tams.megapod3\")[\"value\"]",
+              "rhs": "#{_('data.salesforce.11b92c83.TechnicalAccountManager__c')}",
+              "uuid": "condition-37ae96f3-7967-42e3-8f15-b3f70c5a5945"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 8,
+            "provider": "workato_service",
+            "name": "call_service_async",
+            "as": "bd5510d0",
+            "title": null,
+            "description": "Call recipe <span class=\"provider\">Callable - Slack alerts for Cases</span> (do not wait for response)",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "flow_id": "Callable - Slack Alert #tam_newcases channel"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "flow_id": {
+                "zip_name": "salesforce/callable/callable_slack_alerts_for_cases.recipe.json",
+                "name": "Callable - Slack alerts for Cases",
+                "folder": "salesforce/callable"
+              },
+              "request": {
+                "caseId": "#{_('data.salesforce.11b92c83.Id')}",
+                "channel": "#megapod3",
+                "message": "A new Case `#{_('data.salesforce.11b92c83.CaseNumber')}` has been opened for Account `#{_('data.salesforce.11b92c83.Account.Name')}`."
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "request",
+                "label": "Recipe input",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Case ID",
+                    "name": "caseId",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Channel",
+                    "name": "channel",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Message",
+                    "name": "message",
+                    "type": "string",
+                    "optional": false
+                  }
+                ]
+              }
+            ],
+            "comment": "Send the slack notification to #megapod3 channel if a tam is matched.",
+            "uuid": "3f14b4c2-2f6b-4c6c-a269-f2b6e9613f5b"
+          }
+        ],
+        "uuid": "7e78dfc4-0707-4104-8e37-a05310643255"
+      },
+      {
+        "number": 9,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "equals_to",
+              "lhs": "#{_('data.salesforce.11b92c83.Account.Name')}",
+              "rhs": "Experian"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 10,
+            "provider": "workato_service",
+            "name": "call_service_async",
+            "as": "291bcd6d",
+            "title": null,
+            "description": "Call recipe <span class=\"provider\">Callable - Slack alerts for Cases</span> (do not wait for response)",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "flow_id": "Callable - Slack Alert #tam_newcases channel"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "flow_id": {
+                "zip_name": "salesforce/callable/callable_slack_alerts_for_cases.recipe.json",
+                "name": "Callable - Slack alerts for Cases",
+                "folder": "salesforce/callable"
+              },
+              "request": {
+                "caseId": "#{_('data.salesforce.11b92c83.Id')}",
+                "channel": "#tam_experian",
+                "message": "A new Case `#{_('data.salesforce.11b92c83.CaseNumber')}` has been created for Account `#{_('data.salesforce.11b92c83.Account.Name')}`."
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "request",
+                "label": "Recipe input",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Case ID",
+                    "name": "caseId",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Channel",
+                    "name": "channel",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Message",
+                    "name": "message",
+                    "type": "string",
+                    "optional": false
+                  }
+                ]
+              }
+            ],
+            "comment": "Send the slack notification to #tam_experian channel if account is Experian",
+            "uuid": "fa37c508-782a-4c04-a564-4f2b68935f3e"
+          }
+        ],
+        "comment": "",
+        "uuid": "95e4b036-178b-452d-b9f2-0acd0bc6ccb0"
+      },
+      {
+        "number": 11,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "equals_to",
+              "lhs": "#{_('data.salesforce.11b92c83.Product__c')}",
+              "rhs": "InsightCloudSec",
+              "uuid": "condition-0a1e9737-cf40-4c77-850d-1de402339bb6"
+            },
+            {
+              "operand": "equals_to",
+              "lhs": "#{_('data.salesforce.11b92c83.ICSTicketType__c')}",
+              "rhs": "Feature Request",
+              "uuid": "condition-33825ffa-bec5-4cae-8c0b-6905af62650e"
+            },
+            {
+              "operand": "equals_to",
+              "lhs": "#{_('data.salesforce.11b92c83.FeatureRequestProductFeedback__c')}",
+              "rhs": "Long Term Backlog",
+              "uuid": "condition-1585d4fe-1b28-4d92-a3e2-e26418752a3d"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 12,
+            "provider": "workato_service",
+            "name": "call_service_async",
+            "as": "34ee0a0e",
+            "title": null,
+            "description": "Call recipe <span class=\"provider\">Callable - Salesforce Case to Product Board Note</span> (do not wait for response)",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "flow_id": "Callable - Salesforce Case to Product Board Note"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "flow_id": {
+                "zip_name": "salesforce/callable/callable_salesforce_case_to_product_board_note.recipe.json",
+                "name": "Callable - Salesforce Case to Product Board Note",
+                "folder": "salesforce/callable"
+              },
+              "request": {
+                "caseId": "#{_('data.salesforce.11b92c83.Id')}"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "request",
+                "label": "Recipe input",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Case ID",
+                    "name": "caseId",
+                    "type": "string",
+                    "optional": false
+                  }
+                ]
+              }
+            ],
+            "uuid": "5a0c211f-9f77-42b5-b89a-056adbd0e29e"
+          }
+        ],
+        "uuid": "515f973e-0717-469d-acd1-edde114b695c"
+      }
+    ],
+    "comment": "Trigger when a new case  is created.",
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Case ID"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Case Number"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "Account"
+      },
+      {
+        "name": "custom_column_4",
+        "label": "TAM"
+      },
+      {
+        "name": "custom_column_5",
+        "label": "Super Support"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.salesforce.11b92c83.Id')}",
+      "custom_column_2": "#{_('data.salesforce.11b92c83.CaseNumber')}",
+      "custom_column_3": "#{_('data.salesforce.11b92c83.Account.Name')}",
+      "custom_column_4": "#{_('data.salesforce.11b92c83.TechnicalAccountManager__c')}",
+      "custom_column_5": "=_('data.salesforce.11b92c83.SuperSupport__c').present? ? \"Yes\" : \"No\""
+    },
+    "uuid": "55d981a9-e3ee-4480-a1dd-b76620ccff66"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "salesforce",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/salesforce.connection.json",
+        "name": "Salesforce",
+        "folder": "connections"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

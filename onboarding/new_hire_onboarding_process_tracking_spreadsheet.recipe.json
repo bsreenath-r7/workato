@@ -1,0 +1,2724 @@
+{
+  "name": "New Hire Onboarding - Process Tracking Spreadsheet",
+  "description": "When there is a trigger on a specified schedule, do action",
+  "version": 3,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "clock",
+    "name": "scheduled_event",
+    "as": "4769e0dc",
+    "title": null,
+    "description": "<span class=\"provider\">Trigger</span> every 1 days at <span class=\"provider\">12:00:00 PM</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+      "time_unit": "Days"
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "time_unit": "days",
+      "trigger_every": "1",
+      "trigger_at": "12:00:00"
+    },
+    "extended_input_schema": [
+      {
+        "type": "string",
+        "name": "trigger_every",
+        "control_type": "integer",
+        "label": "Trigger every",
+        "hint": "Define repeating schedule. Enter whole numbers only.\n                        This field can be set to a minimum of 5 minutes.",
+        "default": "5",
+        "optional": false,
+        "extends_schema": true
+      },
+      {
+        "type": "string",
+        "name": "trigger_at",
+        "control_type": "time",
+        "label": "Trigger at",
+        "hint": "Set a time to schedule the job.",
+        "optional": false,
+        "extends_schema": true
+      },
+      {
+        "type": "date_time",
+        "name": "start_after",
+        "control_type": "date_time",
+        "label": "Start after",
+        "hint": "Set date and time to start or leave blank to start immediately. <b>Once recipe has been run or tested, value cannot be changed.</b>",
+        "optional": true,
+        "extends_schema": true,
+        "since_field": true,
+        "render_input": "date_time_conversion",
+        "parse_output": "date_time_conversion"
+      },
+      {
+        "type": "string",
+        "name": "timezone",
+        "control_type": "select",
+        "label": "Timezone",
+        "hint": "Select the timezone to use. Leave it blank to use <b>(GMT-08:00) Pacific Time (US & Canada)</b>",
+        "pick_list": [
+          [
+            "International Date Line West",
+            "Etc/GMT+12"
+          ],
+          [
+            "Midway Island",
+            "Pacific/Midway"
+          ],
+          [
+            "American Samoa",
+            "Pacific/Pago_Pago"
+          ],
+          [
+            "Hawaii",
+            "Pacific/Honolulu"
+          ],
+          [
+            "Alaska",
+            "America/Juneau"
+          ],
+          [
+            "Pacific Time (US & Canada)",
+            "America/Los_Angeles"
+          ],
+          [
+            "Tijuana",
+            "America/Tijuana"
+          ],
+          [
+            "Mountain Time (US & Canada)",
+            "America/Denver"
+          ],
+          [
+            "Arizona",
+            "America/Phoenix"
+          ],
+          [
+            "Chihuahua",
+            "America/Chihuahua"
+          ],
+          [
+            "Mazatlan",
+            "America/Mazatlan"
+          ],
+          [
+            "Central Time (US & Canada)",
+            "America/Chicago"
+          ],
+          [
+            "Saskatchewan",
+            "America/Regina"
+          ],
+          [
+            "Guadalajara",
+            "America/Mexico_City"
+          ],
+          [
+            "Mexico City",
+            "America/Mexico_City"
+          ],
+          [
+            "Monterrey",
+            "America/Monterrey"
+          ],
+          [
+            "Central America",
+            "America/Guatemala"
+          ],
+          [
+            "Eastern Time (US & Canada)",
+            "America/New_York"
+          ],
+          [
+            "Indiana (East)",
+            "America/Indiana/Indianapolis"
+          ],
+          [
+            "Bogota",
+            "America/Bogota"
+          ],
+          [
+            "Lima",
+            "America/Lima"
+          ],
+          [
+            "Quito",
+            "America/Lima"
+          ],
+          [
+            "Atlantic Time (Canada)",
+            "America/Halifax"
+          ],
+          [
+            "Caracas",
+            "America/Caracas"
+          ],
+          [
+            "La Paz",
+            "America/La_Paz"
+          ],
+          [
+            "Santiago",
+            "America/Santiago"
+          ],
+          [
+            "Newfoundland",
+            "America/St_Johns"
+          ],
+          [
+            "Brasilia",
+            "America/Sao_Paulo"
+          ],
+          [
+            "Buenos Aires",
+            "America/Argentina/Buenos_Aires"
+          ],
+          [
+            "Montevideo",
+            "America/Montevideo"
+          ],
+          [
+            "Georgetown",
+            "America/Guyana"
+          ],
+          [
+            "Puerto Rico",
+            "America/Puerto_Rico"
+          ],
+          [
+            "Greenland",
+            "America/Godthab"
+          ],
+          [
+            "Mid-Atlantic",
+            "Atlantic/South_Georgia"
+          ],
+          [
+            "Azores",
+            "Atlantic/Azores"
+          ],
+          [
+            "Cape Verde Is.",
+            "Atlantic/Cape_Verde"
+          ],
+          [
+            "Dublin",
+            "Europe/Dublin"
+          ],
+          [
+            "Edinburgh",
+            "Europe/London"
+          ],
+          [
+            "Lisbon",
+            "Europe/Lisbon"
+          ],
+          [
+            "London",
+            "Europe/London"
+          ],
+          [
+            "Casablanca",
+            "Africa/Casablanca"
+          ],
+          [
+            "Monrovia",
+            "Africa/Monrovia"
+          ],
+          [
+            "UTC",
+            "Etc/UTC"
+          ],
+          [
+            "Belgrade",
+            "Europe/Belgrade"
+          ],
+          [
+            "Bratislava",
+            "Europe/Bratislava"
+          ],
+          [
+            "Budapest",
+            "Europe/Budapest"
+          ],
+          [
+            "Ljubljana",
+            "Europe/Ljubljana"
+          ],
+          [
+            "Prague",
+            "Europe/Prague"
+          ],
+          [
+            "Sarajevo",
+            "Europe/Sarajevo"
+          ],
+          [
+            "Skopje",
+            "Europe/Skopje"
+          ],
+          [
+            "Warsaw",
+            "Europe/Warsaw"
+          ],
+          [
+            "Zagreb",
+            "Europe/Zagreb"
+          ],
+          [
+            "Brussels",
+            "Europe/Brussels"
+          ],
+          [
+            "Copenhagen",
+            "Europe/Copenhagen"
+          ],
+          [
+            "Madrid",
+            "Europe/Madrid"
+          ],
+          [
+            "Paris",
+            "Europe/Paris"
+          ],
+          [
+            "Amsterdam",
+            "Europe/Amsterdam"
+          ],
+          [
+            "Berlin",
+            "Europe/Berlin"
+          ],
+          [
+            "Bern",
+            "Europe/Zurich"
+          ],
+          [
+            "Zurich",
+            "Europe/Zurich"
+          ],
+          [
+            "Rome",
+            "Europe/Rome"
+          ],
+          [
+            "Stockholm",
+            "Europe/Stockholm"
+          ],
+          [
+            "Vienna",
+            "Europe/Vienna"
+          ],
+          [
+            "West Central Africa",
+            "Africa/Algiers"
+          ],
+          [
+            "Bucharest",
+            "Europe/Bucharest"
+          ],
+          [
+            "Cairo",
+            "Africa/Cairo"
+          ],
+          [
+            "Helsinki",
+            "Europe/Helsinki"
+          ],
+          [
+            "Kyiv",
+            "Europe/Kiev"
+          ],
+          [
+            "Riga",
+            "Europe/Riga"
+          ],
+          [
+            "Sofia",
+            "Europe/Sofia"
+          ],
+          [
+            "Tallinn",
+            "Europe/Tallinn"
+          ],
+          [
+            "Vilnius",
+            "Europe/Vilnius"
+          ],
+          [
+            "Athens",
+            "Europe/Athens"
+          ],
+          [
+            "Istanbul",
+            "Europe/Istanbul"
+          ],
+          [
+            "Minsk",
+            "Europe/Minsk"
+          ],
+          [
+            "Jerusalem",
+            "Asia/Jerusalem"
+          ],
+          [
+            "Harare",
+            "Africa/Harare"
+          ],
+          [
+            "Pretoria",
+            "Africa/Johannesburg"
+          ],
+          [
+            "Kaliningrad",
+            "Europe/Kaliningrad"
+          ],
+          [
+            "Moscow",
+            "Europe/Moscow"
+          ],
+          [
+            "St. Petersburg",
+            "Europe/Moscow"
+          ],
+          [
+            "Volgograd",
+            "Europe/Volgograd"
+          ],
+          [
+            "Samara",
+            "Europe/Samara"
+          ],
+          [
+            "Kuwait",
+            "Asia/Kuwait"
+          ],
+          [
+            "Riyadh",
+            "Asia/Riyadh"
+          ],
+          [
+            "Nairobi",
+            "Africa/Nairobi"
+          ],
+          [
+            "Baghdad",
+            "Asia/Baghdad"
+          ],
+          [
+            "Tehran",
+            "Asia/Tehran"
+          ],
+          [
+            "Abu Dhabi",
+            "Asia/Muscat"
+          ],
+          [
+            "Muscat",
+            "Asia/Muscat"
+          ],
+          [
+            "Baku",
+            "Asia/Baku"
+          ],
+          [
+            "Tbilisi",
+            "Asia/Tbilisi"
+          ],
+          [
+            "Yerevan",
+            "Asia/Yerevan"
+          ],
+          [
+            "Kabul",
+            "Asia/Kabul"
+          ],
+          [
+            "Ekaterinburg",
+            "Asia/Yekaterinburg"
+          ],
+          [
+            "Islamabad",
+            "Asia/Karachi"
+          ],
+          [
+            "Karachi",
+            "Asia/Karachi"
+          ],
+          [
+            "Tashkent",
+            "Asia/Tashkent"
+          ],
+          [
+            "Chennai",
+            "Asia/Kolkata"
+          ],
+          [
+            "Kolkata",
+            "Asia/Kolkata"
+          ],
+          [
+            "Mumbai",
+            "Asia/Kolkata"
+          ],
+          [
+            "New Delhi",
+            "Asia/Kolkata"
+          ],
+          [
+            "Kathmandu",
+            "Asia/Kathmandu"
+          ],
+          [
+            "Astana",
+            "Asia/Dhaka"
+          ],
+          [
+            "Dhaka",
+            "Asia/Dhaka"
+          ],
+          [
+            "Sri Jayawardenepura",
+            "Asia/Colombo"
+          ],
+          [
+            "Almaty",
+            "Asia/Almaty"
+          ],
+          [
+            "Novosibirsk",
+            "Asia/Novosibirsk"
+          ],
+          [
+            "Rangoon",
+            "Asia/Rangoon"
+          ],
+          [
+            "Bangkok",
+            "Asia/Bangkok"
+          ],
+          [
+            "Hanoi",
+            "Asia/Bangkok"
+          ],
+          [
+            "Jakarta",
+            "Asia/Jakarta"
+          ],
+          [
+            "Krasnoyarsk",
+            "Asia/Krasnoyarsk"
+          ],
+          [
+            "Beijing",
+            "Asia/Shanghai"
+          ],
+          [
+            "Chongqing",
+            "Asia/Chongqing"
+          ],
+          [
+            "Hong Kong",
+            "Asia/Hong_Kong"
+          ],
+          [
+            "Urumqi",
+            "Asia/Urumqi"
+          ],
+          [
+            "Kuala Lumpur",
+            "Asia/Kuala_Lumpur"
+          ],
+          [
+            "Singapore",
+            "Asia/Singapore"
+          ],
+          [
+            "Taipei",
+            "Asia/Taipei"
+          ],
+          [
+            "Perth",
+            "Australia/Perth"
+          ],
+          [
+            "Irkutsk",
+            "Asia/Irkutsk"
+          ],
+          [
+            "Ulaanbaatar",
+            "Asia/Ulaanbaatar"
+          ],
+          [
+            "Seoul",
+            "Asia/Seoul"
+          ],
+          [
+            "Osaka",
+            "Asia/Tokyo"
+          ],
+          [
+            "Sapporo",
+            "Asia/Tokyo"
+          ],
+          [
+            "Tokyo",
+            "Asia/Tokyo"
+          ],
+          [
+            "Yakutsk",
+            "Asia/Yakutsk"
+          ],
+          [
+            "Darwin",
+            "Australia/Darwin"
+          ],
+          [
+            "Adelaide",
+            "Australia/Adelaide"
+          ],
+          [
+            "Canberra",
+            "Australia/Melbourne"
+          ],
+          [
+            "Melbourne",
+            "Australia/Melbourne"
+          ],
+          [
+            "Sydney",
+            "Australia/Sydney"
+          ],
+          [
+            "Brisbane",
+            "Australia/Brisbane"
+          ],
+          [
+            "Hobart",
+            "Australia/Hobart"
+          ],
+          [
+            "Vladivostok",
+            "Asia/Vladivostok"
+          ],
+          [
+            "Guam",
+            "Pacific/Guam"
+          ],
+          [
+            "Port Moresby",
+            "Pacific/Port_Moresby"
+          ],
+          [
+            "Magadan",
+            "Asia/Magadan"
+          ],
+          [
+            "Srednekolymsk",
+            "Asia/Srednekolymsk"
+          ],
+          [
+            "Solomon Is.",
+            "Pacific/Guadalcanal"
+          ],
+          [
+            "New Caledonia",
+            "Pacific/Noumea"
+          ],
+          [
+            "Fiji",
+            "Pacific/Fiji"
+          ],
+          [
+            "Kamchatka",
+            "Asia/Kamchatka"
+          ],
+          [
+            "Marshall Is.",
+            "Pacific/Majuro"
+          ],
+          [
+            "Auckland",
+            "Pacific/Auckland"
+          ],
+          [
+            "Wellington",
+            "Pacific/Auckland"
+          ],
+          [
+            "Nuku'alofa",
+            "Pacific/Tongatapu"
+          ],
+          [
+            "Tokelau Is.",
+            "Pacific/Fakaofo"
+          ],
+          [
+            "Chatham Is.",
+            "Pacific/Chatham"
+          ],
+          [
+            "Samoa",
+            "Pacific/Apia"
+          ]
+        ],
+        "optional": true
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "lookup_table",
+            "name": "get_entries",
+            "as": "1230923f",
+            "title": null,
+            "description": "\n      Get all\n      <span class=\"provider\">entries</span>\n      from\n      <span class=\"provider\">ONBOARDING_NEW_HIRES_VARIABLES</span>\n      lookup table\n    ",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "lookup_table_id": "ONBOARDING_NEW_HIRES_VARIABLES"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "lookup_table_id": {
+                "zip_name": "onboarding_new_hires_variables.lookup_table.json",
+                "name": "ONBOARDING_NEW_HIRES_VARIABLES",
+                "folder": ""
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "array",
+                "name": "entries",
+                "label": "Entries",
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "Entry ID",
+                    "parse_output": "integer_conversion",
+                    "type": "integer",
+                    "name": "id"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Variable_Name",
+                        "name": "col1",
+                        "type": "string",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Type",
+                        "name": "col2",
+                        "type": "string",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Value1",
+                        "name": "col3",
+                        "type": "string",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Value2",
+                        "name": "col4",
+                        "type": "string",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Desc",
+                        "name": "col5",
+                        "type": "string",
+                        "sticky": true
+                      }
+                    ],
+                    "label": "Entry",
+                    "type": "object",
+                    "name": "entry"
+                  }
+                ]
+              }
+            ],
+            "comment": "This step is used as a placeholder to make sure the lookup table is pulled associated to the recipe under the Workato Dashboard Depency Checker",
+            "uuid": "0a0f1c3f-49b2-4d88-ab17-e1a83b522776"
+          },
+          {
+            "number": 3,
+            "provider": "workato_variable",
+            "name": "declare_variable",
+            "as": "1707765e",
+            "title": "  Create variables CSV Column Headers, Number_Of_People_Processed",
+            "description": "Create variables <span class=\"provider\">CSV Column Headers</span>, <span class=\"provider\">Number_Of_People_Processed</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "variables": {
+                "schema": "[{\"name\":\"csv_column_headers\",\"type\":\"string\",\"optional\":true,\"label\":\"CSV Column Headers\",\"control_type\":\"text\"},{\"name\":\"number_of_people_processed\",\"type\":\"integer\",\"optional\":true,\"label\":\"Number_Of_People_Processed\",\"control_type\":\"integer\"}]",
+                "data": {
+                  "csv_column_headers": "Preferred name\t\nStart date\t\nCompletion date\t\nOffice\t\nRole\t\nBusiness Process Reason\t\nPersonal email\t\nManager\t\nEmployee ID\t\nManager Email\t\nWorkday Username\t\nNew Hire MGMT Level\nNew Hire Starting In Office or Remote \t\nEMEA Day 1 IT and Welcome Session Invite North America\nIT and Welcome Session invites 12pm ET \nMgr Day 1 invite \nDonut -- NH, Mgr \t\nDonut buddy\nAdd Mgr to #Phase3Onboarding Slack\t\nAdd Mgr to #remoteonboarding slack\nNew Moose Slack Channel \nNew Moose QQs invite\nNMLP date\nNMLP enrollment in SoR\nNMLP invite\nNMLP slack\nNMLP Email Mgr \nNMLP email NH\nMTB: SOR Enroll in Program Enroll IC and Manager's\nNew Hire Manager Onboarding Program: SOR Enroll in Program\nDay 2 Date\nDay 2 Calendar invite \nDay 2 Record of Attendance (Facilitator)\nDay 3 Date\nDay 3 Calendar invite \nDay 3 Record of Attendance (Facilitator)\nDay 4 Date\t\nDay 4 Calendar invite \nDay 4 Record of Attendance (Facilitator)\nMonth 2 Date Relevent Cohort Date\t\nMonth 2 invite \nMonth 2 Record of Attendance (Facilitator)\nManager's Month 2 Date\t\nManager's Month 2 Learders Foundations invite \nManager's Month 2 Record of Attendance (Facilitator)\nMonth 3 Date\t\nMonth 3 invite \t\nMonth 3 Record of Attendance (Facilitator)\nManager's Month 4 My Leadership Behaviors Date\t\nManager's Month 4 invite\nManager's Month 4 Record of Attendance (Facilitator)\nSocial event invite\nN Am swag code sent? \nEMEA/ APAC swag mailed? \nAutomate?",
+                  "number_of_people_processed": "0"
+                }
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "string",
+                "name": "csv_column_headers",
+                "control_type": "text",
+                "label": "CSV Column Headers",
+                "optional": true
+              },
+              {
+                "type": "integer",
+                "name": "number_of_people_processed",
+                "control_type": "integer",
+                "label": "Number_Of_People_Processed",
+                "optional": true,
+                "parse_output": "integer_conversion"
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "variables",
+                "control_type": "form-schema-builder",
+                "label": "Variables",
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Schema",
+                    "extends_schema": true,
+                    "broadcast_change_event": true,
+                    "type": "string",
+                    "name": "schema"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "CSV Column Headers",
+                        "name": "csv_column_headers",
+                        "type": "string",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "integer",
+                        "label": "Number_Of_People_Processed",
+                        "parse_output": "integer_conversion",
+                        "name": "number_of_people_processed",
+                        "type": "integer",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      }
+                    ],
+                    "label": "Data",
+                    "type": "object",
+                    "name": "data"
+                  }
+                ],
+                "exclude_fields": [
+                  "hint"
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "variables.data.csv_column_headers",
+              "variables",
+              "variables.schema",
+              "variables.data",
+              "variables.data.number_of_people_processed"
+            ],
+            "comment": "This variable will store the CSV Column header names as reference",
+            "uuid": "20755d1f-a66e-42ed-ac9b-7591e49c9d7b"
+          },
+          {
+            "number": 4,
+            "provider": "google_sheets",
+            "name": "search_spreadsheet_rows_v4_new",
+            "as": "0b8b8606",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "spreadsheet": "MB New Hire Testing"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "team_drives": "my_drive",
+              "count": "5000",
+              "spreadsheet_id": "=lookup(\"ONBOARDING_NEW_HIRES_VARIABLES\", \"Variable_Name\": \"googleTrackingSpeadsheetID\")[\"Value1\"]",
+              "sheet_name": "=lookup(\"ONBOARDING_NEW_HIRES_VARIABLES\", \"Variable_Name\": \"googleTrackingSheetName\")[\"Value1\"]",
+              "column_headers": "Preferred name\t\nStart date\t\nCompletion date\t\nOffice\t\nRole\t\nBusiness Process Reason\t\nPersonal email\t\nManager\t\nEmployee ID\t\nManager Email\t\nWorkday Username\t\nNew Hire MGMT Level\nNew Hire Starting In Office or Remote \t\nEMEA Day 1 IT and Welcome Session Invite North America\nIT and Welcome Session invites 12pm ET \nMgr Day 1 invite \nDonut -- NH, Mgr \t\nDonut buddy\nAdd Mgr to #Phase3Onboarding Slack\t\nAdd Mgr to #remoteonboarding slack\nNew Moose Slack Channel \nNew Moose QQs invite\nNMLP date\nNMLP enrollment in SoR\nNMLP invite\nNMLP slack\nNMLP Email Mgr \nNMLP email NH\nMTB: SOR Enroll in Program Enroll IC and Manager's\nNew Hire Manager Onboarding Program: SOR Enroll in Program\nDay 2 Date\nDay 2 Calendar invite \nDay 2 Record of Attendance (Facilitator)\nDay 3 Date\nDay 3 Calendar invite \nDay 3 Record of Attendance (Facilitator)\nDay 4 Date\t\nDay 4 Calendar invite \nDay 4 Record of Attendance (Facilitator)\nMonth 2 Date Relevent Cohort Date\t\nMonth 2 invite \nMonth 2 Record of Attendance (Facilitator)\nManager's Month 2 Date\t\nManager's Month 2 Learders Foundations invite \nManager's Month 2 Record of Attendance (Facilitator)\nMonth 3 Date\t\nMonth 3 invite \t\nMonth 3 Record of Attendance (Facilitator)\nManager's Month 4 My Leadership Behaviors Date\t\nManager's Month 4 invite\nManager's Month 4 Record of Attendance (Facilitator)\nSocial event invite\nN Am swag code sent? \nEMEA/ APAC swag mailed? \nAutomate?",
+              "data": {
+                "col_Automate?": "YES"
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "string",
+                "name": "spreadsheet_id",
+                "control_type": "text",
+                "label": "Spreadsheet ID"
+              },
+              {
+                "type": "string",
+                "name": "spreadsheet_name",
+                "control_type": "text",
+                "label": "Spreadsheet name"
+              },
+              {
+                "type": "string",
+                "name": "sheet",
+                "control_type": "text",
+                "label": "Sheet name"
+              },
+              {
+                "type": "array",
+                "name": "rows",
+                "label": "Rows",
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "Row number",
+                    "parse_output": "integer_conversion",
+                    "type": "integer",
+                    "name": "row_number"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Preferred name\t",
+                    "custom_attribute": 1,
+                    "type": "string",
+                    "name": "col_Preferred_name_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Preferred name\t (Deprecated)",
+                    "custom_attribute": 1,
+                    "type": "string",
+                    "name": "col_Preferred name\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Start date\t",
+                    "custom_attribute": 2,
+                    "type": "string",
+                    "name": "col_Start_date_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Start date\t (Deprecated)",
+                    "custom_attribute": 2,
+                    "type": "string",
+                    "name": "col_Start date\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Completion date\t",
+                    "custom_attribute": 3,
+                    "type": "string",
+                    "name": "col_Completion_date_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Completion date\t (Deprecated)",
+                    "custom_attribute": 3,
+                    "type": "string",
+                    "name": "col_Completion date\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Office\t",
+                    "custom_attribute": 4,
+                    "type": "string",
+                    "name": "col_Office_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Office\t (Deprecated)",
+                    "custom_attribute": 4,
+                    "type": "string",
+                    "name": "col_Office\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Role\t",
+                    "custom_attribute": 5,
+                    "type": "string",
+                    "name": "col_Role_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Role\t (Deprecated)",
+                    "custom_attribute": 5,
+                    "type": "string",
+                    "name": "col_Role\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Business Process Reason\t",
+                    "custom_attribute": 6,
+                    "type": "string",
+                    "name": "col_Business_Process_Reason_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Business Process Reason\t (Deprecated)",
+                    "custom_attribute": 6,
+                    "type": "string",
+                    "name": "col_Business Process Reason\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Personal email\t",
+                    "custom_attribute": 7,
+                    "type": "string",
+                    "name": "col_Personal_email_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Personal email\t (Deprecated)",
+                    "custom_attribute": 7,
+                    "type": "string",
+                    "name": "col_Personal email\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager\t",
+                    "custom_attribute": 8,
+                    "type": "string",
+                    "name": "col_Manager_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager\t (Deprecated)",
+                    "custom_attribute": 8,
+                    "type": "string",
+                    "name": "col_Manager\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Employee ID\t",
+                    "custom_attribute": 9,
+                    "type": "string",
+                    "name": "col_Employee_ID_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Employee ID\t (Deprecated)",
+                    "custom_attribute": 9,
+                    "type": "string",
+                    "name": "col_Employee ID\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager Email\t",
+                    "custom_attribute": 10,
+                    "type": "string",
+                    "name": "col_Manager_Email_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager Email\t (Deprecated)",
+                    "custom_attribute": 10,
+                    "type": "string",
+                    "name": "col_Manager Email\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Workday Username\t",
+                    "custom_attribute": 11,
+                    "type": "string",
+                    "name": "col_Workday_Username_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Workday Username\t (Deprecated)",
+                    "custom_attribute": 11,
+                    "type": "string",
+                    "name": "col_Workday Username\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "New Hire MGMT Level",
+                    "custom_attribute": 12,
+                    "type": "string",
+                    "name": "col_New_Hire_MGMT_Level"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "New Hire MGMT Level (Deprecated)",
+                    "custom_attribute": 12,
+                    "type": "string",
+                    "name": "col_New Hire MGMT Level"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "New Hire Starting In Office or Remote \t",
+                    "custom_attribute": 13,
+                    "type": "string",
+                    "name": "col_New_Hire_Starting_In_Office_or_Remote__"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "New Hire Starting In Office or Remote \t (Deprecated)",
+                    "custom_attribute": 13,
+                    "type": "string",
+                    "name": "col_New Hire Starting In Office or Remote \t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "EMEA Day 1 IT and Welcome Session Invite North America",
+                    "custom_attribute": 14,
+                    "type": "string",
+                    "name": "col_EMEA_Day_1_IT_and_Welcome_Session_Invite_North_America"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "EMEA Day 1 IT and Welcome Session Invite North America (Deprecated)",
+                    "custom_attribute": 14,
+                    "type": "string",
+                    "name": "col_EMEA Day 1 IT and Welcome Session Invite North America"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "IT and Welcome Session invites 12pm ET ",
+                    "custom_attribute": 15,
+                    "type": "string",
+                    "name": "col_IT_and_Welcome_Session_invites_12pm_ET_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "IT and Welcome Session invites 12pm ET  (Deprecated)",
+                    "custom_attribute": 15,
+                    "type": "string",
+                    "name": "col_IT and Welcome Session invites 12pm ET "
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Mgr Day 1 invite ",
+                    "custom_attribute": 16,
+                    "type": "string",
+                    "name": "col_Mgr_Day_1_invite_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Mgr Day 1 invite  (Deprecated)",
+                    "custom_attribute": 16,
+                    "type": "string",
+                    "name": "col_Mgr Day 1 invite "
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Donut -- NH, Mgr \t",
+                    "custom_attribute": 17,
+                    "type": "string",
+                    "name": "col_Donut____NH__Mgr__"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Donut -- NH, Mgr \t (Deprecated)",
+                    "custom_attribute": 17,
+                    "type": "string",
+                    "name": "col_Donut -- NH, Mgr \t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Donut buddy",
+                    "custom_attribute": 18,
+                    "type": "string",
+                    "name": "col_Donut_buddy"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Donut buddy (Deprecated)",
+                    "custom_attribute": 18,
+                    "type": "string",
+                    "name": "col_Donut buddy"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Add Mgr to #Phase3Onboarding Slack\t",
+                    "custom_attribute": 19,
+                    "type": "string",
+                    "name": "col_Add_Mgr_to__Phase3Onboarding_Slack_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Add Mgr to #Phase3Onboarding Slack\t (Deprecated)",
+                    "custom_attribute": 19,
+                    "type": "string",
+                    "name": "col_Add Mgr to #Phase3Onboarding Slack\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Add Mgr to #remoteonboarding slack",
+                    "custom_attribute": 20,
+                    "type": "string",
+                    "name": "col_Add_Mgr_to__remoteonboarding_slack"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Add Mgr to #remoteonboarding slack (Deprecated)",
+                    "custom_attribute": 20,
+                    "type": "string",
+                    "name": "col_Add Mgr to #remoteonboarding slack"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "New Moose Slack Channel ",
+                    "custom_attribute": 21,
+                    "type": "string",
+                    "name": "col_New_Moose_Slack_Channel_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "New Moose Slack Channel  (Deprecated)",
+                    "custom_attribute": 21,
+                    "type": "string",
+                    "name": "col_New Moose Slack Channel "
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "New Moose QQs invite",
+                    "custom_attribute": 22,
+                    "type": "string",
+                    "name": "col_New_Moose_QQs_invite"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "New Moose QQs invite (Deprecated)",
+                    "custom_attribute": 22,
+                    "type": "string",
+                    "name": "col_New Moose QQs invite"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "NMLP date",
+                    "custom_attribute": 23,
+                    "type": "string",
+                    "name": "col_NMLP_date"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "NMLP date (Deprecated)",
+                    "custom_attribute": 23,
+                    "type": "string",
+                    "name": "col_NMLP date"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "NMLP enrollment in SoR",
+                    "custom_attribute": 24,
+                    "type": "string",
+                    "name": "col_NMLP_enrollment_in_SoR"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "NMLP enrollment in SoR (Deprecated)",
+                    "custom_attribute": 24,
+                    "type": "string",
+                    "name": "col_NMLP enrollment in SoR"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "NMLP invite",
+                    "custom_attribute": 25,
+                    "type": "string",
+                    "name": "col_NMLP_invite"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "NMLP invite (Deprecated)",
+                    "custom_attribute": 25,
+                    "type": "string",
+                    "name": "col_NMLP invite"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "NMLP slack",
+                    "custom_attribute": 26,
+                    "type": "string",
+                    "name": "col_NMLP_slack"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "NMLP slack (Deprecated)",
+                    "custom_attribute": 26,
+                    "type": "string",
+                    "name": "col_NMLP slack"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "NMLP Email Mgr ",
+                    "custom_attribute": 27,
+                    "type": "string",
+                    "name": "col_NMLP_Email_Mgr_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "NMLP Email Mgr  (Deprecated)",
+                    "custom_attribute": 27,
+                    "type": "string",
+                    "name": "col_NMLP Email Mgr "
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "NMLP email NH",
+                    "custom_attribute": 28,
+                    "type": "string",
+                    "name": "col_NMLP_email_NH"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "NMLP email NH (Deprecated)",
+                    "custom_attribute": 28,
+                    "type": "string",
+                    "name": "col_NMLP email NH"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "MTB: SOR Enroll in Program Enroll IC and Manager's",
+                    "custom_attribute": 29,
+                    "type": "string",
+                    "name": "col_MTB__SOR_Enroll_in_Program_Enroll_IC_and_Manager_s"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "MTB: SOR Enroll in Program Enroll IC and Manager's (Deprecated)",
+                    "custom_attribute": 29,
+                    "type": "string",
+                    "name": "col_MTB: SOR Enroll in Program Enroll IC and Manager's"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "New Hire Manager Onboarding Program: SOR Enroll in Program",
+                    "custom_attribute": 30,
+                    "type": "string",
+                    "name": "col_New_Hire_Manager_Onboarding_Program__SOR_Enroll_in_Program"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "New Hire Manager Onboarding Program: SOR Enroll in Program (Deprecated)",
+                    "custom_attribute": 30,
+                    "type": "string",
+                    "name": "col_New Hire Manager Onboarding Program: SOR Enroll in Program"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 2 Date",
+                    "custom_attribute": 31,
+                    "type": "string",
+                    "name": "col_Day_2_Date"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 2 Date (Deprecated)",
+                    "custom_attribute": 31,
+                    "type": "string",
+                    "name": "col_Day 2 Date"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 2 Calendar invite ",
+                    "custom_attribute": 32,
+                    "type": "string",
+                    "name": "col_Day_2_Calendar_invite_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 2 Calendar invite  (Deprecated)",
+                    "custom_attribute": 32,
+                    "type": "string",
+                    "name": "col_Day 2 Calendar invite "
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 2 Record of Attendance (Facilitator)",
+                    "custom_attribute": 33,
+                    "type": "string",
+                    "name": "col_Day_2_Record_of_Attendance__Facilitator_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 2 Record of Attendance (Facilitator) (Deprecated)",
+                    "custom_attribute": 33,
+                    "type": "string",
+                    "name": "col_Day 2 Record of Attendance (Facilitator)"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 3 Date",
+                    "custom_attribute": 34,
+                    "type": "string",
+                    "name": "col_Day_3_Date"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 3 Date (Deprecated)",
+                    "custom_attribute": 34,
+                    "type": "string",
+                    "name": "col_Day 3 Date"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 3 Calendar invite ",
+                    "custom_attribute": 35,
+                    "type": "string",
+                    "name": "col_Day_3_Calendar_invite_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 3 Calendar invite  (Deprecated)",
+                    "custom_attribute": 35,
+                    "type": "string",
+                    "name": "col_Day 3 Calendar invite "
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 3 Record of Attendance (Facilitator)",
+                    "custom_attribute": 36,
+                    "type": "string",
+                    "name": "col_Day_3_Record_of_Attendance__Facilitator_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 3 Record of Attendance (Facilitator) (Deprecated)",
+                    "custom_attribute": 36,
+                    "type": "string",
+                    "name": "col_Day 3 Record of Attendance (Facilitator)"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 4 Date\t",
+                    "custom_attribute": 37,
+                    "type": "string",
+                    "name": "col_Day_4_Date_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 4 Date\t (Deprecated)",
+                    "custom_attribute": 37,
+                    "type": "string",
+                    "name": "col_Day 4 Date\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 4 Calendar invite ",
+                    "custom_attribute": 38,
+                    "type": "string",
+                    "name": "col_Day_4_Calendar_invite_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 4 Calendar invite  (Deprecated)",
+                    "custom_attribute": 38,
+                    "type": "string",
+                    "name": "col_Day 4 Calendar invite "
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 4 Record of Attendance (Facilitator)",
+                    "custom_attribute": 39,
+                    "type": "string",
+                    "name": "col_Day_4_Record_of_Attendance__Facilitator_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 4 Record of Attendance (Facilitator) (Deprecated)",
+                    "custom_attribute": 39,
+                    "type": "string",
+                    "name": "col_Day 4 Record of Attendance (Facilitator)"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Month 2 Date Relevent Cohort Date\t",
+                    "custom_attribute": 40,
+                    "type": "string",
+                    "name": "col_Month_2_Date_Relevent_Cohort_Date_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Month 2 Date Relevent Cohort Date\t (Deprecated)",
+                    "custom_attribute": 40,
+                    "type": "string",
+                    "name": "col_Month 2 Date Relevent Cohort Date\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Month 2 invite ",
+                    "custom_attribute": 41,
+                    "type": "string",
+                    "name": "col_Month_2_invite_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Month 2 invite  (Deprecated)",
+                    "custom_attribute": 41,
+                    "type": "string",
+                    "name": "col_Month 2 invite "
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Month 2 Record of Attendance (Facilitator)",
+                    "custom_attribute": 42,
+                    "type": "string",
+                    "name": "col_Month_2_Record_of_Attendance__Facilitator_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Month 2 Record of Attendance (Facilitator) (Deprecated)",
+                    "custom_attribute": 42,
+                    "type": "string",
+                    "name": "col_Month 2 Record of Attendance (Facilitator)"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager's Month 2 Date\t",
+                    "custom_attribute": 43,
+                    "type": "string",
+                    "name": "col_Manager_s_Month_2_Date_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager's Month 2 Date\t (Deprecated)",
+                    "custom_attribute": 43,
+                    "type": "string",
+                    "name": "col_Manager's Month 2 Date\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager's Month 2 Learders Foundations invite ",
+                    "custom_attribute": 44,
+                    "type": "string",
+                    "name": "col_Manager_s_Month_2_Learders_Foundations_invite_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager's Month 2 Learders Foundations invite  (Deprecated)",
+                    "custom_attribute": 44,
+                    "type": "string",
+                    "name": "col_Manager's Month 2 Learders Foundations invite "
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager's Month 2 Record of Attendance (Facilitator)",
+                    "custom_attribute": 45,
+                    "type": "string",
+                    "name": "col_Manager_s_Month_2_Record_of_Attendance__Facilitator_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager's Month 2 Record of Attendance (Facilitator) (Deprecated)",
+                    "custom_attribute": 45,
+                    "type": "string",
+                    "name": "col_Manager's Month 2 Record of Attendance (Facilitator)"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Month 3 Date\t",
+                    "custom_attribute": 46,
+                    "type": "string",
+                    "name": "col_Month_3_Date_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Month 3 Date\t (Deprecated)",
+                    "custom_attribute": 46,
+                    "type": "string",
+                    "name": "col_Month 3 Date\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Month 3 invite \t",
+                    "custom_attribute": 47,
+                    "type": "string",
+                    "name": "col_Month_3_invite__"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Month 3 invite \t (Deprecated)",
+                    "custom_attribute": 47,
+                    "type": "string",
+                    "name": "col_Month 3 invite \t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Month 3 Record of Attendance (Facilitator)",
+                    "custom_attribute": 48,
+                    "type": "string",
+                    "name": "col_Month_3_Record_of_Attendance__Facilitator_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Month 3 Record of Attendance (Facilitator) (Deprecated)",
+                    "custom_attribute": 48,
+                    "type": "string",
+                    "name": "col_Month 3 Record of Attendance (Facilitator)"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager's Month 4 My Leadership Behaviors Date\t",
+                    "custom_attribute": 49,
+                    "type": "string",
+                    "name": "col_Manager_s_Month_4_My_Leadership_Behaviors_Date_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager's Month 4 My Leadership Behaviors Date\t (Deprecated)",
+                    "custom_attribute": 49,
+                    "type": "string",
+                    "name": "col_Manager's Month 4 My Leadership Behaviors Date\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager's Month 4 invite",
+                    "custom_attribute": 50,
+                    "type": "string",
+                    "name": "col_Manager_s_Month_4_invite"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager's Month 4 invite (Deprecated)",
+                    "custom_attribute": 50,
+                    "type": "string",
+                    "name": "col_Manager's Month 4 invite"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager's Month 4 Record of Attendance (Facilitator)",
+                    "custom_attribute": 51,
+                    "type": "string",
+                    "name": "col_Manager_s_Month_4_Record_of_Attendance__Facilitator_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager's Month 4 Record of Attendance (Facilitator) (Deprecated)",
+                    "custom_attribute": 51,
+                    "type": "string",
+                    "name": "col_Manager's Month 4 Record of Attendance (Facilitator)"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Social event invite",
+                    "custom_attribute": 52,
+                    "type": "string",
+                    "name": "col_Social_event_invite"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Social event invite (Deprecated)",
+                    "custom_attribute": 52,
+                    "type": "string",
+                    "name": "col_Social event invite"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "N Am swag code sent? ",
+                    "custom_attribute": 53,
+                    "type": "string",
+                    "name": "col_N_Am_swag_code_sent__"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "N Am swag code sent?  (Deprecated)",
+                    "custom_attribute": 53,
+                    "type": "string",
+                    "name": "col_N Am swag code sent? "
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "EMEA/ APAC swag mailed? ",
+                    "custom_attribute": 54,
+                    "type": "string",
+                    "name": "col_EMEA__APAC_swag_mailed__"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "EMEA/ APAC swag mailed?  (Deprecated)",
+                    "custom_attribute": 54,
+                    "type": "string",
+                    "name": "col_EMEA/ APAC swag mailed? "
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Automate?",
+                    "custom_attribute": 55,
+                    "type": "string",
+                    "name": "col_Automate_"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Automate? (Deprecated)",
+                    "custom_attribute": 55,
+                    "type": "string",
+                    "name": "col_Automate?"
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "sheet_name",
+                "control_type": "text",
+                "label": "Sheet name",
+                "hint": "Use <b>Sheet name</b> pill from the output of other Google Sheets’ triggers/actions. Or enter sheet name manually.",
+                "extends_schema": true,
+                "change_on_blur": true
+              },
+              {
+                "type": "string",
+                "name": "column_headers",
+                "control_type": "text-area",
+                "label": "Column headers",
+                "hint": "List down the column headers in the order that they appear in your sheet. One column per line.",
+                "extends_schema": true,
+                "change_on_blur": true
+              },
+              {
+                "type": "object",
+                "name": "data",
+                "label": "Columns",
+                "hint": "Enter one or more search values. Workato will search for rows matching <b>ALL</b> of the search values below.",
+                "sticky": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Preferred name\t",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Preferred name\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Start date\t",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Start date\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Completion date\t",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Completion date\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Office\t",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Office\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Role\t",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Role\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Business Process Reason\t",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Business Process Reason\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Personal email\t",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Personal email\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager\t",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Manager\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Employee ID\t",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Employee ID\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager Email\t",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Manager Email\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Workday Username\t",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Workday Username\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "New Hire MGMT Level",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_New Hire MGMT Level"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "New Hire Starting In Office or Remote \t",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_New Hire Starting In Office or Remote \t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "EMEA Day 1 IT and Welcome Session Invite North America",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_EMEA Day 1 IT and Welcome Session Invite North America"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "IT and Welcome Session invites 12pm ET ",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_IT and Welcome Session invites 12pm ET "
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Mgr Day 1 invite ",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Mgr Day 1 invite "
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Donut -- NH, Mgr \t",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Donut -- NH, Mgr \t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Donut buddy",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Donut buddy"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Add Mgr to #Phase3Onboarding Slack\t",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Add Mgr to #Phase3Onboarding Slack\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Add Mgr to #remoteonboarding slack",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Add Mgr to #remoteonboarding slack"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "New Moose Slack Channel ",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_New Moose Slack Channel "
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "New Moose QQs invite",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_New Moose QQs invite"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "NMLP date",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_NMLP date"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "NMLP enrollment in SoR",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_NMLP enrollment in SoR"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "NMLP invite",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_NMLP invite"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "NMLP slack",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_NMLP slack"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "NMLP Email Mgr ",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_NMLP Email Mgr "
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "NMLP email NH",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_NMLP email NH"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "MTB: SOR Enroll in Program Enroll IC and Manager's",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_MTB: SOR Enroll in Program Enroll IC and Manager's"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "New Hire Manager Onboarding Program: SOR Enroll in Program",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_New Hire Manager Onboarding Program: SOR Enroll in Program"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 2 Date",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Day 2 Date"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 2 Calendar invite ",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Day 2 Calendar invite "
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 2 Record of Attendance (Facilitator)",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Day 2 Record of Attendance (Facilitator)"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 3 Date",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Day 3 Date"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 3 Calendar invite ",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Day 3 Calendar invite "
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 3 Record of Attendance (Facilitator)",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Day 3 Record of Attendance (Facilitator)"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 4 Date\t",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Day 4 Date\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 4 Calendar invite ",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Day 4 Calendar invite "
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Day 4 Record of Attendance (Facilitator)",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Day 4 Record of Attendance (Facilitator)"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Month 2 Date Relevent Cohort Date\t",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Month 2 Date Relevent Cohort Date\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Month 2 invite ",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Month 2 invite "
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Month 2 Record of Attendance (Facilitator)",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Month 2 Record of Attendance (Facilitator)"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager's Month 2 Date\t",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Manager's Month 2 Date\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager's Month 2 Learders Foundations invite ",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Manager's Month 2 Learders Foundations invite "
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager's Month 2 Record of Attendance (Facilitator)",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Manager's Month 2 Record of Attendance (Facilitator)"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Month 3 Date\t",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Month 3 Date\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Month 3 invite \t",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Month 3 invite \t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Month 3 Record of Attendance (Facilitator)",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Month 3 Record of Attendance (Facilitator)"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager's Month 4 My Leadership Behaviors Date\t",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Manager's Month 4 My Leadership Behaviors Date\t"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager's Month 4 invite",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Manager's Month 4 invite"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager's Month 4 Record of Attendance (Facilitator)",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Manager's Month 4 Record of Attendance (Facilitator)"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Social event invite",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Social event invite"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "N Am swag code sent? ",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_N Am swag code sent? "
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "EMEA/ APAC swag mailed? ",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_EMEA/ APAC swag mailed? "
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Automate?",
+                    "optional": true,
+                    "sticky": true,
+                    "hint": "Search for an exact match of the search value you enter here. Search value is case-sensitive and can contain space.",
+                    "type": "string",
+                    "name": "col_Automate?"
+                  }
+                ]
+              },
+              {
+                "type": "number",
+                "name": "count",
+                "control_type": "number",
+                "label": "Search result size",
+                "hint": "Maximum number of matched rows to be returned. Minimum accepted value is <b>1</b> and maximum accepted value is <b>50000</b>.",
+                "default": 200,
+                "optional": true,
+                "parse_output": "float_conversion"
+              }
+            ],
+            "comment": "Search through the referenced New Hire Onboarding Spreadsheet .. Pulling down all",
+            "uuid": "9d8e5942-54f2-4815-a6dd-a65ed49bab80",
+            "skip": false
+          },
+          {
+            "number": 5,
+            "as": "b07c2a11",
+            "keyword": "foreach",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "repeat_mode": "simple",
+            "clear_scope": "false",
+            "input": {
+            },
+            "block": [
+              {
+                "number": 6,
+                "provider": "workato_variable",
+                "name": "declare_variable",
+                "as": "b8722da7",
+                "title": "  Create variables Row_Number, Perferred_Name, Personal_Email, Start_Date, Workday_ID",
+                "description": "Create variables <span class=\"provider\">Row_Number</span>, <span class=\"provider\">Perferred_Name</span>, <span class=\"provider\">Personal_Email</span>, <span class=\"provider\">Start_Date</span>, <span class=\"provider\">Workday_ID</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "variables": {
+                    "schema": "[{\"name\":\"row_number\",\"type\":\"string\",\"optional\":true,\"label\":\"Row_Number\",\"control_type\":\"text\"},{\"name\":\"perferred_name\",\"type\":\"string\",\"optional\":true,\"label\":\"Perferred_Name\",\"control_type\":\"text\"},{\"name\":\"personal_email\",\"type\":\"string\",\"optional\":true,\"label\":\"Personal_Email\",\"control_type\":\"text\"},{\"name\":\"start_date\",\"type\":\"string\",\"optional\":true,\"label\":\"Start_Date\",\"control_type\":\"text\"},{\"name\":\"workday_id\",\"type\":\"string\",\"optional\":true,\"label\":\"Workday_ID\",\"control_type\":\"text\"}]",
+                    "data": {
+                      "row_number": "#{_('data.foreach.b07c2a11.row_number')}",
+                      "personal_email": "#{_('data.foreach.b07c2a11.col_Personal_email_')}",
+                      "perferred_name": "#{_('data.foreach.b07c2a11.col_Preferred_name_')}",
+                      "start_date": "#{_('data.foreach.b07c2a11.col_Start_date_')}",
+                      "workday_id": "#{_('data.foreach.b07c2a11.col_Employee_ID_')}"
+                    }
+                  }
+                },
+                "extended_output_schema": [
+                  {
+                    "type": "string",
+                    "name": "row_number",
+                    "control_type": "text",
+                    "label": "Row_Number",
+                    "optional": true
+                  },
+                  {
+                    "type": "string",
+                    "name": "perferred_name",
+                    "control_type": "text",
+                    "label": "Perferred_Name",
+                    "optional": true
+                  },
+                  {
+                    "type": "string",
+                    "name": "personal_email",
+                    "control_type": "text",
+                    "label": "Personal_Email",
+                    "optional": true
+                  },
+                  {
+                    "type": "string",
+                    "name": "start_date",
+                    "control_type": "text",
+                    "label": "Start_Date",
+                    "optional": true
+                  },
+                  {
+                    "type": "string",
+                    "name": "workday_id",
+                    "control_type": "text",
+                    "label": "Workday_ID",
+                    "optional": true
+                  }
+                ],
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "variables",
+                    "control_type": "form-schema-builder",
+                    "label": "Variables",
+                    "optional": true,
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Schema",
+                        "extends_schema": true,
+                        "broadcast_change_event": true,
+                        "type": "string",
+                        "name": "schema"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Row_Number",
+                            "name": "row_number",
+                            "type": "string",
+                            "optional": true,
+                            "hint": "Defaults to nil if not supplied.",
+                            "sticky": true
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Perferred_Name",
+                            "name": "perferred_name",
+                            "type": "string",
+                            "optional": true,
+                            "hint": "Defaults to nil if not supplied.",
+                            "sticky": true
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Personal_Email",
+                            "name": "personal_email",
+                            "type": "string",
+                            "optional": true,
+                            "hint": "Defaults to nil if not supplied.",
+                            "sticky": true
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Start_Date",
+                            "name": "start_date",
+                            "type": "string",
+                            "optional": true,
+                            "hint": "Defaults to nil if not supplied.",
+                            "sticky": true
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Workday_ID",
+                            "name": "workday_id",
+                            "type": "string",
+                            "optional": true,
+                            "hint": "Defaults to nil if not supplied.",
+                            "sticky": true
+                          }
+                        ],
+                        "label": "Data",
+                        "type": "object",
+                        "name": "data"
+                      }
+                    ],
+                    "exclude_fields": [
+                      "hint"
+                    ]
+                  }
+                ],
+                "visible_config_fields": [
+                  "variables.data.row_number",
+                  "variables",
+                  "variables.schema",
+                  "variables.data.perferred_name",
+                  "variables.data.personal_email",
+                  "variables.data.workday_id",
+                  "variables.data",
+                  "variables.data.start_date",
+                  "variables.data.business_process_reason",
+                  "variables.data.starting_in_office_or_remote",
+                  "variables.data.ready_for_automation"
+                ],
+                "comment": "Store High Level Variables that can be passed into the following recipe",
+                "uuid": "2857e38e-c85b-4435-a029-c290a9e01a35",
+                "skip": false
+              },
+              {
+                "number": 7,
+                "provider": "workato_service",
+                "name": "call_service_async",
+                "as": "519add60",
+                "title": null,
+                "description": "Call recipe <span class=\"provider\">Callable: Process New Hire from New Hire Tracking Sheet</span> (do not wait for response)",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "flow_id": "Callable: Process New Hire from New Hire Tracking Sheet"
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "flow_id": {
+                    "zip_name": "onboarding/callable/callable_new_hire_onboarding_process_new_hire_from_gsheet.recipe.json",
+                    "name": "Callable: New Hire Onboarding - Process New Hire from GSheet",
+                    "folder": "onboarding/callable"
+                  },
+                  "request": {
+                    "Row_Number": "#{_('data.workato_variable.b8722da7.row_number')}",
+                    "Workday_ID": "#{_('data.workato_variable.b8722da7.workday_id')}",
+                    "Start_Date": "#{_('data.workato_variable.b8722da7.start_date')}",
+                    "Peferred_Name": "#{_('data.workato_variable.b8722da7.perferred_name')}"
+                  }
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "request",
+                    "label": "Recipe input",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Row number",
+                        "name": "Row_Number",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Peferred name",
+                        "name": "Peferred_Name",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Start date",
+                        "name": "Start_Date",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Workday ID",
+                        "name": "Workday_ID",
+                        "type": "string",
+                        "optional": false
+                      }
+                    ]
+                  }
+                ],
+                "comment": "This callable recipe will process a single employee from the spreadsheet",
+                "uuid": "bb448553-fd79-48f1-9ffd-52ec0d8b0684",
+                "skip": false
+              },
+              {
+                "number": 8,
+                "provider": "workato_variable",
+                "name": "update_variable",
+                "as": "1685c281",
+                "title": null,
+                "description": "Update variable <span class=\"provider\">Number_Of_People_Processed</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "name": "Number_Of_People_Processed (step 4)"
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "name": "20755d1f-a66e-42ed-ac9b-7591e49c9d7b:1707765e:number_of_people_processed",
+                  "value": "=_('data.workato_variable.1707765e.number_of_people_processed') + 1"
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "integer",
+                    "name": "value",
+                    "control_type": "number",
+                    "label": "Value",
+                    "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                    "sticky": true,
+                    "optional": true,
+                    "parse_output": "integer_conversion",
+                    "strip_interpolation": true
+                  }
+                ],
+                "comment": "This variable is used to store the number of people processed from the Google Sheet",
+                "uuid": "26075bec-fe40-4d46-b896-9223c4298ecf"
+              }
+            ],
+            "source": "#{_('data.google_sheets.0b8b8606.rows')}",
+            "comment": "Loop through all the employees from the Google Spreadsheet where the automation flag is set to TRUE",
+            "uuid": "134f3ea2-bfdd-44c7-a438-7815b2e669d2",
+            "skip": false
+          },
+          {
+            "number": 9,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "equals_to",
+                  "lhs": "#{_('data.workato_variable.1707765e.number_of_people_processed')}",
+                  "rhs": "0",
+                  "uuid": "condition-cad696fb-db34-4e43-9414-242d777bf1c1"
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 10,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "true",
+                  "stop_reason": "There were no people processed from the Tracking Sheet. There might have been a change on the sheet that needs to be addressed. "
+                },
+                "comment": "FAIL MESSAGE:: There were no people processed from the Tracking Sheet. There might have been a change on the sheet that needs to be addressed.",
+                "uuid": "82a54146-265a-4337-a179-3b0da47e18b8"
+              }
+            ],
+            "comment": "This is added in to make sure that if there are any changes to the columns an error is thrown and the changes can be addressed accordingly",
+            "uuid": "4733d3e9-6a5a-44be-a67c-15ae699bc1a3"
+          },
+          {
+            "number": 11,
+            "as": "b859d27f",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "3",
+              "retry_interval": "1"
+            },
+            "block": [
+              {
+                "number": 12,
+                "provider": "workato_service",
+                "name": "call_service",
+                "as": "963e9b47",
+                "title": null,
+                "description": "Call recipe <span class=\"provider\">Callable: New Hire Onboarding - Post Error to Slack Channel</span> ",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "flow_id": "Callable: New Hire Onboarding - Slack Channel Error"
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "flow_id": {
+                    "zip_name": "onboarding/callable/callable_new_hire_onboarding_post_error_to_slack_channel.recipe.json",
+                    "name": "Callable: New Hire Onboarding - Post Error to Slack Channel",
+                    "folder": "onboarding/callable"
+                  },
+                  "request": {
+                    "Automation_Process": "Top Level Recipe",
+                    "Employee_Peferred_Name": "NA",
+                    "Employee_Start_Date": "NA",
+                    "Employee_Workday_ID": "NA",
+                    "Workato_Job_URL": "#{_('data.workato.job_context.job_url')}",
+                    "Error_Message": "#{_('data.catch.b859d27f.message')}",
+                    "Recipe_ID": "#{_('data.workato.job_context.recipe_id')}",
+                    "Job_ID": "#{_('data.workato.job_context.job_id')}",
+                    "Row_Number": "NA"
+                  }
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "request",
+                    "label": "Recipe input",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Automation process",
+                        "name": "Automation_Process",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Employee peferred name",
+                        "name": "Employee_Peferred_Name",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Employee start date",
+                        "name": "Employee_Start_Date",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Employee workday ID",
+                        "name": "Employee_Workday_ID",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Workato job URL",
+                        "name": "Workato_Job_URL",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Error message",
+                        "name": "Error_Message",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Recipe ID",
+                        "name": "Recipe_ID",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Job ID",
+                        "name": "Job_ID",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Row number",
+                        "name": "Row_Number",
+                        "type": "string",
+                        "optional": false
+                      }
+                    ]
+                  }
+                ],
+                "comment": "Use this callable recipe to send a message to the associated Slack Channel for error mitigation",
+                "uuid": "a426ce4d-4c17-4d74-80e2-6aa4402c427b"
+              },
+              {
+                "number": 13,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "true",
+                  "stop_reason": "#{_('data.catch.b859d27f.message')}"
+                },
+                "comment": "Stop the job with the associated job error",
+                "uuid": "1e17b9b4-a646-4f75-837f-d5537a4279d5"
+              }
+            ],
+            "comment": "Retry failed jobs 3 times to make sure timeout errors are caught and a retry is attempted",
+            "uuid": "84489317-7279-4c14-a614-f74f70af4af7"
+          }
+        ],
+        "uuid": "60e56192-1a17-42cd-be16-1a03d100ad6c"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Number of People Processed"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_variable.1707765e.number_of_people_processed')}"
+    },
+    "uuid": "ca399f15-d733-4281-85be-7f13b4bf8273"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "clock",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "google_sheets",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "resources/google_sheets_service_account.connection.json",
+        "name": "Google Sheets - Service Account",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "lookup_table",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

@@ -1,0 +1,1674 @@
+{
+  "name": "Scheduled Task - Generate and Upload VersaPay Reconciliation File",
+  "description": "When there is a trigger event, do action",
+  "version": 21,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "clock",
+    "name": "scheduled_event",
+    "as": "122a87b2",
+    "title": null,
+    "description": "<span class=\"provider\">Trigger</span> every 1 days at <span class=\"provider\">01:00:00 AM</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+      "time_unit": "Days"
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "time_unit": "days",
+      "trigger_every": "1",
+      "trigger_at": "01:00:00",
+      "timezone": "America/New_York"
+    },
+    "extended_input_schema": [
+      {
+        "type": "string",
+        "name": "trigger_every",
+        "control_type": "integer",
+        "label": "Trigger every",
+        "hint": "Define repeating schedule. Enter whole numbers only.\n                        This field can be set to a minimum of 5 minutes.",
+        "default": "5",
+        "optional": false,
+        "extends_schema": true
+      },
+      {
+        "type": "string",
+        "name": "trigger_at",
+        "control_type": "time",
+        "label": "Trigger at",
+        "hint": "Set a time to schedule the job.",
+        "optional": false,
+        "extends_schema": true
+      },
+      {
+        "type": "date_time",
+        "name": "start_after",
+        "control_type": "date_time",
+        "label": "Start after",
+        "hint": "Set date and time to start or leave blank to start immediately. <b>Once recipe has been run or tested, value cannot be changed.</b>",
+        "optional": true,
+        "extends_schema": true,
+        "since_field": true,
+        "render_input": "date_time_conversion",
+        "parse_output": "date_time_conversion"
+      },
+      {
+        "type": "string",
+        "name": "timezone",
+        "control_type": "select",
+        "label": "Timezone",
+        "hint": "Select the timezone to use. Leave it blank to use <b>(GMT-08:00) Pacific Time (US & Canada)</b>",
+        "pick_list": [
+          [
+            "International Date Line West",
+            "Etc/GMT+12"
+          ],
+          [
+            "Midway Island",
+            "Pacific/Midway"
+          ],
+          [
+            "American Samoa",
+            "Pacific/Pago_Pago"
+          ],
+          [
+            "Hawaii",
+            "Pacific/Honolulu"
+          ],
+          [
+            "Alaska",
+            "America/Juneau"
+          ],
+          [
+            "Pacific Time (US & Canada)",
+            "America/Los_Angeles"
+          ],
+          [
+            "Tijuana",
+            "America/Tijuana"
+          ],
+          [
+            "Mountain Time (US & Canada)",
+            "America/Denver"
+          ],
+          [
+            "Arizona",
+            "America/Phoenix"
+          ],
+          [
+            "Chihuahua",
+            "America/Chihuahua"
+          ],
+          [
+            "Mazatlan",
+            "America/Mazatlan"
+          ],
+          [
+            "Central Time (US & Canada)",
+            "America/Chicago"
+          ],
+          [
+            "Saskatchewan",
+            "America/Regina"
+          ],
+          [
+            "Guadalajara",
+            "America/Mexico_City"
+          ],
+          [
+            "Mexico City",
+            "America/Mexico_City"
+          ],
+          [
+            "Monterrey",
+            "America/Monterrey"
+          ],
+          [
+            "Central America",
+            "America/Guatemala"
+          ],
+          [
+            "Eastern Time (US & Canada)",
+            "America/New_York"
+          ],
+          [
+            "Indiana (East)",
+            "America/Indiana/Indianapolis"
+          ],
+          [
+            "Bogota",
+            "America/Bogota"
+          ],
+          [
+            "Lima",
+            "America/Lima"
+          ],
+          [
+            "Quito",
+            "America/Lima"
+          ],
+          [
+            "Atlantic Time (Canada)",
+            "America/Halifax"
+          ],
+          [
+            "Caracas",
+            "America/Caracas"
+          ],
+          [
+            "La Paz",
+            "America/La_Paz"
+          ],
+          [
+            "Santiago",
+            "America/Santiago"
+          ],
+          [
+            "Newfoundland",
+            "America/St_Johns"
+          ],
+          [
+            "Brasilia",
+            "America/Sao_Paulo"
+          ],
+          [
+            "Buenos Aires",
+            "America/Argentina/Buenos_Aires"
+          ],
+          [
+            "Montevideo",
+            "America/Montevideo"
+          ],
+          [
+            "Georgetown",
+            "America/Guyana"
+          ],
+          [
+            "Puerto Rico",
+            "America/Puerto_Rico"
+          ],
+          [
+            "Greenland",
+            "America/Godthab"
+          ],
+          [
+            "Mid-Atlantic",
+            "Atlantic/South_Georgia"
+          ],
+          [
+            "Azores",
+            "Atlantic/Azores"
+          ],
+          [
+            "Cape Verde Is.",
+            "Atlantic/Cape_Verde"
+          ],
+          [
+            "Dublin",
+            "Europe/Dublin"
+          ],
+          [
+            "Edinburgh",
+            "Europe/London"
+          ],
+          [
+            "Lisbon",
+            "Europe/Lisbon"
+          ],
+          [
+            "London",
+            "Europe/London"
+          ],
+          [
+            "Casablanca",
+            "Africa/Casablanca"
+          ],
+          [
+            "Monrovia",
+            "Africa/Monrovia"
+          ],
+          [
+            "UTC",
+            "Etc/UTC"
+          ],
+          [
+            "Belgrade",
+            "Europe/Belgrade"
+          ],
+          [
+            "Bratislava",
+            "Europe/Bratislava"
+          ],
+          [
+            "Budapest",
+            "Europe/Budapest"
+          ],
+          [
+            "Ljubljana",
+            "Europe/Ljubljana"
+          ],
+          [
+            "Prague",
+            "Europe/Prague"
+          ],
+          [
+            "Sarajevo",
+            "Europe/Sarajevo"
+          ],
+          [
+            "Skopje",
+            "Europe/Skopje"
+          ],
+          [
+            "Warsaw",
+            "Europe/Warsaw"
+          ],
+          [
+            "Zagreb",
+            "Europe/Zagreb"
+          ],
+          [
+            "Brussels",
+            "Europe/Brussels"
+          ],
+          [
+            "Copenhagen",
+            "Europe/Copenhagen"
+          ],
+          [
+            "Madrid",
+            "Europe/Madrid"
+          ],
+          [
+            "Paris",
+            "Europe/Paris"
+          ],
+          [
+            "Amsterdam",
+            "Europe/Amsterdam"
+          ],
+          [
+            "Berlin",
+            "Europe/Berlin"
+          ],
+          [
+            "Bern",
+            "Europe/Zurich"
+          ],
+          [
+            "Zurich",
+            "Europe/Zurich"
+          ],
+          [
+            "Rome",
+            "Europe/Rome"
+          ],
+          [
+            "Stockholm",
+            "Europe/Stockholm"
+          ],
+          [
+            "Vienna",
+            "Europe/Vienna"
+          ],
+          [
+            "West Central Africa",
+            "Africa/Algiers"
+          ],
+          [
+            "Bucharest",
+            "Europe/Bucharest"
+          ],
+          [
+            "Cairo",
+            "Africa/Cairo"
+          ],
+          [
+            "Helsinki",
+            "Europe/Helsinki"
+          ],
+          [
+            "Kyiv",
+            "Europe/Kiev"
+          ],
+          [
+            "Riga",
+            "Europe/Riga"
+          ],
+          [
+            "Sofia",
+            "Europe/Sofia"
+          ],
+          [
+            "Tallinn",
+            "Europe/Tallinn"
+          ],
+          [
+            "Vilnius",
+            "Europe/Vilnius"
+          ],
+          [
+            "Athens",
+            "Europe/Athens"
+          ],
+          [
+            "Istanbul",
+            "Europe/Istanbul"
+          ],
+          [
+            "Minsk",
+            "Europe/Minsk"
+          ],
+          [
+            "Jerusalem",
+            "Asia/Jerusalem"
+          ],
+          [
+            "Harare",
+            "Africa/Harare"
+          ],
+          [
+            "Pretoria",
+            "Africa/Johannesburg"
+          ],
+          [
+            "Kaliningrad",
+            "Europe/Kaliningrad"
+          ],
+          [
+            "Moscow",
+            "Europe/Moscow"
+          ],
+          [
+            "St. Petersburg",
+            "Europe/Moscow"
+          ],
+          [
+            "Volgograd",
+            "Europe/Volgograd"
+          ],
+          [
+            "Samara",
+            "Europe/Samara"
+          ],
+          [
+            "Kuwait",
+            "Asia/Kuwait"
+          ],
+          [
+            "Riyadh",
+            "Asia/Riyadh"
+          ],
+          [
+            "Nairobi",
+            "Africa/Nairobi"
+          ],
+          [
+            "Baghdad",
+            "Asia/Baghdad"
+          ],
+          [
+            "Tehran",
+            "Asia/Tehran"
+          ],
+          [
+            "Abu Dhabi",
+            "Asia/Muscat"
+          ],
+          [
+            "Muscat",
+            "Asia/Muscat"
+          ],
+          [
+            "Baku",
+            "Asia/Baku"
+          ],
+          [
+            "Tbilisi",
+            "Asia/Tbilisi"
+          ],
+          [
+            "Yerevan",
+            "Asia/Yerevan"
+          ],
+          [
+            "Kabul",
+            "Asia/Kabul"
+          ],
+          [
+            "Ekaterinburg",
+            "Asia/Yekaterinburg"
+          ],
+          [
+            "Islamabad",
+            "Asia/Karachi"
+          ],
+          [
+            "Karachi",
+            "Asia/Karachi"
+          ],
+          [
+            "Tashkent",
+            "Asia/Tashkent"
+          ],
+          [
+            "Chennai",
+            "Asia/Kolkata"
+          ],
+          [
+            "Kolkata",
+            "Asia/Kolkata"
+          ],
+          [
+            "Mumbai",
+            "Asia/Kolkata"
+          ],
+          [
+            "New Delhi",
+            "Asia/Kolkata"
+          ],
+          [
+            "Kathmandu",
+            "Asia/Kathmandu"
+          ],
+          [
+            "Astana",
+            "Asia/Dhaka"
+          ],
+          [
+            "Dhaka",
+            "Asia/Dhaka"
+          ],
+          [
+            "Sri Jayawardenepura",
+            "Asia/Colombo"
+          ],
+          [
+            "Almaty",
+            "Asia/Almaty"
+          ],
+          [
+            "Novosibirsk",
+            "Asia/Novosibirsk"
+          ],
+          [
+            "Rangoon",
+            "Asia/Rangoon"
+          ],
+          [
+            "Bangkok",
+            "Asia/Bangkok"
+          ],
+          [
+            "Hanoi",
+            "Asia/Bangkok"
+          ],
+          [
+            "Jakarta",
+            "Asia/Jakarta"
+          ],
+          [
+            "Krasnoyarsk",
+            "Asia/Krasnoyarsk"
+          ],
+          [
+            "Beijing",
+            "Asia/Shanghai"
+          ],
+          [
+            "Chongqing",
+            "Asia/Chongqing"
+          ],
+          [
+            "Hong Kong",
+            "Asia/Hong_Kong"
+          ],
+          [
+            "Urumqi",
+            "Asia/Urumqi"
+          ],
+          [
+            "Kuala Lumpur",
+            "Asia/Kuala_Lumpur"
+          ],
+          [
+            "Singapore",
+            "Asia/Singapore"
+          ],
+          [
+            "Taipei",
+            "Asia/Taipei"
+          ],
+          [
+            "Perth",
+            "Australia/Perth"
+          ],
+          [
+            "Irkutsk",
+            "Asia/Irkutsk"
+          ],
+          [
+            "Ulaanbaatar",
+            "Asia/Ulaanbaatar"
+          ],
+          [
+            "Seoul",
+            "Asia/Seoul"
+          ],
+          [
+            "Osaka",
+            "Asia/Tokyo"
+          ],
+          [
+            "Sapporo",
+            "Asia/Tokyo"
+          ],
+          [
+            "Tokyo",
+            "Asia/Tokyo"
+          ],
+          [
+            "Yakutsk",
+            "Asia/Yakutsk"
+          ],
+          [
+            "Darwin",
+            "Australia/Darwin"
+          ],
+          [
+            "Adelaide",
+            "Australia/Adelaide"
+          ],
+          [
+            "Canberra",
+            "Australia/Melbourne"
+          ],
+          [
+            "Melbourne",
+            "Australia/Melbourne"
+          ],
+          [
+            "Sydney",
+            "Australia/Sydney"
+          ],
+          [
+            "Brisbane",
+            "Australia/Brisbane"
+          ],
+          [
+            "Hobart",
+            "Australia/Hobart"
+          ],
+          [
+            "Vladivostok",
+            "Asia/Vladivostok"
+          ],
+          [
+            "Guam",
+            "Pacific/Guam"
+          ],
+          [
+            "Port Moresby",
+            "Pacific/Port_Moresby"
+          ],
+          [
+            "Magadan",
+            "Asia/Magadan"
+          ],
+          [
+            "Srednekolymsk",
+            "Asia/Srednekolymsk"
+          ],
+          [
+            "Solomon Is.",
+            "Pacific/Guadalcanal"
+          ],
+          [
+            "New Caledonia",
+            "Pacific/Noumea"
+          ],
+          [
+            "Fiji",
+            "Pacific/Fiji"
+          ],
+          [
+            "Kamchatka",
+            "Asia/Kamchatka"
+          ],
+          [
+            "Marshall Is.",
+            "Pacific/Majuro"
+          ],
+          [
+            "Auckland",
+            "Pacific/Auckland"
+          ],
+          [
+            "Wellington",
+            "Pacific/Auckland"
+          ],
+          [
+            "Nuku'alofa",
+            "Pacific/Tongatapu"
+          ],
+          [
+            "Tokelau Is.",
+            "Pacific/Fakaofo"
+          ],
+          [
+            "Chatham Is.",
+            "Pacific/Chatham"
+          ],
+          [
+            "Samoa",
+            "Pacific/Apia"
+          ]
+        ],
+        "optional": true
+      }
+    ],
+    "visible_config_fields": [
+      "time_unit",
+      "trigger_every",
+      "trigger_at",
+      "timezone"
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "workato_variable",
+        "name": "declare_list",
+        "as": "677a66e8",
+        "title": " Create invoices_and_credits list",
+        "description": "Create <span class=\"provider\">invoices_and_credits</span> list",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "name": "invoices_and_credits",
+          "list_item_schema_json": "[{\"control_type\":\"text\",\"label\":\"Reconciliation Invoice Number\",\"name\":\"reconciliation_invoice_number\",\"type\":\"string\",\"optional\":false,\"hint\":\"invoice or credit memo number (NX89891 or CM5347)\"},{\"control_type\":\"text\",\"label\":\"Balance\",\"name\":\"balance\",\"type\":\"string\",\"optional\":false,\"hint\":\"positive value for invoices, negative value for credit memos\"},{\"control_type\":\"text\",\"label\":\"Division\",\"name\":\"division\",\"type\":\"string\",\"optional\":false,\"hint\":\"subsidiary internal id\"}]"
+        },
+        "extended_output_schema": [
+          {
+            "type": "array",
+            "name": "list_items",
+            "label": "invoices_and_credits",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Reconciliation Invoice Number",
+                "name": "reconciliation_invoice_number",
+                "type": "string",
+                "optional": false,
+                "hint": "invoice or credit memo number (NX89891 or CM5347)"
+              },
+              {
+                "control_type": "text",
+                "label": "Balance",
+                "name": "balance",
+                "type": "string",
+                "optional": false,
+                "hint": "positive value for invoices, negative value for credit memos"
+              },
+              {
+                "control_type": "text",
+                "label": "Division",
+                "name": "division",
+                "type": "string",
+                "optional": false,
+                "hint": "subsidiary internal id"
+              }
+            ]
+          }
+        ],
+        "uuid": "548bf47b-cc3f-4002-a532-77434765e093"
+      },
+      {
+        "number": 2,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 3,
+            "provider": "netsuite",
+            "name": "__adhoc_http_action",
+            "as": "167dbe81",
+            "title": "Get Open Invoices For VersaPay Reconciliation",
+            "description": "Get <span class=\"provider\">Open Invoices For VersaPay Reconciliation</span> in <span class=\"provider\">NetSuite</span> (Custom)",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "mnemonic": "Get Open Invoices For VersaPay Reconciliation",
+              "verb": "get",
+              "response_type": "json",
+              "path": "=lookup(\"NETSUITE_DEFAULT_VALUES\", name: \"restlet_url\")[\"value\"]",
+              "input": {
+                "schema": "[{\"control_type\":\"text\",\"label\":\"deploy\",\"name\":\"deploy\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"script\",\"name\":\"script\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"searchid\",\"name\":\"searchid\",\"type\":\"string\",\"optional\":true}]",
+                "data": {
+                  "script": "=lookup(\"NETSUITE_DEFAULT_VALUES\", name: \"restlet_export_script_id\")[\"value\"]",
+                  "searchid": "=lookup(\"NETSUITE_DEFAULT_VALUES\", name: \"saved_search_versapay_reconciliation_invoices\")[\"value\"]",
+                  "deploy": "1"
+                }
+              },
+              "output": "[{\"name\":\"array\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Array\",\"properties\":[{\"control_type\":\"text\",\"label\":\"Record type\",\"type\":\"string\",\"name\":\"recordType\"},{\"control_type\":\"text\",\"label\":\"ID\",\"type\":\"string\",\"name\":\"id\"},{\"properties\":[{\"name\":\"internalid\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Internalid\",\"properties\":[{\"control_type\":\"text\",\"label\":\"Value\",\"type\":\"string\",\"name\":\"value\"},{\"control_type\":\"text\",\"label\":\"Text\",\"type\":\"string\",\"name\":\"text\"}]},{\"control_type\":\"text\",\"label\":\"Tranid\",\"type\":\"string\",\"name\":\"tranid\"},{\"control_type\":\"text\",\"label\":\"Fxamountremaining\",\"type\":\"string\",\"name\":\"fxamountremaining\"},{\"name\":\"subsidiary\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Subsidiary\",\"properties\":[{\"control_type\":\"text\",\"label\":\"Value\",\"type\":\"string\",\"name\":\"value\"},{\"control_type\":\"text\",\"label\":\"Text\",\"type\":\"string\",\"name\":\"text\"}]}],\"label\":\"Values\",\"type\":\"object\",\"name\":\"values\"}]}]"
+            },
+            "extended_output_schema": [
+              {
+                "type": "array",
+                "name": "array",
+                "label": "Array",
+                "optional": true,
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Record type",
+                    "optional": true,
+                    "type": "string",
+                    "name": "recordType"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "ID",
+                    "optional": true,
+                    "type": "string",
+                    "name": "id"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "name": "internalid",
+                        "type": "array",
+                        "of": "object",
+                        "label": "Internalid",
+                        "optional": true,
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Value",
+                            "optional": true,
+                            "type": "string",
+                            "name": "value"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Text",
+                            "optional": true,
+                            "type": "string",
+                            "name": "text"
+                          }
+                        ]
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Tranid",
+                        "optional": true,
+                        "type": "string",
+                        "name": "tranid"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Fxamountremaining",
+                        "optional": true,
+                        "type": "string",
+                        "name": "fxamountremaining"
+                      },
+                      {
+                        "name": "subsidiary",
+                        "type": "array",
+                        "of": "object",
+                        "label": "Subsidiary",
+                        "optional": true,
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Value",
+                            "optional": true,
+                            "type": "string",
+                            "name": "value"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Text",
+                            "optional": true,
+                            "type": "string",
+                            "name": "text"
+                          }
+                        ]
+                      }
+                    ],
+                    "label": "Values",
+                    "optional": true,
+                    "type": "object",
+                    "name": "values"
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "path",
+                "control_type": "text",
+                "label": "Path",
+                "optional": false
+              },
+              {
+                "type": "string",
+                "name": "response_type",
+                "control_type": "select",
+                "label": "Response type",
+                "default": "json",
+                "sticky": false,
+                "pick_list": [
+                  [
+                    "JSON response",
+                    "json"
+                  ],
+                  [
+                    "Raw response",
+                    "raw"
+                  ]
+                ],
+                "optional": true,
+                "extends_schema": true
+              },
+              {
+                "type": "object",
+                "name": "input",
+                "control_type": "form-schema-builder",
+                "label": "Request URL parameters",
+                "sticky": false,
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Schema",
+                    "extends_schema": true,
+                    "sticky": false,
+                    "optional": true,
+                    "type": "string",
+                    "name": "schema",
+                    "parent": "input"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "deploy",
+                        "optional": true,
+                        "sticky": true,
+                        "type": "string",
+                        "name": "deploy",
+                        "parent": "input.data"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "script",
+                        "optional": true,
+                        "sticky": true,
+                        "type": "string",
+                        "name": "script",
+                        "parent": "input.data"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "searchid",
+                        "optional": true,
+                        "sticky": true,
+                        "type": "string",
+                        "name": "searchid",
+                        "parent": "input.data"
+                      }
+                    ],
+                    "label": "Data",
+                    "optional": true,
+                    "type": "object",
+                    "name": "data",
+                    "parent": "input"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "name": "request_headers",
+                "control_type": "key_value",
+                "label": "Request headers",
+                "optional": true,
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "optional": true,
+                    "type": "string",
+                    "name": "name",
+                    "parent": "request_headers"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Value",
+                    "optional": true,
+                    "type": "string",
+                    "name": "value",
+                    "parent": "request_headers"
+                  }
+                ]
+              },
+              {
+                "type": "string",
+                "name": "output",
+                "control_type": "schema-designer",
+                "label": "Response body",
+                "sticky": true,
+                "optional": true,
+                "extends_schema": true,
+                "schema_neutral": true
+              },
+              {
+                "type": "string",
+                "name": "response_headers",
+                "control_type": "schema-designer",
+                "label": "Response headers",
+                "sticky": false,
+                "optional": true,
+                "extends_schema": true,
+                "schema_neutral": true
+              }
+            ],
+            "visible_config_fields": [
+              "mnemonic",
+              "verb",
+              "response_type",
+              "input",
+              "input.schema",
+              "output",
+              "input.data.script",
+              "path",
+              "input.data",
+              "input.data.searchid",
+              "input.data.deploy"
+            ],
+            "uuid": "d1913fa4-5430-4cba-a863-6f9782b9d59b"
+          },
+          {
+            "number": 4,
+            "as": "363b1acb",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "3",
+              "retry_interval": "10"
+            },
+            "block": [
+              {
+                "number": 5,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "true",
+                  "stop_reason": "#{_('data.catch.363b1acb.message')}"
+                },
+                "uuid": "343f90f4-7ecc-4fe8-906b-122778bff1d2"
+              }
+            ],
+            "uuid": "7a3557ea-b171-4b5d-85e5-3267377d0985"
+          }
+        ],
+        "uuid": "9c97dd11-eac3-4ebb-b83f-ef9dbd0ef8a6"
+      },
+      {
+        "number": 6,
+        "as": "a0ebfc44",
+        "keyword": "foreach",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "repeat_mode": "simple",
+        "clear_scope": "true",
+        "input": {
+        },
+        "block": [
+          {
+            "number": 7,
+            "provider": "workato_variable",
+            "name": "insert_to_list",
+            "as": "c0bb05a6",
+            "title": "Add item to invoices_and_credits list",
+            "description": "Add <span class=\"provider\">item</span> to <span class=\"provider\">invoices_and_credits</span> list",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "name": "invoices_and_credits (step 2)"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "location": "end",
+              "name": "548bf47b-cc3f-4002-a532-77434765e093:677a66e8",
+              "list_item": {
+                "reconciliation_invoice_number": "#{_('data.foreach.a0ebfc44.values.tranid')}",
+                "balance": "#{_('data.foreach.a0ebfc44.values.fxamountremaining')}",
+                "division": "#{_('data.foreach.a0ebfc44.values.subsidiary.first.value')}"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "list_item",
+                "label": "List item",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Reconciliation Invoice Number",
+                    "name": "reconciliation_invoice_number",
+                    "type": "string",
+                    "optional": false,
+                    "hint": "invoice or credit memo number (NX89891 or CM5347)"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Balance",
+                    "name": "balance",
+                    "type": "string",
+                    "optional": false,
+                    "hint": "positive value for invoices, negative value for credit memos"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Division",
+                    "name": "division",
+                    "type": "string",
+                    "optional": false,
+                    "hint": "subsidiary internal id"
+                  }
+                ]
+              }
+            ],
+            "uuid": "88d9bff2-d2a5-472f-b9fb-a0174a83dc63"
+          }
+        ],
+        "source": "#{_('data.netsuite.167dbe81.array')}",
+        "uuid": "5d200947-14ea-4d00-8f24-3cca3f1b22e7"
+      },
+      {
+        "number": 8,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 9,
+            "provider": "netsuite",
+            "name": "__adhoc_http_action",
+            "as": "3be53877",
+            "title": "Get Open Credit Memos For VersaPay Reconciliation",
+            "description": "Get <span class=\"provider\">Open Credit Memos For VersaPay Reconciliation</span> in <span class=\"provider\">NetSuite</span> (Custom)",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "mnemonic": "Get Open Credit Memos For VersaPay Reconciliation",
+              "verb": "get",
+              "response_type": "json",
+              "path": "=lookup(\"NETSUITE_DEFAULT_VALUES\", name: \"restlet_url\")[\"value\"]",
+              "input": {
+                "schema": "[{\"control_type\":\"text\",\"label\":\"deploy\",\"name\":\"deploy\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"script\",\"name\":\"script\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"searchid\",\"name\":\"searchid\",\"type\":\"string\",\"optional\":true}]",
+                "data": {
+                  "script": "=lookup(\"NETSUITE_DEFAULT_VALUES\", name: \"restlet_export_script_id\")[\"value\"]",
+                  "searchid": "=lookup(\"NETSUITE_DEFAULT_VALUES\", name: \"saved_search_versapay_reconciliation_credits\")[\"value\"]",
+                  "deploy": "1"
+                }
+              },
+              "output": "[{\"name\":\"array\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Array\",\"properties\":[{\"control_type\":\"text\",\"label\":\"Record type\",\"type\":\"string\",\"name\":\"recordType\"},{\"control_type\":\"text\",\"label\":\"ID\",\"type\":\"string\",\"name\":\"id\"},{\"properties\":[{\"name\":\"internalid\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Internalid\",\"properties\":[{\"control_type\":\"text\",\"label\":\"Value\",\"type\":\"string\",\"name\":\"value\"},{\"control_type\":\"text\",\"label\":\"Text\",\"type\":\"string\",\"name\":\"text\"}]},{\"control_type\":\"text\",\"label\":\"Tranid\",\"type\":\"string\",\"name\":\"tranid\"},{\"control_type\":\"text\",\"label\":\"Fxamountremaining\",\"type\":\"string\",\"name\":\"fxamountremaining\"},{\"name\":\"subsidiary\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Subsidiary\",\"properties\":[{\"control_type\":\"text\",\"label\":\"Value\",\"type\":\"string\",\"name\":\"value\"},{\"control_type\":\"text\",\"label\":\"Text\",\"type\":\"string\",\"name\":\"text\"}]}],\"label\":\"Values\",\"type\":\"object\",\"name\":\"values\"}]}]"
+            },
+            "extended_output_schema": [
+              {
+                "type": "array",
+                "name": "array",
+                "label": "Array",
+                "optional": true,
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Record type",
+                    "optional": true,
+                    "type": "string",
+                    "name": "recordType"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "ID",
+                    "optional": true,
+                    "type": "string",
+                    "name": "id"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "name": "internalid",
+                        "type": "array",
+                        "of": "object",
+                        "label": "Internalid",
+                        "optional": true,
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Value",
+                            "optional": true,
+                            "type": "string",
+                            "name": "value"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Text",
+                            "optional": true,
+                            "type": "string",
+                            "name": "text"
+                          }
+                        ]
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Tranid",
+                        "optional": true,
+                        "type": "string",
+                        "name": "tranid"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Fxamountremaining",
+                        "optional": true,
+                        "type": "string",
+                        "name": "fxamountremaining"
+                      },
+                      {
+                        "name": "subsidiary",
+                        "type": "array",
+                        "of": "object",
+                        "label": "Subsidiary",
+                        "optional": true,
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Value",
+                            "optional": true,
+                            "type": "string",
+                            "name": "value"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Text",
+                            "optional": true,
+                            "type": "string",
+                            "name": "text"
+                          }
+                        ]
+                      }
+                    ],
+                    "label": "Values",
+                    "optional": true,
+                    "type": "object",
+                    "name": "values"
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "path",
+                "control_type": "text",
+                "label": "Path",
+                "optional": false
+              },
+              {
+                "type": "string",
+                "name": "response_type",
+                "control_type": "select",
+                "label": "Response type",
+                "default": "json",
+                "sticky": false,
+                "pick_list": [
+                  [
+                    "JSON response",
+                    "json"
+                  ],
+                  [
+                    "Raw response",
+                    "raw"
+                  ]
+                ],
+                "optional": true,
+                "extends_schema": true
+              },
+              {
+                "type": "object",
+                "name": "input",
+                "control_type": "form-schema-builder",
+                "label": "Request URL parameters",
+                "sticky": false,
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Schema",
+                    "extends_schema": true,
+                    "sticky": false,
+                    "optional": true,
+                    "type": "string",
+                    "name": "schema"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "deploy",
+                        "optional": true,
+                        "sticky": true,
+                        "type": "string",
+                        "name": "deploy"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "script",
+                        "optional": true,
+                        "sticky": true,
+                        "type": "string",
+                        "name": "script"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "searchid",
+                        "optional": true,
+                        "sticky": true,
+                        "type": "string",
+                        "name": "searchid"
+                      }
+                    ],
+                    "label": "Data",
+                    "optional": true,
+                    "type": "object",
+                    "name": "data"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "name": "request_headers",
+                "control_type": "key_value",
+                "label": "Request headers",
+                "optional": true,
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "optional": true,
+                    "type": "string",
+                    "name": "name"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Value",
+                    "optional": true,
+                    "type": "string",
+                    "name": "value"
+                  }
+                ]
+              },
+              {
+                "type": "string",
+                "name": "output",
+                "control_type": "schema-designer",
+                "label": "Response body",
+                "sticky": true,
+                "optional": true,
+                "extends_schema": true,
+                "schema_neutral": true
+              },
+              {
+                "type": "string",
+                "name": "response_headers",
+                "control_type": "schema-designer",
+                "label": "Response headers",
+                "sticky": false,
+                "optional": true,
+                "extends_schema": true,
+                "schema_neutral": true
+              }
+            ],
+            "visible_config_fields": [
+              "mnemonic",
+              "verb",
+              "response_type",
+              "input",
+              "input.schema",
+              "output",
+              "input.data.script",
+              "path",
+              "input.data",
+              "input.data.searchid",
+              "input.data.deploy"
+            ],
+            "uuid": "0d2cf03e-f107-488b-8a90-e70c0a2b2096"
+          },
+          {
+            "number": 10,
+            "as": "4b04b789",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "3",
+              "retry_interval": "10"
+            },
+            "block": [
+              {
+                "number": 11,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "true",
+                  "stop_reason": "#{_('data.catch.4b04b789.message')}"
+                },
+                "uuid": "2fcae690-1add-40ed-a5d5-1a5469e371d0"
+              }
+            ],
+            "uuid": "2250fb9a-5465-48dc-9c18-5beadff4d08a"
+          }
+        ],
+        "uuid": "4279aa03-b38e-4c2c-b2c5-3984aad5fc63"
+      },
+      {
+        "number": 12,
+        "as": "3244d4ff",
+        "keyword": "foreach",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "repeat_mode": "simple",
+        "clear_scope": "true",
+        "input": {
+        },
+        "block": [
+          {
+            "number": 13,
+            "provider": "workato_variable",
+            "name": "insert_to_list",
+            "as": "4b5ebf6f",
+            "title": "Add item to invoices_and_credits list",
+            "description": "Add <span class=\"provider\">item</span> to <span class=\"provider\">invoices_and_credits</span> list",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "name": "invoices_and_credits (step 2)"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "location": "end",
+              "name": "548bf47b-cc3f-4002-a532-77434765e093:677a66e8",
+              "list_item": {
+                "reconciliation_invoice_number": "#{_('data.foreach.3244d4ff.values.tranid')}",
+                "balance": "-#{_('data.foreach.3244d4ff.values.fxamountremaining')}",
+                "division": "#{_('data.foreach.3244d4ff.values.subsidiary.first.value')}"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "list_item",
+                "label": "List item",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Reconciliation Invoice Number",
+                    "name": "reconciliation_invoice_number",
+                    "type": "string",
+                    "optional": false,
+                    "hint": "invoice or credit memo number (NX89891 or CM5347)"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Balance",
+                    "name": "balance",
+                    "type": "string",
+                    "optional": false,
+                    "hint": "positive value for invoices, negative value for credit memos"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Division",
+                    "name": "division",
+                    "type": "string",
+                    "optional": false,
+                    "hint": "subsidiary internal id"
+                  }
+                ]
+              }
+            ],
+            "uuid": "be059ce0-4b40-45b4-b122-9bc977491531"
+          }
+        ],
+        "source": "#{_('data.netsuite.3be53877.array')}",
+        "uuid": "8b4ee609-cd26-4a5a-8d38-1d29292a9e10"
+      },
+      {
+        "number": 14,
+        "provider": "csv_parser",
+        "name": "create_csv_lines",
+        "as": "0f659c8f",
+        "title": null,
+        "description": null,
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+          "create_header_line": true,
+          "force_quotes": true
+        },
+        "input": {
+          "create_header_line": "true",
+          "column_separator": ",",
+          "force_quotes": "false",
+          "column_labels": "reconciliation_invoice_number\nbalance\ndivision",
+          "lines": {
+            "____source": "#{_('data.workato_variable.677a66e8.list_items')}",
+            "column_0": "#{_('data.workato_variable.677a66e8.list_items.first.reconciliation_invoice_number')}",
+            "column_1": "#{_('data.workato_variable.677a66e8.list_items.first.balance')}",
+            "column_2": "#{_('data.workato_variable.677a66e8.list_items.first.division')}"
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "array",
+            "name": "lines",
+            "label": "CSV data lines",
+            "hint": "Provide field mappings for the CSV data below.",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "reconciliation_invoice_number",
+                "optional": true,
+                "sticky": true,
+                "type": "string",
+                "name": "column_0"
+              },
+              {
+                "control_type": "text",
+                "label": "balance",
+                "optional": true,
+                "sticky": true,
+                "type": "string",
+                "name": "column_1"
+              },
+              {
+                "control_type": "text",
+                "label": "division",
+                "optional": true,
+                "sticky": true,
+                "type": "string",
+                "name": "column_2"
+              }
+            ]
+          }
+        ],
+        "uuid": "000a012b-baea-4c29-ba32-101a35d2198f"
+      },
+      {
+        "number": 15,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 16,
+            "provider": "versa_pay_arc_connector_36450_1556732749",
+            "name": "import_file",
+            "as": "f19c87ba",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "filename": "=\"reconciliation_\"+now.strftime(\"%Y-%m-%d-%H%M%S\")+\".csv\"",
+              "file": "#{_('data.csv_parser.0f659c8f.csv_lines')}"
+            },
+            "visible_config_fields": [
+              "filename",
+              "file"
+            ],
+            "uuid": "8343f518-8738-4658-9984-1e39c2f5f428"
+          },
+          {
+            "number": 17,
+            "as": "c410798f",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "3",
+              "retry_interval": "10"
+            },
+            "block": [
+              {
+                "number": 18,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "true",
+                  "stop_reason": "#{_('data.catch.c410798f.message')}"
+                },
+                "uuid": "9ac800f3-7d78-4f73-86ab-2735ed9a267c"
+              }
+            ],
+            "uuid": "0df01713-2c88-470a-8a16-8994e3000329"
+          }
+        ],
+        "uuid": "10cafa97-bf5b-4aaf-99ea-3bfc0d4444e1"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Invoices"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Credit Memos"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.netsuite.167dbe81.array.first.____Size', 'list_meta', '____Size', 'data.netsuite.167dbe81.array')}",
+      "custom_column_2": "#{_('data.netsuite.3be53877.array.first.____Size', 'list_meta', '____Size', 'data.netsuite.3be53877.array')}"
+    },
+    "uuid": "d9baf2e6-4ed9-4503-a4f0-2da5a6205df4"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "csv_parser",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "versa_pay_arc_connector_36450_1556732749",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "resources/versapay_arc.connection.json",
+        "name": "VersaPay ARC",
+        "folder": "resources",
+        "custom": true
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "netsuite",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "resources/netsuite.connection.json",
+        "name": "NetSuite",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "clock",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

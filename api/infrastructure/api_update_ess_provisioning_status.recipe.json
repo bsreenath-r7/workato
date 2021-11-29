@@ -1,0 +1,1003 @@
+{
+  "name": "API - Update ESS Provisioning Status",
+  "description": "When there is a new call for callable recipe, do action",
+  "version": 12,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "0d68a1fb",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">API - Update ESS Provisioning Status</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "service_name": "API - Update ESS Provisioning Status",
+      "request_schema_json": "[{\"control_type\":\"text\",\"label\":\"Engine ID\",\"name\":\"engine_id\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Event type\",\"name\":\"event_type\",\"type\":\"string\",\"optional\":true,\"hint\":\"deploy_ess, destroy_ess\"},{\"control_type\":\"text\",\"label\":\"Ip address\",\"name\":\"ip_address\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Status\",\"name\":\"status\",\"type\":\"string\",\"optional\":false,\"hint\":\"SUCCESS, FAILURE\"},{\"control_type\":\"text\",\"label\":\"Notes\",\"name\":\"notes\",\"type\":\"string\",\"optional\":true}]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Engine ID",
+            "name": "engine_id",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Event type",
+            "name": "event_type",
+            "type": "string",
+            "optional": true,
+            "hint": "deploy_ess, destroy_ess"
+          },
+          {
+            "control_type": "text",
+            "label": "Ip address",
+            "name": "ip_address",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Status",
+            "name": "status",
+            "type": "string",
+            "optional": false,
+            "hint": "SUCCESS, FAILURE"
+          },
+          {
+            "control_type": "text",
+            "label": "Notes",
+            "name": "notes",
+            "type": "string",
+            "optional": true
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "workato_variable",
+        "name": "declare_variable",
+        "as": "9e1a4d31",
+        "title": "  Create variable ess_status",
+        "description": "Create variable <span class=\"provider\">ess_status</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "variables": {
+            "schema": "[{\"name\":\"ess_status\",\"type\":\"string\",\"optional\":true,\"label\":\"ess_status\",\"control_type\":\"text\"}]"
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "string",
+            "name": "ess_status",
+            "control_type": "text",
+            "label": "ess_status",
+            "optional": true
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "variables",
+            "control_type": "form-schema-builder",
+            "label": "Variables",
+            "optional": true,
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Schema",
+                "extends_schema": true,
+                "broadcast_change_event": true,
+                "type": "string",
+                "name": "schema"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "ess_status",
+                    "name": "ess_status",
+                    "type": "string",
+                    "optional": true,
+                    "hint": "Defaults to nil if not supplied.",
+                    "sticky": true
+                  }
+                ],
+                "label": "Data",
+                "type": "object",
+                "name": "data"
+              }
+            ],
+            "exclude_fields": [
+              "hint"
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "variables.data.ess_status"
+        ],
+        "uuid": "9cbff9a6-58df-4eb4-8f04-2a1c9031932a"
+      },
+      {
+        "number": 2,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "equals_to",
+              "lhs": "#{_('data.workato_service.0d68a1fb.request.event_type')}",
+              "rhs": "destroy_ess"
+            },
+            {
+              "operand": "equals_to",
+              "lhs": "#{_('data.workato_service.0d68a1fb.request.status')}",
+              "rhs": "SUCCESS"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 3,
+            "provider": "workato_variable",
+            "name": "update_variable",
+            "as": "084efceb",
+            "title": null,
+            "description": "Update variable <span class=\"provider\">ess_status</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "name": "ess_status (step 2)"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "name": "9cbff9a6-58df-4eb4-8f04-2a1c9031932a:9e1a4d31:ess_status",
+              "value": "retired"
+            },
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "value",
+                "control_type": "text",
+                "label": "Value",
+                "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                "sticky": true,
+                "optional": true,
+                "strip_interpolation": true
+              }
+            ],
+            "comment": "set the ess row status to \"retired\" for success for destroy_ess",
+            "uuid": "7d403b54-cfcc-45d7-9bec-7c194642ff98",
+            "skip": false
+          }
+        ],
+        "uuid": "bfe47015-ddf1-42b6-8539-aa635998c02c",
+        "skip": false
+      },
+      {
+        "number": 4,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "or",
+          "conditions": [
+            {
+              "operand": "equals_to",
+              "lhs": "#{_('data.workato_service.0d68a1fb.request.event_type')}",
+              "rhs": "deploy_ess"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 5,
+            "provider": "mysql",
+            "name": "search_rows",
+            "as": "9cdb3e22",
+            "title": "Select rows in ess_engine",
+            "description": "Select <span class=\"provider\">rows</span> in <span class=\"provider\">ess_engine</span> table in <span class=\"provider\">MySQL</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "table": "ess_engine"
+            },
+            "toggleCfg": {
+              "table": true
+            },
+            "input": {
+              "limit": "1",
+              "offset": "0",
+              "table": "ess_engine",
+              "where": "engine_id='#{_('data.workato_service.0d68a1fb.request.engine_id')}'"
+            },
+            "extended_output_schema": [
+              {
+                "type": "array",
+                "name": "rows",
+                "label": "Rows",
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "date_time",
+                    "label": "date_created",
+                    "render_input": "convert_date_time",
+                    "parse_output": "parse_time_value",
+                    "details": {
+                      "data_type": "timestamp(3)",
+                      "column_name": "date_created"
+                    },
+                    "optional": true,
+                    "hint": "timestamp(3)",
+                    "type": "date_time",
+                    "name": "date_created"
+                  },
+                  {
+                    "control_type": "date_time",
+                    "label": "date_lastModified",
+                    "render_input": "convert_date_time",
+                    "parse_output": "parse_time_value",
+                    "details": {
+                      "data_type": "timestamp(3)",
+                      "column_name": "date_lastModified"
+                    },
+                    "optional": true,
+                    "hint": "timestamp(3)",
+                    "type": "date_time",
+                    "name": "date_lastmodified_5151a09e"
+                  },
+                  {
+                    "control_type": "date_time",
+                    "label": "date_pendingTimeout",
+                    "render_input": "convert_date_time",
+                    "parse_output": "parse_time_value",
+                    "details": {
+                      "data_type": "timestamp",
+                      "column_name": "date_pendingTimeout"
+                    },
+                    "optional": true,
+                    "hint": "timestamp",
+                    "type": "date_time",
+                    "name": "date_pendingtimeout_568b0583"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "engine_id",
+                    "details": {
+                      "data_type": "varchar(45)",
+                      "column_name": "engine_id"
+                    },
+                    "hint": "varchar(45)",
+                    "optional": true,
+                    "type": "string",
+                    "name": "engine_id"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "id",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "id"
+                    },
+                    "render_input": "parse_integer_output",
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "int(11), primary key",
+                    "type": "integer",
+                    "name": "id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "ipaddress",
+                    "details": {
+                      "data_type": "varchar(45)",
+                      "column_name": "ipaddress"
+                    },
+                    "optional": true,
+                    "hint": "varchar(45)",
+                    "type": "string",
+                    "name": "ipaddress"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "license_id",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "license_id"
+                    },
+                    "render_input": "parse_integer_output",
+                    "hint": "int(11)",
+                    "optional": true,
+                    "type": "integer",
+                    "name": "license_id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "status",
+                    "details": {
+                      "data_type": "varchar(45)",
+                      "column_name": "status"
+                    },
+                    "hint": "varchar(45)",
+                    "optional": true,
+                    "type": "string",
+                    "name": "status"
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "parameters",
+                "control_type": "form-schema-builder",
+                "label": "Parameters",
+                "hint": "First provide the full name assigned to your bind variable in the WHERE condition. e.g. <b>id</b>\n                    Second, provide the actual parameter value. Parameter values can be static or datapills.\n                    Select the <b>closest corresponding data type</b> that your database is expecting for the bind variable",
+                "sticky": true,
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Schema",
+                    "extends_schema": true,
+                    "type": "string",
+                    "name": "schema",
+                    "parent": "parameters"
+                  },
+                  {
+                    "properties": [
+
+                    ],
+                    "label": "Data",
+                    "optional": true,
+                    "type": "object",
+                    "name": "data",
+                    "parent": "parameters"
+                  }
+                ],
+                "override": true
+              }
+            ],
+            "comment": "Get the engine record from the database",
+            "uuid": "2d406f79-a94b-4c12-ba9d-521415b0e5e2"
+          },
+          {
+            "number": 6,
+            "provider": "mysql",
+            "name": "search_rows",
+            "as": "f5005507",
+            "title": "Select rows in ess_license",
+            "description": "Select <span class=\"provider\">rows</span> in <span class=\"provider\">ess_license</span> table in <span class=\"provider\">MySQL</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "table": "ess_license"
+            },
+            "toggleCfg": {
+              "table": true
+            },
+            "input": {
+              "limit": "1",
+              "offset": "0",
+              "table": "ess_license",
+              "where": "license_id='#{_('data.mysql.9cdb3e22.rows.first.license_id')}'"
+            },
+            "extended_output_schema": [
+              {
+                "type": "array",
+                "name": "rows",
+                "label": "Rows",
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "customer_csm",
+                    "details": {
+                      "data_type": "varchar(200)",
+                      "column_name": "customer_csm"
+                    },
+                    "optional": true,
+                    "hint": "varchar(200)",
+                    "type": "string",
+                    "name": "customer_csm"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "customer_id",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "customer_id"
+                    },
+                    "render_input": "parse_integer_output",
+                    "hint": "int(11)",
+                    "optional": true,
+                    "type": "integer",
+                    "name": "customer_id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "customer_name",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "customer_name"
+                    },
+                    "hint": "varchar(100)",
+                    "optional": true,
+                    "type": "string",
+                    "name": "customer_name"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "customer_temAE",
+                    "details": {
+                      "data_type": "varchar(200)",
+                      "column_name": "customer_temAE"
+                    },
+                    "optional": true,
+                    "hint": "varchar(200)",
+                    "type": "string",
+                    "name": "customer_temae_0c31998b"
+                  },
+                  {
+                    "control_type": "date_time",
+                    "label": "date_expiration",
+                    "render_input": "convert_date_time",
+                    "parse_output": "parse_date_time",
+                    "details": {
+                      "data_type": "datetime",
+                      "column_name": "date_expiration"
+                    },
+                    "hint": "datetime",
+                    "optional": true,
+                    "type": "date_time",
+                    "name": "date_expiration"
+                  },
+                  {
+                    "control_type": "date_time",
+                    "label": "date_lastModified",
+                    "render_input": "convert_date_time",
+                    "parse_output": "parse_time_value",
+                    "details": {
+                      "data_type": "timestamp(3)",
+                      "column_name": "date_lastModified"
+                    },
+                    "optional": true,
+                    "hint": "timestamp(3)",
+                    "type": "date_time",
+                    "name": "date_lastmodified_5151a09e"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "dedicated_engines",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "dedicated_engines"
+                    },
+                    "render_input": "parse_integer_output",
+                    "optional": true,
+                    "hint": "int(11)",
+                    "type": "integer",
+                    "name": "dedicated_engines"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "license_id",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "license_id"
+                    },
+                    "render_input": "parse_integer_output",
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "int(11), primary key",
+                    "type": "integer",
+                    "name": "license_id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "license_salesRep",
+                    "details": {
+                      "data_type": "varchar(200)",
+                      "column_name": "license_salesRep"
+                    },
+                    "optional": true,
+                    "hint": "varchar(200)",
+                    "type": "string",
+                    "name": "license_salesrep_514aeb15"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "product_key",
+                    "details": {
+                      "data_type": "varchar(45)",
+                      "column_name": "product_key"
+                    },
+                    "optional": true,
+                    "hint": "varchar(45)",
+                    "type": "string",
+                    "name": "product_key"
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "parameters",
+                "control_type": "form-schema-builder",
+                "label": "Parameters",
+                "hint": "First provide the full name assigned to your bind variable in the WHERE condition. e.g. <b>id</b>\n                    Second, provide the actual parameter value. Parameter values can be static or datapills.\n                    Select the <b>closest corresponding data type</b> that your database is expecting for the bind variable",
+                "sticky": true,
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Schema",
+                    "extends_schema": true,
+                    "type": "string",
+                    "name": "schema",
+                    "parent": "parameters"
+                  },
+                  {
+                    "properties": [
+
+                    ],
+                    "label": "Data",
+                    "optional": true,
+                    "type": "object",
+                    "name": "data",
+                    "parent": "parameters"
+                  }
+                ],
+                "override": true
+              }
+            ],
+            "comment": "Get the license record that matches the engine record",
+            "uuid": "2020d773-a8ad-4bac-95d2-ef7791c39bfd"
+          },
+          {
+            "number": 7,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "equals_to",
+                  "lhs": "#{_('data.workato_service.0d68a1fb.request.status')}",
+                  "rhs": "SUCCESS"
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 8,
+                "provider": "workato_variable",
+                "name": "update_variable",
+                "as": "2a29155c",
+                "title": null,
+                "description": "Update variable <span class=\"provider\">ess_status</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "name": "ess_status (step 2)"
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "name": "9cbff9a6-58df-4eb4-8f04-2a1c9031932a:9e1a4d31:ess_status",
+                  "value": "provisioned"
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "string",
+                    "name": "value",
+                    "control_type": "text",
+                    "label": "Value",
+                    "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                    "sticky": true,
+                    "optional": true,
+                    "strip_interpolation": true
+                  }
+                ],
+                "comment": "set the ess row status to \"provisioned\" for success for deploy_ess",
+                "uuid": "21792606-ad46-43a3-8d02-84a606ea90e2",
+                "skip": false
+              },
+              {
+                "number": 9,
+                "provider": "slack_bot",
+                "name": "post_bot_message",
+                "as": "a91ba9fe",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "channel": "ess_automation_notifications"
+                },
+                "toggleCfg": {
+                  "channel": true
+                },
+                "input": {
+                  "text": "*ESS Engine Now Available*",
+                  "attachment_fields": [
+                    {
+                      "title": "Customer Name",
+                      "value": "=_('data.mysql.f5005507.rows.first.customer_name').present? ? _('data.mysql.f5005507.rows.first.customer_name') : \"_not available_\""
+                    },
+                    {
+                      "title": "Engine ID",
+                      "value": "#{_('data.workato_service.0d68a1fb.request.engine_id')}"
+                    },
+                    {
+                      "title": "IP Address",
+                      "value": "#{_('data.workato_service.0d68a1fb.request.ip_address')}"
+                    }
+                  ],
+                  "channel": "#ess_automation_notifications"
+                },
+                "uuid": "b32497ba-b191-4600-af27-f0b52979aec5"
+              },
+              {
+                "number": 10,
+                "keyword": "else",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                },
+                "block": [
+                  {
+                    "number": 11,
+                    "provider": "workato_variable",
+                    "name": "update_variable",
+                    "as": "1293a0b3",
+                    "title": null,
+                    "description": "Update variable <span class=\"provider\">ess_status</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "name": "ess_status (step 2)"
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "name": "9cbff9a6-58df-4eb4-8f04-2a1c9031932a:9e1a4d31:ess_status",
+                      "value": "failed"
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "string",
+                        "name": "value",
+                        "control_type": "text",
+                        "label": "Value",
+                        "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                        "sticky": true,
+                        "optional": true,
+                        "strip_interpolation": true
+                      }
+                    ],
+                    "comment": "set the ess row status to \"failed\" for any other status for deploy_ess",
+                    "uuid": "9553cc7c-7e38-444a-9fb3-3f3fd36c5fe7",
+                    "skip": false
+                  },
+                  {
+                    "number": 12,
+                    "provider": "slack_bot",
+                    "name": "post_bot_message",
+                    "as": "bb175036",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "channel": "ess_automation_notifications"
+                    },
+                    "toggleCfg": {
+                      "channel": true,
+                      "message.color": true
+                    },
+                    "input": {
+                      "text": "*ESS Engine Deploy Failure*",
+                      "attachment_fields": [
+                        {
+                          "title": "Customer Name",
+                          "value": "=_('data.mysql.f5005507.rows.first.customer_name').present? ? _('data.mysql.f5005507.rows.first.customer_name') : \"_not available_\""
+                        },
+                        {
+                          "title": "Engine ID",
+                          "value": "#{_('data.workato_service.0d68a1fb.request.engine_id')}"
+                        }
+                      ],
+                      "channel": "#ess_automation_notifications",
+                      "message": {
+                        "color": "danger"
+                      }
+                    },
+                    "uuid": "43f64d25-24bd-4aad-b590-d8da31cfa022"
+                  }
+                ],
+                "uuid": "0d7e2201-c87a-47bb-ac93-8e700ea93375",
+                "skip": false
+              }
+            ],
+            "uuid": "58dddeed-f3d4-4c5c-a214-3cad646f232d",
+            "skip": false
+          }
+        ],
+        "uuid": "81086e43-9f1a-4d8a-9184-c74e16776688",
+        "skip": false
+      },
+      {
+        "number": 13,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "present",
+              "lhs": "#{_('data.workato_variable.9e1a4d31.ess_status')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 14,
+            "provider": "mysql",
+            "name": "update_rows",
+            "as": "774fbbfe",
+            "title": "Update rows in ess_engine",
+            "description": "Update <span class=\"provider\">rows</span> in <span class=\"provider\">ess_engine</span> table in <span class=\"provider\">MySQL</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "table": "ess_engine"
+            },
+            "toggleCfg": {
+              "table": true
+            },
+            "input": {
+              "table": "ess_engine",
+              "where": "engine_id='#{_('data.workato_service.0d68a1fb.request.engine_id')}'",
+              "columns": {
+                "date_pendingtimeout_568b0583": "=clear",
+                "status": "#{_('data.workato_variable.9e1a4d31.ess_status')}",
+                "date_lastmodified_5151a09e": "=now",
+                "ipaddress": "=_('data.workato_service.0d68a1fb.request.ip_address').present? ? _('data.workato_service.0d68a1fb.request.ip_address') : skip"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "columns",
+                "label": "Columns",
+                "properties": [
+                  {
+                    "control_type": "date_time",
+                    "label": "date_created",
+                    "render_input": "convert_date_time",
+                    "parse_output": "parse_time_value",
+                    "details": {
+                      "data_type": "timestamp(3)",
+                      "column_name": "date_created"
+                    },
+                    "optional": true,
+                    "hint": "timestamp(3)",
+                    "type": "date_time",
+                    "name": "date_created",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "date_time",
+                    "label": "date_lastModified",
+                    "render_input": "convert_date_time",
+                    "parse_output": "parse_time_value",
+                    "details": {
+                      "data_type": "timestamp(3)",
+                      "column_name": "date_lastModified"
+                    },
+                    "optional": true,
+                    "hint": "timestamp(3)",
+                    "type": "date_time",
+                    "name": "date_lastmodified_5151a09e",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "date_time",
+                    "label": "date_pendingTimeout",
+                    "render_input": "convert_date_time",
+                    "parse_output": "parse_time_value",
+                    "details": {
+                      "data_type": "timestamp",
+                      "column_name": "date_pendingTimeout"
+                    },
+                    "optional": true,
+                    "hint": "timestamp",
+                    "type": "date_time",
+                    "name": "date_pendingtimeout_568b0583",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "engine_id",
+                    "details": {
+                      "data_type": "varchar(45)",
+                      "column_name": "engine_id"
+                    },
+                    "hint": "varchar(45)",
+                    "optional": true,
+                    "type": "string",
+                    "name": "engine_id",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "id",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "id"
+                    },
+                    "render_input": "parse_integer_output",
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "int(11), primary key",
+                    "type": "integer",
+                    "name": "id",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "ipaddress",
+                    "details": {
+                      "data_type": "varchar(45)",
+                      "column_name": "ipaddress"
+                    },
+                    "optional": true,
+                    "hint": "varchar(45)",
+                    "type": "string",
+                    "name": "ipaddress",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "license_id",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "license_id"
+                    },
+                    "render_input": "parse_integer_output",
+                    "hint": "int(11)",
+                    "optional": true,
+                    "type": "integer",
+                    "name": "license_id",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "status",
+                    "details": {
+                      "data_type": "varchar(45)",
+                      "column_name": "status"
+                    },
+                    "hint": "varchar(45)",
+                    "optional": true,
+                    "type": "string",
+                    "name": "status",
+                    "parent": "columns"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "table",
+              "where",
+              "columns.status",
+              "columns.date_pendingtimeout_568b0583",
+              "columns",
+              "columns.date_lastmodified_5151a09e",
+              "columns.ipaddress"
+            ],
+            "comment": "update the status and clear any date_pendingTimeout value",
+            "uuid": "d1779406-e0ab-4f70-8833-ae3a9bbdfa71",
+            "skip": false
+          }
+        ],
+        "uuid": "352c2cc9-7c65-4e6e-ba7b-06fa71b39d8e",
+        "skip": false
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Engine ID"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Status (input/output)"
+      },
+      {
+        "name": "custom_column_4",
+        "label": "Event Type"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "Notes"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_service.0d68a1fb.request.engine_id')}",
+      "custom_column_2": "#{_('data.workato_service.0d68a1fb.request.status')}/#{_('data.workato_variable.9e1a4d31.ess_status')}",
+      "custom_column_4": "#{_('data.workato_service.0d68a1fb.request.event_type')}",
+      "custom_column_3": "#{_('data.workato_service.0d68a1fb.request.notes')}"
+    },
+    "uuid": "77c465d9-32e5-4fb3-a46b-b9ab3c46b8af"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "mysql",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "resources/mysql.connection.json",
+        "name": "MySQL",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "slack_bot",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/workatointegrations.connection.json",
+        "name": "workatointegrations",
+        "folder": "connections"
+      }
+    }
+  ]
+}

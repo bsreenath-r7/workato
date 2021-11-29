@@ -1,0 +1,1282 @@
+{
+  "name": "Salesforce Jira-Case Association (Create) - Salesforce Jira Issue",
+  "description": "When there is a trigger event, do action",
+  "version": 75,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "salesforce",
+    "name": "new_custom_object_webhook",
+    "as": "30a4537e",
+    "title": "New Jira- case association",
+    "description": "New <span class=\"provider\">Jira- case association</span> in <span class=\"provider\">Salesforce</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+      "sobject_name": "Jira- case association",
+      "field_list": [
+        {
+          "label": "Record ID",
+          "value": "Id"
+        },
+        {
+          "label": "Jira-Case Association #",
+          "value": "Name"
+        },
+        {
+          "label": "Created Date",
+          "value": "CreatedDate"
+        },
+        {
+          "label": "Last Modified Date",
+          "value": "LastModifiedDate"
+        },
+        {
+          "label": "Last Modified By ID",
+          "value": "LastModifiedById"
+        },
+        {
+          "label": "Case",
+          "value": "Case__c"
+        },
+        {
+          "label": "Fix Version",
+          "value": "Fix_Version__c"
+        },
+        {
+          "label": "Description",
+          "value": "Description__c"
+        },
+        {
+          "label": "Jira Number",
+          "value": "JiraNumber__c"
+        },
+        {
+          "label": "Jira Project",
+          "value": "JiraProject__c"
+        },
+        {
+          "label": "Jira Ticket",
+          "value": "JiraTicket__c"
+        },
+        {
+          "label": "Link to record in Jira",
+          "value": "LinktorecordinJira__c"
+        },
+        {
+          "label": "Project",
+          "value": "Project__c"
+        },
+        {
+          "label": "Status",
+          "value": "Status__c"
+        },
+        {
+          "label": "Title",
+          "value": "Title__c"
+        },
+        {
+          "label": "Jira Instance",
+          "value": "JiraInstance__c"
+        }
+      ]
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "sobject_name": "JiraCaseAssociation__c",
+      "since_offset": "0",
+      "field_list": "Id\nName\nCreatedDate\nLastModifiedDate\nLastModifiedById\nCase__c\nFix_Version__c\nDescription__c\nJiraNumber__c\nJiraProject__c\nJiraTicket__c\nLinktorecordinJira__c\nProject__c\nStatus__c\nTitle__c\nJiraInstance__c"
+    },
+    "extended_output_schema": [
+      {
+        "type": "date_time",
+        "name": "CreatedDate",
+        "control_type": "date_time",
+        "label": "Created Date",
+        "optional": true,
+        "custom": false,
+        "render_input": "render_iso8601_timestamp",
+        "parse_output": "parse_iso8601_timestamp",
+        "sfdc_createable": true,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "Name",
+        "control_type": "text",
+        "label": "Jira-Case Association #",
+        "optional": true,
+        "custom": false,
+        "event_title": true,
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "LastModifiedById",
+        "control_type": "text",
+        "label": "Last Modified By ID",
+        "optional": true,
+        "custom": false,
+        "sfdc_createable": true,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "date_time",
+        "name": "LastModifiedDate",
+        "control_type": "date_time",
+        "label": "Last Modified Date",
+        "optional": true,
+        "custom": false,
+        "render_input": "render_iso8601_timestamp",
+        "parse_output": "parse_iso8601_timestamp",
+        "sfdc_createable": true,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "Id",
+        "control_type": "text",
+        "label": "Record ID",
+        "optional": true,
+        "custom": false,
+        "key_scope": "JiraCaseAssociation__c",
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "date_time",
+        "name": "SystemModstamp",
+        "control_type": "date_time",
+        "label": "System Modstamp",
+        "optional": true,
+        "custom": false,
+        "render_input": "render_iso8601_timestamp",
+        "parse_output": "parse_iso8601_timestamp",
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "Case__c",
+        "control_type": "text",
+        "label": "Case",
+        "custom": true,
+        "sfdc_createable": true,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "Description__c",
+        "control_type": "text-area",
+        "label": "Description",
+        "optional": true,
+        "custom": true,
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "string",
+        "name": "Fix_Version__c",
+        "control_type": "text",
+        "label": "Fix Version",
+        "optional": true,
+        "custom": true,
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "string",
+        "name": "JiraInstance__c",
+        "control_type": "select",
+        "label": "Jira Instance",
+        "pick_list": "sobject_field_values_list",
+        "pick_list_params": {
+          "sobject_name": "\"JiraCaseAssociation__c\""
+        },
+        "optional": true,
+        "custom": true,
+        "toggle_hint": "Select from list",
+        "toggle_field": {
+          "control_type": "text",
+          "label": "Jira Instance",
+          "toggle_hint": "Enter custom value",
+          "optional": true,
+          "custom": true,
+          "sfdc_createable": true,
+          "sfdc_updateable": true,
+          "type": "string",
+          "name": "JiraInstance__c"
+        },
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "number",
+        "name": "JiraNumber__c",
+        "control_type": "number",
+        "label": "Jira Number",
+        "optional": true,
+        "custom": true,
+        "parse_output": "float_conversion",
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "string",
+        "name": "JiraProject__c",
+        "control_type": "select",
+        "label": "Jira Project",
+        "pick_list": "sobject_field_values_list",
+        "pick_list_params": {
+          "sobject_name": "\"JiraCaseAssociation__c\""
+        },
+        "optional": true,
+        "custom": true,
+        "toggle_hint": "Select from list",
+        "toggle_field": {
+          "control_type": "text",
+          "label": "Jira Project",
+          "toggle_hint": "Enter custom value",
+          "optional": true,
+          "custom": true,
+          "sfdc_createable": true,
+          "sfdc_updateable": true,
+          "type": "string",
+          "name": "JiraProject__c"
+        },
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "string",
+        "name": "JiraTicket__c",
+        "control_type": "text",
+        "label": "Jira Ticket",
+        "optional": true,
+        "custom": true,
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "LinktorecordinJira__c",
+        "control_type": "url",
+        "label": "Link to record in Jira",
+        "optional": true,
+        "custom": true,
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "string",
+        "name": "Project__c",
+        "control_type": "text",
+        "label": "Project",
+        "optional": true,
+        "custom": true,
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "string",
+        "name": "Status__c",
+        "control_type": "text",
+        "label": "Status",
+        "optional": true,
+        "custom": true,
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "string",
+        "name": "Title__c",
+        "control_type": "text",
+        "label": "Title",
+        "optional": true,
+        "custom": true,
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "object",
+        "name": "CombinedAttachments",
+        "label": "Combined attachments",
+        "properties": [
+          {
+            "control_type": "number",
+            "label": "Total size",
+            "parse_output": "integer_conversion",
+            "type": "integer",
+            "name": "totalSize"
+          },
+          {
+            "name": "records",
+            "type": "array",
+            "of": "object",
+            "label": "Files",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "ID",
+                "type": "string",
+                "name": "Id"
+              },
+              {
+                "control_type": "number",
+                "label": "Content size",
+                "parse_output": "integer_conversion",
+                "type": "integer",
+                "name": "ContentSize"
+              },
+              {
+                "control_type": "url",
+                "label": "Content URL",
+                "type": "string",
+                "name": "ContentUrl"
+              },
+              {
+                "control_type": "text",
+                "label": "File extension",
+                "type": "string",
+                "name": "FileExtension"
+              },
+              {
+                "control_type": "text",
+                "label": "File type",
+                "type": "string",
+                "name": "FileType"
+              },
+              {
+                "control_type": "text",
+                "label": "Parent ID",
+                "type": "string",
+                "name": "ParentId"
+              },
+              {
+                "control_type": "text",
+                "label": "Record type",
+                "type": "string",
+                "name": "RecordType"
+              },
+              {
+                "control_type": "text",
+                "label": "Title",
+                "type": "string",
+                "name": "Title"
+              }
+            ]
+          }
+        ],
+        "sfdc_field_type": "CombinedAttachment"
+      }
+    ],
+    "extended_input_schema": [
+      {
+        "type": "string",
+        "name": "since_offset",
+        "control_type": "select",
+        "label": "When first started, this recipe should pick up events from",
+        "hint": "When starting the recipe for the first time, picks up Salesforce records from the specified date and time. <b>Once the recipe has been run or tested, this value cannot be changed.</b>",
+        "default": -3600,
+        "pick_list": [
+          [
+            "Recipe start",
+            0
+          ],
+          [
+            "An hour ago",
+            -3600
+          ],
+          [
+            "Yesterday",
+            -86400
+          ],
+          [
+            "Last week",
+            -604800
+          ],
+          [
+            "Last month",
+            -2629746
+          ],
+          [
+            "Beginning of time",
+            "no_limit"
+          ]
+        ],
+        "toggle_hint": "Select from list",
+        "toggle_field": {
+          "control_type": "date_time",
+          "label": "When first started, this recipe should pick up events from",
+          "render_input": "convert_date_time",
+          "parse_output": "convert_date_time",
+          "toggle_hint": "Enter custom value",
+          "since_field": true,
+          "hint": "When starting the recipe for the first time, picks up Salesforce records from the specified date and time. <b>Once the recipe has been run or tested, this value cannot be changed.</b>",
+          "type": "date_time",
+          "name": "since"
+        },
+        "since_field": true
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "present",
+              "lhs": "#{_('data.salesforce.30a4537e.JiraInstance__c')}",
+              "rhs": "",
+              "uuid": "condition-16b6a212-d8ae-4f93-aa88-5012fd6ce3d2"
+            },
+            {
+              "operand": "equals_to",
+              "lhs": "#{_('data.salesforce.30a4537e.JiraInstance__c')}",
+              "rhs": "Rapid7 On-Prem",
+              "uuid": "condition-2fd197d9-82af-43b5-8a84-654fc2ee0576"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 2,
+            "keyword": "try",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+            },
+            "block": [
+              {
+                "number": 3,
+                "provider": "workato_service",
+                "name": "call_service",
+                "as": "bd594efb",
+                "title": null,
+                "description": "Call recipe <span class=\"provider\">Callable - Sync Jira Issue to Salesforce Jira Issue</span> ",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "flow_id": "Callable - Sync Jira Issue to Salesforce Jira Issue"
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "flow_id": {
+                    "zip_name": "jira/callable/callable_sync_jira_issue_to_salesforce_jira_issue.recipe.json",
+                    "name": "Callable - Sync Jira Issue to Salesforce Jira Issue",
+                    "folder": "jira/callable"
+                  },
+                  "request": {
+                    "jira_issue_key": "#{_('data.salesforce.30a4537e.JiraTicket__c')}"
+                  }
+                },
+                "extended_output_schema": [
+                  {
+                    "type": "object",
+                    "name": "reply",
+                    "label": "Reply",
+                    "properties": [
+                      {
+                        "name": "remapped_jira_case_associations",
+                        "type": "array",
+                        "of": "object",
+                        "label": "Remapped Jira/Case Associations",
+                        "optional": true,
+                        "hint": "List of the remapped Jira Case Associations",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Case Number",
+                            "name": "case",
+                            "type": "string",
+                            "optional": true
+                          }
+                        ]
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Jira Issue Key",
+                        "name": "jira_issue_key",
+                        "type": "string",
+                        "optional": false,
+                        "hint": "Key of the updated Jira, it will be blank if no Jira was updated"
+                      }
+                    ]
+                  }
+                ],
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "request",
+                    "label": "Recipe input",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Jira Issue Key",
+                        "name": "jira_issue_key",
+                        "type": "string",
+                        "optional": false
+                      }
+                    ]
+                  }
+                ],
+                "comment": "Synchronous Call so that we can use the current Jira Key in the following steps.",
+                "uuid": "5a6b5098-e19f-4736-aa2e-9f46d1198c26",
+                "skip": false
+              },
+              {
+                "number": 4,
+                "as": "497c4697",
+                "keyword": "catch",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "max_retry_count": "0",
+                  "retry_interval": "2"
+                },
+                "block": [
+                  {
+                    "number": 5,
+                    "keyword": "stop",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "stop_with_error": "true",
+                      "stop_reason": "#{_('data.catch.497c4697.message')}"
+                    },
+                    "uuid": "fbffda88-6cdc-457f-85e7-97ad50f0976c",
+                    "skip": false
+                  }
+                ],
+                "uuid": "4db78611-9545-46b1-9133-b51056bc7a8f",
+                "skip": false
+              }
+            ],
+            "uuid": "e5edf62f-4251-4189-bd6d-37fd7681985b",
+            "skip": false
+          },
+          {
+            "number": 6,
+            "provider": "logger",
+            "name": "log_message",
+            "as": "88d59642",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "message": "#{_('data.salesforce.30a4537e.get_custom_object(Case__c>id, sobject_name: Case).IsClosed')} + \"    \" + #{_('data.workato_service.bd594efb.reply.jira_issue_key')} + \"     \"  + #{_('data.salesforce.30a4537e.JiraProject__c')}"
+            },
+            "uuid": "b9b14a62-7e43-4aa9-9e63-b74209317640",
+            "skip": false
+          },
+          {
+            "number": 7,
+            "provider": "workato_variable",
+            "name": "declare_variable",
+            "as": "091b743c",
+            "title": "  Create variable validation",
+            "description": "Create variable <span class=\"provider\">validation</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "variables": {
+                "schema": "[{\"name\":\"validation\",\"type\":\"string\",\"optional\":true,\"label\":\"validation\",\"control_type\":\"text\"}]",
+                "data": {
+                  "validation": "=(_('data.salesforce.30a4537e.get_custom_object(Case__c>id, sobject_name: Case).IsClosed').is_not_true? && _('data.workato_service.bd594efb.reply.jira_issue_key').present?) ? true : (_('data.salesforce.30a4537e.get_custom_object(Case__c>id, sobject_name: Case).IsClosed').is_true? && _('data.workato_service.bd594efb.reply.jira_issue_key').present? && _('data.salesforce.30a4537e.JiraProject__c').include?(\"IDEA\") ? true : false)"
+                }
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "string",
+                "name": "validation",
+                "control_type": "text",
+                "label": "validation",
+                "optional": true
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "variables",
+                "control_type": "form-schema-builder",
+                "label": "Variables",
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Schema",
+                    "extends_schema": true,
+                    "broadcast_change_event": true,
+                    "type": "string",
+                    "name": "schema"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "validation",
+                        "name": "validation",
+                        "type": "string",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      }
+                    ],
+                    "label": "Data",
+                    "type": "object",
+                    "name": "data"
+                  }
+                ],
+                "exclude_fields": [
+                  "hint"
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "variables.data.validation"
+            ],
+            "comment": "validates (if Case is Closed for IDEA Jira - Case Association, if yes , still Update Support Link field in Jira)  OR (if Case is Open and Jira Issue Key is present for other Jira Projects)",
+            "uuid": "d77f4192-4967-401c-8046-214159ad9a1e",
+            "skip": false
+          },
+          {
+            "number": 8,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "is_true",
+                  "lhs": "#{_('data.workato_variable.091b743c.validation')}",
+                  "rhs": null,
+                  "uuid": "condition-29512429-61b4-46fe-94cf-76bdb373243c"
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 9,
+                "keyword": "try",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                },
+                "block": [
+                  {
+                    "number": 10,
+                    "provider": "workato_service",
+                    "name": "call_service",
+                    "as": "93ad6014",
+                    "title": null,
+                    "description": "Call recipe <span class=\"provider\">Add Salesforce Case fields to Jira Issue</span> ",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "flow_id": "Add Salesforce Case fields to Jira Issue"
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "flow_id": {
+                        "zip_name": "salesforce/callable/callable_add_salesforce_case_fields_to_jira_issue.recipe.json",
+                        "name": "Callable - Add Salesforce Case fields to Jira Issue",
+                        "folder": "salesforce/callable"
+                      },
+                      "request": {
+                        "jira_issue_key": "#{_('data.workato_service.bd594efb.reply.jira_issue_key')}",
+                        "salesforce_case_number": "#{_('data.salesforce.30a4537e.get_custom_object(Case__c>id, sobject_name: Case).CaseNumber')}",
+                        "salesforce_account_name": "#{_('data.salesforce.30a4537e.get_custom_object(Case__c>id, sobject_name: Case).get_custom_object(AccountId>id, sobject_name: Account).Name')}"
+                      }
+                    },
+                    "extended_output_schema": [
+                      {
+                        "type": "object",
+                        "name": "reply",
+                        "label": "Reply",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Jira issue key",
+                            "name": "jira_issue_key",
+                            "type": "string",
+                            "optional": false,
+                            "hint": "Key of the updated Jira.  It will be blank if no matching Jira could be found."
+                          }
+                        ]
+                      }
+                    ],
+                    "extended_input_schema": [
+                      {
+                        "type": "object",
+                        "name": "request",
+                        "label": "Recipe input",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Jira Issue Key",
+                            "name": "jira_issue_key",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Salesforce Case Number",
+                            "name": "salesforce_case_number",
+                            "type": "string",
+                            "optional": true,
+                            "hint": "specify if you want to add the case number to the Jira (this recipes checks to make sure duplicates are not added)"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Salesforce Account Name",
+                            "name": "salesforce_account_name",
+                            "type": "string",
+                            "optional": true,
+                            "hint": "specify if you would to add the account name to the Jira  (this recipes checks to make sure duplicates are not added)"
+                          }
+                        ]
+                      }
+                    ],
+                    "visible_config_fields": [
+                      "flow_id",
+                      "request",
+                      "request.salesforce_case_number",
+                      "request.salesforce_account_name"
+                    ],
+                    "comment": "Add the Case Number and Account Name to the Case",
+                    "uuid": "092d44ca-6045-4a1f-9d42-b787f160827f",
+                    "skip": false
+                  },
+                  {
+                    "number": 11,
+                    "as": "4f0eff1e",
+                    "keyword": "catch",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "max_retry_count": "0",
+                      "retry_interval": "2"
+                    },
+                    "block": [
+                      {
+                        "number": 12,
+                        "keyword": "stop",
+                        "dynamicPickListSelection": {
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                          "stop_with_error": "true",
+                          "stop_reason": "#{_('data.catch.4f0eff1e.message')}"
+                        },
+                        "uuid": "36602f6d-1b77-4ba8-9732-350bc58a6fcd",
+                        "skip": false
+                      }
+                    ],
+                    "uuid": "5dcb3fa5-de9d-4e00-928b-ad56bf3b1f94",
+                    "skip": false
+                  }
+                ],
+                "uuid": "df924eff-08d7-4350-9c03-1f701675e89e",
+                "skip": false
+              }
+            ],
+            "comment": "(Only attempt to update these fields if the Case is NOT Closed) OR  (if the Case is Closed , but the Porject is IDEA Jira)",
+            "uuid": "87380106-3bad-4559-a138-e6b49a630a19",
+            "skip": false
+          }
+        ],
+        "uuid": "42bd147c-8101-4c6f-b47d-90fa43c00067"
+      },
+      {
+        "number": 13,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "present",
+              "lhs": "#{_('data.salesforce.30a4537e.JiraInstance__c')}",
+              "rhs": "",
+              "uuid": "condition-16b6a212-d8ae-4f93-aa88-5012fd6ce3d2"
+            },
+            {
+              "operand": "equals_to",
+              "lhs": "#{_('data.salesforce.30a4537e.JiraInstance__c')}",
+              "rhs": "InsightCloudSec",
+              "uuid": "condition-2fd197d9-82af-43b5-8a84-654fc2ee0576"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 14,
+            "keyword": "try",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+            },
+            "block": [
+              {
+                "number": 15,
+                "provider": "workato_service",
+                "name": "call_service",
+                "as": "08d50002",
+                "title": null,
+                "description": "Call recipe <span class=\"provider\">Callable - Sync Divvy Cloud Jira Issue to Salesforce Jira Issue</span> ",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "flow_id": "Callable - Sync Divvy Cloud Jira Issue to Salesforce Jira Issue"
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "flow_id": {
+                    "zip_name": "divvycloud/callable/callable_sync_divvy_cloud_jira_issue_to_salesforce_jira_issue.recipe.json",
+                    "name": "Callable - Sync Divvy Cloud Jira Issue to Salesforce Jira Issue",
+                    "folder": "divvycloud/callable"
+                  },
+                  "request": {
+                    "jira_issue_key": "#{_('data.salesforce.30a4537e.JiraTicket__c')}"
+                  }
+                },
+                "extended_output_schema": [
+                  {
+                    "type": "object",
+                    "name": "reply",
+                    "label": "Reply",
+                    "properties": [
+                      {
+                        "name": "remapped_jira_case_associations",
+                        "type": "array",
+                        "of": "object",
+                        "label": "Remapped Jira/Case Associations",
+                        "optional": true,
+                        "hint": "List of the remapped Jira Case Associations",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Case Number",
+                            "name": "case",
+                            "type": "string",
+                            "optional": true
+                          }
+                        ]
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Jira Issue Key",
+                        "name": "jira_issue_key",
+                        "type": "string",
+                        "optional": false,
+                        "hint": "Key of the updated Jira, it will be blank if no Jira was updated"
+                      }
+                    ]
+                  }
+                ],
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "request",
+                    "label": "Recipe input",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Jira Issue Key",
+                        "name": "jira_issue_key",
+                        "type": "string",
+                        "optional": false
+                      }
+                    ]
+                  }
+                ],
+                "comment": "Synchronous Call so that we can use the current Jira Key in the following steps.",
+                "uuid": "06287e67-9bdb-49b3-887d-0af67cb967bb",
+                "skip": false
+              },
+              {
+                "number": 16,
+                "as": "cf688d02",
+                "keyword": "catch",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "max_retry_count": "0",
+                  "retry_interval": "2"
+                },
+                "block": [
+                  {
+                    "number": 17,
+                    "keyword": "stop",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "stop_with_error": "true",
+                      "stop_reason": "#{_('data.catch.497c4697.message')}"
+                    },
+                    "uuid": "5420271e-2c1d-41d5-bea6-c5177561b788",
+                    "skip": false
+                  }
+                ],
+                "uuid": "a79fedce-d642-4025-8a36-eec68b736c0e",
+                "skip": false
+              }
+            ],
+            "uuid": "27e01e27-6dd9-498a-9076-55811272e4ab",
+            "skip": false
+          },
+          {
+            "number": 18,
+            "provider": "logger",
+            "name": "log_message",
+            "as": "ca8945e9",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "message": "#{_('data.salesforce.30a4537e.get_custom_object(Case__c>id, sobject_name: Case).IsClosed')} + \"    \" + #{_('data.workato_service.08d50002.reply.jira_issue_key')} + \"     \"  + #{_('data.salesforce.30a4537e.JiraProject__c')}"
+            },
+            "uuid": "d73ce3f8-cad7-4667-9005-75081c971ac9",
+            "skip": false
+          },
+          {
+            "number": 19,
+            "provider": "workato_variable",
+            "name": "declare_variable",
+            "as": "f4b47cac",
+            "title": "  Create variable validation",
+            "description": "Create variable <span class=\"provider\">validation</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "variables": {
+                "schema": "[{\"name\":\"validation\",\"type\":\"string\",\"optional\":true,\"label\":\"validation\",\"control_type\":\"text\"}]",
+                "data": {
+                  "validation": "=(_('data.salesforce.30a4537e.get_custom_object(Case__c>id, sobject_name: Case).IsClosed').is_not_true? && _('data.workato_service.08d50002.reply.jira_issue_key').present?) ? true : (_('data.salesforce.30a4537e.get_custom_object(Case__c>id, sobject_name: Case).IsClosed').is_true? && _('data.workato_service.08d50002.reply.jira_issue_key').present? && _('data.workato_service.08d50002.reply.jira_issue_key').include?(\"IDEA\") ? true : false)"
+                }
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "string",
+                "name": "validation",
+                "control_type": "text",
+                "label": "validation",
+                "optional": true
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "variables",
+                "control_type": "form-schema-builder",
+                "label": "Variables",
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Schema",
+                    "extends_schema": true,
+                    "broadcast_change_event": true,
+                    "type": "string",
+                    "name": "schema"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "validation",
+                        "name": "validation",
+                        "type": "string",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      }
+                    ],
+                    "label": "Data",
+                    "type": "object",
+                    "name": "data"
+                  }
+                ],
+                "exclude_fields": [
+                  "hint"
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "variables.data.validation"
+            ],
+            "comment": "validates (if Case is Closed for IDEA Jira - Case Association, if yes , still Update Support Link field in Jira)  OR (if Case is Open and Jira Issue Key is present for other Jira Projects)",
+            "uuid": "07919a62-e9b4-4d49-b775-feeb2978b63b",
+            "skip": false
+          },
+          {
+            "number": 20,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "is_true",
+                  "lhs": "#{_('data.workato_variable.f4b47cac.validation')}",
+                  "rhs": null,
+                  "uuid": "condition-c44ddcc2-461b-44ee-bfa9-636232dadd47"
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 21,
+                "keyword": "try",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                },
+                "block": [
+                  {
+                    "number": 22,
+                    "provider": "workato_service",
+                    "name": "call_service",
+                    "as": "40ba1c97",
+                    "title": null,
+                    "description": "Call recipe <span class=\"provider\">Callable - Add Salesforce Case fields to Divvy Cloud Jira Issue</span> ",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "flow_id": "Callable - Add Salesforce Case fields to Divvy Cloud Jira Issue"
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "flow_id": {
+                        "zip_name": "divvycloud/callable/callable_add_salesforce_case_fields_to_divvy_cloud_jira_issue.recipe.json",
+                        "name": "Callable - Add Salesforce Case fields to Divvy Cloud Jira Issue",
+                        "folder": "divvycloud/callable"
+                      },
+                      "request": {
+                        "jira_issue_key": "#{_('data.workato_service.08d50002.reply.jira_issue_key')}",
+                        "salesforce_case_number": "#{_('data.salesforce.30a4537e.get_custom_object(Case__c>id, sobject_name: Case).CaseNumber')}",
+                        "salesforce_account_name": "#{_('data.salesforce.30a4537e.get_custom_object(Case__c>id, sobject_name: Case).get_custom_object(AccountId>id, sobject_name: Account).Name')}"
+                      }
+                    },
+                    "extended_output_schema": [
+                      {
+                        "type": "object",
+                        "name": "reply",
+                        "label": "Reply",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Jira issue key",
+                            "name": "jira_issue_key",
+                            "type": "string",
+                            "optional": false,
+                            "hint": "Key of the updated Jira.  It will be blank if no matching Jira could be found."
+                          }
+                        ]
+                      }
+                    ],
+                    "extended_input_schema": [
+                      {
+                        "type": "object",
+                        "name": "request",
+                        "label": "Recipe input",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Jira Issue Key",
+                            "name": "jira_issue_key",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Salesforce Case Number",
+                            "name": "salesforce_case_number",
+                            "type": "string",
+                            "optional": true,
+                            "hint": "specify if you want to add the case number to the Jira (this recipes checks to make sure duplicates are not added)"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Salesforce Account Name",
+                            "name": "salesforce_account_name",
+                            "type": "string",
+                            "optional": true,
+                            "hint": "specify if you would to add the account name to the Jira  (this recipes checks to make sure duplicates are not added)"
+                          }
+                        ]
+                      }
+                    ],
+                    "visible_config_fields": [
+                      "flow_id",
+                      "request",
+                      "request.salesforce_case_number",
+                      "request.salesforce_account_name"
+                    ],
+                    "comment": "Add the Case Number and Account Name to the Case",
+                    "uuid": "211425d3-1784-4de5-84f7-0220572881ca",
+                    "skip": false
+                  },
+                  {
+                    "number": 23,
+                    "as": "adba55e0",
+                    "keyword": "catch",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "max_retry_count": "0",
+                      "retry_interval": "2"
+                    },
+                    "block": [
+                      {
+                        "number": 24,
+                        "keyword": "stop",
+                        "dynamicPickListSelection": {
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                          "stop_with_error": "true",
+                          "stop_reason": "#{_('data.catch.4f0eff1e.message')}"
+                        },
+                        "uuid": "f491b742-240d-463e-8a34-afd169e02a16",
+                        "skip": false
+                      }
+                    ],
+                    "uuid": "7e2ed97b-8602-4019-bb71-411a6fedf28a",
+                    "skip": false
+                  }
+                ],
+                "uuid": "1944b9f3-1dee-4eb6-a1fd-42597d61bd92",
+                "skip": false
+              }
+            ],
+            "comment": "(Only attempt to update these fields if the Case is NOT Closed) OR  (if the Case is Closed , but the Porject is IDEA Jira)",
+            "uuid": "740ba304-22f8-4b4f-b67e-aceddedfa780",
+            "skip": false
+          }
+        ],
+        "uuid": "d91ab1be-adaf-4a3e-96b1-6a11f545ced5",
+        "skip": false
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_4",
+        "label": "Case/Jira Instance"
+      },
+      {
+        "name": "custom_column_1",
+        "label": "Original Jira Key"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Final Jira Key"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "Remapped Associations"
+      },
+      {
+        "name": "custom_column_5",
+        "label": "Status"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_4": "#{_('data.salesforce.30a4537e.Case__c')}/#{_('data.salesforce.30a4537e.JiraInstance__c')}",
+      "custom_column_1": "#{_('data.salesforce.30a4537e.JiraTicket__c')}",
+      "custom_column_2": "=_('data.workato_service.bd594efb.reply.jira_issue_key').present? ? _('data.workato_service.bd594efb.reply.jira_issue_key') : _('data.workato_service.08d50002.reply.jira_issue_key') ",
+      "custom_column_3": "=_('data.workato_service.bd594efb.reply.remapped_jira_case_associations.first.____Size', 'list_meta', '____Size', 'data.workato_service.bd594efb.reply.remapped_jira_case_associations').present? ? _('data.workato_service.bd594efb.reply.remapped_jira_case_associations.first.____Size', 'list_meta', '____Size', 'data.workato_service.bd594efb.reply.remapped_jira_case_associations') : _('data.workato_service.08d50002.reply.remapped_jira_case_associations.first.____Size', 'list_meta', '____Size', 'data.workato_service.08d50002.reply.remapped_jira_case_associations')",
+      "custom_column_5": "=(_('data.catch.497c4697.message').present? ? \"sync_error\" : \"\" ) + (_('data.catch.4f0eff1e.message').present? ? \"jira_update_error\" : \"\") + (_('data.catch.cf688d02.message').present? ? \"sync_error\" : \"\" ) + (_('data.catch.adba55e0.message').present? ? \"jira_update_error\" : \"\")"
+    },
+    "uuid": "77cc403a-6303-433b-a742-f7e7588d0e79"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "salesforce",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/salesforce.connection.json",
+        "name": "Salesforce",
+        "folder": "connections"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "logger",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

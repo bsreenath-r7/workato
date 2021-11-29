@@ -1,0 +1,611 @@
+{
+  "name": "New/Updated MySQL Row (VENDOR) - Extract Payments for Vendor from NetSuite",
+  "description": "When there is a trigger event, do action",
+  "version": 1,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "mysql",
+    "name": "updated_row_v2",
+    "as": "5b40477b",
+    "title": "New/updated row in netsuite_1099_vendor",
+    "description": "New/updated <span class=\"provider\">row</span> in <span class=\"provider\">netsuite_1099_vendor</span> table in <span class=\"provider\">MySQL</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+      "table": "netsuite_1099_vendor",
+      "primary_key": "internal_id",
+      "sort_column": "last_modified"
+    },
+    "toggleCfg": {
+      "table": true
+    },
+    "input": {
+      "table": "netsuite_1099_vendor",
+      "primary_key": "internal_id",
+      "sort_column": "last_modified",
+      "where": "state='payments-search'"
+    },
+    "extended_output_schema": [
+      {
+        "type": "integer",
+        "name": "internal_id",
+        "control_type": "integer",
+        "label": "internal_id",
+        "hint": "int(11), primary key",
+        "optional": true,
+        "event_title": true,
+        "render_input": "parse_integer_output",
+        "parse_output": "parse_integer_output",
+        "details": {
+          "data_type": "int(11)",
+          "column_name": "internal_id"
+        }
+      },
+      {
+        "type": "string",
+        "name": "state",
+        "control_type": "text",
+        "label": "state",
+        "hint": "varchar(45)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(45)",
+          "column_name": "state"
+        }
+      },
+      {
+        "type": "date_time",
+        "name": "last_modified",
+        "control_type": "date_time",
+        "label": "last_modified",
+        "hint": "timestamp(3)",
+        "optional": true,
+        "render_input": "convert_date_time",
+        "parse_output": "convert_date_time",
+        "details": {
+          "data_type": "timestamp(3)",
+          "column_name": "last_modified"
+        }
+      },
+      {
+        "type": "string",
+        "name": "ptin",
+        "control_type": "text",
+        "label": "ptin",
+        "hint": "varchar(20)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(20)",
+          "column_name": "ptin"
+        }
+      },
+      {
+        "type": "string",
+        "name": "payee_tin",
+        "control_type": "text",
+        "label": "payee_tin",
+        "hint": "varchar(14)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(14)",
+          "column_name": "payee_tin"
+        }
+      },
+      {
+        "type": "string",
+        "name": "payee_name",
+        "control_type": "text",
+        "label": "payee_name",
+        "hint": "varchar(40)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(40)",
+          "column_name": "payee_name"
+        }
+      },
+      {
+        "type": "string",
+        "name": "address_line",
+        "control_type": "text",
+        "label": "address_line",
+        "hint": "varchar(40)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(40)",
+          "column_name": "address_line"
+        }
+      },
+      {
+        "type": "string",
+        "name": "address_city",
+        "control_type": "text",
+        "label": "address_city",
+        "hint": "varchar(40)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(40)",
+          "column_name": "address_city"
+        }
+      },
+      {
+        "type": "string",
+        "name": "address_state",
+        "control_type": "text",
+        "label": "address_state",
+        "hint": "varchar(2)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(2)",
+          "column_name": "address_state"
+        }
+      },
+      {
+        "type": "string",
+        "name": "address_zip",
+        "control_type": "text",
+        "label": "address_zip",
+        "hint": "varchar(10)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(10)",
+          "column_name": "address_zip"
+        }
+      },
+      {
+        "type": "number",
+        "name": "box1",
+        "control_type": "number",
+        "label": "box1",
+        "hint": "decimal(14,2)",
+        "optional": true,
+        "render_input": "parse_numeric_output",
+        "parse_output": "parse_numeric_output",
+        "details": {
+          "data_type": "decimal(14,2)",
+          "column_name": "box1"
+        }
+      },
+      {
+        "type": "number",
+        "name": "box2",
+        "control_type": "number",
+        "label": "box2",
+        "hint": "decimal(14,2)",
+        "optional": true,
+        "render_input": "parse_numeric_output",
+        "parse_output": "parse_numeric_output",
+        "details": {
+          "data_type": "decimal(14,2)",
+          "column_name": "box2"
+        }
+      },
+      {
+        "type": "number",
+        "name": "box3",
+        "control_type": "number",
+        "label": "box3",
+        "hint": "decimal(14,2)",
+        "optional": true,
+        "render_input": "parse_numeric_output",
+        "parse_output": "parse_numeric_output",
+        "details": {
+          "data_type": "decimal(14,2)",
+          "column_name": "box3"
+        }
+      },
+      {
+        "type": "number",
+        "name": "box4",
+        "control_type": "number",
+        "label": "box4",
+        "hint": "decimal(14,2)",
+        "optional": true,
+        "render_input": "parse_numeric_output",
+        "parse_output": "parse_numeric_output",
+        "details": {
+          "data_type": "decimal(14,2)",
+          "column_name": "box4"
+        }
+      },
+      {
+        "type": "number",
+        "name": "box5",
+        "control_type": "number",
+        "label": "box5",
+        "hint": "decimal(14,2)",
+        "optional": true,
+        "render_input": "parse_numeric_output",
+        "parse_output": "parse_numeric_output",
+        "details": {
+          "data_type": "decimal(14,2)",
+          "column_name": "box5"
+        }
+      },
+      {
+        "type": "number",
+        "name": "box6",
+        "control_type": "number",
+        "label": "box6",
+        "hint": "decimal(14,2)",
+        "optional": true,
+        "render_input": "parse_numeric_output",
+        "parse_output": "parse_numeric_output",
+        "details": {
+          "data_type": "decimal(14,2)",
+          "column_name": "box6"
+        }
+      },
+      {
+        "type": "number",
+        "name": "box7",
+        "control_type": "number",
+        "label": "box7",
+        "hint": "decimal(14,2)",
+        "optional": true,
+        "render_input": "parse_numeric_output",
+        "parse_output": "parse_numeric_output",
+        "details": {
+          "data_type": "decimal(14,2)",
+          "column_name": "box7"
+        }
+      },
+      {
+        "type": "number",
+        "name": "box8",
+        "control_type": "number",
+        "label": "box8",
+        "hint": "decimal(14,2)",
+        "optional": true,
+        "render_input": "parse_numeric_output",
+        "parse_output": "parse_numeric_output",
+        "details": {
+          "data_type": "decimal(14,2)",
+          "column_name": "box8"
+        }
+      },
+      {
+        "type": "number",
+        "name": "box9",
+        "control_type": "number",
+        "label": "box9",
+        "hint": "decimal(14,2)",
+        "optional": true,
+        "render_input": "parse_numeric_output",
+        "parse_output": "parse_numeric_output",
+        "details": {
+          "data_type": "decimal(14,2)",
+          "column_name": "box9"
+        }
+      },
+      {
+        "type": "number",
+        "name": "box10",
+        "control_type": "number",
+        "label": "box10",
+        "hint": "decimal(14,2)",
+        "optional": true,
+        "render_input": "parse_numeric_output",
+        "parse_output": "parse_numeric_output",
+        "details": {
+          "data_type": "decimal(14,2)",
+          "column_name": "box10"
+        }
+      },
+      {
+        "type": "number",
+        "name": "box13",
+        "control_type": "number",
+        "label": "box13",
+        "hint": "decimal(14,2)",
+        "optional": true,
+        "render_input": "parse_numeric_output",
+        "parse_output": "parse_numeric_output",
+        "details": {
+          "data_type": "decimal(14,2)",
+          "column_name": "box13"
+        }
+      },
+      {
+        "type": "number",
+        "name": "box14",
+        "control_type": "number",
+        "label": "box14",
+        "hint": "decimal(14,2)",
+        "optional": true,
+        "render_input": "parse_numeric_output",
+        "parse_output": "parse_numeric_output",
+        "details": {
+          "data_type": "decimal(14,2)",
+          "column_name": "box14"
+        }
+      },
+      {
+        "type": "number",
+        "name": "box15a",
+        "control_type": "number",
+        "label": "box15a",
+        "hint": "decimal(14,2)",
+        "optional": true,
+        "render_input": "parse_numeric_output",
+        "parse_output": "parse_numeric_output",
+        "details": {
+          "data_type": "decimal(14,2)",
+          "column_name": "box15a"
+        }
+      },
+      {
+        "type": "number",
+        "name": "box15b",
+        "control_type": "number",
+        "label": "box15b",
+        "hint": "decimal(14,2)",
+        "optional": true,
+        "render_input": "parse_numeric_output",
+        "parse_output": "parse_numeric_output",
+        "details": {
+          "data_type": "decimal(14,2)",
+          "column_name": "box15b"
+        }
+      },
+      {
+        "type": "number",
+        "name": "box18",
+        "control_type": "number",
+        "label": "box18",
+        "hint": "decimal(14,2)",
+        "optional": true,
+        "render_input": "parse_numeric_output",
+        "parse_output": "parse_numeric_output",
+        "details": {
+          "data_type": "decimal(14,2)",
+          "column_name": "box18"
+        }
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "mysql",
+        "name": "delete_rows",
+        "as": "3418c466",
+        "title": "Delete rows in netsuite_1099_payment",
+        "description": "Delete <span class=\"provider\">rows</span> in <span class=\"provider\">netsuite_1099_payment</span> table in <span class=\"provider\">MySQL</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "table": "netsuite_1099_payment"
+        },
+        "toggleCfg": {
+          "table": true
+        },
+        "input": {
+          "table": "netsuite_1099_payment",
+          "where": "vendor_internal_id=#{_('data.mysql.5b40477b.internal_id')}"
+        },
+        "comment": "Delete all Payment records from MySQL for this vendor",
+        "uuid": "dc711f0e-2c4a-4d08-885d-1efa17cb98ba"
+      },
+      {
+        "number": 2,
+        "provider": "mysql",
+        "name": "delete_rows",
+        "as": "dd2a7ed8",
+        "title": "Delete rows in netsuite_1099_payment_bill",
+        "description": "Delete <span class=\"provider\">rows</span> in <span class=\"provider\">netsuite_1099_payment_bill</span> table in <span class=\"provider\">MySQL</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "table": "netsuite_1099_payment_bill"
+        },
+        "toggleCfg": {
+          "table": true
+        },
+        "input": {
+          "table": "netsuite_1099_payment_bill",
+          "where": "vendor_internal_id=#{_('data.mysql.5b40477b.internal_id')}"
+        },
+        "comment": "Delete all Payment-Bill records from MySQL for this vendor",
+        "uuid": "845bd12a-c1b2-475c-a03d-3036f94447c8"
+      },
+      {
+        "number": 3,
+        "provider": "workato_service",
+        "name": "call_service_async",
+        "as": "08c28776",
+        "title": null,
+        "description": "Call recipe <span class=\"provider\">Pub-Sub Util - Setup Tracking for Pub-Sub</span> (do not wait for response)",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "flow_id": "Pub-Sub Util - Setup Tracking for Pub-Sub"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "flow_id": {
+            "zip_name": "util/pub-sub/callable_setup_tracking_for_pub_sub.recipe.json",
+            "name": "Callable - Setup Tracking for Pub-Sub",
+            "folder": "util/pub-sub"
+          },
+          "request": {
+            "key": "vendor.#{_('data.mysql.5b40477b.internal_id')}",
+            "total_expected_requests": "1"
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "request",
+            "label": "Recipe input",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Key",
+                "name": "key",
+                "type": "string",
+                "optional": false,
+                "hint": "This is the unique identifier for the search you want to track (e.g. for retrieving all payments for a specific vendor the key would be vendor.[internal_id])",
+                "parent": "request"
+              },
+              {
+                "control_type": "integer",
+                "label": "Total expected requests",
+                "parse_output": "integer_conversion",
+                "name": "total_expected_requests",
+                "type": "integer",
+                "optional": false,
+                "hint": "When tracking the pub-sub requests, this is the total expected number (e.g. if you are using pub-sub to go through pages of a NetSuite saved search, this would be the total number of pages)",
+                "parent": "request"
+              }
+            ]
+          }
+        ],
+        "comment": "Setup tracking to ensure that at least one payment search was performed for this Vendor",
+        "uuid": "926065d2-33f9-41eb-b8b2-0e7d4a876917"
+      },
+      {
+        "number": 4,
+        "provider": "workato_pub_sub",
+        "name": "publish_to_topic",
+        "as": "c3dfc19e",
+        "title": null,
+        "description": "Publish <span class=\"provider\">message</span> to <span class=\"provider\">NetSuite Search Request</span> PubSub topic",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "topic_id": "NetSuite Search Request"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "topic_id": {
+            "zip_name": "netsuite_search_request.topic.json",
+            "name": "NetSuite Search Request",
+            "folder": ""
+          },
+          "message": {
+            "type": "1099-vendor-payment",
+            "filter": {
+              "key": "vendor_internal_id",
+              "value": "#{_('data.mysql.5b40477b.internal_id')}"
+            }
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "message",
+            "label": "Message",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Type",
+                "name": "type",
+                "type": "string",
+                "optional": false,
+                "hint": "inactive-employee",
+                "parent": "message"
+              },
+              {
+                "control_type": "text",
+                "label": "Search ID",
+                "name": "search_id",
+                "type": "string",
+                "optional": true,
+                "hint": "The Search ID for a specific search you want to use",
+                "parent": "message"
+              },
+              {
+                "control_type": "text",
+                "label": "Page number",
+                "name": "page_number",
+                "type": "string",
+                "optional": true,
+                "hint": "The specific page to retrieve when specifying the Search ID",
+                "parent": "message"
+              },
+              {
+                "name": "filter",
+                "type": "array",
+                "of": "object",
+                "label": "Filter",
+                "optional": true,
+                "hint": "",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Key",
+                    "name": "key",
+                    "type": "string",
+                    "optional": true,
+                    "parent": "message.filter"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Value",
+                    "name": "value",
+                    "type": "string",
+                    "optional": true,
+                    "parent": "message.filter"
+                  }
+                ],
+                "parent": "message"
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "topic_id",
+          "message.filter.key",
+          "message.filter.value"
+        ],
+        "comment": "Kick off the process to get all payments for this vendor",
+        "uuid": "73032d85-5465-40a6-b843-07326d81b344"
+      }
+    ],
+    "comment": "New/Updated Row from VENDOR table where state = \"payments-search\"",
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Vendor Internal ID"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Vendor Name"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "Last Modified"
+      },
+      {
+        "name": "custom_column_4",
+        "label": "State"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.mysql.5b40477b.internal_id')}",
+      "custom_column_2": "#{_('data.mysql.5b40477b.payee_name')}",
+      "custom_column_3": "#{_('data.mysql.5b40477b.last_modified')}",
+      "custom_column_4": "#{_('data.mysql.5b40477b.state')}"
+    },
+    "uuid": "d1941ff2-85e5-4f2b-9738-e8c4cd16345a"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "mysql",
+      "account_id": {
+        "zip_name": "resources/mysql.connection.json",
+        "name": "MySQL",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_pub_sub",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "account_id": null
+    }
+  ]
+}

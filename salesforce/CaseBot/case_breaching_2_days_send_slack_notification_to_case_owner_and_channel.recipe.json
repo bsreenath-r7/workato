@@ -1,0 +1,1562 @@
+{
+  "name": "Case breaching 2 days send Slack Notification to Case Owner and Channel",
+  "description": "When there is a scheduled object search using SOQL query in Salesforce, do action and other actions",
+  "version": 41,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "salesforce",
+    "name": "scheduled_sobject_soql_query",
+    "as": "scheduled_sobject_soql_query",
+    "title": "Scheduled Case search using SOQL",
+    "description": "Scheduled <span class=\"provider\">Case</span> search using SOQL query in <span class=\"provider\">Salesforce</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+      "sobject_name": "Case",
+      "table_list": [
+        {
+          "label": "Case",
+          "value": "Case_sobject",
+          "selected": true
+        }
+      ],
+      "field_list": [
+        {
+          "label": "Owner ID",
+          "value": "OwnerId"
+        },
+        {
+          "label": "Case number",
+          "value": "CaseNumber"
+        },
+        {
+          "label": "Subject",
+          "value": "Subject"
+        },
+        {
+          "label": "Case ID",
+          "value": "Id"
+        },
+        {
+          "label": "Case owner",
+          "value": "CaseOwner__c"
+        }
+      ]
+    },
+    "toggleCfg": {
+      "Sunday": true,
+      "Monday": true,
+      "Tuesday": true,
+      "Wednesday": true,
+      "Thursday": true,
+      "Friday": true,
+      "Saturday": true
+    },
+    "input": {
+      "schedule": "daily",
+      "hour": "15",
+      "minute": "00",
+      "day_of_month": "1",
+      "Sunday": "false",
+      "Monday": "true",
+      "Tuesday": "true",
+      "Wednesday": "true",
+      "Thursday": "true",
+      "Friday": "true",
+      "Saturday": "false",
+      "sobject_name": "Case",
+      "time_zone": "Eastern Time (US & Canada)",
+      "table_list": "Case_sobject",
+      "field_list": "OwnerId\nCaseNumber\nSubject\nId\nCaseOwner__c",
+      "conditions": "=\"TLMD__c <= \"  + 2.days.ago.strftime(\"%Y-%m-%dT23:59:59.000000+00:00\")  +\" AND TLMD__c >= \" +7.days.ago.strftime(\"%Y-%m-%dT23:59:59.000000+00:00\")+\" AND Status IN ('In Progress', 'Investigation', 'Waiting on Customer', 'With Customer Success Management') ORDER BY TLMD__c DESC\"",
+      "batch_size": "2000"
+    },
+    "extended_output_schema": [
+      {
+        "type": "string",
+        "name": "first_Case_name",
+        "control_type": "text",
+        "label": "First Case name",
+        "event_title": true
+      },
+      {
+        "type": "string",
+        "name": "last_Case_name",
+        "control_type": "text",
+        "label": "Last Case name",
+        "event_title": true
+      },
+      {
+        "type": "array",
+        "name": "Case",
+        "label": "Cases",
+        "of": "object",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Case ID",
+            "optional": true,
+            "custom": false,
+            "sfdc_createable": false,
+            "sfdc_updateable": false,
+            "type": "string",
+            "name": "Id"
+          },
+          {
+            "control_type": "text",
+            "label": "Case Number",
+            "optional": true,
+            "custom": false,
+            "sfdc_createable": false,
+            "sfdc_updateable": false,
+            "type": "string",
+            "name": "CaseNumber"
+          },
+          {
+            "control_type": "text",
+            "label": "Owner ID",
+            "optional": true,
+            "custom": false,
+            "sfdc_createable": true,
+            "sfdc_updateable": true,
+            "type": "string",
+            "name": "OwnerId"
+          },
+          {
+            "control_type": "text",
+            "label": "Subject",
+            "optional": true,
+            "custom": false,
+            "sfdc_createable": true,
+            "sfdc_updateable": true,
+            "type": "string",
+            "name": "Subject"
+          },
+          {
+            "control_type": "text",
+            "label": "Case Owner",
+            "optional": true,
+            "custom": true,
+            "sfdc_createable": false,
+            "sfdc_updateable": false,
+            "type": "string",
+            "name": "CaseOwner__c"
+          }
+        ]
+      }
+    ],
+    "visible_config_fields": [
+      "sobject_name",
+      "conditions",
+      "schedule",
+      "hour",
+      "minute",
+      "day_of_month",
+      "Sunday",
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "table_list",
+      "field_list",
+      "time_zone",
+      "batch_size"
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "as": "foreach",
+            "keyword": "foreach",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "clear_scope": false,
+            "input": {
+            },
+            "block": [
+              {
+                "number": 3,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "present",
+                      "lhs": "#{_('data.foreach.foreach.OwnerId')}",
+                      "rhs": null
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 4,
+                    "provider": "salesforce",
+                    "name": "search_sobjects_soql",
+                    "as": "search_sobjects",
+                    "title": "Search Users using SOQL",
+                    "description": "Search <span class=\"provider\">Users</span> using SOQL query in <span class=\"provider\">Salesforce</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "sobject_name": "User",
+                      "field_list": [
+                        {
+                          "label": "Email",
+                          "value": "Email"
+                        },
+                        {
+                          "label": "Full name",
+                          "value": "Name"
+                        }
+                      ]
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "sobject_name": "User",
+                      "field_list": "Email\nName",
+                      "query": "Id = '#{_('data.foreach.foreach.OwnerId')}'",
+                      "limit": "150"
+                    },
+                    "extended_output_schema": [
+                      {
+                        "type": "array",
+                        "name": "User",
+                        "label": "Users",
+                        "of": "object",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Email",
+                            "custom": false,
+                            "sfdc_createable": true,
+                            "sfdc_updateable": true,
+                            "type": "string",
+                            "name": "Email"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Full Name",
+                            "event_title": true,
+                            "custom": false,
+                            "sfdc_createable": false,
+                            "sfdc_updateable": false,
+                            "type": "string",
+                            "name": "Name"
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "number",
+                                "label": "Total size",
+                                "parse_output": "integer_conversion",
+                                "type": "integer",
+                                "name": "totalSize"
+                              },
+                              {
+                                "name": "records",
+                                "type": "array",
+                                "of": "object",
+                                "label": "Files",
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "ID",
+                                    "type": "string",
+                                    "name": "Id"
+                                  },
+                                  {
+                                    "control_type": "number",
+                                    "label": "Content size",
+                                    "parse_output": "integer_conversion",
+                                    "type": "integer",
+                                    "name": "ContentSize"
+                                  },
+                                  {
+                                    "control_type": "url",
+                                    "label": "Content URL",
+                                    "type": "string",
+                                    "name": "ContentUrl"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "File extension",
+                                    "type": "string",
+                                    "name": "FileExtension"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "File type",
+                                    "type": "string",
+                                    "name": "FileType"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Parent ID",
+                                    "type": "string",
+                                    "name": "ParentId"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Record type",
+                                    "type": "string",
+                                    "name": "RecordType"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Title",
+                                    "type": "string",
+                                    "name": "Title"
+                                  }
+                                ]
+                              }
+                            ],
+                            "label": "Combined attachments",
+                            "sfdc_field_type": "CombinedAttachment",
+                            "type": "object",
+                            "name": "CombinedAttachments"
+                          }
+                        ]
+                      },
+                      {
+                        "type": "integer",
+                        "name": "list_size",
+                        "control_type": "number",
+                        "label": "List size",
+                        "parse_output": "integer_conversion"
+                      }
+                    ],
+                    "extended_input_schema": [
+                      {
+                        "type": "boolean",
+                        "name": "include_combined_attachments",
+                        "control_type": "checkbox",
+                        "label": "Select combined attachments",
+                        "hint": "Select <b>Yes</b> to obtain data from notes, attachments and files associated to the queried records. Default value is <b>Yes</b>.",
+                        "optional": true,
+                        "extends_schema": true,
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        }
+                      }
+                    ],
+                    "uuid": "afeb4100-6a95-4c46-974e-c2f7b31d32bb"
+                  },
+                  {
+                    "number": 5,
+                    "keyword": "if",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "type": "compound",
+                      "operand": "and",
+                      "conditions": [
+                        {
+                          "operand": "present",
+                          "lhs": "#{_('data.salesforce.search_sobjects.User.first.Email')}",
+                          "rhs": null
+                        }
+                      ]
+                    },
+                    "block": [
+                      {
+                        "number": 6,
+                        "provider": "lookup_table",
+                        "name": "search_entries",
+                        "as": "search_entries",
+                        "title": null,
+                        "description": "\n      Search\n      <span class=\"provider\">entries</span>\n      in\n      <span class=\"provider\">CASEBOT_USERS_LIST</span>\n      lookup table\n    ",
+                        "keyword": "action",
+                        "dynamicPickListSelection": {
+                          "lookup_table_id": "CASEBOT_USERS_LIST"
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                          "lookup_table_id": {
+                            "zip_name": "casebot_users_list.lookup_table.json",
+                            "name": "CASEBOT_USERS_LIST",
+                            "folder": ""
+                          },
+                          "parameters": {
+                            "col1": "=_('data.salesforce.search_sobjects.User.first.Email').downcase"
+                          }
+                        },
+                        "extended_output_schema": [
+                          {
+                            "type": "array",
+                            "name": "entries",
+                            "label": "Entries",
+                            "of": "object",
+                            "properties": [
+                              {
+                                "control_type": "number",
+                                "label": "Entry ID",
+                                "parse_output": "integer_conversion",
+                                "type": "integer",
+                                "name": "id"
+                              },
+                              {
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "EMAIL",
+                                    "name": "col1",
+                                    "sticky": true,
+                                    "type": "string"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "SLACKUSERNAME",
+                                    "name": "col2",
+                                    "sticky": true,
+                                    "type": "string"
+                                  }
+                                ],
+                                "label": "Entry",
+                                "type": "object",
+                                "name": "entry"
+                              }
+                            ]
+                          }
+                        ],
+                        "extended_input_schema": [
+                          {
+                            "type": "object",
+                            "name": "parameters",
+                            "label": "Search by",
+                            "hint": "Provide one or more entry fields to search the entry",
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "EMAIL",
+                                "name": "col1",
+                                "sticky": true,
+                                "type": "string",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "SLACKUSERNAME",
+                                "name": "col2",
+                                "sticky": true,
+                                "type": "string",
+                                "optional": true
+                              }
+                            ]
+                          }
+                        ],
+                        "uuid": "316ddbc1-50d0-4a9b-8864-9d2eb259c14f"
+                      },
+                      {
+                        "number": 7,
+                        "keyword": "if",
+                        "dynamicPickListSelection": {
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                          "type": "compound",
+                          "operand": "and",
+                          "conditions": [
+                            {
+                              "operand": "present",
+                              "lhs": "#{_('data.lookup_table.search_entries.entries.first.entry.col2')}",
+                              "rhs": null
+                            }
+                          ]
+                        },
+                        "block": [
+                          {
+                            "number": 8,
+                            "provider": "workato_service",
+                            "name": "call_service_async",
+                            "as": "call_service_async__1",
+                            "title": null,
+                            "description": "Call recipe <span class=\"provider\">POST_SLACK_MESSAGE</span> (do not wait for response)",
+                            "keyword": "action",
+                            "dynamicPickListSelection": {
+                              "flow_id": "POST_SLACK_MESSAGE"
+                            },
+                            "toggleCfg": {
+                            },
+                            "input": {
+                              "flow_id": {
+                                "zip_name": "salesforce/CaseBot/post_customer_support_notifications_to_slack.recipe.json",
+                                "name": "Post Customer support notifications to Slack",
+                                "folder": "salesforce/CaseBot"
+                              },
+                              "request": {
+                                "channel": "#{_('data.lookup_table.search_entries.entries.first.entry.col2')}",
+                                "text": "[{\"color\":\"#FFAB33\",\"title\":\"Case breaching 2 days\",\"fields\":[{\"title\":\"Case Number\",\"value\":\"<#{_('data.workato.job_context.account_properties.salesforceCaseProdUrl', 'account_property', 'salesforceCaseProdUrl')}#{_('data.foreach.foreach.Id')}/view|#{_('data.foreach.foreach.CaseNumber')}>\"},{\"title\":\"Case Owner\",\"value\":\"#{_('data.foreach.foreach.CaseOwner__c')}\"},{\"title\":\"Case Subject\",\"value\":\"#{_('data.foreach.foreach.Subject')}\"}], \"thumb_url\" : \"https://s3.us-east-2.amazonaws.com/workato-colloquium/2-image.png\"}]"
+                              }
+                            },
+                            "extended_input_schema": [
+                              {
+                                "type": "object",
+                                "name": "request",
+                                "label": "Recipe input",
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "Channel",
+                                    "name": "channel",
+                                    "type": "string",
+                                    "parent": "request"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Text",
+                                    "name": "text",
+                                    "type": "string",
+                                    "parent": "request"
+                                  }
+                                ]
+                              }
+                            ],
+                            "uuid": "c0a81986-fee2-43d0-8efe-ba1e9cd9a68a"
+                          },
+                          {
+                            "number": 9,
+                            "provider": "workato_service",
+                            "name": "call_service_async",
+                            "as": "call_service_async__2",
+                            "title": null,
+                            "description": "Call recipe <span class=\"provider\">LOG_EVENT</span> (do not wait for response)",
+                            "keyword": "action",
+                            "dynamicPickListSelection": {
+                              "flow_id": "LOG_EVENT"
+                            },
+                            "toggleCfg": {
+                            },
+                            "input": {
+                              "flow_id": {
+                                "zip_name": "util/colloquium_logs.recipe.json",
+                                "name": "Colloquium Logs",
+                                "folder": "util"
+                              },
+                              "request": {
+                                "event_name": "response",
+                                "job_id": "#{_('data.workato.job_context.job_id')}",
+                                "userhandle": "#{_('data.lookup_table.search_entries.entries.first.entry.col2')}",
+                                "email": "#{_('data.lookup_table.search_entries.entries.first.entry.col1')}",
+                                "sent": "1",
+                                "isChannel": "0",
+                                "name": "#{_('data.salesforce.search_sobjects.User.first.Name')}"
+                              }
+                            },
+                            "extended_input_schema": [
+                              {
+                                "type": "object",
+                                "name": "request",
+                                "label": "Recipe input",
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "Event name",
+                                    "name": "event_name",
+                                    "type": "string",
+                                    "optional": false
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Type",
+                                    "name": "type",
+                                    "type": "string",
+                                    "optional": true
+                                  },
+                                  {
+                                    "control_type": "integer",
+                                    "label": "Recipe ID",
+                                    "parse_output": "integer_conversion",
+                                    "name": "recipe_id",
+                                    "type": "integer",
+                                    "optional": true
+                                  },
+                                  {
+                                    "control_type": "integer",
+                                    "label": "Job ID",
+                                    "parse_output": "integer_conversion",
+                                    "name": "job_id",
+                                    "type": "integer",
+                                    "optional": true
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Job URL",
+                                    "name": "job_url",
+                                    "type": "string",
+                                    "optional": true
+                                  },
+                                  {
+                                    "control_type": "date_time",
+                                    "label": "Created at",
+                                    "render_input": "date_time_conversion",
+                                    "parse_output": "date_time_conversion",
+                                    "name": "created_at",
+                                    "type": "date_time",
+                                    "optional": true
+                                  },
+                                  {
+                                    "control_type": "date_time",
+                                    "label": "Completed at",
+                                    "render_input": "date_time_conversion",
+                                    "parse_output": "date_time_conversion",
+                                    "name": "completed_at",
+                                    "type": "date_time",
+                                    "optional": true
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Is Error",
+                                    "parse_output": "integer_conversion",
+                                    "name": "is_error",
+                                    "type": "integer",
+                                    "optional": true
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Error type",
+                                    "name": "error_type",
+                                    "type": "string",
+                                    "optional": true
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Error msg",
+                                    "name": "error_msg",
+                                    "type": "string",
+                                    "optional": true
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Userid",
+                                    "name": "userid",
+                                    "type": "string",
+                                    "optional": true
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Channel",
+                                    "name": "channel",
+                                    "type": "string",
+                                    "optional": true
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "User Handle",
+                                    "name": "userhandle",
+                                    "type": "string",
+                                    "optional": true
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Name",
+                                    "name": "name",
+                                    "type": "string",
+                                    "optional": true
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Email",
+                                    "name": "email",
+                                    "type": "string",
+                                    "optional": true
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Team",
+                                    "name": "team",
+                                    "type": "string",
+                                    "optional": true
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Command",
+                                    "name": "command",
+                                    "type": "string",
+                                    "optional": true
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Params",
+                                    "name": "params",
+                                    "type": "string",
+                                    "optional": true
+                                  },
+                                  {
+                                    "control_type": "integer",
+                                    "label": "Sent",
+                                    "parse_output": "integer_conversion",
+                                    "name": "sent",
+                                    "type": "integer",
+                                    "optional": true
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Reason",
+                                    "name": "reason",
+                                    "type": "string",
+                                    "optional": true
+                                  },
+                                  {
+                                    "control_type": "number",
+                                    "label": "Is channel",
+                                    "parse_output": "float_conversion",
+                                    "name": "isChannel",
+                                    "type": "number",
+                                    "optional": true
+                                  }
+                                ]
+                              }
+                            ],
+                            "visible_config_fields": [
+                              "flow_id",
+                              "request.job_id",
+                              "request.isChannel",
+                              "request.sent",
+                              "request.response",
+                              "request.email",
+                              "request.userhandle",
+                              "request",
+                              "request.event_name",
+                              "request.name"
+                            ],
+                            "uuid": "2d7a3e9b-1aaa-4e38-b9dc-59ab0b6e065e"
+                          }
+                        ],
+                        "uuid": "aca589f1-6904-4439-8c65-9688ac52b1cc"
+                      },
+                      {
+                        "number": 10,
+                        "keyword": "if",
+                        "dynamicPickListSelection": {
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                          "type": "compound",
+                          "operand": "and",
+                          "conditions": [
+                            {
+                              "operand": "blank",
+                              "lhs": "#{_('data.lookup_table.search_entries.entries.first.entry.col2')}",
+                              "rhs": null
+                            }
+                          ]
+                        },
+                        "block": [
+                          {
+                            "number": 11,
+                            "provider": "workato_service",
+                            "name": "call_service_async",
+                            "as": "call_service_async__4",
+                            "title": null,
+                            "description": "Call recipe <span class=\"provider\">LOG_EVENT</span> (do not wait for response)",
+                            "keyword": "action",
+                            "dynamicPickListSelection": {
+                              "flow_id": "LOG_EVENT"
+                            },
+                            "toggleCfg": {
+                            },
+                            "input": {
+                              "flow_id": {
+                                "zip_name": "util/colloquium_logs.recipe.json",
+                                "name": "Colloquium Logs",
+                                "folder": "util"
+                              },
+                              "request": {
+                                "event_name": "response",
+                                "job_id": "#{_('data.workato.job_context.job_id')}",
+                                "email": "#{_('data.salesforce.search_sobjects.User.first.Email')}",
+                                "sent": "0",
+                                "isChannel": "0",
+                                "reason": "SLACK_NOT_FOUND"
+                              }
+                            },
+                            "extended_input_schema": [
+                              {
+                                "type": "object",
+                                "name": "request",
+                                "label": "Recipe input",
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "Event name",
+                                    "name": "event_name",
+                                    "type": "string",
+                                    "optional": false,
+                                    "parent": "request"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Type",
+                                    "name": "type",
+                                    "type": "string",
+                                    "optional": true,
+                                    "parent": "request"
+                                  },
+                                  {
+                                    "control_type": "integer",
+                                    "label": "Recipe ID",
+                                    "parse_output": "integer_conversion",
+                                    "name": "recipe_id",
+                                    "type": "integer",
+                                    "optional": true,
+                                    "parent": "request"
+                                  },
+                                  {
+                                    "control_type": "integer",
+                                    "label": "Job ID",
+                                    "parse_output": "integer_conversion",
+                                    "name": "job_id",
+                                    "type": "integer",
+                                    "optional": true,
+                                    "parent": "request"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Job URL",
+                                    "name": "job_url",
+                                    "type": "string",
+                                    "optional": true,
+                                    "parent": "request"
+                                  },
+                                  {
+                                    "control_type": "date_time",
+                                    "label": "Created at",
+                                    "render_input": "date_time_conversion",
+                                    "parse_output": "date_time_conversion",
+                                    "name": "created_at",
+                                    "type": "date_time",
+                                    "optional": true,
+                                    "parent": "request"
+                                  },
+                                  {
+                                    "control_type": "date_time",
+                                    "label": "Completed at",
+                                    "render_input": "date_time_conversion",
+                                    "parse_output": "date_time_conversion",
+                                    "name": "completed_at",
+                                    "type": "date_time",
+                                    "optional": true,
+                                    "parent": "request"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Is Error",
+                                    "parse_output": "integer_conversion",
+                                    "name": "is_error",
+                                    "type": "integer",
+                                    "optional": true,
+                                    "parent": "request"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Error type",
+                                    "name": "error_type",
+                                    "type": "string",
+                                    "optional": true,
+                                    "parent": "request"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Error msg",
+                                    "name": "error_msg",
+                                    "type": "string",
+                                    "optional": true,
+                                    "parent": "request"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Userid",
+                                    "name": "userid",
+                                    "type": "string",
+                                    "optional": true,
+                                    "parent": "request"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Channel",
+                                    "name": "channel",
+                                    "type": "string",
+                                    "optional": true,
+                                    "parent": "request"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "User Handle",
+                                    "name": "userhandle",
+                                    "type": "string",
+                                    "optional": true,
+                                    "parent": "request"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Name",
+                                    "name": "name",
+                                    "type": "string",
+                                    "optional": true,
+                                    "parent": "request"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Email",
+                                    "name": "email",
+                                    "type": "string",
+                                    "optional": true,
+                                    "parent": "request"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Team",
+                                    "name": "team",
+                                    "type": "string",
+                                    "optional": true,
+                                    "parent": "request"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Command",
+                                    "name": "command",
+                                    "type": "string",
+                                    "optional": true,
+                                    "parent": "request"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Params",
+                                    "name": "params",
+                                    "type": "string",
+                                    "optional": true,
+                                    "parent": "request"
+                                  },
+                                  {
+                                    "control_type": "integer",
+                                    "label": "Sent",
+                                    "parse_output": "integer_conversion",
+                                    "name": "sent",
+                                    "type": "integer",
+                                    "optional": true,
+                                    "parent": "request"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Reason",
+                                    "name": "reason",
+                                    "type": "string",
+                                    "optional": true,
+                                    "parent": "request"
+                                  },
+                                  {
+                                    "control_type": "number",
+                                    "label": "Is channel",
+                                    "parse_output": "float_conversion",
+                                    "name": "isChannel",
+                                    "type": "number",
+                                    "optional": true,
+                                    "parent": "request"
+                                  }
+                                ]
+                              }
+                            ],
+                            "visible_config_fields": [
+                              "flow_id",
+                              "request.job_id",
+                              "request.isChannel",
+                              "request.sent",
+                              "request.email",
+                              "request",
+                              "request.event_name",
+                              "request.reason",
+                              "request.response"
+                            ],
+                            "uuid": "23ddc382-7dc1-4dd2-8f39-1131b0712ada"
+                          }
+                        ],
+                        "uuid": "62e07930-28bf-4b91-b449-c37204a6c936"
+                      }
+                    ],
+                    "uuid": "dc438b96-c48d-4120-925e-38f524b44fbe"
+                  }
+                ],
+                "uuid": "756efedf-df35-4d6c-add1-acd488be7c63"
+              },
+              {
+                "number": 12,
+                "provider": "slack",
+                "name": "post_message_to_channel",
+                "as": "post_message_to_channel",
+                "title": null,
+                "description": null,
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "channel": "slack-sf-caseupdates"
+                },
+                "toggleCfg": {
+                  "channel": true,
+                  "color": true
+                },
+                "input": {
+                  "parse": "true",
+                  "text": "*Case breaching 2 days*",
+                  "color": "warning",
+                  "username": "Casebot",
+                  "channel": "C7P2UFX2P",
+                  "attachment_text": "*Case Number*\n<#{_('data.workato.job_context.account_properties.salesforceCaseProdUrl', 'account_property', 'salesforceCaseProdUrl')}#{_('data.foreach.foreach.Id')}/view|#{_('data.foreach.foreach.CaseNumber')}>\n*Case Owner*\n#{_('data.foreach.foreach.CaseOwner__c')}\n*Case Subject*\n#{_('data.foreach.foreach.Subject')}",
+                  "thumb_url": "https://s3.us-east-2.amazonaws.com/workato-colloquium/2-image.png"
+                },
+                "visible_config_fields": [
+                  "title",
+                  "title_link",
+                  "attachment_text",
+                  "color",
+                  "parse",
+                  "thread_ts",
+                  "username",
+                  "channel",
+                  "text",
+                  "icon_url",
+                  "thumb_url"
+                ],
+                "uuid": "ebad9eb5-1ffa-47d9-ba11-71e1d04eccca"
+              },
+              {
+                "number": 13,
+                "provider": "workato_service",
+                "name": "call_service_async",
+                "as": "call_service_async__3",
+                "title": null,
+                "description": "Call recipe <span class=\"provider\">LOG_EVENT</span> (do not wait for response)",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "flow_id": "LOG_EVENT"
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "flow_id": {
+                    "zip_name": "util/colloquium_logs.recipe.json",
+                    "name": "Colloquium Logs",
+                    "folder": "util"
+                  },
+                  "request": {
+                    "event_name": "response",
+                    "job_id": "#{_('data.workato.job_context.job_id')}",
+                    "userhandle": "slack-sf-caseupdates",
+                    "sent": "1",
+                    "isChannel": "1"
+                  }
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "request",
+                    "label": "Recipe input",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Event name",
+                        "name": "event_name",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Type",
+                        "name": "type",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "integer",
+                        "label": "Recipe ID",
+                        "parse_output": "integer_conversion",
+                        "name": "recipe_id",
+                        "type": "integer",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "integer",
+                        "label": "Job ID",
+                        "parse_output": "integer_conversion",
+                        "name": "job_id",
+                        "type": "integer",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Job URL",
+                        "name": "job_url",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "date_time",
+                        "label": "Created at",
+                        "render_input": "date_time_conversion",
+                        "parse_output": "date_time_conversion",
+                        "name": "created_at",
+                        "type": "date_time",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "date_time",
+                        "label": "Completed at",
+                        "render_input": "date_time_conversion",
+                        "parse_output": "date_time_conversion",
+                        "name": "completed_at",
+                        "type": "date_time",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Is Error",
+                        "parse_output": "integer_conversion",
+                        "name": "is_error",
+                        "type": "integer",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Error type",
+                        "name": "error_type",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Error msg",
+                        "name": "error_msg",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Userid",
+                        "name": "userid",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Channel",
+                        "name": "channel",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "User Handle",
+                        "name": "userhandle",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Name",
+                        "name": "name",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Email",
+                        "name": "email",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Team",
+                        "name": "team",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Command",
+                        "name": "command",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Params",
+                        "name": "params",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "integer",
+                        "label": "Sent",
+                        "parse_output": "integer_conversion",
+                        "name": "sent",
+                        "type": "integer",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Reason",
+                        "name": "reason",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "number",
+                        "label": "Is channel",
+                        "parse_output": "float_conversion",
+                        "name": "isChannel",
+                        "type": "number",
+                        "optional": true
+                      }
+                    ]
+                  }
+                ],
+                "visible_config_fields": [
+                  "flow_id",
+                  "request.job_id",
+                  "request.isChannel",
+                  "request.sent",
+                  "request.response",
+                  "request.userhandle",
+                  "request",
+                  "request.event_name"
+                ],
+                "uuid": "2490797a-16d2-4742-95e1-20dc4f8623ec"
+              }
+            ],
+            "source": "#{_('data.salesforce.scheduled_sobject_soql_query.Case')}",
+            "uuid": "d8c05e0d-9e21-4f98-9812-ab36d98ba616"
+          },
+          {
+            "number": 14,
+            "as": "catch",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "0",
+              "retry_interval": "2"
+            },
+            "block": [
+              {
+                "number": 15,
+                "provider": "logger",
+                "name": "log_message",
+                "as": "log_message",
+                "title": null,
+                "description": null,
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "message": "#{_('data.catch.catch.message')}"
+                },
+                "uuid": "3e756a55-9e2a-4909-8e92-91d28765d517"
+              }
+            ],
+            "uuid": "0ff494a3-8b22-4c50-bd8c-995ecb69a08c"
+          }
+        ],
+        "uuid": "934e26a3-21de-4b8b-a47e-9c7f1ae16c5d"
+      },
+      {
+        "number": 16,
+        "provider": "workato_service",
+        "name": "call_service_async",
+        "as": "call_service_async__5",
+        "title": null,
+        "description": "Call recipe <span class=\"provider\">LOG_EVENT</span> (do not wait for response)",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "flow_id": "LOG_EVENT"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "flow_id": {
+            "zip_name": "util/colloquium_logs.recipe.json",
+            "name": "Colloquium Logs",
+            "folder": "util"
+          },
+          "request": {
+            "event_name": "recipe",
+            "type": "scheduler",
+            "recipe_id": "#{_('data.workato.job_context.recipe_id')}",
+            "job_id": "#{_('data.workato.job_context.job_id')}",
+            "job_url": "#{_('data.workato.job_context.job_url')}",
+            "created_at": "#{_('data.workato.job_context.job_created_at')}",
+            "completed_at": "=now",
+            "is_error": "=_('data.catch.catch.type') ? 1 : 0",
+            "error_type": "#{_('data.catch.catch.type')}",
+            "error_msg": "#{_('data.catch.catch.message')}"
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "request",
+            "label": "Recipe input",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Event name",
+                "name": "event_name",
+                "type": "string",
+                "optional": false
+              },
+              {
+                "control_type": "text",
+                "label": "Type",
+                "name": "type",
+                "type": "string",
+                "optional": true
+              },
+              {
+                "control_type": "integer",
+                "label": "Recipe ID",
+                "parse_output": "integer_conversion",
+                "name": "recipe_id",
+                "type": "integer",
+                "optional": true
+              },
+              {
+                "control_type": "integer",
+                "label": "Job ID",
+                "parse_output": "integer_conversion",
+                "name": "job_id",
+                "type": "integer",
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "Job URL",
+                "name": "job_url",
+                "type": "string",
+                "optional": true
+              },
+              {
+                "control_type": "date_time",
+                "label": "Created at",
+                "render_input": "date_time_conversion",
+                "parse_output": "date_time_conversion",
+                "name": "created_at",
+                "type": "date_time",
+                "optional": true
+              },
+              {
+                "control_type": "date_time",
+                "label": "Completed at",
+                "render_input": "date_time_conversion",
+                "parse_output": "date_time_conversion",
+                "name": "completed_at",
+                "type": "date_time",
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "Is Error",
+                "parse_output": "integer_conversion",
+                "name": "is_error",
+                "type": "integer",
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "Error type",
+                "name": "error_type",
+                "type": "string",
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "Error msg",
+                "name": "error_msg",
+                "type": "string",
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "Userid",
+                "name": "userid",
+                "type": "string",
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "Channel",
+                "name": "channel",
+                "type": "string",
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "User Handle",
+                "name": "userhandle",
+                "type": "string",
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "Name",
+                "name": "name",
+                "type": "string",
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "Email",
+                "name": "email",
+                "type": "string",
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "Team",
+                "name": "team",
+                "type": "string",
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "Command",
+                "name": "command",
+                "type": "string",
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "Params",
+                "name": "params",
+                "type": "string",
+                "optional": true
+              },
+              {
+                "control_type": "integer",
+                "label": "Sent",
+                "parse_output": "integer_conversion",
+                "name": "sent",
+                "type": "integer",
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "Reason",
+                "name": "reason",
+                "type": "string",
+                "optional": true
+              },
+              {
+                "control_type": "number",
+                "label": "Is channel",
+                "parse_output": "float_conversion",
+                "name": "isChannel",
+                "type": "number",
+                "optional": true
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "flow_id",
+          "request.type",
+          "request.recipe_id",
+          "request.job_id",
+          "request.job_url",
+          "request.created_at",
+          "request.completed_at",
+          "request.is_error",
+          "request.error_type",
+          "request.error_msg"
+        ],
+        "uuid": "9731d3c9-3e58-4822-a9fe-9224c2f5e048"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Case Number"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Case ID"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "Case Owner"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.salesforce.scheduled_sobject_soql_query.Case.first.CaseNumber')}",
+      "custom_column_2": "#{_('data.salesforce.scheduled_sobject_soql_query.Case.first.Id')}",
+      "custom_column_3": "#{_('data.salesforce.scheduled_sobject_soql_query.Case.first.CaseOwner__c')}"
+    },
+    "uuid": "fce15dac-0fcc-45ff-8848-e61b0276fb4c"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "salesforce",
+      "account_id": {
+        "zip_name": "connections/salesforce.connection.json",
+        "name": "Salesforce",
+        "folder": "connections"
+      },
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "lookup_table",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "slack",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/slack_v2.connection.json",
+        "name": "Slack - v2",
+        "folder": "connections"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "logger",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

@@ -1,0 +1,57 @@
+{
+  "name": "Email - Terminated Employees Error Report",
+  "schema": [
+    {
+      "name": "errors",
+      "type": "array",
+      "of": "object",
+      "label": "Errors",
+      "optional": false,
+      "properties": [
+        {
+          "control_type": "text",
+          "label": "Employee number",
+          "name": "employee_number",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "control_type": "text",
+          "label": "Employee First Name",
+          "name": "employee_firstname",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "control_type": "text",
+          "label": "Employee Last Name",
+          "name": "employee_lastname",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "control_type": "text",
+          "label": "Termination Date",
+          "name": "termination_date",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "control_type": "text",
+          "label": "Application",
+          "name": "application",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "control_type": "text",
+          "label": "Status Message",
+          "name": "status_message",
+          "type": "string",
+          "optional": false
+        }
+      ]
+    }
+  ],
+  "content": "<p>You are receiving this email because employees have termed at Rapid7 but we were unable to automatically remove access to our systems.  Here is a list of the current open errors:</p>\n\n<h3>Auto-Inactivation Errors</h3>\n\n<table>\n  <tr>\n    <th style=\"padding: 0 1em; text-align: left;\">Employee Name</th>\n    <th style=\"padding: 0 1em; text-align: left;\">Termination Date</th>\n    <th style=\"padding: 0 1em; text-align: left;\">Employee Number</th>\n    <th style=\"padding: 0 1em; text-align: left;\">Application</th>\n    <th style=\"padding: 0 1em; text-align: left;\">Error Message</th>\n  </tr>\n  {{#errors}}\n  <tr>\n    <td style=\"padding: 0 1em; text-align: left;\">{{employee_firstname}} {{employee_lastname}}</td>\n    <td style=\"padding: 0 1em; text-align: left;\">{{termination_date}}</td>\n    <td style=\"padding: 0 1em; text-align: left;\">{{employee_number}}</td>\n    <td style=\"padding: 0 1em; text-align: left;\">{{application}}</td>\n    <td style=\"padding: 0 1em; text-align: left;\">{{status_message}}</td>\n  </tr>\n  {{/errors}}\n</table>\n\n<p>Please work with the integrations team to resolve these issues so that this employee will be removed from the error report once resolved.</p>"
+}

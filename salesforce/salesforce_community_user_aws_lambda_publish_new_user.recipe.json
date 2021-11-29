@@ -1,0 +1,1089 @@
+{
+  "name": "Salesforce Community User - AWS Lambda (Publish New User) ",
+  "description": "When there is a trigger event, do action",
+  "version": 19,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "salesforce",
+    "name": "updated_custom_object",
+    "as": "f6bee893",
+    "title": "New/updated User",
+    "description": "New/updated <span class=\"provider\">User</span> in <span class=\"provider\">Salesforce</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+      "sobject_name": "User",
+      "field_list": [
+        {
+          "label": "Contact name",
+          "value": "ContactId"
+        },
+        {
+          "label": "User ID",
+          "value": "Id"
+        },
+        {
+          "label": "Username",
+          "value": "Username"
+        },
+        {
+          "label": "Last name",
+          "value": "LastName"
+        },
+        {
+          "label": "First name",
+          "value": "FirstName"
+        },
+        {
+          "label": "Email",
+          "value": "Email"
+        },
+        {
+          "label": "Account ID",
+          "value": "AccountId"
+        },
+        {
+          "label": "Account.Account  name",
+          "value": "Account$Account ID.Name"
+        },
+        {
+          "label": "Active",
+          "value": "IsActive"
+        }
+      ],
+      "table_list": [
+        {
+          "label": "Account",
+          "value": "Account"
+        }
+      ]
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "sobject_name": "User",
+      "since_offset": "-3600",
+      "field_list": "ContactId\nId\nUsername\nLastName\nFirstName\nEmail\nAccountId\nAccount$Account ID.Name\nIsActive",
+      "table_list": "Account"
+    },
+    "filter": {
+      "conditions": [
+        {
+          "operand": "present",
+          "lhs": "#{_('data.salesforce.f6bee893.ContactId')}",
+          "rhs": null
+        },
+        {
+          "operand": "is_true",
+          "lhs": "#{_('data.salesforce.f6bee893.IsActive')}",
+          "rhs": null
+        }
+      ],
+      "operand": "and",
+      "type": "compound"
+    },
+    "extended_output_schema": [
+      {
+        "type": "string",
+        "name": "AccountId",
+        "control_type": "text",
+        "label": "Account ID",
+        "optional": true,
+        "custom": false,
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "boolean",
+        "name": "IsActive",
+        "control_type": "checkbox",
+        "label": "Active",
+        "optional": true,
+        "custom": false,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Active",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "custom": false,
+          "sfdc_createable": true,
+          "sfdc_updateable": true,
+          "type": "boolean",
+          "name": "IsActive"
+        },
+        "render_input": {
+        },
+        "parse_output": {
+        },
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "string",
+        "name": "ContactId",
+        "control_type": "text",
+        "label": "Contact Name",
+        "optional": true,
+        "custom": false,
+        "sfdc_createable": true,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "date_time",
+        "name": "CreatedDate",
+        "control_type": "date_time",
+        "label": "Created Date",
+        "optional": true,
+        "custom": false,
+        "render_input": "render_iso8601_timestamp",
+        "parse_output": "parse_iso8601_timestamp",
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "Email",
+        "control_type": "text",
+        "label": "Email",
+        "custom": false,
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "string",
+        "name": "FirstName",
+        "control_type": "text",
+        "label": "First Name",
+        "optional": true,
+        "custom": false,
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "date_time",
+        "name": "LastModifiedDate",
+        "control_type": "date_time",
+        "label": "Last Modified Date",
+        "optional": true,
+        "custom": false,
+        "render_input": "render_iso8601_timestamp",
+        "parse_output": "parse_iso8601_timestamp",
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "LastName",
+        "control_type": "text",
+        "label": "Last Name",
+        "custom": false,
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "date_time",
+        "name": "SystemModstamp",
+        "control_type": "date_time",
+        "label": "System Modstamp",
+        "optional": true,
+        "custom": false,
+        "render_input": "render_iso8601_timestamp",
+        "parse_output": "parse_iso8601_timestamp",
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "Id",
+        "control_type": "text",
+        "label": "User ID",
+        "optional": true,
+        "custom": false,
+        "key_scope": "User",
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "Username",
+        "control_type": "text",
+        "label": "Username",
+        "custom": false,
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "object",
+        "name": "Account",
+        "label": "Account",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Account Name",
+            "event_title": true,
+            "custom": false,
+            "sfdc_createable": true,
+            "sfdc_updateable": true,
+            "type": "string",
+            "name": "Name"
+          }
+        ]
+      },
+      {
+        "type": "object",
+        "name": "CombinedAttachments",
+        "label": "Combined attachments",
+        "properties": [
+          {
+            "control_type": "number",
+            "label": "Total size",
+            "parse_output": "integer_conversion",
+            "type": "integer",
+            "name": "totalSize"
+          },
+          {
+            "name": "records",
+            "type": "array",
+            "of": "object",
+            "label": "Files",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "ID",
+                "type": "string",
+                "name": "Id"
+              },
+              {
+                "control_type": "number",
+                "label": "Content size",
+                "parse_output": "integer_conversion",
+                "type": "integer",
+                "name": "ContentSize"
+              },
+              {
+                "control_type": "url",
+                "label": "Content URL",
+                "type": "string",
+                "name": "ContentUrl"
+              },
+              {
+                "control_type": "text",
+                "label": "File extension",
+                "type": "string",
+                "name": "FileExtension"
+              },
+              {
+                "control_type": "text",
+                "label": "File type",
+                "type": "string",
+                "name": "FileType"
+              },
+              {
+                "control_type": "text",
+                "label": "Parent ID",
+                "type": "string",
+                "name": "ParentId"
+              },
+              {
+                "control_type": "text",
+                "label": "Record type",
+                "type": "string",
+                "name": "RecordType"
+              },
+              {
+                "control_type": "text",
+                "label": "Title",
+                "type": "string",
+                "name": "Title"
+              }
+            ]
+          }
+        ],
+        "sfdc_field_type": "CombinedAttachment"
+      }
+    ],
+    "extended_input_schema": [
+      {
+        "type": "string",
+        "name": "since_offset",
+        "control_type": "select",
+        "label": "When first started, this recipe should pick up events from",
+        "hint": "When starting the recipe for the first time, picks up Salesforce records from the specified date and time. <b>Once the recipe has been run or tested, this value cannot be changed.</b>",
+        "default": -3600,
+        "pick_list": [
+          [
+            "Recipe start",
+            0
+          ],
+          [
+            "An hour ago",
+            -3600
+          ],
+          [
+            "Yesterday",
+            -86400
+          ],
+          [
+            "Last week",
+            -604800
+          ],
+          [
+            "Last month",
+            -2629746
+          ],
+          [
+            "Beginning of time",
+            "no_limit"
+          ]
+        ],
+        "toggle_hint": "Select from list",
+        "toggle_field": {
+          "control_type": "date_time",
+          "label": "When first started, this recipe should pick up events from",
+          "render_input": "convert_date_time",
+          "parse_output": "convert_date_time",
+          "toggle_hint": "Enter custom value",
+          "since_field": true,
+          "hint": "When starting the recipe for the first time, picks up Salesforce records from the specified date and time. <b>Once the recipe has been run or tested, this value cannot be changed.</b>",
+          "type": "date_time",
+          "name": "since"
+        },
+        "since_field": true
+      }
+    ],
+    "visible_config_fields": [
+      "sobject_name",
+      "field_list",
+      "since_offset",
+      "table_list"
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "salesforce",
+            "name": "search_sobjects",
+            "as": "d1ed3ce8",
+            "title": "Search Platform customers",
+            "description": "Search for <span class=\"provider\">Platform customers</span> in <span class=\"provider\">Salesforce</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "sobject_name": "Platform customer",
+              "field_list": [
+                {
+                  "label": "Customer ID",
+                  "value": "CustomerId__c"
+                }
+              ]
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "sobject_name": "PlatformCustomer__c",
+              "field_list": "CustomerId__c",
+              "Account__c": "#{_('data.salesforce.f6bee893.AccountId')}",
+              "limit": "150"
+            },
+            "extended_output_schema": [
+              {
+                "type": "array",
+                "name": "PlatformCustomer__c",
+                "label": "Platform Customers",
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Customer Id",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "string",
+                    "name": "CustomerId__c"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "number",
+                        "label": "Total size",
+                        "parse_output": "integer_conversion",
+                        "type": "integer",
+                        "name": "totalSize"
+                      },
+                      {
+                        "name": "records",
+                        "type": "array",
+                        "of": "object",
+                        "label": "Files",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "ID",
+                            "type": "string",
+                            "name": "Id"
+                          },
+                          {
+                            "control_type": "number",
+                            "label": "Content size",
+                            "parse_output": "integer_conversion",
+                            "type": "integer",
+                            "name": "ContentSize"
+                          },
+                          {
+                            "control_type": "url",
+                            "label": "Content URL",
+                            "type": "string",
+                            "name": "ContentUrl"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "File extension",
+                            "type": "string",
+                            "name": "FileExtension"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "File type",
+                            "type": "string",
+                            "name": "FileType"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Parent ID",
+                            "type": "string",
+                            "name": "ParentId"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Record type",
+                            "type": "string",
+                            "name": "RecordType"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Title",
+                            "type": "string",
+                            "name": "Title"
+                          }
+                        ]
+                      }
+                    ],
+                    "label": "Combined attachments",
+                    "sfdc_field_type": "CombinedAttachment",
+                    "type": "object",
+                    "name": "CombinedAttachments"
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "CreatedById",
+                "control_type": "text",
+                "label": "Created By ID",
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "date_time",
+                "name": "CreatedDate",
+                "control_type": "date_time",
+                "label": "Created Date",
+                "optional": true,
+                "custom": false,
+                "render_input": "render_iso8601_timestamp",
+                "parse_output": "parse_iso8601_timestamp",
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "CurrencyIsoCode",
+                "control_type": "select",
+                "label": "Currency ISO Code",
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"PlatformCustomer__c\""
+                },
+                "optional": true,
+                "custom": false,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Currency ISO Code",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": false,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "CurrencyIsoCode"
+                },
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "Name",
+                "control_type": "text",
+                "label": "Customer Name",
+                "optional": true,
+                "custom": false,
+                "event_title": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "boolean",
+                "name": "IsDeleted",
+                "control_type": "checkbox",
+                "label": "Deleted",
+                "optional": true,
+                "custom": false,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Deleted",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "custom": false,
+                  "sfdc_createable": false,
+                  "sfdc_updateable": false,
+                  "type": "boolean",
+                  "name": "IsDeleted"
+                },
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "LastModifiedById",
+                "control_type": "text",
+                "label": "Last Modified By ID",
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "date_time",
+                "name": "LastModifiedDate",
+                "control_type": "date_time",
+                "label": "Last Modified Date",
+                "optional": true,
+                "custom": false,
+                "render_input": "render_iso8601_timestamp",
+                "parse_output": "parse_iso8601_timestamp",
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "OwnerId",
+                "control_type": "text",
+                "label": "Owner ID",
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "Id",
+                "control_type": "text",
+                "label": "Record ID",
+                "sticky": true,
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "date_time",
+                "name": "SystemModstamp",
+                "control_type": "date_time",
+                "label": "System Modstamp",
+                "optional": true,
+                "custom": false,
+                "render_input": "render_iso8601_timestamp",
+                "parse_output": "parse_iso8601_timestamp",
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "Account__c",
+                "control_type": "text",
+                "label": "Account",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "CustomerId__c",
+                "control_type": "text",
+                "label": "Customer Id",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              }
+            ],
+            "visible_config_fields": [
+              "sobject_name",
+              "field_list",
+              "Account__c"
+            ],
+            "hidden_config_fields": [
+              "Id"
+            ],
+            "uuid": "92ea8e05-29fd-4e27-a480-8b1c202fb28c"
+          },
+          {
+            "number": 3,
+            "provider": "workato_mapper",
+            "name": "map",
+            "as": "6d427650",
+            "title": null,
+            "description": "<span class=\"provider\">Map</span> to <span class=\"provider\"><span class=\"provider\">iPIMs User JSON</span></span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "workato_schema_id": "iPIMs User JSON"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "workato_schema_id": {
+                "zip_name": "ipims_user_json.workato_schema.json",
+                "name": "iPIMs User JSON",
+                "folder": ""
+              },
+              "data": {
+                "userId": "#{_('data.salesforce.f6bee893.Id')}",
+                "username": "#{_('data.salesforce.f6bee893.Username')}",
+                "email": "#{_('data.salesforce.f6bee893.Email')}",
+                "account": {
+                  "id": "#{_('data.salesforce.f6bee893.AccountId')}",
+                  "name": "#{_('data.salesforce.f6bee893.Account.Name')}",
+                  "customerId": "#{_('data.salesforce.d1ed3ce8.PlatformCustomer__c.first.CustomerId__c')}"
+                },
+                "id": "#{_('data.salesforce.f6bee893.ContactId')}",
+                "firstName": "#{_('data.salesforce.f6bee893.FirstName')}",
+                "lastName": "#{_('data.salesforce.f6bee893.LastName')}"
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "object",
+                "name": "data",
+                "label": "iPIMs User JSON",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "SFDC Contact ID",
+                    "type": "string",
+                    "name": "id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "SFDC User ID",
+                    "type": "string",
+                    "name": "userId"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "SFDC Username",
+                    "type": "string",
+                    "name": "username"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "First Name",
+                    "type": "string",
+                    "name": "firstName"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Last Name",
+                    "type": "string",
+                    "name": "lastName"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Email",
+                    "type": "string",
+                    "name": "email"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "SFDC Account ID",
+                        "type": "string",
+                        "name": "id"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Name",
+                        "type": "string",
+                        "name": "name"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Platform Customer ID",
+                        "type": "string",
+                        "name": "customerId"
+                      }
+                    ],
+                    "label": "Account",
+                    "type": "object",
+                    "name": "account"
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "data",
+                "label": "iPIMs User JSON",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "SFDC Contact ID",
+                    "type": "string",
+                    "name": "id",
+                    "parent": "data"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "SFDC User ID",
+                    "type": "string",
+                    "name": "userId",
+                    "parent": "data"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "SFDC Username",
+                    "type": "string",
+                    "name": "username",
+                    "parent": "data"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "First Name",
+                    "type": "string",
+                    "name": "firstName",
+                    "parent": "data"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Last Name",
+                    "type": "string",
+                    "name": "lastName",
+                    "parent": "data"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Email",
+                    "type": "string",
+                    "name": "email",
+                    "parent": "data"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "SFDC Account ID",
+                        "type": "string",
+                        "name": "id",
+                        "parent": "data.account"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Name",
+                        "type": "string",
+                        "name": "name",
+                        "parent": "data.account"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Platform Customer ID",
+                        "type": "string",
+                        "name": "customerId",
+                        "parent": "data.account"
+                      }
+                    ],
+                    "label": "Account",
+                    "type": "object",
+                    "name": "account",
+                    "parent": "data"
+                  }
+                ]
+              }
+            ],
+            "uuid": "9d99c193-36dd-4af5-8e87-172323e7fc8c"
+          },
+          {
+            "number": 4,
+            "provider": "aws_lambda",
+            "name": "invoke_function",
+            "as": "a7495c13",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "FunctionName": "salesforce-event-publisher"
+            },
+            "toggleCfg": {
+              "FunctionName": true
+            },
+            "input": {
+              "FunctionName": "salesforce-event-publisher",
+              "list_item": {
+                "schema": "[{\"name\":\"body\",\"type\":\"string\",\"optional\":true,\"label\":\"body\",\"control_type\":\"text\"}]",
+                "data": {
+                  "body": "=_('data.workato_mapper.6d427650.data').to_json"
+                }
+              },
+              "InvocationType": "RequestResponse",
+              "output_schema": "[{\"properties\":[{\"control_type\":\"text\",\"label\":\"Message ID\",\"type\":\"string\",\"name\":\"messageId\"},{\"control_type\":\"text\",\"label\":\"Success\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Success\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"success\"},\"type\":\"boolean\",\"name\":\"success\"},{\"control_type\":\"text\",\"label\":\"Error\",\"type\":\"string\",\"name\":\"error\"}],\"label\":\"Response\",\"type\":\"object\",\"name\":\"response\"}]"
+            },
+            "extended_output_schema": [
+              {
+                "type": "object",
+                "name": "response",
+                "label": "Response",
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Message ID",
+                    "optional": true,
+                    "type": "string",
+                    "name": "messageId"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Success",
+                    "parse_output": {
+                    },
+                    "render_input": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Success",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "success"
+                    },
+                    "optional": true,
+                    "type": "number",
+                    "name": "success"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Error",
+                    "optional": true,
+                    "type": "string",
+                    "name": "error"
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "list_item",
+                "control_type": "form-schema-builder",
+                "label": "Function input",
+                "sticky": true,
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Schema",
+                    "sticky": true,
+                    "extends_schema": true,
+                    "optional": true,
+                    "type": "string",
+                    "name": "schema",
+                    "parent": "list_item"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "body",
+                        "optional": true,
+                        "type": "string",
+                        "name": "body",
+                        "parent": "list_item.data"
+                      }
+                    ],
+                    "label": "Data",
+                    "sticky": true,
+                    "optional": true,
+                    "type": "object",
+                    "name": "data",
+                    "parent": "list_item"
+                  }
+                ],
+                "override": true
+              },
+              {
+                "type": "string",
+                "name": "InvocationType",
+                "control_type": "select",
+                "label": "Invocation type",
+                "hint": "If Asynchrounous event is selected, no response will be received.",
+                "sticky": true,
+                "pick_list": [
+                  [
+                    "RequestResponse",
+                    "RequestResponse"
+                  ],
+                  [
+                    "Asynchronous event",
+                    "Event"
+                  ]
+                ],
+                "optional": true
+              },
+              {
+                "type": "string",
+                "name": "Client_Context",
+                "control_type": "text-area",
+                "label": "Client context",
+                "hint": "Used to pass client-specific information to the lambda function. Enter in JSON format",
+                "optional": true
+              }
+            ],
+            "visible_config_fields": [
+              "FunctionName",
+              "list_item",
+              "list_item.schema",
+              "list_item.data",
+              "output_schema",
+              "InvocationType",
+              "list_item.data.body"
+            ],
+            "uuid": "0335283f-4721-4709-9e43-87979ac6efd6"
+          },
+          {
+            "number": 5,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "is_not_true",
+                  "lhs": "#{_('data.aws_lambda.a7495c13.response.success')}",
+                  "rhs": null
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 6,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "true",
+                  "stop_reason": "#{_('data.aws_lambda.a7495c13.response.error')}"
+                },
+                "uuid": "607fd477-4bff-4745-989f-e24de98d1d61"
+              }
+            ],
+            "uuid": "e64cd072-6416-4077-920b-e91b1695a13a"
+          },
+          {
+            "number": 7,
+            "as": "ff9520ab",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "3",
+              "retry_interval": "10"
+            },
+            "block": [
+              {
+                "number": 8,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "true",
+                  "stop_reason": "#{_('data.catch.ff9520ab.message')}"
+                },
+                "uuid": "512f429c-146a-4106-b1a6-30607b9d8b02"
+              }
+            ],
+            "uuid": "913162e0-7625-49ea-a2ab-73d0fe33c5da"
+          }
+        ],
+        "uuid": "d06b06c0-5df5-40f7-ae54-eef623e3874b"
+      }
+    ],
+    "uuid": "a97c6a5d-f3e0-440f-a860-3966564adadd"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "salesforce",
+      "account_id": {
+        "zip_name": "connections/salesforce.connection.json",
+        "name": "Salesforce",
+        "folder": "connections"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "aws_lambda",
+      "account_id": {
+        "zip_name": "resources/aws_lambda_corp_website.connection.json",
+        "name": "AWS Lambda (Corp Website)",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_mapper",
+      "account_id": null
+    }
+  ]
+}

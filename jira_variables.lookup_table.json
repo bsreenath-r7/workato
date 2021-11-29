@@ -1,0 +1,76 @@
+{
+  "name": "JIRA_VARIABLES",
+  "schema": [
+    {
+      "control_type": "text",
+      "label": "key",
+      "name": "col1",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "value",
+      "name": "col2",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "type",
+      "name": "col3",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "status",
+      "name": "col4",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 5",
+      "name": "col5",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 6",
+      "name": "col6",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 7",
+      "name": "col7",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 8",
+      "name": "col8",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 9",
+      "name": "col9",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 10",
+      "name": "col10",
+      "type": "string",
+      "sticky": false
+    }
+  ],
+  "data": "project.NEX,NEX,\"monitoring_project,monitoring_backlog_to_reopen\",\nproject.MS,MS,monitoring_project,\nproject.AS,AS,monitoring_project,\nproject.SI,SI,monitoring_project,Closed\nproject.IMR,IMR,monitoring_project,\nproject.LOG,LOG,monitoring_project,\nproject.UI,UI,monitoring_project,\nproject.KO,KO,monitoring_project,\nproject.EA,EA,monitoring_project,\nproject.MSSI,MSSI,monitoring_project,\nproject.INTSI,INTSI,monitoring_project,\nproject.ASE,ASE,monitoring_project,\nproject.TCEL,TCEL,monitoring_project,\nproject.DCA,DCA,monitoring_project,\nproject.PLAT,PLAT,monitoring_project,\nproject.PD,PD,monitoring_project,\nproject.IAS,IAS,monitoring_project,\nproject.LSI,LSI,monitoring_project,\nproject.ASP,ASP,monitoring_project,\nproject.TAL,TAL,monitoring_project,\nproject.JA,JA,monitoring_project,\nproject.ASSI,ASSI,monitoring_project,\nproject.IDEA,IDEA,monitoring_project,\nproject.DF,DF,monitoring_project,\nproject.SHAN,SHAN,monitoring_project,\nproject.ICON,ICON,monitoring_project,\nproject.UX,UX,monitoring_project,\nproject.ST,ST,monitoring_project,\nproject.LEARN,LEARN,monitoring_project,\nproject.PROJ,PROJ,monitoring_project,\nproject.IRFE,IRFE,monitoring_project,\nproject.AEPP,AEPP,monitoring_project,\nproject.SEN,SEN,monitoring_project,\nproject.SOAR,SOAR,monitoring_project,\nproject.TCELLPM,TCELLPM,monitoring_project,\nproject.RA,RA,monitoring_project,\nproject.DNA,DNA,monitoring_project,\nproject.ETR,ETR,monitoring_project,\nproject.ENDPOINT,ENDPOINT,monitoring_project,\nproject.NEX,NEX,monitoring_project,\nproject.MC,MC,monitoring_project,\nproject.ECO,ECO,monitoring_project,\"\"\njira_base_url,https://issues.corp.rapid7.com/browse/,,\nproject.MSERV,MSERV,monitoring_project,\nproject.E2,E2,monitoring_project,\nproject.MSPC,MSPC,monitoring_project,\nproject.MDRSOC,MDRSOC,monitoring_project,\nproject.DNR,DNR,monitoring_project,\nslack.proj_reminders.owner,@mgermain,,\nproject.ARR,ARR,monitoring_project,\nproject.APPSI,APPSI,monitoring_project,\nproject.APA,APA,monitoring_project,\nproject.CFA,CFA,monitoring_project,\nproject.ENV,ENV,monitoring_project,\nproject.IWA,IWA,monitoring_project,\nproject.JSA,JSA,monitoring_project,\nproject.NSA,NSA,monitoring_project,\nproject.NA,NA,monitoring_project,\nproject.TPA,TPA,monitoring_project,\nproject.ENG,ENG,monitoring_project,\nproject.CONTENT,CONTENT,monitoring_project,\n"
+}

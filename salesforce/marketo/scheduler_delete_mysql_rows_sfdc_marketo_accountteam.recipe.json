@@ -1,0 +1,100 @@
+{
+  "name": "Scheduler - Delete MySQL Rows (SFDC-MARKETO-ACCOUNTTEAM)",
+  "description": "When there is a trigger event, do action",
+  "version": 1,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "clock",
+    "name": "scheduled_event",
+    "as": "494f80e6",
+    "title": null,
+    "description": "<span class=\"provider\">Trigger</span> every 3 hours",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+      "time_unit": "Hours"
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "time_unit": "hours",
+      "trigger_every": "3"
+    },
+    "extended_input_schema": [
+      {
+        "type": "string",
+        "name": "trigger_every",
+        "control_type": "integer",
+        "label": "Trigger every",
+        "hint": "Define repeating schedule. Enter whole numbers only.\n                        This field can be set to a minimum of 5 minutes.",
+        "default": "5",
+        "optional": false,
+        "extends_schema": true
+      },
+      {
+        "type": "date_time",
+        "name": "start_after",
+        "control_type": "date_time",
+        "label": "Start after",
+        "hint": "Set date and time to start or leave blank to start immediately. <b>Once recipe has been run or tested, value cannot be changed.</b>",
+        "optional": true,
+        "extends_schema": true,
+        "since_field": true,
+        "render_input": "date_time_conversion",
+        "parse_output": "date_time_conversion"
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "mysql",
+        "name": "delete_rows",
+        "as": "774834c1",
+        "title": "Delete rows in sfdc_marketo_accountteam",
+        "description": "Delete <span class=\"provider\">rows</span> in <span class=\"provider\">sfdc_marketo_accountteam</span> table in <span class=\"provider\">MySQL</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "table": "sfdc_marketo_accountteam"
+        },
+        "toggleCfg": {
+          "table": true
+        },
+        "input": {
+          "table": "sfdc_marketo_accountteam",
+          "where": "state = 'import'"
+        },
+        "comment": "when state = 'import'",
+        "uuid": "4c4e3853-eca9-40c0-82b8-5b106697677c"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "#Rows Deleted"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.mysql.774834c1.rows_deleted')}"
+    },
+    "uuid": "226a2041-6546-40bd-aad6-ceb8c604fef5"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "clock",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "mysql",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "resources/mysql.connection.json",
+        "name": "MySQL",
+        "folder": "resources"
+      }
+    }
+  ]
+}

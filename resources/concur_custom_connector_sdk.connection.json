@@ -1,0 +1,10 @@
+{
+  "name": "Concur - Custom Connector SDK",
+  "provider": {
+    "zip_name": "concur_custom_connector_sdk.custom_adapter.json",
+    "name": "Concur - Custom Connector SDK",
+    "folder": ""
+  },
+  "secure_gateway_tunnel_name": null,
+  "root_folder": false
+}

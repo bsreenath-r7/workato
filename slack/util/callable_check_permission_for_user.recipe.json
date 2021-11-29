@@ -1,0 +1,479 @@
+{
+  "name": "Callable - Check Permission for User",
+  "description": "When there is a new call for callable recipe, do action",
+  "version": 5,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "9d1afa86",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">Callable - Check Permission for User</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "service_name": "Callable - Check Permission for User",
+      "request_schema_json": "[{\"name\":\"permission\",\"type\":\"string\",\"optional\":false,\"hint\":\"e.g. itbot.ess.searchEngines\",\"control_type\":\"text\"},{\"name\":\"user\",\"type\":\"string\",\"optional\":false,\"hint\":\"e.g. mflynn\",\"control_type\":\"text\"}]",
+      "reply_schema_json": "[{\"name\":\"isAuthorized\",\"type\":\"boolean\",\"optional\":false}]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Permission",
+            "name": "permission",
+            "type": "string",
+            "optional": false,
+            "hint": "e.g. itbot.ess.searchEngines"
+          },
+          {
+            "control_type": "text",
+            "label": "User",
+            "name": "user",
+            "type": "string",
+            "optional": false,
+            "hint": "e.g. mflynn"
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "lookup_table",
+        "name": "search_entries",
+        "as": "b1e5ff95",
+        "title": null,
+        "description": "\n      Search\n      <span class=\"provider\">entries</span>\n      in\n      <span class=\"provider\">PERMISSIONS</span>\n      lookup table\n    ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "lookup_table_id": "PERMISSIONS"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "lookup_table_id": {
+            "zip_name": "permissions.lookup_table.json",
+            "name": "PERMISSIONS",
+            "folder": ""
+          },
+          "parameters": {
+            "col2": "#{_('data.workato_service.9d1afa86.request.user')}"
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "array",
+            "name": "entries",
+            "label": "Entries",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "number",
+                "label": "Entry ID",
+                "parse_output": "integer_conversion",
+                "type": "integer",
+                "name": "id"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "permission",
+                    "name": "col1",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "user",
+                    "name": "col2",
+                    "type": "string",
+                    "sticky": true
+                  }
+                ],
+                "label": "Entry",
+                "type": "object",
+                "name": "entry"
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "parameters",
+            "label": "Search by",
+            "hint": "Provide one or more entry fields to search the entry",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "permission",
+                "name": "col1",
+                "type": "string",
+                "sticky": true,
+                "optional": true,
+                "parent": "parameters"
+              },
+              {
+                "control_type": "text",
+                "label": "user",
+                "name": "col2",
+                "type": "string",
+                "sticky": true,
+                "optional": true,
+                "parent": "parameters"
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "lookup_table_id",
+          "parameters.col2"
+        ],
+        "hidden_config_fields": [
+          "parameters.col1"
+        ],
+        "comment": "Get all the permissions for the specified user",
+        "uuid": "6cc9d1d5-b22d-4ff4-9b62-5628d0f12f98"
+      },
+      {
+        "number": 2,
+        "provider": "workato_variable",
+        "name": "declare_variable",
+        "as": "8cfa6ba0",
+        "title": "  Create variable isAuthorized",
+        "description": "Create variable <span class=\"provider\">isAuthorized</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "variables": {
+            "schema": "[{\"name\":\"is_authorized\",\"type\":\"boolean\",\"optional\":true,\"label\":\"isAuthorized\",\"control_type\":\"checkbox\"}]"
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "boolean",
+            "name": "is_authorized",
+            "control_type": "checkbox",
+            "label": "isAuthorized",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "isAuthorized",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "name": "is_authorized",
+              "type": "boolean",
+              "optional": true
+            },
+            "render_input": {
+            },
+            "parse_output": {
+            }
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "variables",
+            "control_type": "form-schema-builder",
+            "label": "Variables",
+            "optional": true,
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Schema",
+                "extends_schema": true,
+                "broadcast_change_event": true,
+                "type": "string",
+                "name": "schema",
+                "parent": "variables"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "checkbox",
+                    "label": "isAuthorized",
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "isAuthorized",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "name": "is_authorized",
+                      "type": "boolean",
+                      "optional": true,
+                      "parent": "variables.data"
+                    },
+                    "name": "is_authorized",
+                    "type": "boolean",
+                    "optional": true,
+                    "hint": "Defaults to nil if not supplied.",
+                    "sticky": true,
+                    "parent": "variables.data"
+                  }
+                ],
+                "label": "Data",
+                "type": "object",
+                "name": "data",
+                "parent": "variables"
+              }
+            ],
+            "exclude_fields": [
+              "hint"
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "variables.data.is_authorized"
+        ],
+        "uuid": "41e6a0b6-42bc-4352-95c9-82c94934ea79"
+      },
+      {
+        "number": 3,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "or",
+          "conditions": [
+            {
+              "operand": "greater_than",
+              "lhs": "=_('data.lookup_table.b1e5ff95.entries').pluck(:entry).where(col1: /^#{(_('data.workato_service.9d1afa86.request.permission').split(\".\")[0])}\\.#{(_('data.workato_service.9d1afa86.request.permission').split(\".\")[1])}\\.\\*/).length",
+              "rhs": "0"
+            },
+            {
+              "operand": "greater_than",
+              "lhs": "=_('data.lookup_table.b1e5ff95.entries').pluck(:entry).where(col1: _('data.workato_service.9d1afa86.request.permission')).length",
+              "rhs": "0"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 4,
+            "provider": "workato_variable",
+            "name": "update_variable",
+            "as": "64e7d872",
+            "title": null,
+            "description": "Update variable <span class=\"provider\">isAuthorized</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "name": "isAuthorized (step 3)"
+            },
+            "toggleCfg": {
+              "value": true
+            },
+            "input": {
+              "name": "41e6a0b6-42bc-4352-95c9-82c94934ea79:8cfa6ba0:is_authorized",
+              "value": "true"
+            },
+            "extended_input_schema": [
+              {
+                "type": "boolean",
+                "name": "value",
+                "control_type": "checkbox",
+                "label": "Value",
+                "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                "sticky": true,
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Value",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                  "strip_interpolation": true,
+                  "sticky": true,
+                  "optional": true,
+                  "type": "boolean",
+                  "name": "value"
+                },
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "strip_interpolation": true
+              }
+            ],
+            "uuid": "11678694-926e-4125-9a8b-9ed40c48d4ec"
+          },
+          {
+            "number": 5,
+            "keyword": "else",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+            },
+            "block": [
+              {
+                "number": 6,
+                "provider": "workato_variable",
+                "name": "update_variable",
+                "as": "d5d12a2a",
+                "title": null,
+                "description": "Update variable <span class=\"provider\">isAuthorized</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "name": "isAuthorized (step 3)"
+                },
+                "toggleCfg": {
+                  "value": true
+                },
+                "input": {
+                  "name": "41e6a0b6-42bc-4352-95c9-82c94934ea79:8cfa6ba0:is_authorized",
+                  "value": "false"
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "boolean",
+                    "name": "value",
+                    "control_type": "checkbox",
+                    "label": "Value",
+                    "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                    "sticky": true,
+                    "optional": true,
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Value",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                      "strip_interpolation": true,
+                      "sticky": true,
+                      "optional": true,
+                      "type": "boolean",
+                      "name": "value"
+                    },
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    },
+                    "strip_interpolation": true
+                  }
+                ],
+                "uuid": "54c88ee5-d4f0-4cdb-a547-37e8ab1ff061"
+              }
+            ],
+            "uuid": "e367d0ca-fe02-47f7-840a-69d06ab2ee8d"
+          }
+        ],
+        "comment": "1 - Check for the global permission (if the button permission is itbot.ess.search_engine, do a regex match for /^itbot\\.ess\\.\\*/  2 - Check for the exact permission.  If either are true then the user is authorized to perform the action",
+        "uuid": "d5d8f031-aa56-4466-b411-3c045aee28b0"
+      },
+      {
+        "number": 7,
+        "provider": "workato_service",
+        "name": "send_reply",
+        "as": "33464285",
+        "title": null,
+        "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Callable - Check Permission for User</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+          "reply.isAuthorized": false
+        },
+        "input": {
+          "reply_type": "success",
+          "reply": {
+            "isAuthorized": "#{_('data.workato_variable.8cfa6ba0.is_authorized')}"
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "reply",
+            "label": "Reply",
+            "properties": [
+              {
+                "control_type": "checkbox",
+                "label": "Is authorized",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Is authorized",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "isAuthorized",
+                  "type": "boolean",
+                  "optional": false,
+                  "parent": "reply"
+                },
+                "name": "isAuthorized",
+                "type": "boolean",
+                "optional": false,
+                "parent": "reply"
+              }
+            ]
+          }
+        ],
+        "uuid": "aefb31fb-a61c-46c9-bb1c-ca28b4cb0866"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "User"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Permission"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "isAuthorized"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_service.9d1afa86.request.user')}",
+      "custom_column_2": "#{_('data.workato_service.9d1afa86.request.permission')}",
+      "custom_column_3": "#{_('data.workato_variable.8cfa6ba0.is_authorized')}"
+    },
+    "uuid": "eb6f6397-0150-4efe-97b6-2beac55bd0a6"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "account_id": null,
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "lookup_table",
+      "account_id": null,
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "account_id": null,
+      "skip_validation": false
+    }
+  ]
+}

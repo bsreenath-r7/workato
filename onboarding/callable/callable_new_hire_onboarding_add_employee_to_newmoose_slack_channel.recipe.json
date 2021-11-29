@@ -1,0 +1,1451 @@
+{
+  "name": "Callable: New Hire Onboarding - Add employee to #newmoose slack channel",
+  "description": "When there is a new call for callable recipe, do action",
+  "version": 3,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "1ed1e07a",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">Callable: New Hire Onboarding - Add Employee to #newmoose slack channel</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "service_name": "Callable: New Hire Onboarding - Add Employee to #newmoose slack channel",
+      "request_schema_json": "[{\"name\":\"Employee_Name\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"Employee_Start_Date\",\"type\":\"date_time\",\"optional\":false,\"control_type\":\"date\"},{\"name\":\"Employee_Business_Process_Reason\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"Employee_Slack_Username\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"Employee_Email\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"GSheet_Col\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]",
+      "reply_schema_json": "[{\"name\":\"Update_Needed\",\"type\":\"boolean\",\"optional\":false}]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Employee name",
+            "name": "Employee_Name",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "date",
+            "label": "Employee start date",
+            "render_input": "date_conversion",
+            "parse_output": "date_conversion",
+            "name": "Employee_Start_Date",
+            "type": "date_time",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Employee business process reason",
+            "name": "Employee_Business_Process_Reason",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Employee slack username",
+            "name": "Employee_Slack_Username",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Employee email",
+            "name": "Employee_Email",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "G sheet col",
+            "name": "GSheet_Col",
+            "type": "string",
+            "optional": false
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "workato_variable",
+            "name": "declare_variable",
+            "as": "9b885256",
+            "title": "  Create variable PROCESS_COL_add_emp_to_#newmoose_slack",
+            "description": "Create variable <span class=\"provider\">PROCESS_COL_add_emp_to_#newmoose_slack</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+              "variables.data.process_col_add_emp_to_newmoose_slack": false
+            },
+            "input": {
+              "variables": {
+                "schema": "[{\"control_type\":\"checkbox\",\"label\":\"PROCESS_COL_add_emp_to_#newmoose_slack\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"PROCESS_COL_add_emp_to_#newmoose_slack\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"name\":\"process_col_add_emp_to_newmoose_slack\",\"type\":\"boolean\",\"optional\":true},\"name\":\"process_col_add_emp_to_newmoose_slack\",\"type\":\"boolean\",\"optional\":true}]",
+                "data": {
+                  "process_col_add_emp_to_newmoose_slack": "=#Only start to process this automation Thursday (or 5 days) before start date\nif (_('data.workato_service.1ed1e07a.request.Employee_Start_Date')-5.days) < today\n#Only flow if the business process reason contains the words 'New Hire'\n  if _('data.workato_service.1ed1e07a.request.Employee_Business_Process_Reason').include?(\"New Hire\")\n#Only flow if the associated field actually contains a checkbox\n    if _('data.workato_service.1ed1e07a.request.GSheet_Col').present?\n#Only flow if the associated field checkbox is set to 'FALSE'\n      if _('data.workato_service.1ed1e07a.request.GSheet_Col') == \"FALSE\"\n        true\n      else\n        false\n      end\n    else\n      false\n    end\n  else\n    false\n  end\nelse\n  false\nend"
+                }
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "boolean",
+                "name": "process_col_add_emp_to_newmoose_slack",
+                "control_type": "checkbox",
+                "label": "PROCESS_COL_add_emp_to_#newmoose_slack",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "PROCESS_COL_add_emp_to_#newmoose_slack",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "process_col_add_emp_to_newmoose_slack",
+                  "type": "boolean",
+                  "optional": true
+                },
+                "render_input": {
+                },
+                "parse_output": {
+                }
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "variables",
+                "control_type": "form-schema-builder",
+                "label": "Variables",
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Schema",
+                    "extends_schema": true,
+                    "broadcast_change_event": true,
+                    "type": "string",
+                    "name": "schema"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "checkbox",
+                        "label": "PROCESS_COL_add_emp_to_#newmoose_slack",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "PROCESS_COL_add_emp_to_#newmoose_slack",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "name": "process_col_add_emp_to_newmoose_slack",
+                          "type": "boolean",
+                          "optional": true
+                        },
+                        "name": "process_col_add_emp_to_newmoose_slack",
+                        "type": "boolean",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      }
+                    ],
+                    "label": "Data",
+                    "type": "object",
+                    "name": "data"
+                  }
+                ],
+                "exclude_fields": [
+                  "hint"
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "variables.data.col_add_emp_to_newmoose_slack",
+              "variables",
+              "variables.schema",
+              "variables.data.col_add_mgr_to_remoteonboarding_slack",
+              "variables.data.row_number",
+              "variables.data.workday_id",
+              "variables.data",
+              "variables.data.process_col_add_emp_to_newmoose_slack",
+              "variables.data.process_col_add_mgr_to_remoteonboarding_slack"
+            ],
+            "comment": "Logic Processing to determine if the specific automations should happen",
+            "uuid": "22e6fcdf-3d1c-4aaa-9011-42a2db3c01ab"
+          },
+          {
+            "number": 3,
+            "provider": "workato_variable",
+            "name": "declare_variable",
+            "as": "6cf90e7c",
+            "title": "  Create variables Rule_Validation_Fail, Process_Automation, UPDATE_NEEDED_FOR_Mgr_Added_To_RemoteOnboading_Slack",
+            "description": "Create variables <span class=\"provider\">Rule_Validation_Fail</span>, <span class=\"provider\">Process_Automation</span>, <span class=\"provider\">UPDATE_NEEDED_FOR_Mgr_Added_To_RemoteOnboading_Slack</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+              "variables.data.process_automation": true,
+              "variables.data.update_needed_for_mgr_added_to_remote_onboading_slack": true
+            },
+            "input": {
+              "variables": {
+                "schema": "[{\"name\":\"rule_validation_fail\",\"type\":\"string\",\"optional\":true,\"label\":\"Rule_Validation_Fail\",\"control_type\":\"text\"},{\"name\":\"process_automation\",\"type\":\"boolean\",\"optional\":true,\"label\":\"Process_Automation\",\"control_type\":\"checkbox\"},{\"name\":\"update_needed_for_mgr_added_to_remote_onboading_slack\",\"type\":\"boolean\",\"optional\":true,\"label\":\"UPDATE_NEEDED_FOR_Mgr_Added_To_RemoteOnboading_Slack\",\"control_type\":\"checkbox\"}]",
+                "data": {
+                  "process_automation": "true",
+                  "update_needed_for_mgr_added_to_remote_onboading_slack": "false"
+                }
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "string",
+                "name": "rule_validation_fail",
+                "control_type": "text",
+                "label": "Rule_Validation_Fail",
+                "optional": true
+              },
+              {
+                "type": "boolean",
+                "name": "process_automation",
+                "control_type": "checkbox",
+                "label": "Process_Automation",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Process_Automation",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "process_automation",
+                  "type": "boolean",
+                  "optional": true
+                },
+                "render_input": {
+                },
+                "parse_output": {
+                }
+              },
+              {
+                "type": "boolean",
+                "name": "update_needed_for_mgr_added_to_remote_onboading_slack",
+                "control_type": "checkbox",
+                "label": "UPDATE_NEEDED_FOR_Mgr_Added_To_RemoteOnboading_Slack",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "UPDATE_NEEDED_FOR_Mgr_Added_To_RemoteOnboading_Slack",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "update_needed_for_mgr_added_to_remote_onboading_slack",
+                  "type": "boolean",
+                  "optional": true
+                },
+                "render_input": {
+                },
+                "parse_output": {
+                }
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "variables",
+                "control_type": "form-schema-builder",
+                "label": "Variables",
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Schema",
+                    "extends_schema": true,
+                    "broadcast_change_event": true,
+                    "type": "string",
+                    "name": "schema"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Rule_Validation_Fail",
+                        "name": "rule_validation_fail",
+                        "type": "string",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "checkbox",
+                        "label": "Process_Automation",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Process_Automation",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "name": "process_automation",
+                          "type": "boolean",
+                          "optional": true
+                        },
+                        "name": "process_automation",
+                        "type": "boolean",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "checkbox",
+                        "label": "UPDATE_NEEDED_FOR_Mgr_Added_To_RemoteOnboading_Slack",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "UPDATE_NEEDED_FOR_Mgr_Added_To_RemoteOnboading_Slack",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "name": "update_needed_for_mgr_added_to_remote_onboading_slack",
+                          "type": "boolean",
+                          "optional": true
+                        },
+                        "name": "update_needed_for_mgr_added_to_remote_onboading_slack",
+                        "type": "boolean",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      }
+                    ],
+                    "label": "Data",
+                    "type": "object",
+                    "name": "data"
+                  }
+                ],
+                "exclude_fields": [
+                  "hint"
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "variables.data.rule_validation_fail",
+              "variables",
+              "variables.schema",
+              "variables.data.process_automation",
+              "variables.data",
+              "variables.data.update_needed_for_mgr_added_to_remote_onboading_slack"
+            ],
+            "uuid": "ab8124c7-8307-4e79-87dc-fc2de8828b16"
+          },
+          {
+            "number": 4,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "equals_to",
+                  "lhs": "1",
+                  "rhs": "1",
+                  "uuid": "condition-ff6a7cf6-c1b7-4c4f-8691-e22df67c79a7"
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 5,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "greater_than",
+                      "lhs": "=(_('data.workato_service.1ed1e07a.request.Employee_Start_Date').to_date)-4.days",
+                      "rhs": "=today",
+                      "uuid": "condition-144b4e48-fb5c-49c2-979a-73692d897f50"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 6,
+                    "provider": "workato_variable",
+                    "name": "declare_variable",
+                    "as": "6e9b4e78",
+                    "title": "  Create variable Start_Date_Expected",
+                    "description": "Create variable <span class=\"provider\">Start_Date_Expected</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "variables": {
+                        "schema": "[{\"name\":\"start_date_expected\",\"type\":\"string\",\"optional\":true,\"label\":\"Start_Date_Expected\",\"control_type\":\"text\"}]",
+                        "data": {
+                          "start_date_expected": "=_('data.workato_service.1ed1e07a.request.Employee_Start_Date')-4.days"
+                        }
+                      }
+                    },
+                    "extended_output_schema": [
+                      {
+                        "type": "string",
+                        "name": "start_date_expected",
+                        "control_type": "text",
+                        "label": "Start_Date_Expected",
+                        "optional": true
+                      }
+                    ],
+                    "extended_input_schema": [
+                      {
+                        "type": "object",
+                        "name": "variables",
+                        "control_type": "form-schema-builder",
+                        "label": "Variables",
+                        "optional": true,
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Schema",
+                            "extends_schema": true,
+                            "broadcast_change_event": true,
+                            "type": "string",
+                            "name": "schema"
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Start_Date_Expected",
+                                "name": "start_date_expected",
+                                "type": "string",
+                                "optional": true,
+                                "hint": "Defaults to nil if not supplied.",
+                                "sticky": true
+                              }
+                            ],
+                            "label": "Data",
+                            "type": "object",
+                            "name": "data"
+                          }
+                        ],
+                        "exclude_fields": [
+                          "hint"
+                        ]
+                      }
+                    ],
+                    "visible_config_fields": [
+                      "variables.data.start_date_expected"
+                    ],
+                    "comment": "See what the expected start date should be",
+                    "uuid": "c9f79c3c-c1a2-4aa0-bb6c-d158c4d8ed03"
+                  },
+                  {
+                    "number": 7,
+                    "provider": "workato_variable",
+                    "name": "update_variable",
+                    "as": "f55187b7",
+                    "title": null,
+                    "description": "Update variable <span class=\"provider\">Rule_Validation_Fail</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "name": "Rule_Validation_Fail (step 4)"
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "name": "ab8124c7-8307-4e79-87dc-fc2de8828b16:6cf90e7c:rule_validation_fail",
+                      "value": "Start Date is too far out, it needs to be at least [ #{_('data.workato_variable.6e9b4e78.start_date_expected')} ] or before"
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "string",
+                        "name": "value",
+                        "control_type": "text",
+                        "label": "Value",
+                        "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                        "sticky": true,
+                        "optional": true,
+                        "strip_interpolation": true
+                      }
+                    ],
+                    "comment": "Start Date is to far out, it needs to be at least [ XXX ] or before",
+                    "uuid": "f572deb3-692c-4641-9566-70d98f9b817d"
+                  },
+                  {
+                    "number": 8,
+                    "provider": "workato_variable",
+                    "name": "update_variable",
+                    "as": "6a664c7f",
+                    "title": null,
+                    "description": "Update variable <span class=\"provider\">Process_Automation</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "name": "Process_Automation (step 4)"
+                    },
+                    "toggleCfg": {
+                      "value": true
+                    },
+                    "input": {
+                      "name": "ab8124c7-8307-4e79-87dc-fc2de8828b16:6cf90e7c:process_automation",
+                      "value": "false"
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "boolean",
+                        "name": "value",
+                        "control_type": "checkbox",
+                        "label": "Value",
+                        "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                        "sticky": true,
+                        "optional": true,
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Value",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                          "strip_interpolation": true,
+                          "sticky": true,
+                          "optional": true,
+                          "type": "boolean",
+                          "name": "value"
+                        },
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "strip_interpolation": true
+                      }
+                    ],
+                    "uuid": "a375da59-0d86-47ce-aa0e-a074518e2e01"
+                  }
+                ],
+                "uuid": "0f8ea7c5-278b-4760-8bf0-6dc7ead39c61"
+              },
+              {
+                "number": 9,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "blank",
+                      "lhs": "#{_('data.workato_service.1ed1e07a.request.Employee_Business_Process_Reason')}",
+                      "rhs": "",
+                      "uuid": "condition-85d1f01f-599e-4810-b763-ffd570e22a27"
+                    },
+                    {
+                      "operand": "is_true",
+                      "lhs": "#{_('data.workato_variable.6cf90e7c.process_automation')}",
+                      "rhs": "",
+                      "uuid": "condition-1289f423-d944-4d15-b255-dfcf22f65242"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 10,
+                    "provider": "workato_variable",
+                    "name": "update_variable",
+                    "as": "1dc67ed3",
+                    "title": null,
+                    "description": "Update variable <span class=\"provider\">Rule_Validation_Fail</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "name": "Rule_Validation_Fail (step 4)"
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "name": "ab8124c7-8307-4e79-87dc-fc2de8828b16:6cf90e7c:rule_validation_fail",
+                      "value": "Employee's Business Process Reason column is blank"
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "string",
+                        "name": "value",
+                        "control_type": "text",
+                        "label": "Value",
+                        "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                        "sticky": true,
+                        "optional": true,
+                        "strip_interpolation": true
+                      }
+                    ],
+                    "comment": "Employee's Business Process Reason column is blank",
+                    "uuid": "2cf1991e-b0b2-44ad-84a0-a8c04e74dfd6"
+                  },
+                  {
+                    "number": 11,
+                    "provider": "workato_variable",
+                    "name": "update_variable",
+                    "as": "644c58fc",
+                    "title": null,
+                    "description": "Update variable <span class=\"provider\">Process_Automation</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "name": "Process_Automation (step 4)"
+                    },
+                    "toggleCfg": {
+                      "value": true
+                    },
+                    "input": {
+                      "name": "ab8124c7-8307-4e79-87dc-fc2de8828b16:6cf90e7c:process_automation",
+                      "value": "false"
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "boolean",
+                        "name": "value",
+                        "control_type": "checkbox",
+                        "label": "Value",
+                        "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                        "sticky": true,
+                        "optional": true,
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Value",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                          "strip_interpolation": true,
+                          "sticky": true,
+                          "optional": true,
+                          "type": "boolean",
+                          "name": "value"
+                        },
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "strip_interpolation": true
+                      }
+                    ],
+                    "uuid": "8731ecfa-0a98-4bea-937c-5e2cf7a5278a"
+                  },
+                  {
+                    "number": 12,
+                    "keyword": "stop",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "stop_with_error": "true",
+                      "stop_reason": "The Business Process Reason is not present on the record from the Google Sheet"
+                    },
+                    "comment": "The Business Process Reason is not present on the record from the Google Sheet",
+                    "uuid": "b6e9ca70-adfe-48d4-bac7-ef97497c32d8"
+                  }
+                ],
+                "uuid": "e7e73ef5-719e-422c-9319-d3ab1d5f154c"
+              },
+              {
+                "number": 13,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "not_contains",
+                      "lhs": "=_('data.workato_service.1ed1e07a.request.Employee_Business_Process_Reason').upcase",
+                      "rhs": "NEW HIRE",
+                      "uuid": "condition-0d13a8cf-9a51-4e38-b134-7fd5edb4090b"
+                    },
+                    {
+                      "operand": "is_true",
+                      "lhs": "#{_('data.workato_variable.6cf90e7c.process_automation')}",
+                      "rhs": "",
+                      "uuid": "condition-79edd880-baaa-47fe-994e-eafde3f9aab0"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 14,
+                    "provider": "workato_variable",
+                    "name": "update_variable",
+                    "as": "4b3bcd6f",
+                    "title": null,
+                    "description": "Update variable <span class=\"provider\">Rule_Validation_Fail</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "name": "Rule_Validation_Fail (step 4)"
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "name": "ab8124c7-8307-4e79-87dc-fc2de8828b16:6cf90e7c:rule_validation_fail",
+                      "value": "Employee's Business Process Reason column listed as [ #{_('data.workato_service.1ed1e07a.request.Employee_Business_Process_Reason')} ] and it needs to contain \"New Hire\""
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "string",
+                        "name": "value",
+                        "control_type": "text",
+                        "label": "Value",
+                        "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                        "sticky": true,
+                        "optional": true,
+                        "strip_interpolation": true
+                      }
+                    ],
+                    "comment": "Employee's Business Process Reason column listed as [ XXX ] and it needs to contain \"New Hire\"",
+                    "uuid": "ae3e021c-7826-4e9d-8c28-127e4e60818c"
+                  },
+                  {
+                    "number": 15,
+                    "provider": "workato_variable",
+                    "name": "update_variable",
+                    "as": "7f16812d",
+                    "title": null,
+                    "description": "Update variable <span class=\"provider\">Process_Automation</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "name": "Process_Automation (step 4)"
+                    },
+                    "toggleCfg": {
+                      "value": true
+                    },
+                    "input": {
+                      "name": "ab8124c7-8307-4e79-87dc-fc2de8828b16:6cf90e7c:process_automation",
+                      "value": "false"
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "boolean",
+                        "name": "value",
+                        "control_type": "checkbox",
+                        "label": "Value",
+                        "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                        "sticky": true,
+                        "optional": true,
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Value",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                          "strip_interpolation": true,
+                          "sticky": true,
+                          "optional": true,
+                          "type": "boolean",
+                          "name": "value"
+                        },
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "strip_interpolation": true
+                      }
+                    ],
+                    "uuid": "19669138-165b-4177-879c-6b19afc557c9"
+                  }
+                ],
+                "uuid": "6b1a924b-b26b-479c-971d-063d0d463c7d"
+              },
+              {
+                "number": 16,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "blank",
+                      "lhs": "#{_('data.workato_service.1ed1e07a.request.GSheet_Col')}",
+                      "rhs": "Remote Start",
+                      "uuid": "condition-0d13a8cf-9a51-4e38-b134-7fd5edb4090b"
+                    },
+                    {
+                      "operand": "is_true",
+                      "lhs": "#{_('data.workato_variable.6cf90e7c.process_automation')}",
+                      "rhs": "",
+                      "uuid": "condition-d5984871-53eb-45da-b77e-515e6e28c735"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 17,
+                    "provider": "workato_variable",
+                    "name": "update_variable",
+                    "as": "02edac68",
+                    "title": null,
+                    "description": "Update variable <span class=\"provider\">Rule_Validation_Fail</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "name": "Rule_Validation_Fail (step 4)"
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "name": "ab8124c7-8307-4e79-87dc-fc2de8828b16:6cf90e7c:rule_validation_fail",
+                      "value": "There is no checkbox in the associated GSheet Column"
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "string",
+                        "name": "value",
+                        "control_type": "text",
+                        "label": "Value",
+                        "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                        "sticky": true,
+                        "optional": true,
+                        "strip_interpolation": true
+                      }
+                    ],
+                    "comment": "There is no checkbox in the associated GSheet Column",
+                    "uuid": "a11670d5-8718-42e6-a078-d59fcdf46e55"
+                  },
+                  {
+                    "number": 18,
+                    "provider": "workato_variable",
+                    "name": "update_variable",
+                    "as": "23ea8476",
+                    "title": null,
+                    "description": "Update variable <span class=\"provider\">Process_Automation</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "name": "Process_Automation (step 4)"
+                    },
+                    "toggleCfg": {
+                      "value": true
+                    },
+                    "input": {
+                      "name": "ab8124c7-8307-4e79-87dc-fc2de8828b16:6cf90e7c:process_automation",
+                      "value": "false"
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "boolean",
+                        "name": "value",
+                        "control_type": "checkbox",
+                        "label": "Value",
+                        "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                        "sticky": true,
+                        "optional": true,
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Value",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                          "strip_interpolation": true,
+                          "sticky": true,
+                          "optional": true,
+                          "type": "boolean",
+                          "name": "value"
+                        },
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "strip_interpolation": true
+                      }
+                    ],
+                    "uuid": "5189e5ed-1242-4bc6-8231-263ea7b67e8f"
+                  }
+                ],
+                "uuid": "26d4afaf-fec3-495e-afa8-26369ef44d66"
+              },
+              {
+                "number": 19,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "equals_to",
+                      "lhs": "#{_('data.workato_service.1ed1e07a.request.GSheet_Col')}",
+                      "rhs": "TRUE",
+                      "uuid": "condition-0d13a8cf-9a51-4e38-b134-7fd5edb4090b"
+                    },
+                    {
+                      "operand": "is_true",
+                      "lhs": "#{_('data.workato_variable.6cf90e7c.process_automation')}",
+                      "rhs": "",
+                      "uuid": "condition-d5984871-53eb-45da-b77e-515e6e28c735"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 20,
+                    "provider": "workato_variable",
+                    "name": "update_variable",
+                    "as": "537e6980",
+                    "title": null,
+                    "description": "Update variable <span class=\"provider\">Rule_Validation_Fail</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "name": "Rule_Validation_Fail (step 4)"
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "name": "ab8124c7-8307-4e79-87dc-fc2de8828b16:6cf90e7c:rule_validation_fail",
+                      "value": "The checkbox in the associated GSheet Column is already checked"
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "string",
+                        "name": "value",
+                        "control_type": "text",
+                        "label": "Value",
+                        "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                        "sticky": true,
+                        "optional": true,
+                        "strip_interpolation": true
+                      }
+                    ],
+                    "comment": "The checkbox in the associated GSheet Column is already checked",
+                    "uuid": "db53474c-7719-47e4-95d2-dd7043dcf50b"
+                  },
+                  {
+                    "number": 21,
+                    "provider": "workato_variable",
+                    "name": "update_variable",
+                    "as": "59413487",
+                    "title": null,
+                    "description": "Update variable <span class=\"provider\">Process_Automation</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "name": "Process_Automation (step 4)"
+                    },
+                    "toggleCfg": {
+                      "value": true
+                    },
+                    "input": {
+                      "name": "ab8124c7-8307-4e79-87dc-fc2de8828b16:6cf90e7c:process_automation",
+                      "value": "false"
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "boolean",
+                        "name": "value",
+                        "control_type": "checkbox",
+                        "label": "Value",
+                        "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                        "sticky": true,
+                        "optional": true,
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Value",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                          "strip_interpolation": true,
+                          "sticky": true,
+                          "optional": true,
+                          "type": "boolean",
+                          "name": "value"
+                        },
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "strip_interpolation": true
+                      }
+                    ],
+                    "uuid": "87733b0d-55ea-4238-94a7-c4a2d15ea767"
+                  }
+                ],
+                "uuid": "34659a5d-5f98-4f3a-a33f-8ae2668cdd56"
+              }
+            ],
+            "comment": "Process Rules for the automation",
+            "uuid": "a2773b29-0e93-4d00-9034-447fd565c0fb"
+          },
+          {
+            "number": 22,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "is_true",
+                  "lhs": "#{_('data.workato_variable.6cf90e7c.process_automation')}",
+                  "rhs": "",
+                  "uuid": "condition-bc4cc9e0-81c6-4998-be3a-c8d8d2dd5bbf"
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 23,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "blank",
+                      "lhs": "#{_('data.workato_service.1ed1e07a.request.Employee_Slack_Username')}",
+                      "rhs": "",
+                      "uuid": "condition-8c99b872-0425-4a8d-ac62-058e98ff4913"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 24,
+                    "keyword": "stop",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "stop_with_error": "true",
+                      "stop_reason": "The Workday Username is not present on the record from the Google Sheet"
+                    },
+                    "comment": "Stop Job with Error :: The Workday Username is not present on the record from the Google Sheet",
+                    "uuid": "158ec18c-b266-4ebf-a177-35ed192d2b35"
+                  }
+                ],
+                "uuid": "44aaded0-55d7-4ad4-8018-7467e4d91785"
+              },
+              {
+                "number": 25,
+                "provider": "workato_service",
+                "name": "call_service",
+                "as": "49a27280",
+                "title": null,
+                "description": "Call recipe <span class=\"provider\">Callable: Add user to Slack Channel</span> ",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "flow_id": "Callable: New Hire Onboarding - Add employee to Slack Channel"
+                },
+                "toggleCfg": {
+                  "request.slackChannel": true
+                },
+                "input": {
+                  "flow_id": {
+                    "zip_name": "onboarding/callable/callable_add_user_to_slack_channel.recipe.json",
+                    "name": "Callable: Add user to Slack Channel",
+                    "folder": "onboarding/callable"
+                  },
+                  "request": {
+                    "Employee_Email": "#{_('data.workato_service.1ed1e07a.request.Employee_Email')}",
+                    "slackChannel": "newmoose",
+                    "slackUsername": "#{_('data.workato_service.1ed1e07a.request.Employee_Slack_Username')}"
+                  }
+                },
+                "extended_output_schema": [
+                  {
+                    "type": "object",
+                    "name": "reply",
+                    "label": "Reply",
+                    "properties": [
+                      {
+                        "control_type": "checkbox",
+                        "label": "Employee added to channel",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Employee added to channel",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "name": "Employee_Added_To_Channel",
+                          "type": "boolean",
+                          "optional": false
+                        },
+                        "name": "Employee_Added_To_Channel",
+                        "type": "boolean",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "checkbox",
+                        "label": "Employee already existed on channel",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Employee already existed on channel",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "name": "Employee_Already_Existed_On_Channel",
+                          "type": "boolean",
+                          "optional": false
+                        },
+                        "name": "Employee_Already_Existed_On_Channel",
+                        "type": "boolean",
+                        "optional": false
+                      }
+                    ]
+                  }
+                ],
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "request",
+                    "label": "Recipe input",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Employee first name",
+                        "name": "Employee_First_Name",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Employee last name",
+                        "name": "Employee_Last_Name",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Employee email",
+                        "name": "Employee_Email",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Slack username",
+                        "name": "slackUsername",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "select",
+                        "label": "Slack Channel",
+                        "name": "slackChannel",
+                        "optional": false,
+                        "type": "string",
+                        "pick_list": [
+                          [
+                            "newmoose",
+                            "newmoose"
+                          ],
+                          [
+                            "remoteonboarding",
+                            "remoteonboarding"
+                          ]
+                        ],
+                        "toggle_hint": "Select Channel",
+                        "toggle_field": {
+                          "name": "slackChannel",
+                          "label": "Slack Channel",
+                          "type": "string",
+                          "control_type": "text",
+                          "toggle_hint": "Custom Option"
+                        }
+                      }
+                    ]
+                  }
+                ],
+                "visible_config_fields": [
+                  "flow_id",
+                  "request",
+                  "request.Employee_Email",
+                  "request.slackChannel",
+                  "request.slackUsername"
+                ],
+                "comment": "This callable recipe would add the associated employee to the newmoose slack channel",
+                "uuid": "e8e3fc5d-6956-4454-a09f-3d71c443087d"
+              },
+              {
+                "number": 26,
+                "provider": "workato_variable",
+                "name": "update_variable",
+                "as": "e0879734",
+                "title": null,
+                "description": "Update variable <span class=\"provider\">UPDATE_NEEDED_FOR_Mgr_Added_To_RemoteOnboading_Slack</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "name": "UPDATE_NEEDED_FOR_Mgr_Added_To_RemoteOnboading_Slack (step 4)"
+                },
+                "toggleCfg": {
+                  "value": false
+                },
+                "input": {
+                  "value": "=if _('data.workato_service.49a27280.reply.Employee_Added_To_Channel') == \"true\" or _('data.workato_service.49a27280.reply.Employee_Already_Existed_On_Channel') == \"true\"\n  true\nelse\n  false\nend",
+                  "name": "ab8124c7-8307-4e79-87dc-fc2de8828b16:6cf90e7c:update_needed_for_mgr_added_to_remote_onboading_slack"
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "boolean",
+                    "name": "value",
+                    "control_type": "checkbox",
+                    "label": "Value",
+                    "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                    "sticky": true,
+                    "optional": true,
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Value",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                      "strip_interpolation": true,
+                      "sticky": true,
+                      "optional": true,
+                      "type": "boolean",
+                      "name": "value"
+                    },
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    },
+                    "strip_interpolation": true
+                  }
+                ],
+                "uuid": "368e262c-b7f1-45ce-9052-e97664d07e92"
+              }
+            ],
+            "comment": "If we have determined based on the rules that we would need to process the automation to add the employee to the newmoose slack channel",
+            "uuid": "b69be548-c0ae-4405-b56d-1ea4e0a1d66e"
+          },
+          {
+            "number": 27,
+            "provider": "workato_service",
+            "name": "send_reply",
+            "as": "cbe0d135",
+            "title": null,
+            "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Callable: New Hire Onboarding - Add Employee to #newmoose slack channel</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+              "reply.Update_Needed": false
+            },
+            "input": {
+              "reply_type": "success",
+              "reply": {
+                "Update_Needed": "#{_('data.workato_variable.6cf90e7c.update_needed_for_mgr_added_to_remote_onboading_slack')}"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "reply",
+                "label": "Reply",
+                "properties": [
+                  {
+                    "control_type": "checkbox",
+                    "label": "Update needed",
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Update needed",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "name": "Update_Needed",
+                      "type": "boolean",
+                      "optional": false
+                    },
+                    "name": "Update_Needed",
+                    "type": "boolean",
+                    "optional": false
+                  }
+                ]
+              }
+            ],
+            "uuid": "1488cb22-4df4-4abb-a297-fae8feaa4e36"
+          },
+          {
+            "number": 28,
+            "as": "6acf11b0",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "3",
+              "retry_interval": "1"
+            },
+            "block": [
+              {
+                "number": 29,
+                "provider": "workato_service",
+                "name": "send_reply",
+                "as": "e3a01fcd",
+                "title": null,
+                "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Callable: New Hire Onboarding - Add Employee to #newmoose slack channel</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "reply_type": "error",
+                  "message": "#{_('data.catch.6acf11b0.message')}"
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "string",
+                    "name": "message",
+                    "control_type": "text",
+                    "label": "Message",
+                    "hint": "Error message"
+                  },
+                  {
+                    "type": "string",
+                    "name": "code",
+                    "control_type": "text",
+                    "label": "Error code",
+                    "hint": "Use this field to set custom HTTP error code for service replies. E.g: 404/422 etc. This field is applicable to REST service recipes.",
+                    "optional": true
+                  },
+                  {
+                    "type": "boolean",
+                    "name": "custom_error_response",
+                    "control_type": "checkbox",
+                    "label": "Custom error response?",
+                    "hint": "By default, Workato sends 'reply_type' and 'message' fields in response. When set to 'Yes', the content of the 'Message' field is sent as response body. This field is applicable to REST service recipes.",
+                    "optional": true,
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Custom error response?",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "optional": true,
+                      "hint": "By default, Workato sends 'reply_type' and 'message' fields in response. When set to 'Yes', the content of the 'Message' field is sent as response body. This field is applicable to REST service recipes.",
+                      "type": "boolean",
+                      "name": "custom_error_response"
+                    },
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    }
+                  }
+                ],
+                "uuid": "0c8d1395-c811-4692-ade4-22bf2c5c25bc"
+              },
+              {
+                "number": 30,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "true",
+                  "stop_reason": "#{_('data.catch.6acf11b0.message')}"
+                },
+                "uuid": "b8f3e16c-b9c8-4b0c-b35a-3654059f7171"
+              }
+            ],
+            "uuid": "15a6b694-5a33-4545-843c-5812d74a33c1"
+          }
+        ],
+        "uuid": "ed45b4ee-9854-40fb-9af9-c1b546aee23c"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_5",
+        "label": "Process Update "
+      },
+      {
+        "name": "custom_column_1",
+        "label": "Employee Name || Start Date"
+      },
+      {
+        "name": "custom_column_4",
+        "label": "Business Process Reason || Slack Username"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "Automation Rule Check"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Update to G Sheet Needed"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_5": "#{_('data.workato_variable.6cf90e7c.process_automation')}",
+      "custom_column_1": "#{_('data.workato_service.1ed1e07a.request.Employee_Name')} || #{_('data.workato_service.1ed1e07a.request.Employee_Start_Date')}",
+      "custom_column_4": "#{_('data.workato_service.1ed1e07a.request.Employee_Business_Process_Reason')} || #{_('data.workato_service.1ed1e07a.request.Employee_Slack_Username')}",
+      "custom_column_3": "#{_('data.workato_variable.6cf90e7c.rule_validation_fail')}",
+      "custom_column_2": "#{_('data.workato_variable.6cf90e7c.update_needed_for_mgr_added_to_remote_onboading_slack')}"
+    },
+    "uuid": "ecce6ba9-0f57-4cbc-930f-1a0ec63c4d3b"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

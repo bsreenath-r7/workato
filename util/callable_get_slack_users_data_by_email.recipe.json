@@ -1,0 +1,3956 @@
+{
+  "name": "Callable - Get Slack Users Data By Email",
+  "description": "When there is a new call for callable recipe, make request via HTTP",
+  "version": 27,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "427a46ae",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">Callable - Get Slack Users Data By Email</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "service_name": "Callable - Get Slack Users Data By Email",
+      "request_schema_json": "[{\"control_type\":\"text\",\"label\":\"First name\",\"name\":\"first_name\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Last name\",\"name\":\"last_name\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Email\",\"name\":\"email\",\"type\":\"string\",\"optional\":true}]",
+      "reply_schema_json": "[{\"name\":\"ok\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"user\",\"type\":\"object\",\"optional\":false,\"properties\":[{\"name\":\"id\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"team_id\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"name\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"real_name\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]}]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "First name",
+            "name": "first_name",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Last name",
+            "name": "last_name",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Email",
+            "name": "email",
+            "type": "string",
+            "optional": true
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "present",
+                  "lhs": "#{_('data.workato_service.427a46ae.request.email')}",
+                  "rhs": null
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 3,
+                "provider": "rest",
+                "name": "make_request_v2",
+                "as": "0d323475",
+                "title": null,
+                "description": "<span class=\"provider\">Get slack id</span> via <span class=\"provider\">HTTP</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                  "response.ignore_http_errors": true
+                },
+                "input": {
+                  "request_name": "Get Slack Id",
+                  "request": {
+                    "method": "GET",
+                    "content_type": "application/json",
+                    "url": "https://slack.com/api/users.lookupByEmail",
+                    "parameters": [
+                      {
+                        "param": "token",
+                        "value": "#{_('data.workato.job_context.account_properties.SlackProductionKey', 'account_property', 'SlackProductionKey')}"
+                      },
+                      {
+                        "param": "email",
+                        "value": "#{_('data.workato_service.427a46ae.request.email')}"
+                      }
+                    ]
+                  },
+                  "response": {
+                    "output_type": "json",
+                    "expected_encoding": "UTF-8",
+                    "ignore_http_errors": "false",
+                    "response_schema": "[{\"name\":\"ok\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"user\",\"type\":\"object\",\"optional\":false,\"properties\":[{\"name\":\"id\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"team_id\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"name\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"deleted\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"color\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"real_name\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"tz\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"tz_label\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"tz_offset\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"profile\",\"type\":\"object\",\"optional\":false,\"properties\":[{\"name\":\"title\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"phone\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"skype\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"real_name\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"real_name_normalized\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"display_name\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"display_name_normalized\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"status_text\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"status_emoji\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"status_expiration\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"avatar_hash\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"email\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"image_24\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"image_32\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"image_48\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"image_72\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"image_192\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"image_512\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"status_text_canonical\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"team\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]},{\"name\":\"is_admin\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"is_owner\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"is_primary_owner\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"is_restricted\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"is_ultra_restricted\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"is_bot\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"is_app_user\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"updated\",\"type\":\"number\",\"optional\":false,\"control_type\":\"number\"}]}]",
+                    "headers_schema": "[{\"name\":\"content_type\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"content_length\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"connection\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"date\",\"type\":\"date_time\",\"optional\":false},{\"name\":\"server\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_slack_router\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_slack_req_id\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_oauth_scopes\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_accepted_oauth_scopes\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"expires\",\"type\":\"date_time\",\"optional\":false},{\"name\":\"cache_control\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"pragma\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_xss_protection\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_content_type_options\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_slack_exp\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_slack_backend\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"referrer_policy\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"strict_transport_security\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"vary\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"content_encoding\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"access_control_allow_origin\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_via\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_cache\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"via\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_amz_cf_id\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]"
+                  }
+                },
+                "extended_output_schema": [
+                  {
+                    "type": "object",
+                    "name": "headers",
+                    "label": "Headers",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Content type",
+                        "name": "content_type",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Content length",
+                        "name": "content_length",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Connection",
+                        "name": "connection",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "date_time",
+                        "label": "Date",
+                        "render_input": "date_time_conversion",
+                        "parse_output": "date_time_conversion",
+                        "name": "date",
+                        "type": "date_time",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Server",
+                        "name": "server",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "X slack router",
+                        "name": "x_slack_router",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "X slack req ID",
+                        "name": "x_slack_req_id",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "X oauth scopes",
+                        "name": "x_oauth_scopes",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "X accepted oauth scopes",
+                        "name": "x_accepted_oauth_scopes",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "date_time",
+                        "label": "Expires",
+                        "render_input": "date_time_conversion",
+                        "parse_output": "date_time_conversion",
+                        "name": "expires",
+                        "type": "date_time",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Cache control",
+                        "name": "cache_control",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Pragma",
+                        "name": "pragma",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "X xss protection",
+                        "name": "x_xss_protection",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "X content type options",
+                        "name": "x_content_type_options",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "X slack exp",
+                        "name": "x_slack_exp",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "X slack backend",
+                        "name": "x_slack_backend",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Referrer policy",
+                        "name": "referrer_policy",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Strict transport security",
+                        "name": "strict_transport_security",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Vary",
+                        "name": "vary",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Content encoding",
+                        "name": "content_encoding",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Access control allow origin",
+                        "name": "access_control_allow_origin",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "X via",
+                        "name": "x_via",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "X cache",
+                        "name": "x_cache",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Via",
+                        "name": "via",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "X amz cf ID",
+                        "name": "x_amz_cf_id",
+                        "type": "string",
+                        "optional": false
+                      }
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "name": "response",
+                    "label": "Response",
+                    "properties": [
+                      {
+                        "control_type": "checkbox",
+                        "label": "Ok",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Ok",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "name": "ok",
+                          "type": "boolean",
+                          "optional": false
+                        },
+                        "name": "ok",
+                        "type": "boolean",
+                        "optional": false
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "ID",
+                            "name": "id",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Team ID",
+                            "name": "team_id",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Name",
+                            "name": "name",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Deleted",
+                            "render_input": {
+                            },
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Deleted",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "name": "deleted",
+                              "type": "boolean",
+                              "optional": false
+                            },
+                            "name": "deleted",
+                            "type": "boolean",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Color",
+                            "name": "color",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Real name",
+                            "name": "real_name",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Tz",
+                            "name": "tz",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Tz label",
+                            "name": "tz_label",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Tz offset",
+                            "name": "tz_offset",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Title",
+                                "name": "title",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Phone",
+                                "name": "phone",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Skype",
+                                "name": "skype",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Real name",
+                                "name": "real_name",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Real name normalized",
+                                "name": "real_name_normalized",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Display name",
+                                "name": "display_name",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Display name normalized",
+                                "name": "display_name_normalized",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Status text",
+                                "name": "status_text",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Status emoji",
+                                "name": "status_emoji",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Status expiration",
+                                "name": "status_expiration",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Avatar hash",
+                                "name": "avatar_hash",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Email",
+                                "name": "email",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Image 24",
+                                "name": "image_24",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Image 32",
+                                "name": "image_32",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Image 48",
+                                "name": "image_48",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Image 72",
+                                "name": "image_72",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Image 192",
+                                "name": "image_192",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Image 512",
+                                "name": "image_512",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Status text canonical",
+                                "name": "status_text_canonical",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Team",
+                                "name": "team",
+                                "type": "string",
+                                "optional": false
+                              }
+                            ],
+                            "label": "Profile",
+                            "name": "profile",
+                            "type": "object",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Is admin",
+                            "render_input": {
+                            },
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Is admin",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "name": "is_admin",
+                              "type": "boolean",
+                              "optional": false
+                            },
+                            "name": "is_admin",
+                            "type": "boolean",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Is owner",
+                            "render_input": {
+                            },
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Is owner",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "name": "is_owner",
+                              "type": "boolean",
+                              "optional": false
+                            },
+                            "name": "is_owner",
+                            "type": "boolean",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Is primary owner",
+                            "render_input": {
+                            },
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Is primary owner",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "name": "is_primary_owner",
+                              "type": "boolean",
+                              "optional": false
+                            },
+                            "name": "is_primary_owner",
+                            "type": "boolean",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Is restricted",
+                            "render_input": {
+                            },
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Is restricted",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "name": "is_restricted",
+                              "type": "boolean",
+                              "optional": false
+                            },
+                            "name": "is_restricted",
+                            "type": "boolean",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Is ultra restricted",
+                            "render_input": {
+                            },
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Is ultra restricted",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "name": "is_ultra_restricted",
+                              "type": "boolean",
+                              "optional": false
+                            },
+                            "name": "is_ultra_restricted",
+                            "type": "boolean",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Is bot",
+                            "render_input": {
+                            },
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Is bot",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "name": "is_bot",
+                              "type": "boolean",
+                              "optional": false
+                            },
+                            "name": "is_bot",
+                            "type": "boolean",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Is app user",
+                            "render_input": {
+                            },
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Is app user",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "name": "is_app_user",
+                              "type": "boolean",
+                              "optional": false
+                            },
+                            "name": "is_app_user",
+                            "type": "boolean",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "number",
+                            "label": "Updated",
+                            "parse_output": "float_conversion",
+                            "name": "updated",
+                            "type": "number",
+                            "optional": false
+                          }
+                        ],
+                        "label": "User",
+                        "name": "user",
+                        "type": "object",
+                        "optional": false
+                      }
+                    ]
+                  }
+                ],
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "response",
+                    "label": "Response",
+                    "properties": [
+                      {
+                        "control_type": "select",
+                        "label": "Response content type",
+                        "pick_list": [
+                          [
+                            "Text",
+                            "rawdatatxt"
+                          ],
+                          [
+                            "Binary",
+                            "rawdata"
+                          ],
+                          [
+                            "JSON",
+                            "json"
+                          ],
+                          [
+                            "XML",
+                            "xml2"
+                          ]
+                        ],
+                        "hint": "Select expected format of data response type, e.g. JSON or XML. <a href=\"https://docs.workato.com/developing-connectors/http.html#response-type\" target=\"_blank\">Learn more</a>",
+                        "default": "json",
+                        "extends_schema": true,
+                        "type": "string",
+                        "name": "output_type"
+                      },
+                      {
+                        "control_type": "select",
+                        "label": "Encoding",
+                        "pick_list": [
+                          [
+                            "UTF-8",
+                            "UTF-8"
+                          ],
+                          [
+                            "US-ASCII",
+                            "US-ASCII"
+                          ],
+                          [
+                            "UTF-16BE",
+                            "UTF-16BE"
+                          ],
+                          [
+                            "UTF-16LE",
+                            "UTF-16LE"
+                          ],
+                          [
+                            "UTF-32BE",
+                            "UTF-32BE"
+                          ],
+                          [
+                            "UTF-32LE",
+                            "UTF-32LE"
+                          ],
+                          [
+                            "UTF-16",
+                            "UTF-16"
+                          ],
+                          [
+                            "UTF-32",
+                            "UTF-32"
+                          ],
+                          [
+                            "UTF8-MAC",
+                            "UTF8-MAC"
+                          ],
+                          [
+                            "EUC-JP",
+                            "EUC-JP"
+                          ],
+                          [
+                            "Windows-31J",
+                            "Windows-31J"
+                          ],
+                          [
+                            "Big5",
+                            "Big5"
+                          ],
+                          [
+                            "Big5-HKSCS",
+                            "Big5-HKSCS"
+                          ],
+                          [
+                            "Big5-UAO",
+                            "Big5-UAO"
+                          ],
+                          [
+                            "CP949",
+                            "CP949"
+                          ],
+                          [
+                            "Emacs-Mule",
+                            "Emacs-Mule"
+                          ],
+                          [
+                            "EUC-KR",
+                            "EUC-KR"
+                          ],
+                          [
+                            "EUC-TW",
+                            "EUC-TW"
+                          ],
+                          [
+                            "GB2312",
+                            "GB2312"
+                          ],
+                          [
+                            "GB18030",
+                            "GB18030"
+                          ],
+                          [
+                            "GBK",
+                            "GBK"
+                          ],
+                          [
+                            "ISO-8859-1",
+                            "ISO-8859-1"
+                          ],
+                          [
+                            "ISO-8859-2",
+                            "ISO-8859-2"
+                          ],
+                          [
+                            "ISO-8859-3",
+                            "ISO-8859-3"
+                          ],
+                          [
+                            "ISO-8859-4",
+                            "ISO-8859-4"
+                          ],
+                          [
+                            "ISO-8859-5",
+                            "ISO-8859-5"
+                          ],
+                          [
+                            "ISO-8859-6",
+                            "ISO-8859-6"
+                          ],
+                          [
+                            "ISO-8859-7",
+                            "ISO-8859-7"
+                          ],
+                          [
+                            "ISO-8859-8",
+                            "ISO-8859-8"
+                          ],
+                          [
+                            "ISO-8859-9",
+                            "ISO-8859-9"
+                          ],
+                          [
+                            "ISO-8859-10",
+                            "ISO-8859-10"
+                          ],
+                          [
+                            "ISO-8859-11",
+                            "ISO-8859-11"
+                          ],
+                          [
+                            "ISO-8859-13",
+                            "ISO-8859-13"
+                          ],
+                          [
+                            "ISO-8859-14",
+                            "ISO-8859-14"
+                          ],
+                          [
+                            "ISO-8859-15",
+                            "ISO-8859-15"
+                          ],
+                          [
+                            "ISO-8859-16",
+                            "ISO-8859-16"
+                          ],
+                          [
+                            "KOI8-R",
+                            "KOI8-R"
+                          ],
+                          [
+                            "KOI8-U",
+                            "KOI8-U"
+                          ],
+                          [
+                            "Shift_JIS",
+                            "Shift_JIS"
+                          ],
+                          [
+                            "Windows-1250",
+                            "Windows-1250"
+                          ],
+                          [
+                            "Windows-1251",
+                            "Windows-1251"
+                          ],
+                          [
+                            "Windows-1252",
+                            "Windows-1252"
+                          ],
+                          [
+                            "Windows-1253",
+                            "Windows-1253"
+                          ],
+                          [
+                            "Windows-1254",
+                            "Windows-1254"
+                          ],
+                          [
+                            "Windows-1257",
+                            "Windows-1257"
+                          ],
+                          [
+                            "IBM437",
+                            "IBM437"
+                          ],
+                          [
+                            "IBM737",
+                            "IBM737"
+                          ],
+                          [
+                            "IBM775",
+                            "IBM775"
+                          ],
+                          [
+                            "CP850",
+                            "CP850"
+                          ],
+                          [
+                            "IBM852",
+                            "IBM852"
+                          ],
+                          [
+                            "CP852",
+                            "CP852"
+                          ],
+                          [
+                            "IBM855",
+                            "IBM855"
+                          ],
+                          [
+                            "CP855",
+                            "CP855"
+                          ],
+                          [
+                            "IBM857",
+                            "IBM857"
+                          ],
+                          [
+                            "IBM860",
+                            "IBM860"
+                          ],
+                          [
+                            "IBM861",
+                            "IBM861"
+                          ],
+                          [
+                            "IBM862",
+                            "IBM862"
+                          ],
+                          [
+                            "IBM863",
+                            "IBM863"
+                          ],
+                          [
+                            "IBM864",
+                            "IBM864"
+                          ],
+                          [
+                            "IBM865",
+                            "IBM865"
+                          ],
+                          [
+                            "IBM866",
+                            "IBM866"
+                          ],
+                          [
+                            "IBM869",
+                            "IBM869"
+                          ],
+                          [
+                            "Windows-1258",
+                            "Windows-1258"
+                          ],
+                          [
+                            "GB1988",
+                            "GB1988"
+                          ],
+                          [
+                            "macCentEuro",
+                            "macCentEuro"
+                          ],
+                          [
+                            "macCroatian",
+                            "macCroatian"
+                          ],
+                          [
+                            "macCyrillic",
+                            "macCyrillic"
+                          ],
+                          [
+                            "macGreek",
+                            "macGreek"
+                          ],
+                          [
+                            "macIceland",
+                            "macIceland"
+                          ],
+                          [
+                            "macRoman",
+                            "macRoman"
+                          ],
+                          [
+                            "macRomania",
+                            "macRomania"
+                          ],
+                          [
+                            "macThai",
+                            "macThai"
+                          ],
+                          [
+                            "macTurkish",
+                            "macTurkish"
+                          ],
+                          [
+                            "macUkraine",
+                            "macUkraine"
+                          ],
+                          [
+                            "CP950",
+                            "CP950"
+                          ],
+                          [
+                            "CP951",
+                            "CP951"
+                          ],
+                          [
+                            "IBM037",
+                            "IBM037"
+                          ],
+                          [
+                            "stateless-ISO-2022-JP",
+                            "stateless-ISO-2022-JP"
+                          ],
+                          [
+                            "eucJP-ms",
+                            "eucJP-ms"
+                          ],
+                          [
+                            "CP51932",
+                            "CP51932"
+                          ],
+                          [
+                            "EUC-JIS-2004",
+                            "EUC-JIS-2004"
+                          ],
+                          [
+                            "GB12345",
+                            "GB12345"
+                          ],
+                          [
+                            "ISO-2022-JP",
+                            "ISO-2022-JP"
+                          ],
+                          [
+                            "ISO-2022-JP-2",
+                            "ISO-2022-JP-2"
+                          ],
+                          [
+                            "CP50220",
+                            "CP50220"
+                          ],
+                          [
+                            "CP50221",
+                            "CP50221"
+                          ],
+                          [
+                            "Windows-1256",
+                            "Windows-1256"
+                          ],
+                          [
+                            "Windows-1255",
+                            "Windows-1255"
+                          ],
+                          [
+                            "TIS-620",
+                            "TIS-620"
+                          ],
+                          [
+                            "Windows-874",
+                            "Windows-874"
+                          ],
+                          [
+                            "MacJapanese",
+                            "MacJapanese"
+                          ],
+                          [
+                            "UTF-7",
+                            "UTF-7"
+                          ],
+                          [
+                            "UTF8-DoCoMo",
+                            "UTF8-DoCoMo"
+                          ],
+                          [
+                            "SJIS-DoCoMo",
+                            "SJIS-DoCoMo"
+                          ],
+                          [
+                            "UTF8-KDDI",
+                            "UTF8-KDDI"
+                          ],
+                          [
+                            "SJIS-KDDI",
+                            "SJIS-KDDI"
+                          ],
+                          [
+                            "ISO-2022-JP-KDDI",
+                            "ISO-2022-JP-KDDI"
+                          ],
+                          [
+                            "stateless-ISO-2022-JP-KDDI",
+                            "stateless-ISO-2022-JP-KDDI"
+                          ],
+                          [
+                            "UTF8-SoftBank",
+                            "UTF8-SoftBank"
+                          ],
+                          [
+                            "SJIS-SoftBank",
+                            "SJIS-SoftBank"
+                          ]
+                        ],
+                        "optional": true,
+                        "default": "UTF-8",
+                        "hint": "Default encoding type is set to UTF-8, and typically doesn't need to be changed. <a href=\"https://docs.workato.com/developing-connectors/http.html#expected-encoding\" target=\"_blank\">Learn more</a>",
+                        "type": "string",
+                        "name": "expected_encoding"
+                      },
+                      {
+                        "control_type": "schema-designer",
+                        "label": "Response schema",
+                        "sample_data_type": "json_http",
+                        "extends_schema": true,
+                        "empty_schema_title": "Describe all fields in your response.",
+                        "optional": true,
+                        "sticky": true,
+                        "type": "string",
+                        "name": "response_schema"
+                      },
+                      {
+                        "control_type": "schema-designer",
+                        "label": "HTTP response headers",
+                        "extends_schema": true,
+                        "empty_schema_title": "Describe all the response headers",
+                        "optional": true,
+                        "sticky": true,
+                        "type": "string",
+                        "name": "headers_schema"
+                      },
+                      {
+                        "control_type": "checkbox",
+                        "label": "Mark non-2xx response codes as success?",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Mark non-2xx response codes as success?",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "default": false,
+                          "hint": "If <b>yes</b>, non 2xx response codes returned will be marked as a successful action. If <b>no</b>, non 2xx response codes returned will be marked as an error.",
+                          "optional": true,
+                          "type": "boolean",
+                          "name": "ignore_http_errors"
+                        },
+                        "default": "false",
+                        "hint": "If <b>yes</b>, non 2xx response codes returned will be marked as a successful action. If <b>no</b>, non 2xx response codes returned will be marked as an error.",
+                        "optional": true,
+                        "type": "boolean",
+                        "name": "ignore_http_errors"
+                      }
+                    ],
+                    "override": true
+                  }
+                ],
+                "uuid": "bee5087c-eddf-43a0-9f85-b019293ee05d",
+                "wizardFinished": true
+              },
+              {
+                "number": 4,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "present",
+                      "lhs": "#{_('data.rest.0d323475.response.user.id')}",
+                      "rhs": null
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 5,
+                    "provider": "workato_service",
+                    "name": "send_reply",
+                    "as": "a18f5682",
+                    "title": null,
+                    "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Callable - Get Slack Users Data By Email</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                      "reply.ok": false
+                    },
+                    "input": {
+                      "reply_type": "success",
+                      "reply": {
+                        "ok": "#{_('data.rest.0d323475.response.ok')}",
+                        "user": {
+                          "id": "#{_('data.rest.0d323475.response.user.id')}",
+                          "team_id": "#{_('data.rest.0d323475.response.user.team_id')}",
+                          "name": "#{_('data.rest.0d323475.response.user.name')}",
+                          "real_name": "#{_('data.rest.0d323475.response.user.real_name')}"
+                        }
+                      }
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "object",
+                        "name": "reply",
+                        "label": "Reply",
+                        "properties": [
+                          {
+                            "control_type": "checkbox",
+                            "label": "Ok",
+                            "render_input": {
+                            },
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Ok",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "name": "ok",
+                              "type": "boolean",
+                              "optional": false
+                            },
+                            "name": "ok",
+                            "type": "boolean",
+                            "optional": false
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "ID",
+                                "name": "id",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Team ID",
+                                "name": "team_id",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Name",
+                                "name": "name",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Real name",
+                                "name": "real_name",
+                                "type": "string",
+                                "optional": false
+                              }
+                            ],
+                            "label": "User",
+                            "name": "user",
+                            "type": "object",
+                            "optional": false
+                          }
+                        ]
+                      }
+                    ],
+                    "uuid": "588bd4e8-5189-48df-9413-cdbadfc15ed5"
+                  },
+                  {
+                    "number": 6,
+                    "keyword": "stop",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "stop_with_error": "false"
+                    },
+                    "uuid": "9bc406e2-dd5f-43b8-b57d-93d267d73334"
+                  }
+                ],
+                "uuid": "791bf0e4-e3cf-4e88-be30-a9f3c6f087ab"
+              }
+            ],
+            "uuid": "bcf20c3f-d503-477c-9d11-320185a045f4"
+          },
+          {
+            "number": 7,
+            "provider": "rest",
+            "name": "make_request_v2",
+            "as": "5609b2d0",
+            "title": null,
+            "description": "<span class=\"provider\">Get slack id</span> via <span class=\"provider\">HTTP</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+              "response.ignore_http_errors": true
+            },
+            "input": {
+              "request_name": "Get Slack Id",
+              "request": {
+                "method": "GET",
+                "content_type": "application/json",
+                "url": "https://slack.com/api/users.lookupByEmail",
+                "parameters": [
+                  {
+                    "param": "token",
+                    "value": "#{_('data.workato.job_context.account_properties.SlackProductionKey', 'account_property', 'SlackProductionKey')}"
+                  },
+                  {
+                    "param": "email",
+                    "value": "#{_('data.workato_service.427a46ae.request.first_name')}_#{_('data.workato_service.427a46ae.request.last_name')}@rapid7.com"
+                  }
+                ]
+              },
+              "response": {
+                "output_type": "json",
+                "expected_encoding": "UTF-8",
+                "ignore_http_errors": "false",
+                "response_schema": "[{\"name\":\"ok\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"user\",\"type\":\"object\",\"optional\":false,\"properties\":[{\"name\":\"id\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"team_id\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"name\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"deleted\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"color\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"real_name\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"tz\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"tz_label\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"tz_offset\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"profile\",\"type\":\"object\",\"optional\":false,\"properties\":[{\"name\":\"title\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"phone\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"skype\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"real_name\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"real_name_normalized\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"display_name\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"display_name_normalized\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"status_text\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"status_emoji\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"status_expiration\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"avatar_hash\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"email\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"image_24\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"image_32\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"image_48\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"image_72\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"image_192\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"image_512\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"status_text_canonical\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"team\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]},{\"name\":\"is_admin\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"is_owner\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"is_primary_owner\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"is_restricted\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"is_ultra_restricted\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"is_bot\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"is_app_user\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"updated\",\"type\":\"number\",\"optional\":false,\"control_type\":\"number\"}]}]",
+                "headers_schema": "[{\"name\":\"content_type\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"content_length\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"connection\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"date\",\"type\":\"date_time\",\"optional\":false},{\"name\":\"server\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_slack_router\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_slack_req_id\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_oauth_scopes\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_accepted_oauth_scopes\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"expires\",\"type\":\"date_time\",\"optional\":false},{\"name\":\"cache_control\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"pragma\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_xss_protection\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_content_type_options\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_slack_exp\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_slack_backend\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"referrer_policy\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"strict_transport_security\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"vary\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"content_encoding\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"access_control_allow_origin\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_via\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_cache\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"via\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_amz_cf_id\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]"
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "object",
+                "name": "headers",
+                "label": "Headers",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Content type",
+                    "name": "content_type",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Content length",
+                    "name": "content_length",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Connection",
+                    "name": "connection",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "date_time",
+                    "label": "Date",
+                    "render_input": "date_time_conversion",
+                    "parse_output": "date_time_conversion",
+                    "name": "date",
+                    "type": "date_time",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Server",
+                    "name": "server",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "X slack router",
+                    "name": "x_slack_router",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "X slack req ID",
+                    "name": "x_slack_req_id",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "X oauth scopes",
+                    "name": "x_oauth_scopes",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "X accepted oauth scopes",
+                    "name": "x_accepted_oauth_scopes",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "date_time",
+                    "label": "Expires",
+                    "render_input": "date_time_conversion",
+                    "parse_output": "date_time_conversion",
+                    "name": "expires",
+                    "type": "date_time",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Cache control",
+                    "name": "cache_control",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Pragma",
+                    "name": "pragma",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "X xss protection",
+                    "name": "x_xss_protection",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "X content type options",
+                    "name": "x_content_type_options",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "X slack exp",
+                    "name": "x_slack_exp",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "X slack backend",
+                    "name": "x_slack_backend",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Referrer policy",
+                    "name": "referrer_policy",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Strict transport security",
+                    "name": "strict_transport_security",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Vary",
+                    "name": "vary",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Content encoding",
+                    "name": "content_encoding",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Access control allow origin",
+                    "name": "access_control_allow_origin",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "X via",
+                    "name": "x_via",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "X cache",
+                    "name": "x_cache",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Via",
+                    "name": "via",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "X amz cf ID",
+                    "name": "x_amz_cf_id",
+                    "type": "string",
+                    "optional": false
+                  }
+                ]
+              },
+              {
+                "type": "object",
+                "name": "response",
+                "label": "Response",
+                "properties": [
+                  {
+                    "control_type": "checkbox",
+                    "label": "Ok",
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Ok",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "name": "ok",
+                      "type": "boolean",
+                      "optional": false
+                    },
+                    "name": "ok",
+                    "type": "boolean",
+                    "optional": false
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "ID",
+                        "name": "id",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Team ID",
+                        "name": "team_id",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Name",
+                        "name": "name",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "checkbox",
+                        "label": "Deleted",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Deleted",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "name": "deleted",
+                          "type": "boolean",
+                          "optional": false
+                        },
+                        "name": "deleted",
+                        "type": "boolean",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Color",
+                        "name": "color",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Real name",
+                        "name": "real_name",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Tz",
+                        "name": "tz",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Tz label",
+                        "name": "tz_label",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Tz offset",
+                        "name": "tz_offset",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Title",
+                            "name": "title",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Phone",
+                            "name": "phone",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Skype",
+                            "name": "skype",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Real name",
+                            "name": "real_name",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Real name normalized",
+                            "name": "real_name_normalized",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Display name",
+                            "name": "display_name",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Display name normalized",
+                            "name": "display_name_normalized",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Status text",
+                            "name": "status_text",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Status emoji",
+                            "name": "status_emoji",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Status expiration",
+                            "name": "status_expiration",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Avatar hash",
+                            "name": "avatar_hash",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Email",
+                            "name": "email",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Image 24",
+                            "name": "image_24",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Image 32",
+                            "name": "image_32",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Image 48",
+                            "name": "image_48",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Image 72",
+                            "name": "image_72",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Image 192",
+                            "name": "image_192",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Image 512",
+                            "name": "image_512",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Status text canonical",
+                            "name": "status_text_canonical",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Team",
+                            "name": "team",
+                            "type": "string",
+                            "optional": false
+                          }
+                        ],
+                        "label": "Profile",
+                        "name": "profile",
+                        "type": "object",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "checkbox",
+                        "label": "Is admin",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is admin",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "name": "is_admin",
+                          "type": "boolean",
+                          "optional": false
+                        },
+                        "name": "is_admin",
+                        "type": "boolean",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "checkbox",
+                        "label": "Is owner",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is owner",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "name": "is_owner",
+                          "type": "boolean",
+                          "optional": false
+                        },
+                        "name": "is_owner",
+                        "type": "boolean",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "checkbox",
+                        "label": "Is primary owner",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is primary owner",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "name": "is_primary_owner",
+                          "type": "boolean",
+                          "optional": false
+                        },
+                        "name": "is_primary_owner",
+                        "type": "boolean",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "checkbox",
+                        "label": "Is restricted",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is restricted",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "name": "is_restricted",
+                          "type": "boolean",
+                          "optional": false
+                        },
+                        "name": "is_restricted",
+                        "type": "boolean",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "checkbox",
+                        "label": "Is ultra restricted",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is ultra restricted",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "name": "is_ultra_restricted",
+                          "type": "boolean",
+                          "optional": false
+                        },
+                        "name": "is_ultra_restricted",
+                        "type": "boolean",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "checkbox",
+                        "label": "Is bot",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is bot",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "name": "is_bot",
+                          "type": "boolean",
+                          "optional": false
+                        },
+                        "name": "is_bot",
+                        "type": "boolean",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "checkbox",
+                        "label": "Is app user",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is app user",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "name": "is_app_user",
+                          "type": "boolean",
+                          "optional": false
+                        },
+                        "name": "is_app_user",
+                        "type": "boolean",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "number",
+                        "label": "Updated",
+                        "parse_output": "float_conversion",
+                        "name": "updated",
+                        "type": "number",
+                        "optional": false
+                      }
+                    ],
+                    "label": "User",
+                    "name": "user",
+                    "type": "object",
+                    "optional": false
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "response",
+                "label": "Response",
+                "properties": [
+                  {
+                    "control_type": "select",
+                    "label": "Response content type",
+                    "pick_list": [
+                      [
+                        "Text",
+                        "rawdatatxt"
+                      ],
+                      [
+                        "Binary",
+                        "rawdata"
+                      ],
+                      [
+                        "JSON",
+                        "json"
+                      ],
+                      [
+                        "XML",
+                        "xml2"
+                      ]
+                    ],
+                    "hint": "Select expected format of data response type, e.g. JSON or XML. <a href=\"https://docs.workato.com/developing-connectors/http.html#response-type\" target=\"_blank\">Learn more</a>",
+                    "default": "json",
+                    "extends_schema": true,
+                    "type": "string",
+                    "name": "output_type"
+                  },
+                  {
+                    "control_type": "select",
+                    "label": "Encoding",
+                    "pick_list": [
+                      [
+                        "UTF-8",
+                        "UTF-8"
+                      ],
+                      [
+                        "US-ASCII",
+                        "US-ASCII"
+                      ],
+                      [
+                        "UTF-16BE",
+                        "UTF-16BE"
+                      ],
+                      [
+                        "UTF-16LE",
+                        "UTF-16LE"
+                      ],
+                      [
+                        "UTF-32BE",
+                        "UTF-32BE"
+                      ],
+                      [
+                        "UTF-32LE",
+                        "UTF-32LE"
+                      ],
+                      [
+                        "UTF-16",
+                        "UTF-16"
+                      ],
+                      [
+                        "UTF-32",
+                        "UTF-32"
+                      ],
+                      [
+                        "UTF8-MAC",
+                        "UTF8-MAC"
+                      ],
+                      [
+                        "EUC-JP",
+                        "EUC-JP"
+                      ],
+                      [
+                        "Windows-31J",
+                        "Windows-31J"
+                      ],
+                      [
+                        "Big5",
+                        "Big5"
+                      ],
+                      [
+                        "Big5-HKSCS",
+                        "Big5-HKSCS"
+                      ],
+                      [
+                        "Big5-UAO",
+                        "Big5-UAO"
+                      ],
+                      [
+                        "CP949",
+                        "CP949"
+                      ],
+                      [
+                        "Emacs-Mule",
+                        "Emacs-Mule"
+                      ],
+                      [
+                        "EUC-KR",
+                        "EUC-KR"
+                      ],
+                      [
+                        "EUC-TW",
+                        "EUC-TW"
+                      ],
+                      [
+                        "GB2312",
+                        "GB2312"
+                      ],
+                      [
+                        "GB18030",
+                        "GB18030"
+                      ],
+                      [
+                        "GBK",
+                        "GBK"
+                      ],
+                      [
+                        "ISO-8859-1",
+                        "ISO-8859-1"
+                      ],
+                      [
+                        "ISO-8859-2",
+                        "ISO-8859-2"
+                      ],
+                      [
+                        "ISO-8859-3",
+                        "ISO-8859-3"
+                      ],
+                      [
+                        "ISO-8859-4",
+                        "ISO-8859-4"
+                      ],
+                      [
+                        "ISO-8859-5",
+                        "ISO-8859-5"
+                      ],
+                      [
+                        "ISO-8859-6",
+                        "ISO-8859-6"
+                      ],
+                      [
+                        "ISO-8859-7",
+                        "ISO-8859-7"
+                      ],
+                      [
+                        "ISO-8859-8",
+                        "ISO-8859-8"
+                      ],
+                      [
+                        "ISO-8859-9",
+                        "ISO-8859-9"
+                      ],
+                      [
+                        "ISO-8859-10",
+                        "ISO-8859-10"
+                      ],
+                      [
+                        "ISO-8859-11",
+                        "ISO-8859-11"
+                      ],
+                      [
+                        "ISO-8859-13",
+                        "ISO-8859-13"
+                      ],
+                      [
+                        "ISO-8859-14",
+                        "ISO-8859-14"
+                      ],
+                      [
+                        "ISO-8859-15",
+                        "ISO-8859-15"
+                      ],
+                      [
+                        "ISO-8859-16",
+                        "ISO-8859-16"
+                      ],
+                      [
+                        "KOI8-R",
+                        "KOI8-R"
+                      ],
+                      [
+                        "KOI8-U",
+                        "KOI8-U"
+                      ],
+                      [
+                        "Shift_JIS",
+                        "Shift_JIS"
+                      ],
+                      [
+                        "Windows-1250",
+                        "Windows-1250"
+                      ],
+                      [
+                        "Windows-1251",
+                        "Windows-1251"
+                      ],
+                      [
+                        "Windows-1252",
+                        "Windows-1252"
+                      ],
+                      [
+                        "Windows-1253",
+                        "Windows-1253"
+                      ],
+                      [
+                        "Windows-1254",
+                        "Windows-1254"
+                      ],
+                      [
+                        "Windows-1257",
+                        "Windows-1257"
+                      ],
+                      [
+                        "IBM437",
+                        "IBM437"
+                      ],
+                      [
+                        "IBM737",
+                        "IBM737"
+                      ],
+                      [
+                        "IBM775",
+                        "IBM775"
+                      ],
+                      [
+                        "CP850",
+                        "CP850"
+                      ],
+                      [
+                        "IBM852",
+                        "IBM852"
+                      ],
+                      [
+                        "CP852",
+                        "CP852"
+                      ],
+                      [
+                        "IBM855",
+                        "IBM855"
+                      ],
+                      [
+                        "CP855",
+                        "CP855"
+                      ],
+                      [
+                        "IBM857",
+                        "IBM857"
+                      ],
+                      [
+                        "IBM860",
+                        "IBM860"
+                      ],
+                      [
+                        "IBM861",
+                        "IBM861"
+                      ],
+                      [
+                        "IBM862",
+                        "IBM862"
+                      ],
+                      [
+                        "IBM863",
+                        "IBM863"
+                      ],
+                      [
+                        "IBM864",
+                        "IBM864"
+                      ],
+                      [
+                        "IBM865",
+                        "IBM865"
+                      ],
+                      [
+                        "IBM866",
+                        "IBM866"
+                      ],
+                      [
+                        "IBM869",
+                        "IBM869"
+                      ],
+                      [
+                        "Windows-1258",
+                        "Windows-1258"
+                      ],
+                      [
+                        "GB1988",
+                        "GB1988"
+                      ],
+                      [
+                        "macCentEuro",
+                        "macCentEuro"
+                      ],
+                      [
+                        "macCroatian",
+                        "macCroatian"
+                      ],
+                      [
+                        "macCyrillic",
+                        "macCyrillic"
+                      ],
+                      [
+                        "macGreek",
+                        "macGreek"
+                      ],
+                      [
+                        "macIceland",
+                        "macIceland"
+                      ],
+                      [
+                        "macRoman",
+                        "macRoman"
+                      ],
+                      [
+                        "macRomania",
+                        "macRomania"
+                      ],
+                      [
+                        "macThai",
+                        "macThai"
+                      ],
+                      [
+                        "macTurkish",
+                        "macTurkish"
+                      ],
+                      [
+                        "macUkraine",
+                        "macUkraine"
+                      ],
+                      [
+                        "CP950",
+                        "CP950"
+                      ],
+                      [
+                        "CP951",
+                        "CP951"
+                      ],
+                      [
+                        "IBM037",
+                        "IBM037"
+                      ],
+                      [
+                        "stateless-ISO-2022-JP",
+                        "stateless-ISO-2022-JP"
+                      ],
+                      [
+                        "eucJP-ms",
+                        "eucJP-ms"
+                      ],
+                      [
+                        "CP51932",
+                        "CP51932"
+                      ],
+                      [
+                        "EUC-JIS-2004",
+                        "EUC-JIS-2004"
+                      ],
+                      [
+                        "GB12345",
+                        "GB12345"
+                      ],
+                      [
+                        "ISO-2022-JP",
+                        "ISO-2022-JP"
+                      ],
+                      [
+                        "ISO-2022-JP-2",
+                        "ISO-2022-JP-2"
+                      ],
+                      [
+                        "CP50220",
+                        "CP50220"
+                      ],
+                      [
+                        "CP50221",
+                        "CP50221"
+                      ],
+                      [
+                        "Windows-1256",
+                        "Windows-1256"
+                      ],
+                      [
+                        "Windows-1255",
+                        "Windows-1255"
+                      ],
+                      [
+                        "TIS-620",
+                        "TIS-620"
+                      ],
+                      [
+                        "Windows-874",
+                        "Windows-874"
+                      ],
+                      [
+                        "MacJapanese",
+                        "MacJapanese"
+                      ],
+                      [
+                        "UTF-7",
+                        "UTF-7"
+                      ],
+                      [
+                        "UTF8-DoCoMo",
+                        "UTF8-DoCoMo"
+                      ],
+                      [
+                        "SJIS-DoCoMo",
+                        "SJIS-DoCoMo"
+                      ],
+                      [
+                        "UTF8-KDDI",
+                        "UTF8-KDDI"
+                      ],
+                      [
+                        "SJIS-KDDI",
+                        "SJIS-KDDI"
+                      ],
+                      [
+                        "ISO-2022-JP-KDDI",
+                        "ISO-2022-JP-KDDI"
+                      ],
+                      [
+                        "stateless-ISO-2022-JP-KDDI",
+                        "stateless-ISO-2022-JP-KDDI"
+                      ],
+                      [
+                        "UTF8-SoftBank",
+                        "UTF8-SoftBank"
+                      ],
+                      [
+                        "SJIS-SoftBank",
+                        "SJIS-SoftBank"
+                      ]
+                    ],
+                    "optional": true,
+                    "default": "UTF-8",
+                    "hint": "Default encoding type is set to UTF-8, and typically doesn't need to be changed. <a href=\"https://docs.workato.com/developing-connectors/http.html#expected-encoding\" target=\"_blank\">Learn more</a>",
+                    "type": "string",
+                    "name": "expected_encoding"
+                  },
+                  {
+                    "control_type": "schema-designer",
+                    "label": "Response schema",
+                    "sample_data_type": "json_http",
+                    "extends_schema": true,
+                    "empty_schema_title": "Describe all fields in your response.",
+                    "optional": true,
+                    "sticky": true,
+                    "type": "string",
+                    "name": "response_schema"
+                  },
+                  {
+                    "control_type": "schema-designer",
+                    "label": "HTTP response headers",
+                    "extends_schema": true,
+                    "empty_schema_title": "Describe all the response headers",
+                    "optional": true,
+                    "sticky": true,
+                    "type": "string",
+                    "name": "headers_schema"
+                  },
+                  {
+                    "control_type": "checkbox",
+                    "label": "Mark non-2xx response codes as success?",
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Mark non-2xx response codes as success?",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "default": false,
+                      "hint": "If <b>yes</b>, non 2xx response codes returned will be marked as a successful action. If <b>no</b>, non 2xx response codes returned will be marked as an error.",
+                      "optional": true,
+                      "type": "boolean",
+                      "name": "ignore_http_errors"
+                    },
+                    "default": "false",
+                    "hint": "If <b>yes</b>, non 2xx response codes returned will be marked as a successful action. If <b>no</b>, non 2xx response codes returned will be marked as an error.",
+                    "optional": true,
+                    "type": "boolean",
+                    "name": "ignore_http_errors"
+                  }
+                ],
+                "override": true
+              }
+            ],
+            "uuid": "bfd6a27f-3077-49fe-80a6-0c230326e4f7",
+            "wizardFinished": true
+          },
+          {
+            "number": 8,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "present",
+                  "lhs": "#{_('data.rest.5609b2d0.response.user.id')}",
+                  "rhs": null
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 9,
+                "provider": "workato_service",
+                "name": "send_reply",
+                "as": "5be9abbc",
+                "title": null,
+                "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Callable - Get Slack Users Data By Email</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                  "reply.ok": false
+                },
+                "input": {
+                  "reply_type": "success",
+                  "reply": {
+                    "ok": "#{_('data.rest.5609b2d0.response.ok')}",
+                    "user": {
+                      "id": "#{_('data.rest.5609b2d0.response.user.id')}",
+                      "team_id": "#{_('data.rest.5609b2d0.response.user.team_id')}",
+                      "name": "#{_('data.rest.5609b2d0.response.user.name')}",
+                      "real_name": "#{_('data.rest.5609b2d0.response.user.real_name')}"
+                    }
+                  }
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "reply",
+                    "label": "Reply",
+                    "properties": [
+                      {
+                        "control_type": "checkbox",
+                        "label": "Ok",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Ok",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "name": "ok",
+                          "type": "boolean",
+                          "optional": false
+                        },
+                        "name": "ok",
+                        "type": "boolean",
+                        "optional": false
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "ID",
+                            "name": "id",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Team ID",
+                            "name": "team_id",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Name",
+                            "name": "name",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Real name",
+                            "name": "real_name",
+                            "type": "string",
+                            "optional": false
+                          }
+                        ],
+                        "label": "User",
+                        "name": "user",
+                        "type": "object",
+                        "optional": false
+                      }
+                    ]
+                  }
+                ],
+                "uuid": "93f7aa02-5e9d-4674-8bcf-120d9b92f204"
+              },
+              {
+                "number": 10,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "false"
+                },
+                "uuid": "abb8b338-78a2-493c-a83e-e35dca542002"
+              }
+            ],
+            "uuid": "64297e98-c73b-42ad-8dd4-85d4498bd5fb"
+          },
+          {
+            "number": 11,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "blank",
+                  "lhs": "#{_('data.rest.5609b2d0.response.user.id')}",
+                  "rhs": null
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 12,
+                "provider": "rest",
+                "name": "make_request_v2",
+                "as": "7590c83b",
+                "title": null,
+                "description": "<span class=\"provider\">Get slack id</span> via <span class=\"provider\">HTTP</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                  "response.ignore_http_errors": true
+                },
+                "input": {
+                  "request_name": "Get Slack Id",
+                  "request": {
+                    "method": "GET",
+                    "content_type": "application/json",
+                    "url": "https://slack.com/api/users.lookupByEmail",
+                    "parameters": [
+                      {
+                        "param": "token",
+                        "value": "#{_('data.workato.job_context.account_properties.SlackProductionKey', 'account_property', 'SlackProductionKey')}"
+                      },
+                      {
+                        "param": "email",
+                        "value": "=_('data.workato_service.427a46ae.request.first_name').slice(0,1)+\"_\"+_('data.workato_service.427a46ae.request.last_name')+\"@rapid7.com\""
+                      }
+                    ]
+                  },
+                  "response": {
+                    "output_type": "json",
+                    "expected_encoding": "UTF-8",
+                    "ignore_http_errors": "false",
+                    "response_schema": "[{\"name\":\"ok\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"user\",\"type\":\"object\",\"optional\":false,\"properties\":[{\"name\":\"id\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"team_id\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"name\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"deleted\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"color\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"real_name\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"tz\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"tz_label\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"tz_offset\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"profile\",\"type\":\"object\",\"optional\":false,\"properties\":[{\"name\":\"title\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"phone\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"skype\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"real_name\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"real_name_normalized\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"display_name\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"display_name_normalized\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"status_text\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"status_emoji\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"status_expiration\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"avatar_hash\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"email\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"image_24\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"image_32\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"image_48\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"image_72\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"image_192\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"image_512\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"status_text_canonical\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"team\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]},{\"name\":\"is_admin\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"is_owner\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"is_primary_owner\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"is_restricted\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"is_ultra_restricted\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"is_bot\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"is_app_user\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"updated\",\"type\":\"number\",\"optional\":false,\"control_type\":\"number\"}]}]",
+                    "headers_schema": "[{\"name\":\"content_type\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"content_length\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"connection\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"date\",\"type\":\"date_time\",\"optional\":false},{\"name\":\"server\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_slack_router\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_slack_req_id\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_oauth_scopes\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_accepted_oauth_scopes\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"expires\",\"type\":\"date_time\",\"optional\":false},{\"name\":\"cache_control\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"pragma\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_xss_protection\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_content_type_options\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_slack_exp\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_slack_backend\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"referrer_policy\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"strict_transport_security\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"vary\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"content_encoding\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"access_control_allow_origin\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_via\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_cache\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"via\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"x_amz_cf_id\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]"
+                  }
+                },
+                "extended_output_schema": [
+                  {
+                    "type": "object",
+                    "name": "headers",
+                    "label": "Headers",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Content type",
+                        "name": "content_type",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Content length",
+                        "name": "content_length",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Connection",
+                        "name": "connection",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "date_time",
+                        "label": "Date",
+                        "render_input": "date_time_conversion",
+                        "parse_output": "date_time_conversion",
+                        "name": "date",
+                        "type": "date_time",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Server",
+                        "name": "server",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "X slack router",
+                        "name": "x_slack_router",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "X slack req ID",
+                        "name": "x_slack_req_id",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "X oauth scopes",
+                        "name": "x_oauth_scopes",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "X accepted oauth scopes",
+                        "name": "x_accepted_oauth_scopes",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "date_time",
+                        "label": "Expires",
+                        "render_input": "date_time_conversion",
+                        "parse_output": "date_time_conversion",
+                        "name": "expires",
+                        "type": "date_time",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Cache control",
+                        "name": "cache_control",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Pragma",
+                        "name": "pragma",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "X xss protection",
+                        "name": "x_xss_protection",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "X content type options",
+                        "name": "x_content_type_options",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "X slack exp",
+                        "name": "x_slack_exp",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "X slack backend",
+                        "name": "x_slack_backend",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Referrer policy",
+                        "name": "referrer_policy",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Strict transport security",
+                        "name": "strict_transport_security",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Vary",
+                        "name": "vary",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Content encoding",
+                        "name": "content_encoding",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Access control allow origin",
+                        "name": "access_control_allow_origin",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "X via",
+                        "name": "x_via",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "X cache",
+                        "name": "x_cache",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Via",
+                        "name": "via",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "X amz cf ID",
+                        "name": "x_amz_cf_id",
+                        "type": "string",
+                        "optional": false
+                      }
+                    ]
+                  },
+                  {
+                    "type": "object",
+                    "name": "response",
+                    "label": "Response",
+                    "properties": [
+                      {
+                        "control_type": "checkbox",
+                        "label": "Ok",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Ok",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "name": "ok",
+                          "type": "boolean",
+                          "optional": false
+                        },
+                        "name": "ok",
+                        "type": "boolean",
+                        "optional": false
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "ID",
+                            "name": "id",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Team ID",
+                            "name": "team_id",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Name",
+                            "name": "name",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Deleted",
+                            "render_input": {
+                            },
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Deleted",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "name": "deleted",
+                              "type": "boolean",
+                              "optional": false
+                            },
+                            "name": "deleted",
+                            "type": "boolean",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Color",
+                            "name": "color",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Real name",
+                            "name": "real_name",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Tz",
+                            "name": "tz",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Tz label",
+                            "name": "tz_label",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Tz offset",
+                            "name": "tz_offset",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Title",
+                                "name": "title",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Phone",
+                                "name": "phone",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Skype",
+                                "name": "skype",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Real name",
+                                "name": "real_name",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Real name normalized",
+                                "name": "real_name_normalized",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Display name",
+                                "name": "display_name",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Display name normalized",
+                                "name": "display_name_normalized",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Status text",
+                                "name": "status_text",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Status emoji",
+                                "name": "status_emoji",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Status expiration",
+                                "name": "status_expiration",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Avatar hash",
+                                "name": "avatar_hash",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Email",
+                                "name": "email",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Image 24",
+                                "name": "image_24",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Image 32",
+                                "name": "image_32",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Image 48",
+                                "name": "image_48",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Image 72",
+                                "name": "image_72",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Image 192",
+                                "name": "image_192",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Image 512",
+                                "name": "image_512",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Status text canonical",
+                                "name": "status_text_canonical",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Team",
+                                "name": "team",
+                                "type": "string",
+                                "optional": false
+                              }
+                            ],
+                            "label": "Profile",
+                            "name": "profile",
+                            "type": "object",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Is admin",
+                            "render_input": {
+                            },
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Is admin",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "name": "is_admin",
+                              "type": "boolean",
+                              "optional": false
+                            },
+                            "name": "is_admin",
+                            "type": "boolean",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Is owner",
+                            "render_input": {
+                            },
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Is owner",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "name": "is_owner",
+                              "type": "boolean",
+                              "optional": false
+                            },
+                            "name": "is_owner",
+                            "type": "boolean",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Is primary owner",
+                            "render_input": {
+                            },
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Is primary owner",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "name": "is_primary_owner",
+                              "type": "boolean",
+                              "optional": false
+                            },
+                            "name": "is_primary_owner",
+                            "type": "boolean",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Is restricted",
+                            "render_input": {
+                            },
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Is restricted",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "name": "is_restricted",
+                              "type": "boolean",
+                              "optional": false
+                            },
+                            "name": "is_restricted",
+                            "type": "boolean",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Is ultra restricted",
+                            "render_input": {
+                            },
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Is ultra restricted",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "name": "is_ultra_restricted",
+                              "type": "boolean",
+                              "optional": false
+                            },
+                            "name": "is_ultra_restricted",
+                            "type": "boolean",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Is bot",
+                            "render_input": {
+                            },
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Is bot",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "name": "is_bot",
+                              "type": "boolean",
+                              "optional": false
+                            },
+                            "name": "is_bot",
+                            "type": "boolean",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Is app user",
+                            "render_input": {
+                            },
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Is app user",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "name": "is_app_user",
+                              "type": "boolean",
+                              "optional": false
+                            },
+                            "name": "is_app_user",
+                            "type": "boolean",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "number",
+                            "label": "Updated",
+                            "parse_output": "float_conversion",
+                            "name": "updated",
+                            "type": "number",
+                            "optional": false
+                          }
+                        ],
+                        "label": "User",
+                        "name": "user",
+                        "type": "object",
+                        "optional": false
+                      }
+                    ]
+                  }
+                ],
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "response",
+                    "label": "Response",
+                    "properties": [
+                      {
+                        "control_type": "select",
+                        "label": "Response content type",
+                        "pick_list": [
+                          [
+                            "Text",
+                            "rawdatatxt"
+                          ],
+                          [
+                            "Binary",
+                            "rawdata"
+                          ],
+                          [
+                            "JSON",
+                            "json"
+                          ],
+                          [
+                            "XML",
+                            "xml2"
+                          ]
+                        ],
+                        "hint": "Select expected format of data response type, e.g. JSON or XML. <a href=\"https://docs.workato.com/developing-connectors/http.html#response-type\" target=\"_blank\">Learn more</a>",
+                        "default": "json",
+                        "extends_schema": true,
+                        "type": "string",
+                        "name": "output_type"
+                      },
+                      {
+                        "control_type": "select",
+                        "label": "Encoding",
+                        "pick_list": [
+                          [
+                            "UTF-8",
+                            "UTF-8"
+                          ],
+                          [
+                            "US-ASCII",
+                            "US-ASCII"
+                          ],
+                          [
+                            "UTF-16BE",
+                            "UTF-16BE"
+                          ],
+                          [
+                            "UTF-16LE",
+                            "UTF-16LE"
+                          ],
+                          [
+                            "UTF-32BE",
+                            "UTF-32BE"
+                          ],
+                          [
+                            "UTF-32LE",
+                            "UTF-32LE"
+                          ],
+                          [
+                            "UTF-16",
+                            "UTF-16"
+                          ],
+                          [
+                            "UTF-32",
+                            "UTF-32"
+                          ],
+                          [
+                            "UTF8-MAC",
+                            "UTF8-MAC"
+                          ],
+                          [
+                            "EUC-JP",
+                            "EUC-JP"
+                          ],
+                          [
+                            "Windows-31J",
+                            "Windows-31J"
+                          ],
+                          [
+                            "Big5",
+                            "Big5"
+                          ],
+                          [
+                            "Big5-HKSCS",
+                            "Big5-HKSCS"
+                          ],
+                          [
+                            "Big5-UAO",
+                            "Big5-UAO"
+                          ],
+                          [
+                            "CP949",
+                            "CP949"
+                          ],
+                          [
+                            "Emacs-Mule",
+                            "Emacs-Mule"
+                          ],
+                          [
+                            "EUC-KR",
+                            "EUC-KR"
+                          ],
+                          [
+                            "EUC-TW",
+                            "EUC-TW"
+                          ],
+                          [
+                            "GB2312",
+                            "GB2312"
+                          ],
+                          [
+                            "GB18030",
+                            "GB18030"
+                          ],
+                          [
+                            "GBK",
+                            "GBK"
+                          ],
+                          [
+                            "ISO-8859-1",
+                            "ISO-8859-1"
+                          ],
+                          [
+                            "ISO-8859-2",
+                            "ISO-8859-2"
+                          ],
+                          [
+                            "ISO-8859-3",
+                            "ISO-8859-3"
+                          ],
+                          [
+                            "ISO-8859-4",
+                            "ISO-8859-4"
+                          ],
+                          [
+                            "ISO-8859-5",
+                            "ISO-8859-5"
+                          ],
+                          [
+                            "ISO-8859-6",
+                            "ISO-8859-6"
+                          ],
+                          [
+                            "ISO-8859-7",
+                            "ISO-8859-7"
+                          ],
+                          [
+                            "ISO-8859-8",
+                            "ISO-8859-8"
+                          ],
+                          [
+                            "ISO-8859-9",
+                            "ISO-8859-9"
+                          ],
+                          [
+                            "ISO-8859-10",
+                            "ISO-8859-10"
+                          ],
+                          [
+                            "ISO-8859-11",
+                            "ISO-8859-11"
+                          ],
+                          [
+                            "ISO-8859-13",
+                            "ISO-8859-13"
+                          ],
+                          [
+                            "ISO-8859-14",
+                            "ISO-8859-14"
+                          ],
+                          [
+                            "ISO-8859-15",
+                            "ISO-8859-15"
+                          ],
+                          [
+                            "ISO-8859-16",
+                            "ISO-8859-16"
+                          ],
+                          [
+                            "KOI8-R",
+                            "KOI8-R"
+                          ],
+                          [
+                            "KOI8-U",
+                            "KOI8-U"
+                          ],
+                          [
+                            "Shift_JIS",
+                            "Shift_JIS"
+                          ],
+                          [
+                            "Windows-1250",
+                            "Windows-1250"
+                          ],
+                          [
+                            "Windows-1251",
+                            "Windows-1251"
+                          ],
+                          [
+                            "Windows-1252",
+                            "Windows-1252"
+                          ],
+                          [
+                            "Windows-1253",
+                            "Windows-1253"
+                          ],
+                          [
+                            "Windows-1254",
+                            "Windows-1254"
+                          ],
+                          [
+                            "Windows-1257",
+                            "Windows-1257"
+                          ],
+                          [
+                            "IBM437",
+                            "IBM437"
+                          ],
+                          [
+                            "IBM737",
+                            "IBM737"
+                          ],
+                          [
+                            "IBM775",
+                            "IBM775"
+                          ],
+                          [
+                            "CP850",
+                            "CP850"
+                          ],
+                          [
+                            "IBM852",
+                            "IBM852"
+                          ],
+                          [
+                            "CP852",
+                            "CP852"
+                          ],
+                          [
+                            "IBM855",
+                            "IBM855"
+                          ],
+                          [
+                            "CP855",
+                            "CP855"
+                          ],
+                          [
+                            "IBM857",
+                            "IBM857"
+                          ],
+                          [
+                            "IBM860",
+                            "IBM860"
+                          ],
+                          [
+                            "IBM861",
+                            "IBM861"
+                          ],
+                          [
+                            "IBM862",
+                            "IBM862"
+                          ],
+                          [
+                            "IBM863",
+                            "IBM863"
+                          ],
+                          [
+                            "IBM864",
+                            "IBM864"
+                          ],
+                          [
+                            "IBM865",
+                            "IBM865"
+                          ],
+                          [
+                            "IBM866",
+                            "IBM866"
+                          ],
+                          [
+                            "IBM869",
+                            "IBM869"
+                          ],
+                          [
+                            "Windows-1258",
+                            "Windows-1258"
+                          ],
+                          [
+                            "GB1988",
+                            "GB1988"
+                          ],
+                          [
+                            "macCentEuro",
+                            "macCentEuro"
+                          ],
+                          [
+                            "macCroatian",
+                            "macCroatian"
+                          ],
+                          [
+                            "macCyrillic",
+                            "macCyrillic"
+                          ],
+                          [
+                            "macGreek",
+                            "macGreek"
+                          ],
+                          [
+                            "macIceland",
+                            "macIceland"
+                          ],
+                          [
+                            "macRoman",
+                            "macRoman"
+                          ],
+                          [
+                            "macRomania",
+                            "macRomania"
+                          ],
+                          [
+                            "macThai",
+                            "macThai"
+                          ],
+                          [
+                            "macTurkish",
+                            "macTurkish"
+                          ],
+                          [
+                            "macUkraine",
+                            "macUkraine"
+                          ],
+                          [
+                            "CP950",
+                            "CP950"
+                          ],
+                          [
+                            "CP951",
+                            "CP951"
+                          ],
+                          [
+                            "IBM037",
+                            "IBM037"
+                          ],
+                          [
+                            "stateless-ISO-2022-JP",
+                            "stateless-ISO-2022-JP"
+                          ],
+                          [
+                            "eucJP-ms",
+                            "eucJP-ms"
+                          ],
+                          [
+                            "CP51932",
+                            "CP51932"
+                          ],
+                          [
+                            "EUC-JIS-2004",
+                            "EUC-JIS-2004"
+                          ],
+                          [
+                            "GB12345",
+                            "GB12345"
+                          ],
+                          [
+                            "ISO-2022-JP",
+                            "ISO-2022-JP"
+                          ],
+                          [
+                            "ISO-2022-JP-2",
+                            "ISO-2022-JP-2"
+                          ],
+                          [
+                            "CP50220",
+                            "CP50220"
+                          ],
+                          [
+                            "CP50221",
+                            "CP50221"
+                          ],
+                          [
+                            "Windows-1256",
+                            "Windows-1256"
+                          ],
+                          [
+                            "Windows-1255",
+                            "Windows-1255"
+                          ],
+                          [
+                            "TIS-620",
+                            "TIS-620"
+                          ],
+                          [
+                            "Windows-874",
+                            "Windows-874"
+                          ],
+                          [
+                            "MacJapanese",
+                            "MacJapanese"
+                          ],
+                          [
+                            "UTF-7",
+                            "UTF-7"
+                          ],
+                          [
+                            "UTF8-DoCoMo",
+                            "UTF8-DoCoMo"
+                          ],
+                          [
+                            "SJIS-DoCoMo",
+                            "SJIS-DoCoMo"
+                          ],
+                          [
+                            "UTF8-KDDI",
+                            "UTF8-KDDI"
+                          ],
+                          [
+                            "SJIS-KDDI",
+                            "SJIS-KDDI"
+                          ],
+                          [
+                            "ISO-2022-JP-KDDI",
+                            "ISO-2022-JP-KDDI"
+                          ],
+                          [
+                            "stateless-ISO-2022-JP-KDDI",
+                            "stateless-ISO-2022-JP-KDDI"
+                          ],
+                          [
+                            "UTF8-SoftBank",
+                            "UTF8-SoftBank"
+                          ],
+                          [
+                            "SJIS-SoftBank",
+                            "SJIS-SoftBank"
+                          ]
+                        ],
+                        "optional": true,
+                        "default": "UTF-8",
+                        "hint": "Default encoding type is set to UTF-8, and typically doesn't need to be changed. <a href=\"https://docs.workato.com/developing-connectors/http.html#expected-encoding\" target=\"_blank\">Learn more</a>",
+                        "type": "string",
+                        "name": "expected_encoding"
+                      },
+                      {
+                        "control_type": "schema-designer",
+                        "label": "Response schema",
+                        "sample_data_type": "json_http",
+                        "extends_schema": true,
+                        "empty_schema_title": "Describe all fields in your response.",
+                        "optional": true,
+                        "sticky": true,
+                        "type": "string",
+                        "name": "response_schema"
+                      },
+                      {
+                        "control_type": "schema-designer",
+                        "label": "HTTP response headers",
+                        "extends_schema": true,
+                        "empty_schema_title": "Describe all the response headers",
+                        "optional": true,
+                        "sticky": true,
+                        "type": "string",
+                        "name": "headers_schema"
+                      },
+                      {
+                        "control_type": "checkbox",
+                        "label": "Mark non-2xx response codes as success?",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Mark non-2xx response codes as success?",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "default": false,
+                          "hint": "If <b>yes</b>, non 2xx response codes returned will be marked as a successful action. If <b>no</b>, non 2xx response codes returned will be marked as an error.",
+                          "optional": true,
+                          "type": "boolean",
+                          "name": "ignore_http_errors"
+                        },
+                        "default": "false",
+                        "hint": "If <b>yes</b>, non 2xx response codes returned will be marked as a successful action. If <b>no</b>, non 2xx response codes returned will be marked as an error.",
+                        "optional": true,
+                        "type": "boolean",
+                        "name": "ignore_http_errors"
+                      }
+                    ],
+                    "override": true
+                  }
+                ],
+                "uuid": "0c181bf6-8f2a-481e-a79a-238c806fe056",
+                "wizardFinished": true
+              },
+              {
+                "number": 13,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "present",
+                      "lhs": "#{_('data.rest.5609b2d0.response.user.id')}",
+                      "rhs": null
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 14,
+                    "provider": "workato_service",
+                    "name": "send_reply",
+                    "as": "962607be",
+                    "title": null,
+                    "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Callable - Get Slack Users Data By Email</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                      "reply.ok": false
+                    },
+                    "input": {
+                      "reply_type": "success",
+                      "reply": {
+                        "ok": "#{_('data.rest.5609b2d0.response.ok')}",
+                        "user": {
+                          "id": "#{_('data.rest.5609b2d0.response.user.id')}",
+                          "team_id": "#{_('data.rest.5609b2d0.response.user.team_id')}",
+                          "name": "#{_('data.rest.5609b2d0.response.user.name')}",
+                          "real_name": "#{_('data.rest.5609b2d0.response.user.real_name')}"
+                        }
+                      }
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "object",
+                        "name": "reply",
+                        "label": "Reply",
+                        "properties": [
+                          {
+                            "control_type": "checkbox",
+                            "label": "Ok",
+                            "render_input": {
+                            },
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Ok",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "name": "ok",
+                              "type": "boolean",
+                              "optional": false
+                            },
+                            "name": "ok",
+                            "type": "boolean",
+                            "optional": false
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "ID",
+                                "name": "id",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Team ID",
+                                "name": "team_id",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Name",
+                                "name": "name",
+                                "type": "string",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Real name",
+                                "name": "real_name",
+                                "type": "string",
+                                "optional": false
+                              }
+                            ],
+                            "label": "User",
+                            "name": "user",
+                            "type": "object",
+                            "optional": false
+                          }
+                        ]
+                      }
+                    ],
+                    "uuid": "b524a13d-c0b4-4c15-bcca-e9b8838bcb84"
+                  },
+                  {
+                    "number": 15,
+                    "keyword": "stop",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "stop_with_error": "false"
+                    },
+                    "uuid": "15c5abf7-540a-4efb-bc3a-e90cfd5e735b"
+                  }
+                ],
+                "uuid": "ccb7a1db-58da-42ec-9f2b-159fc02e1131"
+              }
+            ],
+            "uuid": "4654ffcf-6105-44ac-b4a1-2736f3ca7c8c"
+          },
+          {
+            "number": 16,
+            "as": "5617b95b",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "0",
+              "retry_interval": "2"
+            },
+            "block": [
+              {
+                "number": 17,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "true",
+                  "stop_reason": "#{_('data.catch.5617b95b.message')}"
+                },
+                "uuid": "de24348e-ed71-46e0-acef-10797dd79afe"
+              }
+            ],
+            "uuid": "8addd87e-2ed7-4930-99c3-32ed662c5886"
+          }
+        ],
+        "uuid": "a91ac5f8-7f78-467e-9595-8f875dfd3d81"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Name"
+      },
+      {
+        "name": "custom_column_4",
+        "label": "Email"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Slack ID"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "Slack Username"
+      },
+      {
+        "name": "custom_column_5",
+        "label": "Recipe ID"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_service.427a46ae.request.first_name')} #{_('data.workato_service.427a46ae.request.last_name')}",
+      "custom_column_4": "#{_('data.workato_service.427a46ae.request.email')}",
+      "custom_column_2": "=(_('data.rest.0d323475.response.user.id').present? ||  _('data.rest.5609b2d0.response.user.id').present? || _('data.rest.7590c83b.response.user.id').present?) ? (_('data.rest.0d323475.response.user.id') ||_('data.rest.5609b2d0.response.user.id') || _('data.rest.7590c83b.response.user.id')) : \"N/A\"",
+      "custom_column_3": "=(_('data.rest.0d323475.response.user.name').present? || _('data.rest.5609b2d0.response.user.name').present? || _('data.rest.7590c83b.response.user.name').present?) ? (_('data.rest.0d323475.response.user.name') || _('data.rest.5609b2d0.response.user.name') || _('data.rest.7590c83b.response.user.name')) : \"N/A\"",
+      "custom_column_5": "#{_('data.workato_service.427a46ae.context.calling_recipe_id')}"
+    },
+    "uuid": "c716e108-abc9-4b22-9892-219f7413fcb4"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "rest",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/http_connection.connection.json",
+        "name": "HTTP connection",
+        "folder": "connections"
+      }
+    }
+  ]
+}

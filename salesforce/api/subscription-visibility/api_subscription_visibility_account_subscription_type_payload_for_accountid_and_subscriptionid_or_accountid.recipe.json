@@ -1,0 +1,1521 @@
+{
+  "name": "API - Subscription Visibility -  Account/Subscription type payload for accountId and subscriptionId or accountId",
+  "description": "When there is a new call for callable recipe, do action",
+  "version": 2,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "c2cedeb1",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">API - Subscription Visibility -  Account/Subscription type payload for accountId and subscriptionId or accountId</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "request_schema_json": "[{\"control_type\":\"text\",\"label\":\"Account ID\",\"name\":\"accountId\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Subscription ID\",\"name\":\"subscriptionId\",\"type\":\"string\",\"optional\":true}]",
+      "service_name": "API - Subscription Visibility -  Account/Subscription type payload for accountId and subscriptionId or accountId",
+      "reply_schema_json": "[{\"control_type\":\"text\",\"label\":\"ID\",\"type\":\"string\",\"name\":\"id\"},{\"properties\":[{\"control_type\":\"text\",\"label\":\"Type\",\"type\":\"string\",\"name\":\"type\"},{\"control_type\":\"text\",\"label\":\"URL\",\"type\":\"string\",\"name\":\"url\"}],\"label\":\"Attributes\",\"type\":\"object\",\"name\":\"attributes\"},{\"control_type\":\"text\",\"label\":\"Name\",\"type\":\"string\",\"name\":\"name\"},{\"control_type\":\"text\",\"label\":\"Customer since\",\"type\":\"string\",\"name\":\"customerSince\"},{\"properties\":[{\"control_type\":\"text\",\"label\":\"Street\",\"type\":\"string\",\"name\":\"street\"},{\"control_type\":\"text\",\"label\":\"City\",\"type\":\"string\",\"name\":\"city\"},{\"control_type\":\"text\",\"label\":\"State code\",\"type\":\"string\",\"name\":\"stateCode\"},{\"control_type\":\"text\",\"label\":\"Postal code\",\"type\":\"string\",\"name\":\"postalCode\"},{\"control_type\":\"text\",\"label\":\"Country code\",\"type\":\"string\",\"name\":\"countryCode\"}],\"label\":\"Billing address\",\"type\":\"object\",\"name\":\"billingAddress\"},{\"properties\":[{\"control_type\":\"text\",\"label\":\"Street\",\"type\":\"string\",\"name\":\"street\"},{\"control_type\":\"text\",\"label\":\"City\",\"type\":\"string\",\"name\":\"city\"},{\"control_type\":\"text\",\"label\":\"State code\",\"type\":\"string\",\"name\":\"stateCode\"},{\"control_type\":\"text\",\"label\":\"Postal code\",\"type\":\"string\",\"name\":\"postalCode\"},{\"control_type\":\"text\",\"label\":\"Country code\",\"type\":\"string\",\"name\":\"countryCode\"}],\"label\":\"Shipping address\",\"type\":\"object\",\"name\":\"shippingAddress\"},{\"name\":\"customerSuccessManager\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Customer success manager\",\"properties\":[{\"control_type\":\"text\",\"label\":\"ID\",\"type\":\"string\",\"name\":\"id\"},{\"control_type\":\"text\",\"label\":\"First name\",\"type\":\"string\",\"name\":\"firstName\"},{\"control_type\":\"text\",\"label\":\"Last name\",\"type\":\"string\",\"name\":\"lastName\"},{\"control_type\":\"text\",\"label\":\"Name\",\"type\":\"string\",\"name\":\"name\"},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\"},{\"control_type\":\"text\",\"label\":\"Phone\",\"type\":\"string\",\"name\":\"phone\"},{\"control_type\":\"text\",\"label\":\"Role\",\"type\":\"string\",\"name\":\"role\"},{\"properties\":[{\"control_type\":\"text\",\"label\":\"Type\",\"type\":\"string\",\"name\":\"type\"},{\"control_type\":\"text\",\"label\":\"URL\",\"type\":\"string\",\"name\":\"url\"}],\"label\":\"Attributes\",\"type\":\"object\",\"name\":\"attributes\"}]},{\"name\":\"accountExecutive\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Account executive\",\"properties\":[{\"control_type\":\"text\",\"label\":\"ID\",\"type\":\"string\",\"name\":\"id\"},{\"control_type\":\"text\",\"label\":\"First name\",\"type\":\"string\",\"name\":\"firstName\"},{\"control_type\":\"text\",\"label\":\"Last name\",\"type\":\"string\",\"name\":\"lastName\"},{\"control_type\":\"text\",\"label\":\"Name\",\"type\":\"string\",\"name\":\"name\"},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\"},{\"control_type\":\"text\",\"label\":\"Phone\",\"type\":\"string\",\"name\":\"phone\"},{\"control_type\":\"text\",\"label\":\"Role\",\"type\":\"string\",\"name\":\"role\"},{\"properties\":[{\"control_type\":\"text\",\"label\":\"Type\",\"type\":\"string\",\"name\":\"type\"},{\"control_type\":\"text\",\"label\":\"URL\",\"type\":\"string\",\"name\":\"url\"}],\"label\":\"Attributes\",\"type\":\"object\",\"name\":\"attributes\"}]},{\"name\":\"subscriptions\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Subscriptions\",\"properties\":[{\"control_type\":\"text\",\"label\":\"ID\",\"type\":\"string\",\"name\":\"id\"},{\"control_type\":\"text\",\"label\":\"Number\",\"type\":\"string\",\"name\":\"number\"},{\"control_type\":\"text\",\"label\":\"Product ID\",\"type\":\"string\",\"name\":\"productId\"},{\"control_type\":\"text\",\"label\":\"Product line\",\"type\":\"string\",\"name\":\"productLine\"},{\"control_type\":\"text\",\"label\":\"Product token\",\"type\":\"string\",\"name\":\"productToken\"},{\"control_type\":\"text\",\"label\":\"Product code\",\"type\":\"string\",\"name\":\"productCode\"},{\"control_type\":\"text\",\"label\":\"Description\",\"type\":\"string\",\"name\":\"description\"},{\"control_type\":\"text\",\"label\":\"Quantity unit of measure\",\"type\":\"string\",\"name\":\"quantityUnitOfMeasure\"},{\"control_type\":\"number\",\"label\":\"Quantity\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"quantity\"},{\"control_type\":\"text\",\"label\":\"Start date\",\"type\":\"string\",\"name\":\"startDate\"},{\"control_type\":\"text\",\"label\":\"End date\",\"type\":\"string\",\"name\":\"endDate\"},{\"control_type\":\"text\",\"label\":\"Status\",\"type\":\"string\",\"name\":\"status\"},{\"properties\":[{\"control_type\":\"text\",\"label\":\"Type\",\"type\":\"string\",\"name\":\"type\"},{\"control_type\":\"text\",\"label\":\"URL\",\"type\":\"string\",\"name\":\"url\"}],\"label\":\"Attributes\",\"type\":\"object\",\"name\":\"attributes\"}]},{\"name\":\"references\",\"type\":\"array\",\"of\":\"object\",\"label\":\"References\",\"properties\":[{\"control_type\":\"text\",\"label\":\"Source\",\"type\":\"string\",\"name\":\"source\"},{\"control_type\":\"text\",\"label\":\"Customer ID\",\"type\":\"string\",\"name\":\"customerId\"}]}]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Account ID",
+            "name": "accountId",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Subscription ID",
+            "name": "subscriptionId",
+            "type": "string",
+            "optional": true
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "salesforce",
+            "name": "__adhoc_http_action",
+            "as": "b4d881bd",
+            "title": "Single subscription payload for the account type for the Account Id and the Subscription Id",
+            "description": "Single <span class=\"provider\">subscription payload for the account type for the Account Id and the Subscription Id</span> in <span class=\"provider\">Salesforce</span> (Custom)",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "mnemonic": "Single subscription payload for the account type for the Account Id and the Subscription Id",
+              "verb": "get",
+              "response_type": "raw",
+              "path": "/services/apexrest/SubscriptionVisibilitySubscriptionsInfo",
+              "input": {
+                "schema": "[{\"name\":\"accountId\",\"type\":\"string\",\"optional\":true,\"label\":\"accountId\",\"control_type\":\"text\"},{\"name\":\"subscriptionId\",\"type\":\"string\",\"optional\":true,\"label\":\"subscriptionId\",\"control_type\":\"text\"}]",
+                "data": {
+                  "accountId": "#{_('data.workato_service.c2cedeb1.request.accountId')}",
+                  "subscriptionId": "#{_('data.workato_service.c2cedeb1.request.subscriptionId')}"
+                }
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "string",
+                "name": "body",
+                "control_type": "text",
+                "label": "Body",
+                "optional": true
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "path",
+                "control_type": "text",
+                "label": "Path",
+                "hint": "Base URI is <b>https://r7--1p.cs2.my.salesforce.com/</b> - path will be appended to this URI. Use absolute URI to override this base URI.",
+                "optional": false
+              },
+              {
+                "type": "string",
+                "name": "response_type",
+                "control_type": "select",
+                "label": "Response type",
+                "default": "json",
+                "sticky": false,
+                "pick_list": [
+                  [
+                    "JSON response",
+                    "json"
+                  ],
+                  [
+                    "Raw response",
+                    "raw"
+                  ]
+                ],
+                "optional": true,
+                "extends_schema": true
+              },
+              {
+                "type": "object",
+                "name": "input",
+                "control_type": "form-schema-builder",
+                "label": "Request URL parameters",
+                "sticky": false,
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Schema",
+                    "extends_schema": true,
+                    "sticky": true,
+                    "optional": true,
+                    "type": "string",
+                    "name": "schema",
+                    "parent": "input"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "accountId",
+                        "optional": true,
+                        "sticky": true,
+                        "type": "string",
+                        "name": "accountId",
+                        "parent": "input.data"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "subscriptionId",
+                        "optional": true,
+                        "sticky": true,
+                        "type": "string",
+                        "name": "subscriptionId",
+                        "parent": "input.data"
+                      }
+                    ],
+                    "label": "Data",
+                    "optional": true,
+                    "type": "object",
+                    "name": "data",
+                    "parent": "input"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "name": "request_headers",
+                "control_type": "key_value",
+                "label": "Request headers",
+                "optional": true,
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "optional": true,
+                    "type": "string",
+                    "name": "name",
+                    "parent": "request_headers"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Value",
+                    "optional": true,
+                    "type": "string",
+                    "name": "value",
+                    "parent": "request_headers"
+                  }
+                ]
+              },
+              {
+                "type": "string",
+                "name": "response_headers",
+                "control_type": "schema-designer",
+                "label": "Response headers",
+                "sticky": false,
+                "optional": true,
+                "extends_schema": true,
+                "schema_neutral": true
+              }
+            ],
+            "visible_config_fields": [
+              "mnemonic",
+              "verb",
+              "path",
+              "response_type",
+              "input",
+              "input.schema",
+              "input.data.account_id",
+              "input.data.subscription_id",
+              "input.data",
+              "input.data.accountId",
+              "input.data.subscriptionId"
+            ],
+            "uuid": "a87615dc-888e-498f-bdba-b9aa2ba65d49"
+          },
+          {
+            "number": 3,
+            "as": "913c1b0e",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "0",
+              "retry_interval": "2"
+            },
+            "block": [
+              {
+                "number": 4,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "contains",
+                      "lhs": "#{_('data.catch.913c1b0e.message')}",
+                      "rhs": "Account not found"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 5,
+                    "provider": "workato_service",
+                    "name": "send_reply",
+                    "as": "5042556b",
+                    "title": null,
+                    "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">API - Subscription Visibility -  Account/Subscription type payload for accountId and subscriptionId or accountId</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "reply_type": "error",
+                      "code": "404",
+                      "message": "Account not found"
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "string",
+                        "name": "message",
+                        "control_type": "text",
+                        "label": "Message",
+                        "hint": "Error message"
+                      },
+                      {
+                        "type": "string",
+                        "name": "code",
+                        "control_type": "text",
+                        "label": "Error code",
+                        "hint": "Use this field to set custom HTTP error code for service replies. E.g: 404/422 etc. This field is applicable to REST service recipes.",
+                        "optional": true
+                      },
+                      {
+                        "type": "boolean",
+                        "name": "custom_error_response",
+                        "control_type": "checkbox",
+                        "label": "Custom error response?",
+                        "hint": "By default, Workato sends 'reply_type' and 'message' fields in response. When set to 'Yes', the content of the 'Message' field is sent as response body. This field is applicable to REST service recipes.",
+                        "optional": true,
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Custom error response?",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "optional": true,
+                          "hint": "By default, Workato sends 'reply_type' and 'message' fields in response. When set to 'Yes', the content of the 'Message' field is sent as response body. This field is applicable to REST service recipes.",
+                          "type": "boolean",
+                          "name": "custom_error_response"
+                        },
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        }
+                      }
+                    ],
+                    "visible_config_fields": [
+                      "reply_type",
+                      "code"
+                    ],
+                    "comment": "Return \"404, Account not found\"",
+                    "uuid": "acd5542b-be49-4300-afd3-c312d97ec23e"
+                  },
+                  {
+                    "number": 6,
+                    "keyword": "stop",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "stop_with_error": "false"
+                    },
+                    "uuid": "68fd625e-b634-4965-ad03-0ee465040f7b"
+                  }
+                ],
+                "uuid": "f66b8097-ff06-44af-89dd-13ddabd7c99e"
+              },
+              {
+                "number": 7,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "or",
+                  "conditions": [
+                    {
+                      "operand": "contains",
+                      "lhs": "#{_('data.catch.913c1b0e.message')}",
+                      "rhs": "Subscription not found"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 8,
+                    "provider": "workato_service",
+                    "name": "send_reply",
+                    "as": "e97c1fb5",
+                    "title": null,
+                    "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">API - Subscription Visibility -  Account/Subscription type payload for accountId and subscriptionId or accountId</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "reply_type": "error",
+                      "code": "404",
+                      "message": "Subscription not found"
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "string",
+                        "name": "message",
+                        "control_type": "text",
+                        "label": "Message",
+                        "hint": "Error message"
+                      },
+                      {
+                        "type": "string",
+                        "name": "code",
+                        "control_type": "text",
+                        "label": "Error code",
+                        "hint": "Use this field to set custom HTTP error code for service replies. E.g: 404/422 etc. This field is applicable to REST service recipes.",
+                        "optional": true
+                      },
+                      {
+                        "type": "boolean",
+                        "name": "custom_error_response",
+                        "control_type": "checkbox",
+                        "label": "Custom error response?",
+                        "hint": "By default, Workato sends 'reply_type' and 'message' fields in response. When set to 'Yes', the content of the 'Message' field is sent as response body. This field is applicable to REST service recipes.",
+                        "optional": true,
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Custom error response?",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "optional": true,
+                          "hint": "By default, Workato sends 'reply_type' and 'message' fields in response. When set to 'Yes', the content of the 'Message' field is sent as response body. This field is applicable to REST service recipes.",
+                          "type": "boolean",
+                          "name": "custom_error_response"
+                        },
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        }
+                      }
+                    ],
+                    "visible_config_fields": [
+                      "reply_type",
+                      "code"
+                    ],
+                    "comment": "Return \"404, Subscription not found\"",
+                    "uuid": "0c8788e3-0bca-4ef2-a866-19df04bdad97"
+                  },
+                  {
+                    "number": 9,
+                    "keyword": "else",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                    },
+                    "block": [
+                      {
+                        "number": 10,
+                        "keyword": "if",
+                        "dynamicPickListSelection": {
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                          "type": "compound",
+                          "operand": "and",
+                          "conditions": [
+                            {
+                              "operand": "contains",
+                              "lhs": "#{_('data.catch.913c1b0e.message')}",
+                              "rhs": "You either need to specify accountId and subscriptionId or accountId"
+                            }
+                          ]
+                        },
+                        "block": [
+                          {
+                            "number": 11,
+                            "provider": "workato_service",
+                            "name": "send_reply",
+                            "as": "f279f957",
+                            "title": null,
+                            "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">API - Subscription Visibility -  Account/Subscription type payload for accountId and subscriptionId or accountId</span>",
+                            "keyword": "action",
+                            "dynamicPickListSelection": {
+                            },
+                            "toggleCfg": {
+                            },
+                            "input": {
+                              "reply_type": "error",
+                              "code": "422",
+                              "message": "You either need to specify accountId and subscriptionId or accountId"
+                            },
+                            "extended_input_schema": [
+                              {
+                                "type": "string",
+                                "name": "message",
+                                "control_type": "text",
+                                "label": "Message",
+                                "hint": "Error message"
+                              },
+                              {
+                                "type": "string",
+                                "name": "code",
+                                "control_type": "text",
+                                "label": "Error code",
+                                "hint": "Use this field to set custom HTTP error code for service replies. E.g: 404/422 etc. This field is applicable to REST service recipes.",
+                                "optional": true
+                              },
+                              {
+                                "type": "boolean",
+                                "name": "custom_error_response",
+                                "control_type": "checkbox",
+                                "label": "Custom error response?",
+                                "hint": "By default, Workato sends 'reply_type' and 'message' fields in response. When set to 'Yes', the content of the 'Message' field is sent as response body. This field is applicable to REST service recipes.",
+                                "optional": true,
+                                "toggle_hint": "Select from option list",
+                                "toggle_field": {
+                                  "label": "Custom error response?",
+                                  "control_type": "text",
+                                  "toggle_hint": "Use custom value",
+                                  "optional": true,
+                                  "hint": "By default, Workato sends 'reply_type' and 'message' fields in response. When set to 'Yes', the content of the 'Message' field is sent as response body. This field is applicable to REST service recipes.",
+                                  "type": "boolean",
+                                  "name": "custom_error_response"
+                                },
+                                "render_input": {
+                                },
+                                "parse_output": {
+                                }
+                              }
+                            ],
+                            "visible_config_fields": [
+                              "reply_type",
+                              "code"
+                            ],
+                            "comment": "Return \"422, You either need to specify accountId and subscriptionId or accountId\"",
+                            "uuid": "0b486285-8e40-4df1-b0cd-ba292d2f07f6"
+                          },
+                          {
+                            "number": 12,
+                            "keyword": "else",
+                            "dynamicPickListSelection": {
+                            },
+                            "toggleCfg": {
+                            },
+                            "input": {
+                            },
+                            "block": [
+                              {
+                                "number": 13,
+                                "provider": "workato_service",
+                                "name": "send_reply",
+                                "as": "a3e424f1",
+                                "title": null,
+                                "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">API - Subscription Visibility -  Account/Subscription type payload for accountId and subscriptionId or accountId</span>",
+                                "keyword": "action",
+                                "dynamicPickListSelection": {
+                                },
+                                "toggleCfg": {
+                                },
+                                "input": {
+                                  "reply_type": "error",
+                                  "code": "500",
+                                  "message": "Server error"
+                                },
+                                "extended_input_schema": [
+                                  {
+                                    "type": "string",
+                                    "name": "message",
+                                    "control_type": "text",
+                                    "label": "Message",
+                                    "hint": "Error message"
+                                  },
+                                  {
+                                    "type": "string",
+                                    "name": "code",
+                                    "control_type": "text",
+                                    "label": "Error code",
+                                    "hint": "Use this field to set custom HTTP error code for service replies. E.g: 404/422 etc. This field is applicable to REST service recipes.",
+                                    "optional": true
+                                  },
+                                  {
+                                    "type": "boolean",
+                                    "name": "custom_error_response",
+                                    "control_type": "checkbox",
+                                    "label": "Custom error response?",
+                                    "hint": "By default, Workato sends 'reply_type' and 'message' fields in response. When set to 'Yes', the content of the 'Message' field is sent as response body. This field is applicable to REST service recipes.",
+                                    "optional": true,
+                                    "toggle_hint": "Select from option list",
+                                    "toggle_field": {
+                                      "label": "Custom error response?",
+                                      "control_type": "text",
+                                      "toggle_hint": "Use custom value",
+                                      "optional": true,
+                                      "hint": "By default, Workato sends 'reply_type' and 'message' fields in response. When set to 'Yes', the content of the 'Message' field is sent as response body. This field is applicable to REST service recipes.",
+                                      "type": "boolean",
+                                      "name": "custom_error_response"
+                                    },
+                                    "render_input": {
+                                    },
+                                    "parse_output": {
+                                    }
+                                  }
+                                ],
+                                "visible_config_fields": [
+                                  "reply_type",
+                                  "code"
+                                ],
+                                "comment": "Return \"500, Server error\"",
+                                "uuid": "f6cf84dc-9314-4379-b1a9-458ac44925cc"
+                              }
+                            ],
+                            "uuid": "73f17d7d-6451-4a1f-ab33-3795a58ee271"
+                          }
+                        ],
+                        "uuid": "33cd1c2e-1d1d-4f03-8e3b-8451636af5ea"
+                      }
+                    ],
+                    "uuid": "9b67b8d0-0134-42bc-a1bf-4e22549884f2"
+                  }
+                ],
+                "uuid": "f78bb80d-4be3-4367-a222-68cd041d0f84"
+              },
+              {
+                "number": 14,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "false"
+                },
+                "uuid": "0705997e-8ca7-48ff-949f-171342689c97"
+              }
+            ],
+            "uuid": "acd3e789-ff2a-49dc-bfeb-12d6f33e6855"
+          }
+        ],
+        "uuid": "1a7170a2-6a5b-4de9-a25f-0643ebc6b7ef"
+      },
+      {
+        "number": 15,
+        "provider": "json_parser",
+        "name": "parse_json",
+        "as": "0bf63c87",
+        "title": null,
+        "description": null,
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "sample_document": "{\n  \"id\": \"0014100001L9VQUAA3\",\n  \"attributes\": {\n    \"type\": \"Account\",\n    \"url\": \"https://<hostname>/account/0014100001L9VQUAA3\"\n  },\n  \"name\": \"Canadian National Railways\",\n  \"customerSince\": \"long\",\n  \"billingAddress\": {\n    \"street\": \"string\",\n    \"city\": \"Montreal\",\n    \"stateCode\": \"string\",\n    \"postalCode\": \"H3B 2M9\",\n    \"countryCode\": \"CA\"\n  },\n  \"shippingAddress\": {\n    \"street\": \"string\",\n    \"city\": \"Montreal\",\n    \"stateCode\": \"string\",\n    \"postalCode\": \"H3B 2M9\",\n    \"countryCode\": \"CA\"\n  },\n  \"customerSuccessManager\": [\n    {\n      \"id\": \"1M2M00000ADhFIUA1\",\n      \"firstName\": \"Katie\",\n      \"lastName\": \"Lyons\",\n      \"name\": \"Katie Lyons\",\n      \"email\": \"klyons@rapid7.com\",\n      \"phone\": \"457657547\",\n      \"role\": \"Customer Success Manager (CSM)\",\n      \"attributes\": {\n        \"type\": \"AccountTeamMember\",\n        \"url\": \"https://<hostname>/account/0014100001L9VQUAA3/account-team-members/:accountTeamMemberId\"\n      }\n    }\n  ],\n  \"accountExecutive\": [\n    {\n      \"id\": \"01M2M0000085Y0LUAU\",\n      \"firstName\": \"Catherine\",\n      \"lastName\": \"McNally\",\n      \"name\": \"Catherine McNally\",\n      \"email\": \"catherine_mcnally@rapid7.com\",\n      \"phone\": \"645424456\",\n      \"role\": \"Account Executive (AE)\",\n      \"attributes\": {\n        \"type\": \"AccountTeamMember\",\n        \"url\": \"https://<hostname>/account/0014100001L9VQUAA3/account-team-members/:accountTeamMemberId\"\n      }\n    }\n  ],\n  \"subscriptions\": [\n    {\n      \"id\": \"string\",\n      \"number\": \"SUB-0000050\",\n      \"productId\": \"01tR0000005GVIC\",\n      \"productLine\": \"InsightVM\",\n      \"productToken\": \"string\",\n      \"productCode\": \"ONE-IVM\",\n      \"description\": \"ONE-IVM\",\n      \"quantityUnitOfMeasure\": \"Asset\",\n      \"quantity\": 1500,\n      \"startDate\": \"long\",\n      \"endDate\": \"long\",\n      \"status\": \"ACTIVE\",\n      \"attributes\": {\n        \"type\": \"Subscription\",\n        \"url\": \"https://<hostname>/account/0014100001L9VQUAA3/subscriptions/:subscriptionId\"\n      }\n    }\n  ],\n  \"references\": [\n    {\n      \"source\": \"PLATFORM\",\n      \"customerId\": \"6ad3e674-dba6-4052-92a7-2d7c7df995ae\"\n    },\n    {\n      \"source\": \"NETSUITE\",\n      \"customerId\": \"125835959\"\n    }\n  ]\n}",
+          "document": "#{_('data.salesforce.b4d881bd.body')}"
+        },
+        "extended_output_schema": [
+          {
+            "type": "object",
+            "name": "document",
+            "label": "Document",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "ID",
+                "type": "string",
+                "name": "id"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Type",
+                    "type": "string",
+                    "name": "type"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "URL",
+                    "type": "string",
+                    "name": "url"
+                  }
+                ],
+                "label": "Attributes",
+                "type": "object",
+                "name": "attributes"
+              },
+              {
+                "control_type": "text",
+                "label": "Name",
+                "type": "string",
+                "name": "name"
+              },
+              {
+                "control_type": "text",
+                "label": "Customer since",
+                "type": "string",
+                "name": "customerSince"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Street",
+                    "type": "string",
+                    "name": "street"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "City",
+                    "type": "string",
+                    "name": "city"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "State code",
+                    "type": "string",
+                    "name": "stateCode"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Postal code",
+                    "type": "string",
+                    "name": "postalCode"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Country code",
+                    "type": "string",
+                    "name": "countryCode"
+                  }
+                ],
+                "label": "Billing address",
+                "type": "object",
+                "name": "billingAddress"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Street",
+                    "type": "string",
+                    "name": "street"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "City",
+                    "type": "string",
+                    "name": "city"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "State code",
+                    "type": "string",
+                    "name": "stateCode"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Postal code",
+                    "type": "string",
+                    "name": "postalCode"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Country code",
+                    "type": "string",
+                    "name": "countryCode"
+                  }
+                ],
+                "label": "Shipping address",
+                "type": "object",
+                "name": "shippingAddress"
+              },
+              {
+                "name": "customerSuccessManager",
+                "type": "array",
+                "of": "object",
+                "label": "Customer success manager",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "ID",
+                    "type": "string",
+                    "name": "id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "First name",
+                    "type": "string",
+                    "name": "firstName"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Last name",
+                    "type": "string",
+                    "name": "lastName"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "type": "string",
+                    "name": "name"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Email",
+                    "type": "string",
+                    "name": "email"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Phone",
+                    "type": "string",
+                    "name": "phone"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Role",
+                    "type": "string",
+                    "name": "role"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Type",
+                        "type": "string",
+                        "name": "type"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "URL",
+                        "type": "string",
+                        "name": "url"
+                      }
+                    ],
+                    "label": "Attributes",
+                    "type": "object",
+                    "name": "attributes"
+                  }
+                ]
+              },
+              {
+                "name": "accountExecutive",
+                "type": "array",
+                "of": "object",
+                "label": "Account executive",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "ID",
+                    "type": "string",
+                    "name": "id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "First name",
+                    "type": "string",
+                    "name": "firstName"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Last name",
+                    "type": "string",
+                    "name": "lastName"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "type": "string",
+                    "name": "name"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Email",
+                    "type": "string",
+                    "name": "email"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Phone",
+                    "type": "string",
+                    "name": "phone"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Role",
+                    "type": "string",
+                    "name": "role"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Type",
+                        "type": "string",
+                        "name": "type"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "URL",
+                        "type": "string",
+                        "name": "url"
+                      }
+                    ],
+                    "label": "Attributes",
+                    "type": "object",
+                    "name": "attributes"
+                  }
+                ]
+              },
+              {
+                "name": "subscriptions",
+                "type": "array",
+                "of": "object",
+                "label": "Subscriptions",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "ID",
+                    "type": "string",
+                    "name": "id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Number",
+                    "type": "string",
+                    "name": "number"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Product ID",
+                    "type": "string",
+                    "name": "productId"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Product line",
+                    "type": "string",
+                    "name": "productLine"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Product token",
+                    "type": "string",
+                    "name": "productToken"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Product code",
+                    "type": "string",
+                    "name": "productCode"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Description",
+                    "type": "string",
+                    "name": "description"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Quantity unit of measure",
+                    "type": "string",
+                    "name": "quantityUnitOfMeasure"
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "Quantity",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "quantity"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Start date",
+                    "type": "string",
+                    "name": "startDate"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "End date",
+                    "type": "string",
+                    "name": "endDate"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Status",
+                    "type": "string",
+                    "name": "status"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Type",
+                        "type": "string",
+                        "name": "type"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "URL",
+                        "type": "string",
+                        "name": "url"
+                      }
+                    ],
+                    "label": "Attributes",
+                    "type": "object",
+                    "name": "attributes"
+                  }
+                ]
+              },
+              {
+                "name": "references",
+                "type": "array",
+                "of": "object",
+                "label": "References",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Source",
+                    "type": "string",
+                    "name": "source"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Customer ID",
+                    "type": "string",
+                    "name": "customerId"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "uuid": "43afd766-eb00-4478-a651-144f6b694935"
+      },
+      {
+        "number": 16,
+        "provider": "workato_service",
+        "name": "send_reply",
+        "as": "af6bd48c",
+        "title": null,
+        "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">API - Subscription Visibility -  Account/Subscription type payload for accountId and subscriptionId or accountId</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "reply_type": "success",
+          "reply": {
+            "id": "#{_('data.json_parser.0bf63c87.document.id')}",
+            "attributes": {
+              "type": "#{_('data.json_parser.0bf63c87.document.attributes.type')}",
+              "url": "#{_('data.json_parser.0bf63c87.document.attributes.url')}"
+            },
+            "name": "#{_('data.json_parser.0bf63c87.document.name')}",
+            "billingAddress": {
+              "street": "#{_('data.json_parser.0bf63c87.document.billingAddress.street')}",
+              "city": "#{_('data.json_parser.0bf63c87.document.billingAddress.city')}",
+              "stateCode": "#{_('data.json_parser.0bf63c87.document.billingAddress.stateCode')}",
+              "postalCode": "#{_('data.json_parser.0bf63c87.document.billingAddress.postalCode')}",
+              "countryCode": "#{_('data.json_parser.0bf63c87.document.billingAddress.countryCode')}"
+            },
+            "shippingAddress": {
+              "street": "#{_('data.json_parser.0bf63c87.document.shippingAddress.street')}",
+              "city": "#{_('data.json_parser.0bf63c87.document.shippingAddress.city')}",
+              "stateCode": "#{_('data.json_parser.0bf63c87.document.shippingAddress.stateCode')}",
+              "postalCode": "#{_('data.json_parser.0bf63c87.document.shippingAddress.postalCode')}",
+              "countryCode": "#{_('data.json_parser.0bf63c87.document.shippingAddress.countryCode')}"
+            },
+            "subscriptions": {
+              "____source": "#{_('data.json_parser.0bf63c87.document.subscriptions')}",
+              "id": "#{_('data.json_parser.0bf63c87.document.subscriptions.first.id')}",
+              "number": "#{_('data.json_parser.0bf63c87.document.subscriptions.first.number')}",
+              "productId": "#{_('data.json_parser.0bf63c87.document.subscriptions.first.productId')}",
+              "productLine": "#{_('data.json_parser.0bf63c87.document.subscriptions.first.productLine')}",
+              "productToken": "#{_('data.json_parser.0bf63c87.document.subscriptions.first.productToken')}",
+              "productCode": "#{_('data.json_parser.0bf63c87.document.subscriptions.first.productCode')}",
+              "description": "#{_('data.json_parser.0bf63c87.document.subscriptions.first.description')}",
+              "quantityUnitOfMeasure": "#{_('data.json_parser.0bf63c87.document.subscriptions.first.quantityUnitOfMeasure')}",
+              "quantity": "#{_('data.json_parser.0bf63c87.document.subscriptions.first.quantity')}",
+              "startDate": "#{_('data.json_parser.0bf63c87.document.subscriptions.first.startDate')}",
+              "endDate": "#{_('data.json_parser.0bf63c87.document.subscriptions.first.endDate')}",
+              "status": "#{_('data.json_parser.0bf63c87.document.subscriptions.first.status')}",
+              "attributes": {
+                "type": "#{_('data.json_parser.0bf63c87.document.subscriptions.first.attributes.type')}",
+                "url": "#{_('data.json_parser.0bf63c87.document.subscriptions.first.attributes.url')}"
+              }
+            },
+            "references": {
+              "____source": "#{_('data.json_parser.0bf63c87.document.references')}",
+              "source": "#{_('data.json_parser.0bf63c87.document.references.first.source')}",
+              "customerId": "#{_('data.json_parser.0bf63c87.document.references.first.customerId')}"
+            },
+            "customerSince": "#{_('data.json_parser.0bf63c87.document.customerSince')}",
+            "customerSuccessManager": {
+              "____source": "#{_('data.json_parser.0bf63c87.document.customerSuccessManager')}",
+              "id": "#{_('data.json_parser.0bf63c87.document.customerSuccessManager.first.id')}",
+              "firstName": "#{_('data.json_parser.0bf63c87.document.customerSuccessManager.first.firstName')}",
+              "lastName": "#{_('data.json_parser.0bf63c87.document.customerSuccessManager.first.lastName')}",
+              "name": "#{_('data.json_parser.0bf63c87.document.customerSuccessManager.first.name')}",
+              "email": "#{_('data.json_parser.0bf63c87.document.customerSuccessManager.first.email')}",
+              "phone": "#{_('data.json_parser.0bf63c87.document.customerSuccessManager.first.phone')}",
+              "role": "#{_('data.json_parser.0bf63c87.document.customerSuccessManager.first.role')}",
+              "attributes": {
+                "type": "#{_('data.json_parser.0bf63c87.document.customerSuccessManager.first.attributes.type')}",
+                "url": "#{_('data.json_parser.0bf63c87.document.customerSuccessManager.first.attributes.url')}"
+              }
+            },
+            "accountExecutive": {
+              "____source": "#{_('data.json_parser.0bf63c87.document.accountExecutive')}",
+              "id": "#{_('data.json_parser.0bf63c87.document.accountExecutive.first.id')}",
+              "firstName": "#{_('data.json_parser.0bf63c87.document.accountExecutive.first.firstName')}",
+              "lastName": "#{_('data.json_parser.0bf63c87.document.accountExecutive.first.lastName')}",
+              "name": "#{_('data.json_parser.0bf63c87.document.accountExecutive.first.name')}",
+              "email": "#{_('data.json_parser.0bf63c87.document.accountExecutive.first.email')}",
+              "phone": "#{_('data.json_parser.0bf63c87.document.accountExecutive.first.phone')}",
+              "role": "#{_('data.json_parser.0bf63c87.document.accountExecutive.first.role')}",
+              "attributes": {
+                "type": "#{_('data.json_parser.0bf63c87.document.accountExecutive.first.attributes.type')}",
+                "url": "#{_('data.json_parser.0bf63c87.document.accountExecutive.first.attributes.url')}"
+              }
+            }
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "reply",
+            "label": "Reply",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "ID",
+                "type": "string",
+                "name": "id"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Type",
+                    "type": "string",
+                    "name": "type"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "URL",
+                    "type": "string",
+                    "name": "url"
+                  }
+                ],
+                "label": "Attributes",
+                "type": "object",
+                "name": "attributes"
+              },
+              {
+                "control_type": "text",
+                "label": "Name",
+                "type": "string",
+                "name": "name"
+              },
+              {
+                "control_type": "text",
+                "label": "Customer since",
+                "type": "string",
+                "name": "customerSince"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Street",
+                    "type": "string",
+                    "name": "street"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "City",
+                    "type": "string",
+                    "name": "city"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "State code",
+                    "type": "string",
+                    "name": "stateCode"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Postal code",
+                    "type": "string",
+                    "name": "postalCode"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Country code",
+                    "type": "string",
+                    "name": "countryCode"
+                  }
+                ],
+                "label": "Billing address",
+                "type": "object",
+                "name": "billingAddress"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Street",
+                    "type": "string",
+                    "name": "street"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "City",
+                    "type": "string",
+                    "name": "city"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "State code",
+                    "type": "string",
+                    "name": "stateCode"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Postal code",
+                    "type": "string",
+                    "name": "postalCode"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Country code",
+                    "type": "string",
+                    "name": "countryCode"
+                  }
+                ],
+                "label": "Shipping address",
+                "type": "object",
+                "name": "shippingAddress"
+              },
+              {
+                "name": "customerSuccessManager",
+                "type": "array",
+                "of": "object",
+                "label": "Customer success manager",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "ID",
+                    "type": "string",
+                    "name": "id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "First name",
+                    "type": "string",
+                    "name": "firstName"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Last name",
+                    "type": "string",
+                    "name": "lastName"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "type": "string",
+                    "name": "name"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Email",
+                    "type": "string",
+                    "name": "email"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Phone",
+                    "type": "string",
+                    "name": "phone"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Role",
+                    "type": "string",
+                    "name": "role"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Type",
+                        "type": "string",
+                        "name": "type"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "URL",
+                        "type": "string",
+                        "name": "url"
+                      }
+                    ],
+                    "label": "Attributes",
+                    "type": "object",
+                    "name": "attributes"
+                  }
+                ]
+              },
+              {
+                "name": "accountExecutive",
+                "type": "array",
+                "of": "object",
+                "label": "Account executive",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "ID",
+                    "type": "string",
+                    "name": "id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "First name",
+                    "type": "string",
+                    "name": "firstName"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Last name",
+                    "type": "string",
+                    "name": "lastName"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "type": "string",
+                    "name": "name"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Email",
+                    "type": "string",
+                    "name": "email"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Phone",
+                    "type": "string",
+                    "name": "phone"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Role",
+                    "type": "string",
+                    "name": "role"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Type",
+                        "type": "string",
+                        "name": "type"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "URL",
+                        "type": "string",
+                        "name": "url"
+                      }
+                    ],
+                    "label": "Attributes",
+                    "type": "object",
+                    "name": "attributes"
+                  }
+                ]
+              },
+              {
+                "name": "subscriptions",
+                "type": "array",
+                "of": "object",
+                "label": "Subscriptions",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "ID",
+                    "type": "string",
+                    "name": "id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Number",
+                    "type": "string",
+                    "name": "number"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Product ID",
+                    "type": "string",
+                    "name": "productId"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Product line",
+                    "type": "string",
+                    "name": "productLine"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Product token",
+                    "type": "string",
+                    "name": "productToken"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Product code",
+                    "type": "string",
+                    "name": "productCode"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Description",
+                    "type": "string",
+                    "name": "description"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Quantity unit of measure",
+                    "type": "string",
+                    "name": "quantityUnitOfMeasure"
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "Quantity",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "quantity"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Start date",
+                    "type": "string",
+                    "name": "startDate"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "End date",
+                    "type": "string",
+                    "name": "endDate"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Status",
+                    "type": "string",
+                    "name": "status"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Type",
+                        "type": "string",
+                        "name": "type"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "URL",
+                        "type": "string",
+                        "name": "url"
+                      }
+                    ],
+                    "label": "Attributes",
+                    "type": "object",
+                    "name": "attributes"
+                  }
+                ]
+              },
+              {
+                "name": "references",
+                "type": "array",
+                "of": "object",
+                "label": "References",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Source",
+                    "type": "string",
+                    "name": "source"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Customer ID",
+                    "type": "string",
+                    "name": "customerId"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "uuid": "32196a5a-1af7-489b-8d12-a7a9e6028aef"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Account"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Subscription"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "Notes"
+      },
+      {
+        "name": "custom_column_4",
+        "label": "Calling IP"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_service.c2cedeb1.request.accountId')}",
+      "custom_column_2": "#{_('data.workato_service.c2cedeb1.request.subscriptionId')}",
+      "custom_column_3": "#{_('data.catch.913c1b0e.message')}",
+      "custom_column_4": "#{_('data.workato_service.c2cedeb1.context.calling_ip')}"
+    },
+    "uuid": "2202d4b5-ba92-4e40-acf8-37f2f3b8b4d0"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "salesforce",
+      "account_id": {
+        "zip_name": "connections/salesforce.connection.json",
+        "name": "Salesforce",
+        "folder": "connections"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "json_parser",
+      "account_id": null
+    }
+  ]
+}

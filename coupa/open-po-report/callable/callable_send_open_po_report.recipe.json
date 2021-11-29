@@ -1,0 +1,1345 @@
+{
+  "name": "Callable - Send Open PO Report",
+  "description": "When there is a trigger event, do action",
+  "version": 7,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "ba16b987",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">Callable - Send Open PO Report</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "service_name": "Callable - Send Open PO Report",
+      "request_schema_json": "[{\"name\":\"requisitioner_email\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]",
+      "reply_schema_json": "[{\"name\":\"invoices_in_report\",\"type\":\"integer\",\"optional\":false,\"control_type\":\"integer\"}]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Requisitioner email",
+            "name": "requisitioner_email",
+            "type": "string",
+            "optional": false
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "mysql",
+        "name": "search_rows",
+        "as": "ea0ec1f3",
+        "title": "Select rows in coupa_open_po_report_po",
+        "description": "Select <span class=\"provider\">rows</span> in <span class=\"provider\">coupa_open_po_report_po</span> table in <span class=\"provider\">MySQL</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "table": "coupa_open_po_report_po"
+        },
+        "toggleCfg": {
+          "table": true
+        },
+        "input": {
+          "limit": "1000",
+          "offset": "0",
+          "table": "coupa_open_po_report_po",
+          "where": "=\"req_email LIKE '\" + _('data.workato_service.ba16b987.request.requisitioner_email').gsub(\"'\", \"''\") + \"'\""
+        },
+        "extended_output_schema": [
+          {
+            "type": "array",
+            "name": "rows",
+            "label": "Rows",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "date_time",
+                "label": "date_created",
+                "render_input": "convert_date_time",
+                "parse_output": "parse_date_time",
+                "details": {
+                  "data_type": "datetime",
+                  "column_name": "date_created"
+                },
+                "optional": true,
+                "hint": "datetime",
+                "type": "date_time",
+                "name": "date_created"
+              },
+              {
+                "control_type": "integer",
+                "label": "po_id",
+                "parse_output": "parse_integer_output",
+                "details": {
+                  "data_type": "int(11)",
+                  "column_name": "po_id"
+                },
+                "render_input": "parse_integer_output",
+                "event_title": true,
+                "optional": true,
+                "hint": "int(11), primary key",
+                "type": "integer",
+                "name": "po_id"
+              },
+              {
+                "control_type": "integer",
+                "label": "po_number",
+                "parse_output": "parse_integer_output",
+                "details": {
+                  "data_type": "int(11)",
+                  "column_name": "po_number"
+                },
+                "render_input": "parse_integer_output",
+                "optional": true,
+                "hint": "int(11)",
+                "type": "integer",
+                "name": "po_number"
+              },
+              {
+                "control_type": "text",
+                "label": "report_currency",
+                "details": {
+                  "data_type": "varchar(45)",
+                  "column_name": "report_currency"
+                },
+                "optional": true,
+                "hint": "varchar(45)",
+                "type": "string",
+                "name": "report_currency"
+              },
+              {
+                "control_type": "text",
+                "label": "req_currency",
+                "details": {
+                  "data_type": "varchar(45)",
+                  "column_name": "req_currency"
+                },
+                "optional": true,
+                "hint": "varchar(45)",
+                "type": "string",
+                "name": "req_currency"
+              },
+              {
+                "control_type": "text",
+                "label": "req_email",
+                "details": {
+                  "data_type": "varchar(100)",
+                  "column_name": "req_email"
+                },
+                "optional": true,
+                "hint": "varchar(100)",
+                "type": "string",
+                "name": "req_email"
+              },
+              {
+                "control_type": "integer",
+                "label": "req_id",
+                "parse_output": "parse_integer_output",
+                "details": {
+                  "data_type": "int(11)",
+                  "column_name": "req_id"
+                },
+                "render_input": "parse_integer_output",
+                "optional": true,
+                "hint": "int(11)",
+                "type": "integer",
+                "name": "req_id"
+              },
+              {
+                "control_type": "number",
+                "label": "total_invoiced",
+                "parse_output": "parse_numeric_output",
+                "details": {
+                  "data_type": "double",
+                  "column_name": "total_invoiced"
+                },
+                "render_input": "parse_numeric_output",
+                "optional": true,
+                "hint": "double",
+                "type": "number",
+                "name": "total_invoiced"
+              },
+              {
+                "control_type": "number",
+                "label": "total_po",
+                "parse_output": "parse_numeric_output",
+                "details": {
+                  "data_type": "double",
+                  "column_name": "total_po"
+                },
+                "render_input": "parse_numeric_output",
+                "optional": true,
+                "hint": "double",
+                "type": "number",
+                "name": "total_po"
+              },
+              {
+                "control_type": "number",
+                "label": "total_remaining",
+                "parse_output": "parse_numeric_output",
+                "details": {
+                  "data_type": "double",
+                  "column_name": "total_remaining"
+                },
+                "render_input": "parse_numeric_output",
+                "optional": true,
+                "hint": "double",
+                "type": "number",
+                "name": "total_remaining"
+              },
+              {
+                "control_type": "number",
+                "label": "total_req",
+                "parse_output": "parse_numeric_output",
+                "details": {
+                  "data_type": "double",
+                  "column_name": "total_req"
+                },
+                "render_input": "parse_numeric_output",
+                "optional": true,
+                "hint": "double",
+                "type": "number",
+                "name": "total_req"
+              },
+              {
+                "control_type": "text",
+                "label": "vendor_name",
+                "details": {
+                  "data_type": "varchar(100)",
+                  "column_name": "vendor_name"
+                },
+                "optional": true,
+                "hint": "varchar(100)",
+                "type": "string",
+                "name": "vendor_name"
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "table",
+          "where",
+          "limit",
+          "offset"
+        ],
+        "uuid": "b1b2b960-adeb-42cd-a6bb-fece358a5e02"
+      },
+      {
+        "number": 2,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "greater_than",
+              "lhs": "#{_('data.mysql.ea0ec1f3.rows.first.____Size', 'list_meta', '____Size', 'data.mysql.ea0ec1f3.rows')}",
+              "rhs": "0"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 3,
+            "as": "a7539391",
+            "keyword": "foreach",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "clear_scope": "true",
+            "input": {
+            },
+            "block": [
+              {
+                "number": 4,
+                "provider": "workato_variable",
+                "name": "declare_variable",
+                "as": "f9fa8cd7",
+                "title": "Create variable currency",
+                "description": "Create variable <span class=\"provider\">currency</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "string",
+                  "name": "currency",
+                  "value": "#{_('data.foreach.a7539391.report_currency')}"
+                },
+                "extended_output_schema": [
+                  {
+                    "type": "string",
+                    "name": "value",
+                    "control_type": "text",
+                    "label": "currency"
+                  }
+                ],
+                "extended_input_schema": [
+                  {
+                    "type": "string",
+                    "name": "value",
+                    "control_type": "text",
+                    "label": "Default value",
+                    "hint": "Default value for the variable",
+                    "sticky": true,
+                    "optional": true,
+                    "strip_interpolation": true
+                  }
+                ],
+                "uuid": "93b098fe-6005-45b5-8615-f4b4527b291b"
+              },
+              {
+                "number": 5,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "or",
+                  "conditions": [
+                    {
+                      "operand": "blank",
+                      "lhs": "#{_('data.workato_variable.f9fa8cd7.value')}",
+                      "rhs": null
+                    },
+                    {
+                      "operand": "equals_to",
+                      "lhs": "#{_('data.workato_variable.f9fa8cd7.value')}",
+                      "rhs": "accounting_currency"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 6,
+                    "provider": "workato_variable",
+                    "name": "update_variable",
+                    "as": "8ed45318",
+                    "title": "Update variable currency",
+                    "description": "Update variable <span class=\"provider\">currency</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "name": "currency (step 3)"
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "name": "93b098fe-6005-45b5-8615-f4b4527b291b:f9fa8cd7",
+                      "value": "USD"
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "string",
+                        "name": "value",
+                        "control_type": "text",
+                        "label": "Value",
+                        "hint": "Provide value for the variable",
+                        "strip_interpolation": true
+                      }
+                    ],
+                    "uuid": "01350fbb-ec9b-4833-904d-d3472cc9e2e1"
+                  }
+                ],
+                "comment": "If the currency is not defined or \"accounting_currency\", use USD",
+                "uuid": "194119d8-3d5a-4c8e-b40e-4763fc1673b6"
+              },
+              {
+                "number": 7,
+                "provider": "lookup_table",
+                "name": "search_entries",
+                "as": "17fd443f",
+                "title": null,
+                "description": "\n      Search\n      <span class=\"provider\">entries</span>\n      in\n      <span class=\"provider\">CURRENCY_DISPLAY</span>\n      lookup table\n    ",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "lookup_table_id": "CURRENCY_DISPLAY"
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "lookup_table_id": {
+                    "zip_name": "currency_display.lookup_table.json",
+                    "name": "CURRENCY_DISPLAY",
+                    "folder": ""
+                  },
+                  "parameters": {
+                    "col1": "#{_('data.workato_variable.f9fa8cd7.value')}"
+                  }
+                },
+                "extended_output_schema": [
+                  {
+                    "type": "array",
+                    "name": "entries",
+                    "label": "Entries",
+                    "of": "object",
+                    "properties": [
+                      {
+                        "control_type": "number",
+                        "label": "Entry ID",
+                        "parse_output": "integer_conversion",
+                        "type": "integer",
+                        "name": "id"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "code",
+                            "name": "col1",
+                            "type": "string",
+                            "sticky": true
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "unit",
+                            "name": "col2",
+                            "type": "string",
+                            "sticky": true
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "separators",
+                            "name": "col3",
+                            "type": "string",
+                            "sticky": true
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "precision",
+                            "name": "col4",
+                            "type": "string",
+                            "sticky": true
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "format",
+                            "name": "col5",
+                            "type": "string",
+                            "sticky": true
+                          }
+                        ],
+                        "label": "Entry",
+                        "type": "object",
+                        "name": "entry"
+                      }
+                    ]
+                  }
+                ],
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "parameters",
+                    "label": "Search by",
+                    "hint": "Provide one or more entry fields to search the entry",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "code",
+                        "name": "col1",
+                        "type": "string",
+                        "sticky": true,
+                        "optional": true,
+                        "parent": "parameters"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "unit",
+                        "name": "col2",
+                        "type": "string",
+                        "sticky": true,
+                        "optional": true,
+                        "parent": "parameters"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "separators",
+                        "name": "col3",
+                        "type": "string",
+                        "sticky": true,
+                        "optional": true,
+                        "parent": "parameters"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "precision",
+                        "name": "col4",
+                        "type": "string",
+                        "sticky": true,
+                        "optional": true,
+                        "parent": "parameters"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "format",
+                        "name": "col5",
+                        "type": "string",
+                        "sticky": true,
+                        "optional": true,
+                        "parent": "parameters"
+                      }
+                    ]
+                  }
+                ],
+                "visible_config_fields": [
+                  "lookup_table_id",
+                  "parameters.col1"
+                ],
+                "hidden_config_fields": [
+                  "parameters.col2",
+                  "parameters.col3",
+                  "parameters.col4",
+                  "parameters.col5"
+                ],
+                "uuid": "b1172de6-c0a8-4dd4-9c57-94bb76e8e8b1"
+              },
+              {
+                "number": 8,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "equals_to",
+                      "lhs": "#{_('data.lookup_table.17fd443f.entries.first.____Size', 'list_meta', '____Size', 'data.lookup_table.17fd443f.entries')}",
+                      "rhs": "0"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 9,
+                    "provider": "workato_list",
+                    "name": "accumulate_list_items",
+                    "as": "a52d382c",
+                    "title": "Accumulate items to notes list",
+                    "description": "Accumulate <span class=\"provider\">items</span> to <span class=\"provider\">notes</span> list",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "name": "notes",
+                      "list_item": {
+                        "schema": "[{\"name\":\"note\",\"type\":\"string\",\"optional\":true,\"label\":\"note\",\"control_type\":\"text\"}]",
+                        "data": {
+                          "note": "Currency not found: #{_('data.workato_variable.f9fa8cd7.value')}"
+                        }
+                      }
+                    },
+                    "extended_output_schema": [
+                      {
+                        "type": "array",
+                        "name": "list_items",
+                        "label": "Items",
+                        "of": "object",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "note",
+                            "name": "note",
+                            "type": "string",
+                            "optional": true
+                          }
+                        ]
+                      }
+                    ],
+                    "extended_input_schema": [
+                      {
+                        "type": "object",
+                        "name": "list_item",
+                        "control_type": "form-schema-builder",
+                        "label": "List item fields",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Schema",
+                            "extends_schema": true,
+                            "type": "string",
+                            "name": "schema",
+                            "parent": "list_item"
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "note",
+                                "name": "note",
+                                "type": "string",
+                                "optional": true,
+                                "parent": "list_item.data"
+                              }
+                            ],
+                            "label": "Data",
+                            "type": "object",
+                            "name": "data",
+                            "parent": "list_item"
+                          }
+                        ],
+                        "override": true
+                      }
+                    ],
+                    "visible_config_fields": [
+                      "name",
+                      "list_item.data.note"
+                    ],
+                    "uuid": "772a49fd-21e8-43df-b973-b208cc9a8133"
+                  }
+                ],
+                "comment": "If the currency was not found, add a note",
+                "uuid": "b234f6d4-78d2-4db8-8ca1-95ce503dcdf7"
+              },
+              {
+                "number": 10,
+                "provider": "workato_list",
+                "name": "accumulate_list_items",
+                "as": "d59ffd54",
+                "title": "Accumulate items to purchase_orders list",
+                "description": "Accumulate <span class=\"provider\">items</span> to <span class=\"provider\">purchase_orders</span> list",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "name": "purchase_orders",
+                  "list_item": {
+                    "schema": "[{\"name\":\"po_id\",\"type\":\"string\",\"optional\":true,\"label\":\"po_id\",\"control_type\":\"text\"},{\"name\":\"po_number\",\"type\":\"string\",\"optional\":true,\"label\":\"po_number\",\"control_type\":\"text\"},{\"name\":\"date_created\",\"type\":\"string\",\"optional\":true,\"label\":\"date_created\",\"control_type\":\"text\"},{\"name\":\"vendor_name\",\"type\":\"string\",\"optional\":true,\"label\":\"vendor_name\",\"control_type\":\"text\"},{\"name\":\"total_po\",\"type\":\"string\",\"optional\":true,\"label\":\"total_po\",\"control_type\":\"text\"},{\"name\":\"total_invoiced\",\"type\":\"string\",\"optional\":true,\"label\":\"total_invoiced\",\"control_type\":\"text\"},{\"name\":\"total_remaining\",\"type\":\"string\",\"optional\":true,\"label\":\"total_remaining\",\"control_type\":\"text\"}]",
+                    "data": {
+                      "po_id": "#{_('data.foreach.a7539391.po_id')}",
+                      "po_number": "#{_('data.foreach.a7539391.po_number')}",
+                      "date_created": "=_('data.foreach.a7539391.date_created').in_time_zone(\"America/New_York\").strftime(\"%Y-%-m-%d\")",
+                      "vendor_name": "#{_('data.foreach.a7539391.vendor_name')}",
+                      "total_po": "=_('data.lookup_table.17fd443f.entries.first.id').present? ? _('data.foreach.a7539391.total_po').to_currency( unit: _('data.lookup_table.17fd443f.entries.first.entry.col2'), delimiter: _('data.lookup_table.17fd443f.entries.first.entry.col3').split(\";\")[0], separator: _('data.lookup_table.17fd443f.entries.first.entry.col3').split(\";\")[1], precision: _('data.lookup_table.17fd443f.entries.first.entry.col4').to_i, format: _('data.lookup_table.17fd443f.entries.first.entry.col5')).to_s+\" \"+_('data.lookup_table.17fd443f.entries.first.entry.col1') : _('data.foreach.a7539391.total_po').to_s + \" \" + _('data.workato_variable.f9fa8cd7.value')",
+                      "total_invoiced": "=_('data.lookup_table.17fd443f.entries.first.id').present? ? _('data.foreach.a7539391.total_invoiced').to_currency( unit: _('data.lookup_table.17fd443f.entries.first.entry.col2'), delimiter: _('data.lookup_table.17fd443f.entries.first.entry.col3').split(\";\")[0], separator: _('data.lookup_table.17fd443f.entries.first.entry.col3').split(\";\")[1], precision: _('data.lookup_table.17fd443f.entries.first.entry.col4').to_i, format: _('data.lookup_table.17fd443f.entries.first.entry.col5')).to_s+\" \"+_('data.lookup_table.17fd443f.entries.first.entry.col1') : _('data.foreach.a7539391.total_invoiced').to_s + \" \" + _('data.workato_variable.f9fa8cd7.value')",
+                      "total_remaining": "=_('data.lookup_table.17fd443f.entries.first.id').present? ? _('data.foreach.a7539391.total_remaining').to_currency( unit: _('data.lookup_table.17fd443f.entries.first.entry.col2'), delimiter: _('data.lookup_table.17fd443f.entries.first.entry.col3').split(\";\")[0], separator: _('data.lookup_table.17fd443f.entries.first.entry.col3').split(\";\")[1], precision: _('data.lookup_table.17fd443f.entries.first.entry.col4').to_i, format: _('data.lookup_table.17fd443f.entries.first.entry.col5')).to_s+\" \"+_('data.lookup_table.17fd443f.entries.first.entry.col1') : _('data.foreach.a7539391.total_remaining').to_s + \" \" + _('data.workato_variable.f9fa8cd7.value')"
+                    }
+                  }
+                },
+                "extended_output_schema": [
+                  {
+                    "type": "array",
+                    "name": "list_items",
+                    "label": "Items",
+                    "of": "object",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "po_id",
+                        "name": "po_id",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "po_number",
+                        "name": "po_number",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "date_created",
+                        "name": "date_created",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "vendor_name",
+                        "name": "vendor_name",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "total_po",
+                        "name": "total_po",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "total_invoiced",
+                        "name": "total_invoiced",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "total_remaining",
+                        "name": "total_remaining",
+                        "type": "string",
+                        "optional": true
+                      }
+                    ]
+                  }
+                ],
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "list_item",
+                    "control_type": "form-schema-builder",
+                    "label": "List item fields",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Schema",
+                        "extends_schema": true,
+                        "type": "string",
+                        "name": "schema",
+                        "parent": "list_item"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "po_id",
+                            "name": "po_id",
+                            "type": "string",
+                            "optional": true,
+                            "parent": "list_item.data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "po_number",
+                            "name": "po_number",
+                            "type": "string",
+                            "optional": true,
+                            "parent": "list_item.data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "date_created",
+                            "name": "date_created",
+                            "type": "string",
+                            "optional": true,
+                            "parent": "list_item.data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "vendor_name",
+                            "name": "vendor_name",
+                            "type": "string",
+                            "optional": true,
+                            "parent": "list_item.data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "total_po",
+                            "name": "total_po",
+                            "type": "string",
+                            "optional": true,
+                            "parent": "list_item.data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "total_invoiced",
+                            "name": "total_invoiced",
+                            "type": "string",
+                            "optional": true,
+                            "parent": "list_item.data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "total_remaining",
+                            "name": "total_remaining",
+                            "type": "string",
+                            "optional": true,
+                            "parent": "list_item.data"
+                          }
+                        ],
+                        "label": "Data",
+                        "type": "object",
+                        "name": "data",
+                        "parent": "list_item"
+                      }
+                    ],
+                    "override": true
+                  }
+                ],
+                "visible_config_fields": [
+                  "name",
+                  "list_item.data.po_id",
+                  "list_item",
+                  "list_item.schema",
+                  "list_item.data.po_number",
+                  "list_item.data.date_created",
+                  "list_item.data.vendor_name",
+                  "list_item.data.total_po",
+                  "list_item.data.total_invoiced",
+                  "list_item.data.total_remaining"
+                ],
+                "uuid": "cd896149-6353-46b2-9596-8415d069e332"
+              }
+            ],
+            "source": "#{_('data.mysql.ea0ec1f3.rows')}",
+            "comment": "Loop through each PO to get the currency information",
+            "uuid": "6e80eb4a-a8bc-45ae-845b-d556216f387c"
+          },
+          {
+            "number": 11,
+            "provider": "workato_template",
+            "name": "create_document",
+            "as": "42a73406",
+            "title": null,
+            "description": "Create <span class=\"provider\">message</span> using <span class=\"provider\">Email - Open PO Report</span> template",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "template_id": "Email - Open PO Report"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "template_id": {
+                "zip_name": "email_open_po_report.workato_template.json",
+                "name": "Email - Open PO Report",
+                "folder": ""
+              },
+              "template_input": {
+                "purchase_orders": {
+                  "____source": "#{_('data.workato_list.d59ffd54.list_items')}",
+                  "po_number": "#{_('data.workato_list.d59ffd54.list_items.first.po_number')}",
+                  "date_created": "#{_('data.workato_list.d59ffd54.list_items.first.date_created')}",
+                  "vendor_name": "#{_('data.workato_list.d59ffd54.list_items.first.vendor_name')}",
+                  "total_po": "#{_('data.workato_list.d59ffd54.list_items.first.total_po')}",
+                  "total_invoiced": "#{_('data.workato_list.d59ffd54.list_items.first.total_invoiced')}",
+                  "total_remaining": "#{_('data.workato_list.d59ffd54.list_items.first.total_remaining')}",
+                  "po_id": "#{_('data.workato_list.d59ffd54.list_items.first.po_id')}"
+                },
+                "requisitioner_email": "#{_('data.workato_service.ba16b987.request.requisitioner_email')}",
+                "coupa_url": "=lookup(\"COUPA_VARIABLES\", key: \"open_po_report.coupa_url\")[\"value\"]"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "template_input",
+                "label": "Template input",
+                "properties": [
+                  {
+                    "name": "purchase_orders",
+                    "type": "array",
+                    "of": "object",
+                    "label": "Purchase orders",
+                    "optional": false,
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Po ID",
+                        "name": "po_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "template_input.purchase_orders"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Po number",
+                        "name": "po_number",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "template_input.purchase_orders"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Date created",
+                        "name": "date_created",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "template_input.purchase_orders"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Vendor name",
+                        "name": "vendor_name",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "template_input.purchase_orders"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Total po",
+                        "name": "total_po",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "template_input.purchase_orders"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Total invoiced",
+                        "name": "total_invoiced",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "template_input.purchase_orders"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Total remaining",
+                        "name": "total_remaining",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "template_input.purchase_orders"
+                      }
+                    ],
+                    "parent": "template_input"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Requisitioner email",
+                    "name": "requisitioner_email",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "template_input"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Coupa URL",
+                    "name": "coupa_url",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "template_input"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "template_id",
+              "template_input",
+              "template_input.purchase_orders",
+              "template_input.purchase_orders.po_number",
+              "template_input.purchase_orders.date_created",
+              "template_input.purchase_orders.vendor_name",
+              "template_input.purchase_orders.total_po",
+              "template_input.purchase_orders.total_invoiced",
+              "template_input.purchase_orders.total_remaining",
+              "template_input.requisitioner_email",
+              "template_input.coupa_url",
+              "template_input.purchase_orders.po_id"
+            ],
+            "uuid": "f7b58c00-73ab-4a44-9842-febbe37f2d63"
+          },
+          {
+            "number": 12,
+            "provider": "workato_variable",
+            "name": "declare_variable",
+            "as": "2cc24675",
+            "title": "Create variable email",
+            "description": "Create variable <span class=\"provider\">email</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "string",
+              "name": "email",
+              "value": "#{_('data.workato_service.ba16b987.request.requisitioner_email')}"
+            },
+            "extended_output_schema": [
+              {
+                "type": "string",
+                "name": "value",
+                "control_type": "text",
+                "label": "email"
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "value",
+                "control_type": "text",
+                "label": "Default value",
+                "hint": "Default value for the variable",
+                "sticky": true,
+                "optional": true,
+                "strip_interpolation": true
+              }
+            ],
+            "comment": "Create a variable to use for the email address to which the report should be sent",
+            "uuid": "44fb9a93-7b06-4a2f-b462-9e54091ae9cd"
+          },
+          {
+            "number": 13,
+            "provider": "lookup_table",
+            "name": "search_entries",
+            "as": "f3305a9d",
+            "title": null,
+            "description": "\n      Search\n      <span class=\"provider\">entries</span>\n      in\n      <span class=\"provider\">COUPA_VARIABLES</span>\n      lookup table\n    ",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "lookup_table_id": "COUPA_VARIABLES"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "lookup_table_id": {
+                "zip_name": "coupa_variables.lookup_table.json",
+                "name": "COUPA_VARIABLES",
+                "folder": ""
+              },
+              "parameters": {
+                "col1": "open_po_report.testing_email"
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "array",
+                "name": "entries",
+                "label": "Entries",
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "Entry ID",
+                    "parse_output": "integer_conversion",
+                    "type": "integer",
+                    "name": "id"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "key",
+                        "name": "col1",
+                        "type": "string",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "value",
+                        "name": "col2",
+                        "type": "string",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "type",
+                        "name": "col3",
+                        "type": "string",
+                        "sticky": true
+                      }
+                    ],
+                    "label": "Entry",
+                    "type": "object",
+                    "name": "entry"
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "parameters",
+                "label": "Search by",
+                "hint": "Provide one or more entry fields to search the entry",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "key",
+                    "name": "col1",
+                    "type": "string",
+                    "sticky": true,
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "value",
+                    "name": "col2",
+                    "type": "string",
+                    "sticky": true,
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "type",
+                    "name": "col3",
+                    "type": "string",
+                    "sticky": true,
+                    "optional": true
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "lookup_table_id",
+              "parameters.col1",
+              "parameters"
+            ],
+            "hidden_config_fields": [
+              "parameters.col2",
+              "parameters.col3"
+            ],
+            "comment": "Check to see if an email address is hard-coded to receive the Open PO Report (used for testing purposes)",
+            "uuid": "7c425fd8-aaee-4dbf-b3e3-c58d2d474f06"
+          },
+          {
+            "number": 14,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "present",
+                  "lhs": "#{_('data.lookup_table.f3305a9d.entries.first.entry.col2')}",
+                  "rhs": null
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 15,
+                "provider": "workato_variable",
+                "name": "update_variable",
+                "as": "e3bf444b",
+                "title": "Update variable email",
+                "description": "Update variable <span class=\"provider\">email</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "name": "email (step 4)"
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "name": "44fb9a93-7b06-4a2f-b462-9e54091ae9cd:2cc24675",
+                  "value": "#{_('data.lookup_table.f3305a9d.entries.first.entry.col2')}"
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "string",
+                    "name": "value",
+                    "control_type": "text",
+                    "label": "Value",
+                    "hint": "Provide value for the variable",
+                    "strip_interpolation": true
+                  }
+                ],
+                "uuid": "1188f46f-720c-499e-aca7-29f1a7a97ca5"
+              }
+            ],
+            "comment": "If an email is hard-coded, send the PO Report to the specified email address",
+            "uuid": "1db49623-5f17-41d2-97ec-d1f352f36f4f"
+          },
+          {
+            "number": 16,
+            "provider": "email",
+            "name": "send_mail",
+            "as": "8037c134",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "email_type": "html",
+              "to": "=_('data.workato_variable.2cc24675.value')",
+              "subject": "Open PO Report",
+              "body": "#{_('data.workato_template.42a73406.document')}"
+            },
+            "visible_config_fields": [
+              "email_type"
+            ],
+            "uuid": "f7b90d93-2c9c-4fdf-a430-dc6a559c1334"
+          }
+        ],
+        "uuid": "a4ca1fd7-43bf-401b-bf4e-2c085bc8ead5"
+      },
+      {
+        "number": 17,
+        "provider": "mysql",
+        "name": "upsert_rows",
+        "as": "62530d9a",
+        "title": "Upsert row in coupa_open_po_report_req_email",
+        "description": "Upsert <span class=\"provider\">row</span> in <span class=\"provider\">coupa_open_po_report_req_email</span> table in <span class=\"provider\">MySQL</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "table": "coupa_open_po_report_req_email"
+        },
+        "toggleCfg": {
+          "table": true
+        },
+        "input": {
+          "table": "coupa_open_po_report_req_email",
+          "columns": {
+            "email": "#{_('data.workato_service.ba16b987.request.requisitioner_email')}",
+            "po_count": "#{_('data.mysql.ea0ec1f3.rows.first.____Size', 'list_meta', '____Size', 'data.mysql.ea0ec1f3.rows')}"
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "columns",
+            "label": "Columns",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "email",
+                "details": {
+                  "data_type": "varchar(100)",
+                  "column_name": "email"
+                },
+                "event_title": true,
+                "optional": true,
+                "hint": "varchar(100), primary key",
+                "type": "string",
+                "name": "email"
+              },
+              {
+                "control_type": "number",
+                "label": "po_count",
+                "parse_output": "parse_integer_output",
+                "details": {
+                  "data_type": "int(11)",
+                  "column_name": "po_count"
+                },
+                "render_input": "parse_integer_output",
+                "optional": true,
+                "hint": "int(11)",
+                "type": "integer",
+                "name": "po_count"
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "table",
+          "columns",
+          "columns.email",
+          "columns.po_count"
+        ],
+        "comment": "Add the invoice count for the summary email",
+        "uuid": "5bb44d16-17d0-4225-8c5a-455c14ce11c7"
+      },
+      {
+        "number": 18,
+        "provider": "workato_service",
+        "name": "send_reply",
+        "as": "1adfbac6",
+        "title": null,
+        "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Callable - Send Open PO Report</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "reply_type": "success",
+          "reply": {
+            "invoices_in_report": "#{_('data.mysql.ea0ec1f3.rows.first.____Size', 'list_meta', '____Size', 'data.mysql.ea0ec1f3.rows')}"
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "reply",
+            "label": "Reply",
+            "properties": [
+              {
+                "control_type": "integer",
+                "label": "Invoices in report",
+                "parse_output": "integer_conversion",
+                "name": "invoices_in_report",
+                "type": "integer",
+                "optional": false
+              }
+            ]
+          }
+        ],
+        "uuid": "127ff820-164a-491d-b9ec-996ec8551592"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Req Email"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "# POs"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "Notes"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_service.ba16b987.request.requisitioner_email')}",
+      "custom_column_2": "#{_('data.mysql.ea0ec1f3.rows.first.____Size', 'list_meta', '____Size', 'data.mysql.ea0ec1f3.rows')}",
+      "custom_column_3": "=_('data.workato_list.a52d382c.list_items').present? ? _('data.workato_list.a52d382c.list_items').join(\", \") : \"\""
+    },
+    "uuid": "b2b5a4b1-428c-48e1-bcd1-7c70470b7509"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "mysql",
+      "account_id": {
+        "zip_name": "resources/mysql.connection.json",
+        "name": "MySQL",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "email",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_template",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "lookup_table",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_list",
+      "account_id": null
+    }
+  ]
+}

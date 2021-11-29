@@ -1,0 +1,606 @@
+{
+  "name": "Salesforce Case (Premium Support) - Slack Message",
+  "description": "When there is a new record in Salesforce, do action",
+  "version": 6,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "salesforce",
+    "name": "new_custom_object",
+    "as": "f7b754a1",
+    "title": "New Case",
+    "description": "New <span class=\"provider\">Case</span> in <span class=\"provider\">Salesforce</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+      "sobject_name": "Case",
+      "field_list": [
+        {
+          "label": "Case ID",
+          "value": "Id"
+        },
+        {
+          "label": "Case number",
+          "value": "CaseNumber"
+        },
+        {
+          "label": "Severity",
+          "value": "Priority"
+        },
+        {
+          "label": "Subject",
+          "value": "Subject"
+        },
+        {
+          "label": "Account ID",
+          "value": "AccountId"
+        },
+        {
+          "label": "Account.Account  name",
+          "value": "Account$Account ID.Name"
+        },
+        {
+          "label": "Product",
+          "value": "Product__c"
+        },
+        {
+          "label": "Description",
+          "value": "Description"
+        },
+        {
+          "label": "Account.Premium  support",
+          "value": "Account$Account ID.PremiumSupport__c"
+        },
+        {
+          "label": "Record type ID",
+          "value": "RecordTypeId"
+        },
+        {
+          "label": "Created date",
+          "value": "CreatedDate"
+        }
+      ],
+      "table_list": [
+        {
+          "label": "Account",
+          "value": "Account"
+        }
+      ]
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "sobject_name": "Case",
+      "since_offset": "-86400",
+      "field_list": "Id\nCaseNumber\nPriority\nSubject\nAccountId\nAccount$Account ID.Name\nProduct__c\nDescription\nAccount$Account ID.PremiumSupport__c\nRecordTypeId\nCreatedDate",
+      "table_list": "Account"
+    },
+    "filter": {
+      "conditions": [
+        {
+          "operand": "equals_to",
+          "lhs": "#{_('data.salesforce.f7b754a1.RecordTypeId')}",
+          "rhs": "=lookup(\"SALESFORCE_VARIABLES\", \"key\": \"case.recordtype.StandardCase\")[\"value\"]"
+        },
+        {
+          "operand": "is_true",
+          "lhs": "#{_('data.salesforce.f7b754a1.Account.PremiumSupport__c')}",
+          "rhs": null
+        }
+      ],
+      "operand": "and",
+      "type": "compound"
+    },
+    "extended_output_schema": [
+      {
+        "type": "string",
+        "name": "AccountId",
+        "control_type": "text",
+        "label": "Account ID",
+        "optional": true,
+        "custom": false,
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "string",
+        "name": "Id",
+        "control_type": "text",
+        "label": "Case ID",
+        "optional": true,
+        "custom": false,
+        "key_scope": "Case",
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "CaseNumber",
+        "control_type": "text",
+        "label": "Case Number",
+        "optional": true,
+        "custom": false,
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "date_time",
+        "name": "CreatedDate",
+        "control_type": "date_time",
+        "label": "Created Date",
+        "optional": true,
+        "custom": false,
+        "render_input": "render_iso8601_timestamp",
+        "parse_output": "parse_iso8601_timestamp",
+        "sfdc_createable": true,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "Description",
+        "control_type": "text-area",
+        "label": "Description",
+        "optional": true,
+        "custom": false,
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "date_time",
+        "name": "LastModifiedDate",
+        "control_type": "date_time",
+        "label": "Last Modified Date",
+        "optional": true,
+        "custom": false,
+        "render_input": "render_iso8601_timestamp",
+        "parse_output": "parse_iso8601_timestamp",
+        "sfdc_createable": true,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "RecordTypeId",
+        "control_type": "text",
+        "label": "Record Type ID",
+        "optional": true,
+        "custom": false,
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "string",
+        "name": "Priority",
+        "control_type": "select",
+        "label": "Severity",
+        "pick_list": "sobject_field_values_list",
+        "pick_list_params": {
+          "sobject_name": "\"Case\""
+        },
+        "optional": true,
+        "custom": false,
+        "toggle_hint": "Select from list",
+        "toggle_field": {
+          "control_type": "text",
+          "label": "Severity",
+          "toggle_hint": "Enter custom value",
+          "optional": true,
+          "custom": false,
+          "sfdc_createable": true,
+          "sfdc_updateable": true,
+          "type": "string",
+          "name": "Priority"
+        },
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "string",
+        "name": "Subject",
+        "control_type": "text",
+        "label": "Subject",
+        "optional": true,
+        "custom": false,
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "date_time",
+        "name": "SystemModstamp",
+        "control_type": "date_time",
+        "label": "System Modstamp",
+        "optional": true,
+        "custom": false,
+        "render_input": "render_iso8601_timestamp",
+        "parse_output": "parse_iso8601_timestamp",
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "Product__c",
+        "control_type": "select",
+        "label": "Product",
+        "pick_list": "sobject_field_values_list",
+        "pick_list_params": {
+          "sobject_name": "\"Case\""
+        },
+        "optional": true,
+        "custom": true,
+        "toggle_hint": "Select from list",
+        "toggle_field": {
+          "control_type": "text",
+          "label": "Product",
+          "toggle_hint": "Enter custom value",
+          "optional": true,
+          "custom": true,
+          "sfdc_createable": true,
+          "sfdc_updateable": true,
+          "type": "string",
+          "name": "Product__c"
+        },
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "object",
+        "name": "Account",
+        "label": "Account",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Account Name",
+            "event_title": true,
+            "custom": false,
+            "sfdc_createable": true,
+            "sfdc_updateable": true,
+            "type": "string",
+            "name": "Name"
+          },
+          {
+            "control_type": "checkbox",
+            "label": "Premium Support",
+            "render_input": {
+            },
+            "parse_output": {
+            },
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Premium Support",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "custom": true,
+              "sfdc_createable": true,
+              "sfdc_updateable": true,
+              "type": "boolean",
+              "name": "PremiumSupport__c"
+            },
+            "optional": true,
+            "custom": true,
+            "sfdc_createable": true,
+            "sfdc_updateable": true,
+            "type": "boolean",
+            "name": "PremiumSupport__c"
+          }
+        ]
+      },
+      {
+        "type": "object",
+        "name": "CombinedAttachments",
+        "label": "Combined attachments",
+        "properties": [
+          {
+            "control_type": "number",
+            "label": "Total size",
+            "parse_output": "integer_conversion",
+            "type": "integer",
+            "name": "totalSize"
+          },
+          {
+            "name": "records",
+            "type": "array",
+            "of": "object",
+            "label": "Files",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "ID",
+                "type": "string",
+                "name": "Id"
+              },
+              {
+                "control_type": "number",
+                "label": "Content size",
+                "parse_output": "integer_conversion",
+                "type": "integer",
+                "name": "ContentSize"
+              },
+              {
+                "control_type": "url",
+                "label": "Content URL",
+                "type": "string",
+                "name": "ContentUrl"
+              },
+              {
+                "control_type": "text",
+                "label": "File extension",
+                "type": "string",
+                "name": "FileExtension"
+              },
+              {
+                "control_type": "text",
+                "label": "File type",
+                "type": "string",
+                "name": "FileType"
+              },
+              {
+                "control_type": "text",
+                "label": "Parent ID",
+                "type": "string",
+                "name": "ParentId"
+              },
+              {
+                "control_type": "text",
+                "label": "Record type",
+                "type": "string",
+                "name": "RecordType"
+              },
+              {
+                "control_type": "text",
+                "label": "Title",
+                "type": "string",
+                "name": "Title"
+              }
+            ]
+          }
+        ],
+        "sfdc_field_type": "CombinedAttachment"
+      }
+    ],
+    "extended_input_schema": [
+      {
+        "type": "string",
+        "name": "since_offset",
+        "control_type": "select",
+        "label": "When first started, this recipe should pick up events from",
+        "hint": "When starting the recipe for the first time, picks up Salesforce records from the specified date and time. <b>Once the recipe has been run or tested, this value cannot be changed.</b>",
+        "default": -3600,
+        "pick_list": [
+          [
+            "Recipe start",
+            0
+          ],
+          [
+            "An hour ago",
+            -3600
+          ],
+          [
+            "Yesterday",
+            -86400
+          ],
+          [
+            "Last week",
+            -604800
+          ],
+          [
+            "Last month",
+            -2629746
+          ],
+          [
+            "Beginning of time",
+            "no_limit"
+          ]
+        ],
+        "toggle_hint": "Select from list",
+        "toggle_field": {
+          "control_type": "date_time",
+          "label": "When first started, this recipe should pick up events from",
+          "render_input": "convert_date_time",
+          "parse_output": "convert_date_time",
+          "toggle_hint": "Enter custom value",
+          "since_field": true,
+          "hint": "When starting the recipe for the first time, picks up Salesforce records from the specified date and time. <b>Once the recipe has been run or tested, this value cannot be changed.</b>",
+          "type": "date_time",
+          "name": "since"
+        },
+        "since_field": true
+      }
+    ],
+    "visible_config_fields": [
+      "sobject_name",
+      "field_list",
+      "since_offset",
+      "table_list"
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "slack_bot",
+        "name": "post_bot_message",
+        "as": "3efe2af0",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+          "channel": true
+        },
+        "input": {
+          "channel": "#premium_support",
+          "message": {
+            "attachment_text": "=",
+            "title_link": "="
+          },
+          "attachment_fields": [
+            {
+              "title": "Case",
+              "value": "=\"<\"+lookup(\"SALESFORCE_VARIABLES\", \"key\": \"salesforce.url\")[\"value\"]+\"lightning/r/Case/\"+\n_('data.salesforce.f7b754a1.Id')+\"/view|\"+_('data.salesforce.f7b754a1.CaseNumber')+\">\""
+            },
+            {
+              "title": "Severity",
+              "value": "#{_('data.salesforce.f7b754a1.Priority')}"
+            },
+            {
+              "title": "Subject",
+              "value": "#{_('data.salesforce.f7b754a1.Subject')}"
+            },
+            {
+              "title": "Account",
+              "value": "=\"<\"+lookup(\"SALESFORCE_VARIABLES\", \"key\": \"salesforce.url\")[\"value\"]+\"lightning/r/Account/\"+_('data.salesforce.f7b754a1.AccountId')+\"/view|\"+_('data.salesforce.f7b754a1.Account.Name')+\">\""
+            },
+            {
+              "title": "Product",
+              "value": "#{_('data.salesforce.f7b754a1.Product__c')}"
+            },
+            {
+              "title": "Description",
+              "value": "#{_('data.salesforce.f7b754a1.Description')}"
+            }
+          ],
+          "text": "Premium Support Case #{_('data.salesforce.f7b754a1.CaseNumber')} has been created."
+        },
+        "visible_config_fields": [
+          "channel",
+          "blocks",
+          "blocks.block_type",
+          "blocks.section_text",
+          "blocks.image_url",
+          "blocks.alt_text",
+          "blocks.button_title",
+          "blocks.bot_command",
+          "blocks.params",
+          "blocks.style",
+          "blocks.attachment_fields",
+          "blocks.placeholder_text",
+          "blocks.menu_type",
+          "blocks.dynamic_menu_recipe",
+          "blocks.field_name",
+          "blocks.options",
+          "blocks.initial_date",
+          "blocks.image_title",
+          "blocks.external_id",
+          "blocks.elements",
+          "blocks.elements.text",
+          "blocks.elements.image_url",
+          "blocks.elements.alt_text",
+          "blocks.actions",
+          "blocks.actions.button_title",
+          "blocks.actions.bot_command",
+          "blocks.actions.params",
+          "blocks.actions.style",
+          "blocks.actions.placeholder_text",
+          "blocks.actions.initial_date",
+          "blocks.actions.field_name",
+          "blocks.actions.options",
+          "blocks.actions.menu_type",
+          "blocks.actions.dynamic_menu_recipe",
+          "blocks.objects",
+          "blocks.objects.blocks",
+          "blocks.objects.blocks.block_type",
+          "blocks.objects.blocks.section_text",
+          "blocks.objects.blocks.image_url",
+          "blocks.objects.blocks.alt_text",
+          "blocks.objects.blocks.button_title",
+          "blocks.objects.blocks.bot_command",
+          "blocks.objects.blocks.params",
+          "blocks.objects.blocks.style",
+          "blocks.objects.blocks.attachment_fields",
+          "blocks.objects.blocks.placeholder_text",
+          "blocks.objects.blocks.menu_type",
+          "blocks.objects.blocks.dynamic_menu_recipe",
+          "blocks.objects.blocks.field_name",
+          "blocks.objects.blocks.options",
+          "blocks.objects.blocks.initial_date",
+          "blocks.objects.blocks.image_title",
+          "blocks.objects.blocks.elements",
+          "blocks.objects.blocks.elements.text",
+          "blocks.objects.blocks.elements.image_url",
+          "blocks.objects.blocks.elements.alt_text",
+          "blocks.objects.blocks.actions",
+          "blocks.objects.blocks.actions.button_title",
+          "blocks.objects.blocks.actions.bot_command",
+          "blocks.objects.blocks.actions.params",
+          "blocks.objects.blocks.actions.style",
+          "blocks.objects.blocks.actions.placeholder_text",
+          "blocks.objects.blocks.actions.initial_date",
+          "blocks.objects.blocks.actions.field_name",
+          "blocks.objects.blocks.actions.options",
+          "blocks.objects.blocks.actions.menu_type",
+          "blocks.objects.blocks.actions.dynamic_menu_recipe",
+          "message.title",
+          "message.title_link",
+          "message.attachment_text",
+          "message.color",
+          "attachment_fields",
+          "attachment_buttons",
+          "attachment_buttons.params",
+          "attachment_pick_list.options.params",
+          "attachment_items.message.attachment_text",
+          "attachment_items.message.color",
+          "attachment_items.attachment_fields",
+          "attachment_items.attachment_buttons",
+          "message",
+          "blocks.attachment_fields.value",
+          "blocks.elements.type",
+          "text"
+        ],
+        "hidden_config_fields": [
+          "blocks.options.title",
+          "blocks.options.bot_command",
+          "blocks.options.params",
+          "blocks.actions.type",
+          "blocks.actions.options.params",
+          "blocks.objects.blocks.attachment_fields.value",
+          "blocks.objects.blocks.options.title",
+          "blocks.objects.blocks.options.bot_command",
+          "blocks.objects.blocks.options.params",
+          "blocks.objects.blocks.elements.type",
+          "blocks.objects.blocks.actions.type",
+          "blocks.objects.blocks.actions.options.params",
+          "attachment_items.message.title",
+          "attachment_items.message.title_link",
+          "attachment_items.attachment_buttons.params",
+          "attachment_items.attachment_pick_list.options.params",
+          "advanced.ts"
+        ],
+        "uuid": "e0b90f47-cfde-419b-9ed5-32fdab614ede"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Case"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Account"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.salesforce.f7b754a1.CaseNumber')}",
+      "custom_column_2": "#{_('data.salesforce.f7b754a1.Account.Name')}"
+    },
+    "uuid": "f2f494ca-5def-4855-b01e-65e585e50604"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "salesforce",
+      "account_id": {
+        "zip_name": "connections/salesforce.connection.json",
+        "name": "Salesforce",
+        "folder": "connections"
+      },
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "slack_bot",
+      "account_id": {
+        "zip_name": "connections/workatointegrations.connection.json",
+        "name": "workatointegrations",
+        "folder": "connections"
+      },
+      "skip_validation": false
+    }
+  ]
+}

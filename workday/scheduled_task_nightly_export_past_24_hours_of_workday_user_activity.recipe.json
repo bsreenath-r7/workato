@@ -1,0 +1,547 @@
+{
+  "name": "Scheduled Task (Nightly) - Export Past 24 Hours of Workday User Activity",
+  "description": "When there is a trigger on a specified schedule, get report from Workday",
+  "version": 4,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "clock",
+    "name": "timer",
+    "as": "2e9a410f",
+    "title": null,
+    "description": null,
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "interval": "1440",
+      "start_at": "2020-07-23T07:00:00-07:00"
+    },
+    "block": [
+      {
+        "number": 1,
+        "provider": "workday",
+        "name": "get_report",
+        "as": "c622b1f3",
+        "title": null,
+        "description": null,
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+          "remove_empty": true,
+          "replace_with_additional": true,
+          "use_automatic_schema": true
+        },
+        "input": {
+          "remove_empty": "true",
+          "replace_with_additional": "false",
+          "report_url": "=lookup(\"WORKDAY_VARIABLES\",\"key\": \"report.user_activity\")[\"value\"]",
+          "use_automatic_schema": "false",
+          "custom_output": "[{\"control_type\":\"text\",\"label\":\"Request time\",\"name\":\"Request_Time\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"System account\",\"name\":\"System_Account\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"IP address\",\"name\":\"IP_Address\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"User agent\",\"name\":\"User_Agent\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Task\",\"name\":\"Task\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Target\",\"name\":\"Target\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Activity category\",\"name\":\"Activity_Category\",\"type\":\"string\",\"optional\":false}]"
+        },
+        "extended_output_schema": [
+          {
+            "type": "array",
+            "name": "report",
+            "label": "Rows",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Request time",
+                "name": "Request_Time",
+                "type": "string",
+                "optional": false
+              },
+              {
+                "control_type": "text",
+                "label": "System account",
+                "name": "System_Account",
+                "type": "string",
+                "optional": false
+              },
+              {
+                "control_type": "text",
+                "label": "IP address",
+                "name": "IP_Address",
+                "type": "string",
+                "optional": false
+              },
+              {
+                "control_type": "text",
+                "label": "User agent",
+                "name": "User_Agent",
+                "type": "string",
+                "optional": false
+              },
+              {
+                "control_type": "text",
+                "label": "Task",
+                "name": "Task",
+                "type": "string",
+                "optional": false
+              },
+              {
+                "control_type": "text",
+                "label": "Target",
+                "name": "Target",
+                "type": "string",
+                "optional": false
+              },
+              {
+                "control_type": "text",
+                "label": "Activity category",
+                "name": "Activity_Category",
+                "type": "string",
+                "optional": false
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "report_url",
+          "custom_input",
+          "custom_output",
+          "remove_empty",
+          "replace_with_additional",
+          "From_Moment",
+          "To_Moment",
+          "use_automatic_schema"
+        ],
+        "comment": "NOTE:  For development purposes, the ISU_Workato connection is used here, but it may be necessary to create a dedicated ISU for this integration.",
+        "uuid": "f52dab1c-b9c9-4b0f-8f29-7d77dcec187b"
+      },
+      {
+        "number": 2,
+        "provider": "logger",
+        "name": "log_message",
+        "as": "65291a57",
+        "title": null,
+        "description": null,
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "message": "Preparing to add  #{_('data.workday.c622b1f3.report.first.____Size', 'list_meta', '____Size', 'data.workday.c622b1f3.report')} rows of user activity.\nJob Start time: #{_('data.clock.2e9a410f.time')}"
+        },
+        "uuid": "8d6776cb-968a-4166-8868-99866f3bd994"
+      },
+      {
+        "number": 3,
+        "as": "13a6c6de",
+        "keyword": "foreach",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "repeat_mode": "simple",
+        "clear_scope": "false",
+        "input": {
+        },
+        "block": [
+          {
+            "number": 4,
+            "provider": "mysql",
+            "name": "insert_row",
+            "as": "4b5a3a5e",
+            "title": "Insert row in User_Activity",
+            "description": "Insert <span class=\"provider\">row</span> in <span class=\"provider\">User_Activity</span> table in <span class=\"provider\">MySQL</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "table": "User_Activity"
+            },
+            "toggleCfg": {
+              "table": true
+            },
+            "input": {
+              "table": "User_Activity",
+              "columns": {
+                "activity_category_509f6675": "#{_('data.foreach.13a6c6de.Activity_Category')}",
+                "ip_address_62234f24": "#{_('data.foreach.13a6c6de.IP_Address')}",
+                "request_time_c1e37333": "#{_('data.foreach.13a6c6de.Request_Time')}",
+                "system_account_6686429f": "#{_('data.foreach.13a6c6de.System_Account')}",
+                "target_1ff4c982": "#{_('data.foreach.13a6c6de.Target')}",
+                "task_0124aa15": "#{_('data.foreach.13a6c6de.Task')}",
+                "user_agent_741a2312": "#{_('data.foreach.13a6c6de.User_Agent')}"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "columns",
+                "label": "Columns",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Activity Category",
+                    "details": {
+                      "data_type": "text",
+                      "column_name": "Activity Category"
+                    },
+                    "optional": true,
+                    "hint": "text",
+                    "type": "string",
+                    "name": "activity_category_509f6675",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "IP Address",
+                    "details": {
+                      "data_type": "text",
+                      "column_name": "IP Address"
+                    },
+                    "optional": true,
+                    "hint": "text",
+                    "type": "string",
+                    "name": "ip_address_62234f24",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "ReqID",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "ReqID"
+                    },
+                    "render_input": "parse_integer_output",
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "int(11), primary key",
+                    "type": "integer",
+                    "name": "reqid_3ab3b154",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Request Time",
+                    "details": {
+                      "data_type": "text",
+                      "column_name": "Request Time"
+                    },
+                    "optional": true,
+                    "hint": "text",
+                    "type": "string",
+                    "name": "request_time_c1e37333",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "System Account",
+                    "details": {
+                      "data_type": "text",
+                      "column_name": "System Account"
+                    },
+                    "optional": true,
+                    "hint": "text",
+                    "type": "string",
+                    "name": "system_account_6686429f",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Target",
+                    "details": {
+                      "data_type": "text",
+                      "column_name": "Target"
+                    },
+                    "optional": true,
+                    "hint": "text",
+                    "type": "string",
+                    "name": "target_1ff4c982",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Task",
+                    "details": {
+                      "data_type": "text",
+                      "column_name": "Task"
+                    },
+                    "optional": true,
+                    "hint": "text",
+                    "type": "string",
+                    "name": "task_0124aa15",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "User Agent",
+                    "details": {
+                      "data_type": "text",
+                      "column_name": "User Agent"
+                    },
+                    "optional": true,
+                    "hint": "text",
+                    "type": "string",
+                    "name": "user_agent_741a2312",
+                    "parent": "columns"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "table",
+              "columns.activity_category_509f6675",
+              "columns.ip_address_62234f24",
+              "columns.request_time_c1e37333",
+              "columns.system_account_6686429f",
+              "columns.target_1ff4c982",
+              "columns.task_0124aa15",
+              "columns.user_agent_741a2312"
+            ],
+            "uuid": "994da683-8bb7-4fd3-b4a0-fccab5c640a1"
+          }
+        ],
+        "source": "#{_('data.workday.c622b1f3.report')}",
+        "uuid": "d2ebf40e-d853-4efe-b244-577b276bde7d"
+      },
+      {
+        "number": 5,
+        "provider": "logger",
+        "name": "log_message",
+        "as": "48825c9c",
+        "title": null,
+        "description": null,
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "message": "Last Row id entered:  #{_('data.mysql.4b5a3a5e.inserted_id')}"
+        },
+        "uuid": "c2e4421c-8bce-486b-a1b6-12efa63d0969"
+      },
+      {
+        "number": 6,
+        "keyword": "stop",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "stop_with_error": "false"
+        },
+        "uuid": "b9a3b10e-8021-4194-853f-cb90fd5561f9"
+      },
+      {
+        "number": 7,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "is_true",
+              "lhs": "false\n",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 8,
+            "provider": "mysql",
+            "name": "insert_row_batch",
+            "as": "269f2a98",
+            "title": "Insert rows in User_Activity",
+            "description": "Insert <span class=\"provider\">batch of rows</span> in <span class=\"provider\">User_Activity</span> table in <span class=\"provider\">MySQL</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "table": "User_Activity"
+            },
+            "toggleCfg": {
+              "table": true
+            },
+            "input": {
+              "table": "User_Activity",
+              "rows": {
+                "____source": "#{_('data.workday.c622b1f3.report')}",
+                "activity_category_509f6675": "#{_('data.workday.c622b1f3.report.first.Activity_Category')}",
+                "ip_address_62234f24": "#{_('data.workday.c622b1f3.report.first.IP_Address')}",
+                "request_time_c1e37333": "#{_('data.workday.c622b1f3.report.first.Request_Time')}",
+                "system_account_6686429f": "#{_('data.workday.c622b1f3.report.first.System_Account')}",
+                "target_1ff4c982": "#{_('data.workday.c622b1f3.report.first.Target')}",
+                "task_0124aa15": "#{_('data.workday.c622b1f3.report.first.Task')}",
+                "user_agent_741a2312": "#{_('data.workday.c622b1f3.report.first.User_Agent')}"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "array",
+                "name": "rows",
+                "label": "Rows",
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Activity Category",
+                    "details": {
+                      "data_type": "text",
+                      "column_name": "Activity Category"
+                    },
+                    "optional": true,
+                    "hint": "text",
+                    "type": "string",
+                    "name": "activity_category_509f6675",
+                    "parent": "rows"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "IP Address",
+                    "details": {
+                      "data_type": "text",
+                      "column_name": "IP Address"
+                    },
+                    "optional": true,
+                    "hint": "text",
+                    "type": "string",
+                    "name": "ip_address_62234f24",
+                    "parent": "rows"
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "ReqID",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "ReqID"
+                    },
+                    "render_input": "parse_integer_output",
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "int(11), primary key",
+                    "type": "integer",
+                    "name": "reqid_3ab3b154",
+                    "parent": "rows"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Request Time",
+                    "details": {
+                      "data_type": "text",
+                      "column_name": "Request Time"
+                    },
+                    "optional": true,
+                    "hint": "text",
+                    "type": "string",
+                    "name": "request_time_c1e37333",
+                    "parent": "rows"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "System Account",
+                    "details": {
+                      "data_type": "text",
+                      "column_name": "System Account"
+                    },
+                    "optional": true,
+                    "hint": "text",
+                    "type": "string",
+                    "name": "system_account_6686429f",
+                    "parent": "rows"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Target",
+                    "details": {
+                      "data_type": "text",
+                      "column_name": "Target"
+                    },
+                    "optional": true,
+                    "hint": "text",
+                    "type": "string",
+                    "name": "target_1ff4c982",
+                    "parent": "rows"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Task",
+                    "details": {
+                      "data_type": "text",
+                      "column_name": "Task"
+                    },
+                    "optional": true,
+                    "hint": "text",
+                    "type": "string",
+                    "name": "task_0124aa15",
+                    "parent": "rows"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "User Agent",
+                    "details": {
+                      "data_type": "text",
+                      "column_name": "User Agent"
+                    },
+                    "optional": true,
+                    "hint": "text",
+                    "type": "string",
+                    "name": "user_agent_741a2312",
+                    "parent": "rows"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "table",
+              "rows.activity_category_509f6675",
+              "rows.ip_address_62234f24",
+              "rows.request_time_c1e37333",
+              "rows.system_account_6686429f",
+              "rows.target_1ff4c982",
+              "rows.task_0124aa15",
+              "rows.user_agent_741a2312"
+            ],
+            "uuid": "cf1ef2b4-5154-45fc-83c3-22726283aca3"
+          }
+        ],
+        "uuid": "6f99c4cb-64df-4f24-9bf0-6bc2468bd1aa"
+      }
+    ],
+    "comment": "Retrieves report from Workday of the past 24 hours of user activity for all Write, Download and other tasks not specifically excluded.   Store this data in a secure location for so that it can be searched as needed by Audit.    The Workday User Activity Report only allows lookback of up to 30 days.   Daily exports of this report for the current 24 hour period allows Audit to have access to this data for longer periods.",
+    "uuid": "7e8704f2-b35f-4162-8ab0-7edc2f170474"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "clock",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workday",
+      "account_id": {
+        "zip_name": "resources/workday.connection.json",
+        "name": "Workday",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "mysql",
+      "account_id": {
+        "zip_name": "resources/mysql_workday_audit.connection.json",
+        "name": "MySQL - Workday Audit",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "logger",
+      "account_id": null
+    }
+  ]
+}

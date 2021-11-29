@@ -1,0 +1,1881 @@
+{
+  "name": "Test - Has Field Value Changed?",
+  "description": "When there is a trigger event, do action",
+  "version": 16,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "clock",
+    "name": "timer",
+    "as": "28f32ab1",
+    "title": null,
+    "description": null,
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "interval": "5"
+    },
+    "block": [
+      {
+        "number": 1,
+        "provider": "workato_service",
+        "name": "call_service",
+        "as": "4e2a9bba",
+        "title": null,
+        "description": "Call recipe <span class=\"provider\">Callable - Field Monitoring - Remove Field Value from Monitoring</span> ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "flow_id": "Callable - Field Monitoring - Remove Field Value from Monitoring"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "flow_id": {
+            "zip_name": "util/field-monitoring/callable_field_monitoring_remove_field_value_from_monitoring.recipe.json",
+            "name": "Callable - Field Monitoring - Remove Field Value from Monitoring",
+            "folder": "util/field-monitoring"
+          },
+          "request": {
+            "field_definition": {
+              "system_name": "#{_('data.workato.job_context.recipe_id')}",
+              "object_id": "#{_('data.workato.job_context.job_id')}",
+              "field_name": "test"
+            }
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "object",
+            "name": "reply",
+            "label": "Reply",
+            "properties": [
+              {
+                "control_type": "checkbox",
+                "label": "Field Previously Monitored?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Field Being Monitored?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "was_field_being_monitored",
+                  "hint": "Indicates whether the field was present in the field_monitoring database",
+                  "type": "boolean",
+                  "optional": false
+                },
+                "name": "was_field_previously_monitored",
+                "hint": "Indicates whether the field was present in the field_monitoring database",
+                "type": "boolean",
+                "optional": false
+              },
+              {
+                "control_type": "checkbox",
+                "label": "Field Upserted to Database for future change checks?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Field Removed from Database?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "was_field_removed_from_monitoring_database",
+                  "type": "boolean",
+                  "optional": false,
+                  "hint": "Indicates whether the specified was upserted into the monitoring database for future change checks."
+                },
+                "name": "was_field_removed_from_monitoring_database",
+                "type": "boolean",
+                "optional": false,
+                "hint": "Indicates whether the specified was removed from the monitoring database."
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "request",
+            "label": "Recipe input",
+            "properties": [
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "System Name",
+                    "name": "system_name",
+                    "hint": "Name of the System (i.e. salesforce, netsuite, workday, etc",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Object ID",
+                    "name": "object_id",
+                    "hint": "Unique Identifier of the object within the system that is being monitoried (i.e. for Salesforce, this would be the Record Id of the object)",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Field Name",
+                    "name": "field_name",
+                    "hint": "Name of the Field (i.e. if monitoring the Account name in Salesforce, the field name would be 'name')",
+                    "type": "string",
+                    "optional": false
+                  }
+                ],
+                "label": "Field Definition",
+                "name": "field_definition",
+                "type": "object",
+                "hint": "The system_name, object_id, and field_name will be used as primary keys to uniquely identify the value being monitored.",
+                "optional": false
+              }
+            ]
+          }
+        ],
+        "uuid": "adbc110d-1c99-4a18-848f-95dcc2ed6116"
+      },
+      {
+        "number": 2,
+        "provider": "workato_service",
+        "name": "call_service",
+        "as": "d48b4407",
+        "title": null,
+        "description": "Call recipe <span class=\"provider\">Callable - Field Monitoring - Has Field Value Been Changed?</span> ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "flow_id": "Callable - Field Monitoring - Has Field Value Been Changed?"
+        },
+        "toggleCfg": {
+          "request.option_update_value_if_changed": true
+        },
+        "input": {
+          "flow_id": {
+            "zip_name": "util/field-monitoring/callable_field_monitoring_has_field_value_been_changed.recipe.json",
+            "name": "Callable - Field Monitoring - Has Field Value Been Changed?",
+            "folder": "util/field-monitoring"
+          },
+          "request": {
+            "field_definition": {
+              "system_name": "#{_('data.workato.job_context.recipe_id')}",
+              "object_id": "#{_('data.workato.job_context.job_id')}",
+              "field_name": "test",
+              "value": "test value"
+            },
+            "option_update_value_if_changed": "true"
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "object",
+            "name": "reply",
+            "label": "Reply",
+            "properties": [
+              {
+                "control_type": "checkbox",
+                "label": "Field Previously Monitored?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Field Previously Monitored?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "was_field_being_monitored",
+                  "hint": "Indicates whether the field was present in the field_monitoring database",
+                  "type": "boolean",
+                  "optional": false
+                },
+                "name": "was_field_being_monitored",
+                "hint": "Indicates whether the field was present in the field_monitoring database",
+                "type": "boolean",
+                "optional": false
+              },
+              {
+                "control_type": "checkbox",
+                "label": "Field Upserted to Database for future change checks?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Field Upserted to Database for future change checks?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "was_field_upserted_to_monitoring_database",
+                  "type": "boolean",
+                  "optional": false,
+                  "hint": "Indicates whether the specified was upserted into the monitoring database for future change checks."
+                },
+                "name": "was_field_upserted_to_monitoring_database",
+                "type": "boolean",
+                "optional": false,
+                "hint": "Indicates whether the specified was upserted into the monitoring database for future change checks."
+              },
+              {
+                "control_type": "checkbox",
+                "label": "Field Changed?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Field Changed?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "has_field_changed",
+                  "type": "boolean",
+                  "optional": false,
+                  "hint": "Did this value change?"
+                },
+                "name": "has_field_changed",
+                "type": "boolean",
+                "optional": false,
+                "hint": "Did this value change?"
+              },
+              {
+                "control_type": "date",
+                "label": "Field Last Updated",
+                "render_input": "date_conversion",
+                "parse_output": "date_conversion",
+                "name": "field_last_updated",
+                "type": "date_time",
+                "optional": true,
+                "hint": "This is the date the field was last updated (regardless if the field has changed or not)."
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "request",
+            "label": "Recipe input",
+            "properties": [
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "System Name",
+                    "name": "system_name",
+                    "hint": "Name of the System (i.e. salesforce, netsuite, workday, etc",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request.field_definition"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Object ID",
+                    "name": "object_id",
+                    "hint": "Unique Identifier of the object within the system that is being monitoried (i.e. for Salesforce, this would be the Record Id of the object)",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request.field_definition"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Object Name",
+                    "name": "object_name",
+                    "hint": "Name of the Object (not required, just used for storing more information about the object being monitored)",
+                    "type": "string",
+                    "optional": true,
+                    "parent": "request.field_definition"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Field Name",
+                    "name": "field_name",
+                    "hint": "Name of the Field (i.e. if monitoring the Account name in Salesforce, the field name would be 'name')",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request.field_definition"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Value",
+                    "name": "value",
+                    "hint": "Value of the field being monitored.  This value will be compared in the future to determine if the field has changed.",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request.field_definition"
+                  }
+                ],
+                "label": "Field Definition",
+                "name": "field_definition",
+                "type": "object",
+                "hint": "The system_name, object_id, and field_name will be used as primary keys to uniquely identify the value being monitored.",
+                "optional": false,
+                "parent": "request"
+              },
+              {
+                "control_type": "checkbox",
+                "label": "Option - Update Value if Changed?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Option - Update Value if Changed?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "option_update_value_if_changed",
+                  "hint": "When checking to see if the value has changed, selecting 'TRUE' will update the monitored value for future tracking (future checks will use the value specified in the field_definition)",
+                  "type": "boolean",
+                  "optional": true,
+                  "parent": "request"
+                },
+                "name": "option_update_value_if_changed",
+                "hint": "When checking to see if the value has changed, selecting 'TRUE' will update the monitored value for future tracking (future checks will use the value specified in the field_definition)",
+                "type": "boolean",
+                "optional": true,
+                "parent": "request"
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "flow_id",
+          "request",
+          "request.field_definition",
+          "request.field_definition.system_name",
+          "request.field_definition.object_id",
+          "request.field_definition.field_name",
+          "request.field_definition.value",
+          "request.option_update_value_if_changed"
+        ],
+        "uuid": "f717db41-d445-4af1-b1f7-3730bc59dc23"
+      },
+      {
+        "number": 3,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "or",
+          "conditions": [
+            {
+              "operand": "is_true",
+              "lhs": "#{_('data.workato_service.d48b4407.reply.was_field_being_monitored')}",
+              "rhs": null,
+              "uuid": "a407a623-cdc2-4cf5-bd35-d3df41bf3c7e"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 4,
+            "keyword": "stop",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "stop_with_error": "true",
+              "stop_reason": "wrong return values"
+            },
+            "uuid": "a8049348-f47b-4075-b255-72649291b793"
+          }
+        ],
+        "uuid": "935efa25-5620-45c1-a4f8-3ea0ccc48b5c",
+        "collapsed_conditions": [
+
+        ]
+      },
+      {
+        "number": 5,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "or",
+          "conditions": [
+            {
+              "operand": "is_true",
+              "lhs": "#{_('data.workato_service.d48b4407.reply.has_field_changed')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 6,
+            "keyword": "stop",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "stop_with_error": "true",
+              "stop_reason": "wrong return values"
+            },
+            "uuid": "b9d3658a-fba2-4bad-b11c-88cefbb22c63"
+          }
+        ],
+        "uuid": "82f99ef7-e984-45ff-b63b-23fbe55d2292"
+      },
+      {
+        "number": 7,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "or",
+          "conditions": [
+            {
+              "operand": "is_not_true",
+              "lhs": "#{_('data.workato_service.d48b4407.reply.was_field_upserted_to_monitoring_database')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 8,
+            "keyword": "stop",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "stop_with_error": "true",
+              "stop_reason": "wrong return values"
+            },
+            "uuid": "495fd639-aa71-43e4-93b9-f6c6644ac9f4"
+          }
+        ],
+        "uuid": "ec22603e-0a31-4c39-8803-5db81ebdc8c3"
+      },
+      {
+        "number": 9,
+        "provider": "workato_service",
+        "name": "call_service",
+        "as": "842506cf",
+        "title": null,
+        "description": "Call recipe <span class=\"provider\">Callable - Field Monitoring - Has Field Value Been Changed?</span> ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "flow_id": "Callable - Field Monitoring - Has Field Value Been Changed?"
+        },
+        "toggleCfg": {
+          "request.option_update_value_if_changed": true
+        },
+        "input": {
+          "flow_id": {
+            "zip_name": "util/field-monitoring/callable_field_monitoring_has_field_value_been_changed.recipe.json",
+            "name": "Callable - Field Monitoring - Has Field Value Been Changed?",
+            "folder": "util/field-monitoring"
+          },
+          "request": {
+            "field_definition": {
+              "system_name": "#{_('data.workato.job_context.recipe_id')}",
+              "object_id": "#{_('data.workato.job_context.job_id')}",
+              "field_name": "test",
+              "value": "test value"
+            },
+            "option_update_value_if_changed": "true"
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "object",
+            "name": "reply",
+            "label": "Reply",
+            "properties": [
+              {
+                "control_type": "checkbox",
+                "label": "Field Previously Monitored?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Field Previously Monitored?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "was_field_being_monitored",
+                  "hint": "Indicates whether the field was present in the field_monitoring database",
+                  "type": "boolean",
+                  "optional": false
+                },
+                "name": "was_field_being_monitored",
+                "hint": "Indicates whether the field was present in the field_monitoring database",
+                "type": "boolean",
+                "optional": false
+              },
+              {
+                "control_type": "checkbox",
+                "label": "Field Upserted to Database for future change checks?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Field Upserted to Database for future change checks?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "was_field_upserted_to_monitoring_database",
+                  "type": "boolean",
+                  "optional": false,
+                  "hint": "Indicates whether the specified was upserted into the monitoring database for future change checks."
+                },
+                "name": "was_field_upserted_to_monitoring_database",
+                "type": "boolean",
+                "optional": false,
+                "hint": "Indicates whether the specified was upserted into the monitoring database for future change checks."
+              },
+              {
+                "control_type": "checkbox",
+                "label": "Field Changed?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Field Changed?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "has_field_changed",
+                  "type": "boolean",
+                  "optional": false,
+                  "hint": "Did this value change?"
+                },
+                "name": "has_field_changed",
+                "type": "boolean",
+                "optional": false,
+                "hint": "Did this value change?"
+              },
+              {
+                "control_type": "date",
+                "label": "Field Last Updated",
+                "render_input": "date_conversion",
+                "parse_output": "date_conversion",
+                "name": "field_last_updated",
+                "type": "date_time",
+                "optional": true,
+                "hint": "This is the date the field was last updated (regardless if the field has changed or not)."
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "request",
+            "label": "Recipe input",
+            "properties": [
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "System Name",
+                    "name": "system_name",
+                    "hint": "Name of the System (i.e. salesforce, netsuite, workday, etc",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Object ID",
+                    "name": "object_id",
+                    "hint": "Unique Identifier of the object within the system that is being monitoried (i.e. for Salesforce, this would be the Record Id of the object)",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Object Name",
+                    "name": "object_name",
+                    "hint": "Name of the Object (not required, just used for storing more information about the object being monitored)",
+                    "type": "string",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Field Name",
+                    "name": "field_name",
+                    "hint": "Name of the Field (i.e. if monitoring the Account name in Salesforce, the field name would be 'name')",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Value",
+                    "name": "value",
+                    "hint": "Value of the field being monitored.  This value will be compared in the future to determine if the field has changed.",
+                    "type": "string",
+                    "optional": false
+                  }
+                ],
+                "label": "Field Definition",
+                "name": "field_definition",
+                "type": "object",
+                "hint": "The system_name, object_id, and field_name will be used as primary keys to uniquely identify the value being monitored.",
+                "optional": false
+              },
+              {
+                "control_type": "checkbox",
+                "label": "Option - Update Value if Changed?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Option - Update Value if Changed?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "option_update_value_if_changed",
+                  "hint": "When checking to see if the value has changed, selecting 'TRUE' will update the monitored value for future tracking (future checks will use the value specified in the field_definition)",
+                  "type": "boolean",
+                  "optional": true
+                },
+                "name": "option_update_value_if_changed",
+                "hint": "When checking to see if the value has changed, selecting 'TRUE' will update the monitored value for future tracking (future checks will use the value specified in the field_definition)",
+                "type": "boolean",
+                "optional": true
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "flow_id",
+          "request",
+          "request.field_definition",
+          "request.field_definition.system_name",
+          "request.field_definition.object_id",
+          "request.field_definition.field_name",
+          "request.field_definition.value",
+          "request.option_update_value_if_changed"
+        ],
+        "uuid": "62d71f40-2b4d-45ba-adb9-a644baaee0dc"
+      },
+      {
+        "number": 10,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "or",
+          "conditions": [
+            {
+              "operand": "is_not_true",
+              "lhs": "#{_('data.workato_service.842506cf.reply.was_field_being_monitored')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 11,
+            "keyword": "stop",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "stop_with_error": "true",
+              "stop_reason": "wrong"
+            },
+            "uuid": "772316ae-63a6-425d-97ff-f9ec753ad0ff"
+          }
+        ],
+        "uuid": "721a6273-2e6d-4483-b89e-dedf2ceb8065"
+      },
+      {
+        "number": 12,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "or",
+          "conditions": [
+            {
+              "operand": "is_true",
+              "lhs": "#{_('data.workato_service.842506cf.reply.has_field_changed')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 13,
+            "keyword": "stop",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "stop_with_error": "true",
+              "stop_reason": "wrong"
+            },
+            "uuid": "b6c673a1-ab64-4258-80c7-5814019beaaf"
+          }
+        ],
+        "uuid": "cc5269b3-3c5c-4921-b4b5-d34de48a0acd",
+        "collapsed_conditions": [
+          "eb4fcf81-3e8b-443d-8d2b-ce2e4f16d79b"
+        ]
+      },
+      {
+        "number": 14,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "or",
+          "conditions": [
+            {
+              "operand": "is_true",
+              "lhs": "#{_('data.workato_service.842506cf.reply.was_field_upserted_to_monitoring_database')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 15,
+            "keyword": "stop",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "stop_with_error": "true",
+              "stop_reason": "wrong"
+            },
+            "uuid": "28911400-ddf5-4aa1-b7fa-ac094a973ea4"
+          }
+        ],
+        "uuid": "26957a5f-ce70-4b76-95a2-9bb5f645e383"
+      },
+      {
+        "number": 16,
+        "provider": "workato_service",
+        "name": "call_service",
+        "as": "131b604d",
+        "title": null,
+        "description": "Call recipe <span class=\"provider\">Callable - Field Monitoring - Has Field Value Been Changed?</span> ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "flow_id": "Callable - Field Monitoring - Has Field Value Been Changed?"
+        },
+        "toggleCfg": {
+          "request.option_update_value_if_changed": true
+        },
+        "input": {
+          "flow_id": {
+            "zip_name": "util/field-monitoring/callable_field_monitoring_has_field_value_been_changed.recipe.json",
+            "name": "Callable - Field Monitoring - Has Field Value Been Changed?",
+            "folder": "util/field-monitoring"
+          },
+          "request": {
+            "field_definition": {
+              "system_name": "#{_('data.workato.job_context.recipe_id')}",
+              "object_id": "#{_('data.workato.job_context.job_id')}",
+              "field_name": "test",
+              "value": "test value 2"
+            },
+            "option_update_value_if_changed": "true"
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "object",
+            "name": "reply",
+            "label": "Reply",
+            "properties": [
+              {
+                "control_type": "checkbox",
+                "label": "Field Previously Monitored?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Field Previously Monitored?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "was_field_being_monitored",
+                  "hint": "Indicates whether the field was present in the field_monitoring database",
+                  "type": "boolean",
+                  "optional": false
+                },
+                "name": "was_field_being_monitored",
+                "hint": "Indicates whether the field was present in the field_monitoring database",
+                "type": "boolean",
+                "optional": false
+              },
+              {
+                "control_type": "checkbox",
+                "label": "Field Upserted to Database for future change checks?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Field Upserted to Database for future change checks?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "was_field_upserted_to_monitoring_database",
+                  "type": "boolean",
+                  "optional": false,
+                  "hint": "Indicates whether the specified was upserted into the monitoring database for future change checks."
+                },
+                "name": "was_field_upserted_to_monitoring_database",
+                "type": "boolean",
+                "optional": false,
+                "hint": "Indicates whether the specified was upserted into the monitoring database for future change checks."
+              },
+              {
+                "control_type": "checkbox",
+                "label": "Field Changed?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Field Changed?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "has_field_changed",
+                  "type": "boolean",
+                  "optional": false,
+                  "hint": "Did this value change?"
+                },
+                "name": "has_field_changed",
+                "type": "boolean",
+                "optional": false,
+                "hint": "Did this value change?"
+              },
+              {
+                "control_type": "date",
+                "label": "Field Last Updated",
+                "render_input": "date_conversion",
+                "parse_output": "date_conversion",
+                "name": "field_last_updated",
+                "type": "date_time",
+                "optional": true,
+                "hint": "This is the date the field was last updated (regardless if the field has changed or not)."
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "request",
+            "label": "Recipe input",
+            "properties": [
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "System Name",
+                    "name": "system_name",
+                    "hint": "Name of the System (i.e. salesforce, netsuite, workday, etc",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Object ID",
+                    "name": "object_id",
+                    "hint": "Unique Identifier of the object within the system that is being monitoried (i.e. for Salesforce, this would be the Record Id of the object)",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Object Name",
+                    "name": "object_name",
+                    "hint": "Name of the Object (not required, just used for storing more information about the object being monitored)",
+                    "type": "string",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Field Name",
+                    "name": "field_name",
+                    "hint": "Name of the Field (i.e. if monitoring the Account name in Salesforce, the field name would be 'name')",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Value",
+                    "name": "value",
+                    "hint": "Value of the field being monitored.  This value will be compared in the future to determine if the field has changed.",
+                    "type": "string",
+                    "optional": false
+                  }
+                ],
+                "label": "Field Definition",
+                "name": "field_definition",
+                "type": "object",
+                "hint": "The system_name, object_id, and field_name will be used as primary keys to uniquely identify the value being monitored.",
+                "optional": false
+              },
+              {
+                "control_type": "checkbox",
+                "label": "Option - Update Value if Changed?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Option - Update Value if Changed?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "option_update_value_if_changed",
+                  "hint": "When checking to see if the value has changed, selecting 'TRUE' will update the monitored value for future tracking (future checks will use the value specified in the field_definition)",
+                  "type": "boolean",
+                  "optional": true
+                },
+                "name": "option_update_value_if_changed",
+                "hint": "When checking to see if the value has changed, selecting 'TRUE' will update the monitored value for future tracking (future checks will use the value specified in the field_definition)",
+                "type": "boolean",
+                "optional": true
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "flow_id",
+          "request",
+          "request.field_definition",
+          "request.field_definition.system_name",
+          "request.field_definition.object_id",
+          "request.field_definition.field_name",
+          "request.field_definition.value",
+          "request.option_update_value_if_changed"
+        ],
+        "uuid": "f81d421b-e84c-4ce4-ad8c-7f9fc77ce585"
+      },
+      {
+        "number": 17,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "or",
+          "conditions": [
+            {
+              "operand": "is_not_true",
+              "lhs": "#{_('data.workato_service.131b604d.reply.was_field_being_monitored')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 18,
+            "keyword": "stop",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "stop_with_error": "true",
+              "stop_reason": "wrong"
+            },
+            "uuid": "8fe785a2-131d-4c8d-8e6f-581e7ddb065a"
+          }
+        ],
+        "uuid": "301b409b-b01c-4d37-8349-1ef67251e5fe"
+      },
+      {
+        "number": 19,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "or",
+          "conditions": [
+            {
+              "operand": "is_not_true",
+              "lhs": "#{_('data.workato_service.131b604d.reply.has_field_changed')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 20,
+            "keyword": "stop",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "stop_with_error": "true",
+              "stop_reason": "wrong"
+            },
+            "uuid": "c8e5c396-b187-4d58-8131-510aa0aa86b7"
+          }
+        ],
+        "uuid": "dabdaf88-0710-4689-b2a8-299028f20406"
+      },
+      {
+        "number": 21,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "or",
+          "conditions": [
+            {
+              "operand": "is_not_true",
+              "lhs": "#{_('data.workato_service.131b604d.reply.was_field_upserted_to_monitoring_database')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 22,
+            "keyword": "stop",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "stop_with_error": "true",
+              "stop_reason": "wrong"
+            },
+            "uuid": "cbd5ceed-8b34-4a6a-a895-c1b61ce21246"
+          }
+        ],
+        "uuid": "3b1a8144-efa7-4aa0-a938-776f4d929e00"
+      },
+      {
+        "number": 23,
+        "provider": "workato_service",
+        "name": "call_service",
+        "as": "0bc71915",
+        "title": null,
+        "description": "Call recipe <span class=\"provider\">Callable - Field Monitoring - Remove Field Value from Monitoring</span> ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "flow_id": "Callable - Field Monitoring - Remove Field Value from Monitoring"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "flow_id": {
+            "zip_name": "util/field-monitoring/callable_field_monitoring_remove_field_value_from_monitoring.recipe.json",
+            "name": "Callable - Field Monitoring - Remove Field Value from Monitoring",
+            "folder": "util/field-monitoring"
+          },
+          "request": {
+            "field_definition": {
+              "system_name": "#{_('data.workato.job_context.recipe_id')}",
+              "object_id": "#{_('data.workato.job_context.job_id')}",
+              "field_name": "test"
+            }
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "object",
+            "name": "reply",
+            "label": "Reply",
+            "properties": [
+              {
+                "control_type": "checkbox",
+                "label": "Field Previously Monitored?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Field Being Monitored?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "was_field_being_monitored",
+                  "hint": "Indicates whether the field was present in the field_monitoring database",
+                  "type": "boolean",
+                  "optional": false
+                },
+                "name": "was_field_previously_monitored",
+                "hint": "Indicates whether the field was present in the field_monitoring database",
+                "type": "boolean",
+                "optional": false
+              },
+              {
+                "control_type": "checkbox",
+                "label": "Field Upserted to Database for future change checks?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Field Removed from Database?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "was_field_removed_from_monitoring_database",
+                  "type": "boolean",
+                  "optional": false,
+                  "hint": "Indicates whether the specified was upserted into the monitoring database for future change checks."
+                },
+                "name": "was_field_removed_from_monitoring_database",
+                "type": "boolean",
+                "optional": false,
+                "hint": "Indicates whether the specified was removed from the monitoring database."
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "request",
+            "label": "Recipe input",
+            "properties": [
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "System Name",
+                    "name": "system_name",
+                    "hint": "Name of the System (i.e. salesforce, netsuite, workday, etc",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request.field_definition"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Object ID",
+                    "name": "object_id",
+                    "hint": "Unique Identifier of the object within the system that is being monitoried (i.e. for Salesforce, this would be the Record Id of the object)",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request.field_definition"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Field Name",
+                    "name": "field_name",
+                    "hint": "Name of the Field (i.e. if monitoring the Account name in Salesforce, the field name would be 'name')",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request.field_definition"
+                  }
+                ],
+                "label": "Field Definition",
+                "name": "field_definition",
+                "type": "object",
+                "hint": "The system_name, object_id, and field_name will be used as primary keys to uniquely identify the value being monitored.",
+                "optional": false,
+                "parent": "request"
+              }
+            ]
+          }
+        ],
+        "uuid": "79553b1c-146e-4776-a101-84334d87f279"
+      },
+      {
+        "number": 24,
+        "provider": "workato_service",
+        "name": "call_service",
+        "as": "3a84cd8a",
+        "title": null,
+        "description": "Call recipe <span class=\"provider\">Callable - Field Monitoring - Has Field Value Been Changed?</span> ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "flow_id": "Callable - Field Monitoring - Has Field Value Been Changed?"
+        },
+        "toggleCfg": {
+          "request.option_update_value_if_changed": true
+        },
+        "input": {
+          "flow_id": {
+            "zip_name": "util/field-monitoring/callable_field_monitoring_has_field_value_been_changed.recipe.json",
+            "name": "Callable - Field Monitoring - Has Field Value Been Changed?",
+            "folder": "util/field-monitoring"
+          },
+          "request": {
+            "field_definition": {
+              "system_name": "#{_('data.workato.job_context.recipe_id')}",
+              "object_id": "#{_('data.workato.job_context.job_id')}",
+              "field_name": "test",
+              "value": "DH - Test\ntest2"
+            },
+            "option_update_value_if_changed": "true"
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "object",
+            "name": "reply",
+            "label": "Reply",
+            "properties": [
+              {
+                "control_type": "checkbox",
+                "label": "Field Previously Monitored?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Field Previously Monitored?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "was_field_being_monitored",
+                  "hint": "Indicates whether the field was present in the field_monitoring database",
+                  "type": "boolean",
+                  "optional": false
+                },
+                "name": "was_field_being_monitored",
+                "hint": "Indicates whether the field was present in the field_monitoring database",
+                "type": "boolean",
+                "optional": false
+              },
+              {
+                "control_type": "checkbox",
+                "label": "Field Upserted to Database for future change checks?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Field Upserted to Database for future change checks?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "was_field_upserted_to_monitoring_database",
+                  "type": "boolean",
+                  "optional": false,
+                  "hint": "Indicates whether the specified was upserted into the monitoring database for future change checks."
+                },
+                "name": "was_field_upserted_to_monitoring_database",
+                "type": "boolean",
+                "optional": false,
+                "hint": "Indicates whether the specified was upserted into the monitoring database for future change checks."
+              },
+              {
+                "control_type": "checkbox",
+                "label": "Field Changed?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Field Changed?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "has_field_changed",
+                  "type": "boolean",
+                  "optional": false,
+                  "hint": "Did this value change?"
+                },
+                "name": "has_field_changed",
+                "type": "boolean",
+                "optional": false,
+                "hint": "Did this value change?"
+              },
+              {
+                "control_type": "date",
+                "label": "Field Last Updated",
+                "render_input": "date_conversion",
+                "parse_output": "date_conversion",
+                "name": "field_last_updated",
+                "type": "date_time",
+                "optional": true,
+                "hint": "This is the date the field was last updated (regardless if the field has changed or not)."
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "request",
+            "label": "Recipe input",
+            "properties": [
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "System Name",
+                    "name": "system_name",
+                    "hint": "Name of the System (i.e. salesforce, netsuite, workday, etc",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request.field_definition"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Object ID",
+                    "name": "object_id",
+                    "hint": "Unique Identifier of the object within the system that is being monitoried (i.e. for Salesforce, this would be the Record Id of the object)",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request.field_definition"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Object Name",
+                    "name": "object_name",
+                    "hint": "Name of the Object (not required, just used for storing more information about the object being monitored)",
+                    "type": "string",
+                    "optional": true,
+                    "parent": "request.field_definition"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Field Name",
+                    "name": "field_name",
+                    "hint": "Name of the Field (i.e. if monitoring the Account name in Salesforce, the field name would be 'name')",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request.field_definition"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Value",
+                    "name": "value",
+                    "hint": "Value of the field being monitored.  This value will be compared in the future to determine if the field has changed.",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request.field_definition"
+                  }
+                ],
+                "label": "Field Definition",
+                "name": "field_definition",
+                "type": "object",
+                "hint": "The system_name, object_id, and field_name will be used as primary keys to uniquely identify the value being monitored.",
+                "optional": false,
+                "parent": "request"
+              },
+              {
+                "control_type": "checkbox",
+                "label": "Option - Update Value if Changed?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Option - Update Value if Changed?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "option_update_value_if_changed",
+                  "hint": "When checking to see if the value has changed, selecting 'TRUE' will update the monitored value for future tracking (future checks will use the value specified in the field_definition)",
+                  "type": "boolean",
+                  "optional": true,
+                  "parent": "request"
+                },
+                "name": "option_update_value_if_changed",
+                "hint": "When checking to see if the value has changed, selecting 'TRUE' will update the monitored value for future tracking (future checks will use the value specified in the field_definition)",
+                "type": "boolean",
+                "optional": true,
+                "parent": "request"
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "flow_id",
+          "request",
+          "request.field_definition",
+          "request.field_definition.system_name",
+          "request.field_definition.object_id",
+          "request.field_definition.field_name",
+          "request.field_definition.value",
+          "request.option_update_value_if_changed"
+        ],
+        "uuid": "0331fef8-fcfe-4325-9a5b-19f5c11e8150"
+      },
+      {
+        "number": 25,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "is_true",
+              "lhs": "#{_('data.workato_service.3a84cd8a.reply.was_field_being_monitored')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 26,
+            "keyword": "stop",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "stop_with_error": "true",
+              "stop_reason": "wrong"
+            },
+            "uuid": "9b392e81-b993-48d0-817d-066822aea4d0"
+          }
+        ],
+        "uuid": "5c9f97c1-20f5-4658-b98f-25b1404cf5bb"
+      },
+      {
+        "number": 27,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "is_not_true",
+              "lhs": "#{_('data.workato_service.3a84cd8a.reply.was_field_upserted_to_monitoring_database')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 28,
+            "keyword": "stop",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "stop_with_error": "true",
+              "stop_reason": "wrong"
+            },
+            "uuid": "a7e0bf0b-d37e-42f0-b216-1ccee3b6fe38"
+          }
+        ],
+        "uuid": "36efb62b-cb29-4083-b349-1bc475ebc15e"
+      },
+      {
+        "number": 29,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "is_true",
+              "lhs": "#{_('data.workato_service.3a84cd8a.reply.has_field_changed')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 30,
+            "keyword": "stop",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "stop_with_error": "true",
+              "stop_reason": "wrong"
+            },
+            "uuid": "1f47646a-d370-4354-afe5-76449242439d"
+          }
+        ],
+        "uuid": "710b95ff-731e-416f-81d5-0643b1854967"
+      },
+      {
+        "number": 31,
+        "provider": "workato_service",
+        "name": "call_service",
+        "as": "fc9c50dd",
+        "title": null,
+        "description": "Call recipe <span class=\"provider\">Callable - Field Monitoring - Has Field Value Been Changed?</span> ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "flow_id": "Callable - Field Monitoring - Has Field Value Been Changed?"
+        },
+        "toggleCfg": {
+          "request.option_update_value_if_changed": true
+        },
+        "input": {
+          "flow_id": {
+            "zip_name": "util/field-monitoring/callable_field_monitoring_has_field_value_been_changed.recipe.json",
+            "name": "Callable - Field Monitoring - Has Field Value Been Changed?",
+            "folder": "util/field-monitoring"
+          },
+          "request": {
+            "field_definition": {
+              "system_name": "#{_('data.workato.job_context.recipe_id')}",
+              "object_id": "#{_('data.workato.job_context.job_id')}",
+              "field_name": "test",
+              "value": "DH - Test\ntest2"
+            },
+            "option_update_value_if_changed": "true"
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "object",
+            "name": "reply",
+            "label": "Reply",
+            "properties": [
+              {
+                "control_type": "checkbox",
+                "label": "Field Previously Monitored?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Field Previously Monitored?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "was_field_being_monitored",
+                  "hint": "Indicates whether the field was present in the field_monitoring database",
+                  "type": "boolean",
+                  "optional": false
+                },
+                "name": "was_field_being_monitored",
+                "hint": "Indicates whether the field was present in the field_monitoring database",
+                "type": "boolean",
+                "optional": false
+              },
+              {
+                "control_type": "checkbox",
+                "label": "Field Upserted to Database for future change checks?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Field Upserted to Database for future change checks?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "was_field_upserted_to_monitoring_database",
+                  "type": "boolean",
+                  "optional": false,
+                  "hint": "Indicates whether the specified was upserted into the monitoring database for future change checks."
+                },
+                "name": "was_field_upserted_to_monitoring_database",
+                "type": "boolean",
+                "optional": false,
+                "hint": "Indicates whether the specified was upserted into the monitoring database for future change checks."
+              },
+              {
+                "control_type": "checkbox",
+                "label": "Field Changed?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Field Changed?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "has_field_changed",
+                  "type": "boolean",
+                  "optional": false,
+                  "hint": "Did this value change?"
+                },
+                "name": "has_field_changed",
+                "type": "boolean",
+                "optional": false,
+                "hint": "Did this value change?"
+              },
+              {
+                "control_type": "date",
+                "label": "Field Last Updated",
+                "render_input": "date_conversion",
+                "parse_output": "date_conversion",
+                "name": "field_last_updated",
+                "type": "date_time",
+                "optional": true,
+                "hint": "This is the date the field was last updated (regardless if the field has changed or not)."
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "request",
+            "label": "Recipe input",
+            "properties": [
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "System Name",
+                    "name": "system_name",
+                    "hint": "Name of the System (i.e. salesforce, netsuite, workday, etc",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request.field_definition"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Object ID",
+                    "name": "object_id",
+                    "hint": "Unique Identifier of the object within the system that is being monitoried (i.e. for Salesforce, this would be the Record Id of the object)",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request.field_definition"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Object Name",
+                    "name": "object_name",
+                    "hint": "Name of the Object (not required, just used for storing more information about the object being monitored)",
+                    "type": "string",
+                    "optional": true,
+                    "parent": "request.field_definition"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Field Name",
+                    "name": "field_name",
+                    "hint": "Name of the Field (i.e. if monitoring the Account name in Salesforce, the field name would be 'name')",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request.field_definition"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Value",
+                    "name": "value",
+                    "hint": "Value of the field being monitored.  This value will be compared in the future to determine if the field has changed.",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request.field_definition"
+                  }
+                ],
+                "label": "Field Definition",
+                "name": "field_definition",
+                "type": "object",
+                "hint": "The system_name, object_id, and field_name will be used as primary keys to uniquely identify the value being monitored.",
+                "optional": false,
+                "parent": "request"
+              },
+              {
+                "control_type": "checkbox",
+                "label": "Option - Update Value if Changed?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Option - Update Value if Changed?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "option_update_value_if_changed",
+                  "hint": "When checking to see if the value has changed, selecting 'TRUE' will update the monitored value for future tracking (future checks will use the value specified in the field_definition)",
+                  "type": "boolean",
+                  "optional": true,
+                  "parent": "request"
+                },
+                "name": "option_update_value_if_changed",
+                "hint": "When checking to see if the value has changed, selecting 'TRUE' will update the monitored value for future tracking (future checks will use the value specified in the field_definition)",
+                "type": "boolean",
+                "optional": true,
+                "parent": "request"
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "flow_id",
+          "request",
+          "request.field_definition",
+          "request.field_definition.system_name",
+          "request.field_definition.object_id",
+          "request.field_definition.field_name",
+          "request.field_definition.value",
+          "request.option_update_value_if_changed"
+        ],
+        "uuid": "be81dbfc-9181-4a15-b457-b470d0270d46"
+      },
+      {
+        "number": 32,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "is_true",
+              "lhs": "#{_('data.workato_service.fc9c50dd.reply.has_field_changed')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 33,
+            "keyword": "stop",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "stop_with_error": "true",
+              "stop_reason": "wrong"
+            },
+            "uuid": "41f62606-a627-42f1-a8ef-781eccec4057"
+          }
+        ],
+        "uuid": "60da11df-5cb2-4ae4-b8e6-e48ece92e8e2"
+      },
+      {
+        "number": 34,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "is_true",
+              "lhs": "#{_('data.workato_service.fc9c50dd.reply.was_field_upserted_to_monitoring_database')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 35,
+            "keyword": "stop",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "stop_with_error": "true",
+              "stop_reason": "wrong"
+            },
+            "uuid": "3e17a03d-0556-4db1-a87b-32e535c7a096"
+          }
+        ],
+        "uuid": "72e17ff0-d2e0-4073-a7b2-45c0bb3746ef"
+      },
+      {
+        "number": 36,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "is_not_true",
+              "lhs": "#{_('data.workato_service.fc9c50dd.reply.was_field_being_monitored')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 37,
+            "keyword": "stop",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "stop_with_error": "true",
+              "stop_reason": "wrong"
+            },
+            "uuid": "6c9dc522-6f97-4b2b-9d6a-bcdd2877e99c"
+          }
+        ],
+        "uuid": "e8d82d0a-6f73-47cb-bbd6-068b8360456b"
+      }
+    ],
+    "uuid": "4617705b-f449-4fd9-ac7e-dafe7e4ee55d"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "clock",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "account_id": null
+    }
+  ]
+}

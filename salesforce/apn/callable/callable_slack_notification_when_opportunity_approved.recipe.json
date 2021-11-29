@@ -1,0 +1,2329 @@
+{
+  "name": "Callable - Slack Notification when Opportunity Approved",
+  "description": "**Trigger**: It's a callable recipe which is being trigger by the phase 2 APN recipe.\n\n**Description**: Send a Slack message when an Opportunity that is shared with APN is approved by AWS.\n\n**Actions**: It receive the apn id and opp status as an input from parent recipe and generate notifications  to send in aws-opps channel.",
+  "version": 77,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "26879487",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">Callable - Slack Notification when Opportunity approved</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "service_name": "Callable - Slack Notification when Opportunity approved",
+      "request_schema_json": "[{\"name\":\"status\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"apnId\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]",
+      "reply_schema_json": "[]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Status",
+            "name": "status",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Apn ID",
+            "name": "apnId",
+            "type": "string",
+            "optional": false
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "salesforce",
+            "name": "search_sobjects",
+            "as": "f4b5647e",
+            "title": "Search Amazon Partner Network Requests",
+            "description": "Search for <span class=\"provider\">Amazon Partner Network Requests</span> in <span class=\"provider\">Salesforce</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "sobject_name": "Amazon Partner Network Request",
+              "table_list": [
+                {
+                  "label": "Owner",
+                  "value": "Group"
+                }
+              ],
+              "field_list": [
+                {
+                  "label": "Opportunity Owner First Name",
+                  "value": "OpportunityOwnerFirstName__c"
+                },
+                {
+                  "label": "Opportunity Owner Last Name",
+                  "value": "OpportunityOwnerLastName__c"
+                },
+                {
+                  "label": "Record ID",
+                  "value": "Id"
+                },
+                {
+                  "label": "Opportunity Title",
+                  "value": "Name"
+                },
+                {
+                  "label": "ACE Opportunity ID",
+                  "value": "APNCRMUniqueIdentifier__c"
+                },
+                {
+                  "label": "AWS Sales Rep Email",
+                  "value": "AWSAccountOwnerEmail__c"
+                },
+                {
+                  "label": "AWS Sales Rep Name",
+                  "value": "AWSAccountOwnerName__c"
+                },
+                {
+                  "label": "AWS Field Engagement",
+                  "value": "AWSFieldEngagement__c"
+                },
+                {
+                  "label": "AWS ISV Success Manager Email",
+                  "value": "AWSISVSuccessManagerEmail__c"
+                },
+                {
+                  "label": "AWS ISV Success Manager Name",
+                  "value": "AWSISVSuccessManagerName__c"
+                },
+                {
+                  "label": "AWS Stage",
+                  "value": "AWSStage__c"
+                },
+                {
+                  "label": "Account Name",
+                  "value": "AccountName__c"
+                },
+                {
+                  "label": "Close Date",
+                  "value": "CloseDate__c"
+                },
+                {
+                  "label": "Industry",
+                  "value": "Industry__c"
+                },
+                {
+                  "label": "ACE Created Date",
+                  "value": "ACECreatedDate__c"
+                },
+                {
+                  "label": "Opportunity Number",
+                  "value": "OpportunityNumber__c"
+                },
+                {
+                  "label": "Opportunity Owner email",
+                  "value": "OpportunityOwneremail__c"
+                },
+                {
+                  "label": "Opportunity",
+                  "value": "Opportunity__c"
+                },
+                {
+                  "label": "Partner Acceptance Status",
+                  "value": "PartnerAcceptanceStatus__c"
+                },
+                {
+                  "label": "APN AWS Stage",
+                  "value": "APNAWSStage__c"
+                },
+                {
+                  "label": "APN Account Name",
+                  "value": "APNAccountName__c"
+                },
+                {
+                  "label": "AWS Status",
+                  "value": "AWSStatus__c"
+                },
+                {
+                  "label": "ACE Opp Owner Email",
+                  "value": "ACEOppOwnerEmail__c"
+                },
+                {
+                  "label": "Opp Update Detected Date",
+                  "value": "OppUpdateDetectedDate__c"
+                },
+                {
+                  "label": "Owner.Name",
+                  "value": "Owner$Owner ID.Name"
+                },
+                {
+                  "label": "Owner.Email",
+                  "value": "Owner$Owner ID.Email"
+                },
+                {
+                  "label": "Connect with AWS Rep?",
+                  "value": "ConnectwithAWSRep__c"
+                }
+              ]
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "limit": "1",
+              "sobject_name": "AmazonPartnerNetworkRequest__c",
+              "table_list": "Group",
+              "Id": "#{_('data.workato_service.26879487.request.apnId')}",
+              "field_list": "OpportunityOwnerFirstName__c\nOpportunityOwnerLastName__c\nId\nName\nAPNCRMUniqueIdentifier__c\nAWSAccountOwnerEmail__c\nAWSAccountOwnerName__c\nAWSFieldEngagement__c\nAWSISVSuccessManagerEmail__c\nAWSISVSuccessManagerName__c\nAWSStage__c\nAccountName__c\nCloseDate__c\nIndustry__c\nACECreatedDate__c\nOpportunityNumber__c\nOpportunityOwneremail__c\nOpportunity__c\nPartnerAcceptanceStatus__c\nAPNAWSStage__c\nAPNAccountName__c\nAWSStatus__c\nACEOppOwnerEmail__c\nOppUpdateDetectedDate__c\nOwner$Owner ID.Name\nOwner$Owner ID.Email\nConnectwithAWSRep__c"
+            },
+            "extended_output_schema": [
+              {
+                "type": "array",
+                "name": "AmazonPartnerNetworkRequest__c",
+                "label": "Amazon Partner Network Requests",
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Opportunity Title",
+                    "optional": true,
+                    "event_title": true,
+                    "custom": false,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "string",
+                    "name": "Name"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Record ID",
+                    "optional": true,
+                    "custom": false,
+                    "sfdc_createable": false,
+                    "sfdc_updateable": false,
+                    "type": "string",
+                    "name": "Id"
+                  },
+                  {
+                    "control_type": "text-area",
+                    "label": "ACE Created Date",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "string",
+                    "name": "ACECreatedDate__c"
+                  },
+                  {
+                    "control_type": "text-area",
+                    "label": "ACE Opp Owner Email",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "string",
+                    "name": "ACEOppOwnerEmail__c"
+                  },
+                  {
+                    "control_type": "text-area",
+                    "label": "ACE Opportunity ID",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "string",
+                    "name": "APNCRMUniqueIdentifier__c"
+                  },
+                  {
+                    "control_type": "text-area",
+                    "label": "APN AWS Stage",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "string",
+                    "name": "APNAWSStage__c"
+                  },
+                  {
+                    "control_type": "text-area",
+                    "label": "APN Account Name",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "string",
+                    "name": "APNAccountName__c"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "AWS Field Engagement",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": false,
+                    "sfdc_updateable": false,
+                    "type": "string",
+                    "name": "AWSFieldEngagement__c"
+                  },
+                  {
+                    "control_type": "text-area",
+                    "label": "AWS ISV Success Manager Email",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "string",
+                    "name": "AWSISVSuccessManagerEmail__c"
+                  },
+                  {
+                    "control_type": "text-area",
+                    "label": "AWS ISV Success Manager Name",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "string",
+                    "name": "AWSISVSuccessManagerName__c"
+                  },
+                  {
+                    "control_type": "text-area",
+                    "label": "AWS Sales Rep Email",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "string",
+                    "name": "AWSAccountOwnerEmail__c"
+                  },
+                  {
+                    "control_type": "text-area",
+                    "label": "AWS Sales Rep Name",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "string",
+                    "name": "AWSAccountOwnerName__c"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "AWS Stage",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": false,
+                    "sfdc_updateable": false,
+                    "type": "string",
+                    "name": "AWSStage__c"
+                  },
+                  {
+                    "control_type": "text-area",
+                    "label": "AWS Status",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "string",
+                    "name": "AWSStatus__c"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Account Name",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": false,
+                    "sfdc_updateable": false,
+                    "type": "string",
+                    "name": "AccountName__c"
+                  },
+                  {
+                    "control_type": "date",
+                    "label": "Close Date",
+                    "render_input": "render_iso8601_date",
+                    "parse_output": "parse_iso8601_date",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": false,
+                    "sfdc_updateable": false,
+                    "type": "date_time",
+                    "name": "CloseDate__c"
+                  },
+                  {
+                    "control_type": "select",
+                    "label": "Connect with AWS Rep?",
+                    "pick_list": "sobject_field_values_list",
+                    "pick_list_params": {
+                      "sobject_name": "\"AmazonPartnerNetworkRequest__c\""
+                    },
+                    "toggle_hint": "Select from list",
+                    "toggle_field": {
+                      "control_type": "text",
+                      "label": "Connect with AWS Rep?",
+                      "toggle_hint": "Enter custom value",
+                      "optional": true,
+                      "custom": true,
+                      "sfdc_createable": true,
+                      "sfdc_updateable": true,
+                      "type": "string",
+                      "name": "ConnectwithAWSRep__c"
+                    },
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "string",
+                    "name": "ConnectwithAWSRep__c"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Industry",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": false,
+                    "sfdc_updateable": false,
+                    "type": "string",
+                    "name": "Industry__c"
+                  },
+                  {
+                    "control_type": "date",
+                    "label": "Opp Update Detected Date",
+                    "render_input": "render_iso8601_date",
+                    "parse_output": "parse_iso8601_date",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "date_time",
+                    "name": "OppUpdateDetectedDate__c"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Opportunity",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "string",
+                    "name": "Opportunity__c"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Opportunity Number",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": false,
+                    "sfdc_updateable": false,
+                    "type": "string",
+                    "name": "OpportunityNumber__c"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Opportunity Owner First Name",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": false,
+                    "sfdc_updateable": false,
+                    "type": "string",
+                    "name": "OpportunityOwnerFirstName__c"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Opportunity Owner Last Name",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": false,
+                    "sfdc_updateable": false,
+                    "type": "string",
+                    "name": "OpportunityOwnerLastName__c"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Opportunity Owner email",
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": false,
+                    "sfdc_updateable": false,
+                    "type": "string",
+                    "name": "OpportunityOwneremail__c"
+                  },
+                  {
+                    "control_type": "select",
+                    "label": "Partner Acceptance Status",
+                    "pick_list": "sobject_field_values_list",
+                    "pick_list_params": {
+                      "sobject_name": "\"AmazonPartnerNetworkRequest__c\""
+                    },
+                    "toggle_hint": "Select from list",
+                    "toggle_field": {
+                      "control_type": "text",
+                      "label": "Partner Acceptance Status",
+                      "toggle_hint": "Enter custom value",
+                      "optional": true,
+                      "custom": true,
+                      "sfdc_createable": true,
+                      "sfdc_updateable": true,
+                      "type": "string",
+                      "name": "PartnerAcceptanceStatus__c"
+                    },
+                    "optional": true,
+                    "custom": true,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "string",
+                    "name": "PartnerAcceptanceStatus__c"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Email",
+                        "optional": true,
+                        "custom": false,
+                        "sfdc_createable": true,
+                        "sfdc_updateable": true,
+                        "type": "string",
+                        "name": "Email"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Name",
+                        "event_title": true,
+                        "custom": false,
+                        "sfdc_createable": true,
+                        "sfdc_updateable": true,
+                        "type": "string",
+                        "name": "Name"
+                      }
+                    ],
+                    "label": "Owner",
+                    "type": "object",
+                    "name": "Owner"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "number",
+                        "label": "Total size",
+                        "parse_output": "integer_conversion",
+                        "type": "integer",
+                        "name": "totalSize"
+                      },
+                      {
+                        "name": "records",
+                        "type": "array",
+                        "of": "object",
+                        "label": "Files",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "ID",
+                            "type": "string",
+                            "name": "Id"
+                          },
+                          {
+                            "control_type": "number",
+                            "label": "Content size",
+                            "parse_output": "integer_conversion",
+                            "type": "integer",
+                            "name": "ContentSize"
+                          },
+                          {
+                            "control_type": "url",
+                            "label": "Content URL",
+                            "type": "string",
+                            "name": "ContentUrl"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "File extension",
+                            "type": "string",
+                            "name": "FileExtension"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "File type",
+                            "type": "string",
+                            "name": "FileType"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Parent ID",
+                            "type": "string",
+                            "name": "ParentId"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Record type",
+                            "type": "string",
+                            "name": "RecordType"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Title",
+                            "type": "string",
+                            "name": "Title"
+                          }
+                        ]
+                      }
+                    ],
+                    "label": "Combined attachments",
+                    "sfdc_field_type": "CombinedAttachment",
+                    "type": "object",
+                    "name": "CombinedAttachments"
+                  }
+                ]
+              },
+              {
+                "type": "integer",
+                "name": "list_size",
+                "control_type": "number",
+                "label": "List size",
+                "parse_output": "integer_conversion"
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "CreatedById",
+                "control_type": "text",
+                "label": "Created By ID",
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": true,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "date_time",
+                "name": "CreatedDate",
+                "control_type": "date_time",
+                "label": "Created Date",
+                "optional": true,
+                "custom": false,
+                "render_input": "render_iso8601_timestamp",
+                "parse_output": "parse_iso8601_timestamp",
+                "sfdc_createable": true,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "CurrencyIsoCode",
+                "control_type": "select",
+                "label": "Currency ISO Code",
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"AmazonPartnerNetworkRequest__c\""
+                },
+                "optional": true,
+                "custom": false,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Currency ISO Code",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": false,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "CurrencyIsoCode"
+                },
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "boolean",
+                "name": "IsDeleted",
+                "control_type": "checkbox",
+                "label": "Deleted",
+                "optional": true,
+                "custom": false,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Deleted",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "custom": false,
+                  "sfdc_createable": false,
+                  "sfdc_updateable": false,
+                  "type": "boolean",
+                  "name": "IsDeleted"
+                },
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "LastModifiedById",
+                "control_type": "text",
+                "label": "Last Modified By ID",
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": true,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "date_time",
+                "name": "LastModifiedDate",
+                "control_type": "date_time",
+                "label": "Last Modified Date",
+                "optional": true,
+                "custom": false,
+                "render_input": "render_iso8601_timestamp",
+                "parse_output": "parse_iso8601_timestamp",
+                "sfdc_createable": true,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "date_time",
+                "name": "LastReferencedDate",
+                "control_type": "date_time",
+                "label": "Last Referenced Date",
+                "optional": true,
+                "custom": false,
+                "render_input": "render_iso8601_timestamp",
+                "parse_output": "parse_iso8601_timestamp",
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "date_time",
+                "name": "LastViewedDate",
+                "control_type": "date_time",
+                "label": "Last Viewed Date",
+                "optional": true,
+                "custom": false,
+                "render_input": "render_iso8601_timestamp",
+                "parse_output": "parse_iso8601_timestamp",
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "Name",
+                "control_type": "text",
+                "label": "Opportunity Title",
+                "optional": true,
+                "custom": false,
+                "event_title": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "OwnerId",
+                "control_type": "text",
+                "label": "Owner ID",
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "Id",
+                "control_type": "text",
+                "label": "Record ID",
+                "sticky": true,
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "date_time",
+                "name": "SystemModstamp",
+                "control_type": "date_time",
+                "label": "System Modstamp",
+                "optional": true,
+                "custom": false,
+                "render_input": "render_iso8601_timestamp",
+                "parse_output": "parse_iso8601_timestamp",
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "ACECreatedDate__c",
+                "control_type": "text-area",
+                "label": "ACE Created Date",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "ACEOppOwnerEmail__c",
+                "control_type": "text-area",
+                "label": "ACE Opp Owner Email",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "APNCRMUniqueIdentifier__c",
+                "control_type": "text-area",
+                "label": "ACE Opportunity ID",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "APNAWSStage__c",
+                "control_type": "text-area",
+                "label": "APN AWS Stage",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "APNAccountName__c",
+                "control_type": "text-area",
+                "label": "APN Account Name",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "APNCampaignName__c",
+                "control_type": "text-area",
+                "label": "APN Campaign Name",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "APNCloseDate__c",
+                "control_type": "text-area",
+                "label": "APN Close Date",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "APNClosedLostReason__c",
+                "control_type": "text-area",
+                "label": "APN Closed Lost Reason",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "APNIndustry__c",
+                "control_type": "text-area",
+                "label": "APN Industry",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "APNShippingCountry__c",
+                "control_type": "text-area",
+                "label": "APN Shipping Country",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "APNShippingState__c",
+                "control_type": "text-area",
+                "label": "APN Shipping State",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "APNShippingZipPostalCode__c",
+                "control_type": "text-area",
+                "label": "APN Shipping Zip/Postal Code",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "APNWebsite__c",
+                "control_type": "text-area",
+                "label": "APN Website",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "AWSAccountID__c",
+                "control_type": "text",
+                "label": "AWS Account ID",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "AWSFieldEngagement__c",
+                "control_type": "text",
+                "label": "AWS Field Engagement",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "AWSISVSuccessManagerEmail__c",
+                "control_type": "text-area",
+                "label": "AWS ISV Success Manager Email",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "AWSISVSuccessManagerName__c",
+                "control_type": "text-area",
+                "label": "AWS ISV Success Manager Name",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "AWSPrimaryContactEmail__c",
+                "control_type": "text-area",
+                "label": "AWS Primary Contact Email",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "AWSPrimaryContactName__c",
+                "control_type": "text-area",
+                "label": "AWS Primary Contact Name",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "AWSAccountOwnerEmail__c",
+                "control_type": "text-area",
+                "label": "AWS Sales Rep Email",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "AWSAccountOwnerName__c",
+                "control_type": "text-area",
+                "label": "AWS Sales Rep Name",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "AWSStage__c",
+                "control_type": "text",
+                "label": "AWS Stage",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "AWSStatus__c",
+                "control_type": "text-area",
+                "label": "AWS Status",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "AccountName__c",
+                "control_type": "text",
+                "label": "Account Name",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "APNRecordOwner__c",
+                "control_type": "text",
+                "label": "Assigned To",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "CaseSafeId_APN__c",
+                "control_type": "text",
+                "label": "CaseSafeId - APN",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "date_time",
+                "name": "CloseDate__c",
+                "control_type": "date",
+                "label": "Close Date",
+                "optional": true,
+                "custom": true,
+                "render_input": "render_iso8601_date",
+                "parse_output": "parse_iso8601_date",
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "ClosedLostReason__c",
+                "control_type": "text",
+                "label": "Closed Lost Reason",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "ConnectwithAWSRep__c",
+                "control_type": "select",
+                "label": "Connect with AWS Rep?",
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"AmazonPartnerNetworkRequest__c\""
+                },
+                "optional": true,
+                "custom": true,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Connect with AWS Rep?",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": true,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "ConnectwithAWSRep__c"
+                },
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "DidAWSrepengageonopp__c",
+                "control_type": "select",
+                "label": "Did AWS rep engage on opp?",
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"AmazonPartnerNetworkRequest__c\""
+                },
+                "optional": true,
+                "custom": true,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Did AWS rep engage on opp?",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": true,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "DidAWSrepengageonopp__c"
+                },
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "Industry__c",
+                "control_type": "text",
+                "label": "Industry",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "NetNewBusinessForCompany__c",
+                "control_type": "select",
+                "label": "Is This Opp Net New Business?",
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"AmazonPartnerNetworkRequest__c\""
+                },
+                "optional": true,
+                "custom": true,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Is This Opp Net New Business?",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": true,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "NetNewBusinessForCompany__c"
+                },
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "date_time",
+                "name": "LastPublishedOn__c",
+                "control_type": "date_time",
+                "label": "Last Publish Attempted On",
+                "optional": true,
+                "custom": true,
+                "render_input": "render_iso8601_timestamp",
+                "parse_output": "parse_iso8601_timestamp",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "MarketplacePropensitytoBuy__c",
+                "control_type": "select",
+                "label": "Marketplace Propensity to Buy",
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"AmazonPartnerNetworkRequest__c\""
+                },
+                "optional": true,
+                "custom": true,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Marketplace Propensity to Buy",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": true,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "MarketplacePropensitytoBuy__c"
+                },
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "date_time",
+                "name": "OppUpdateDetectedDate__c",
+                "control_type": "date",
+                "label": "Opp Update Detected Date",
+                "optional": true,
+                "custom": true,
+                "render_input": "render_iso8601_date",
+                "parse_output": "parse_iso8601_date",
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "Opportunity__c",
+                "control_type": "text",
+                "label": "Opportunity",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "OpportunityNumber__c",
+                "control_type": "text",
+                "label": "Opportunity Number",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "OpportunityOwnerFirstName__c",
+                "control_type": "text",
+                "label": "Opportunity Owner First Name",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "OpportunityOwnerLastName__c",
+                "control_type": "text",
+                "label": "Opportunity Owner Last Name",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "OpportunityOwneremail__c",
+                "control_type": "text",
+                "label": "Opportunity Owner email",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "OpportunityTitle__c",
+                "control_type": "text-area",
+                "label": "Opportunity Title (OLD)",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "OrganizationId__c",
+                "control_type": "text",
+                "label": "Organization Id",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "PartnerAcceptanceStatus__c",
+                "control_type": "select",
+                "label": "Partner Acceptance Status",
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"AmazonPartnerNetworkRequest__c\""
+                },
+                "optional": true,
+                "custom": true,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Partner Acceptance Status",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": true,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "PartnerAcceptanceStatus__c"
+                },
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "PublishingStatus__c",
+                "control_type": "select",
+                "label": "Publishing Status",
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"AmazonPartnerNetworkRequest__c\""
+                },
+                "optional": true,
+                "custom": true,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Publishing Status",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": true,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "PublishingStatus__c"
+                },
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "ShippingCountry__c",
+                "control_type": "text",
+                "label": "Shipping Country",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "ShippingStateProvince__c",
+                "control_type": "text",
+                "label": "Shipping State/Province",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "ShippingZipPostalCode__c",
+                "control_type": "text",
+                "label": "Shipping Zip/Postal Code",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "Source__c",
+                "control_type": "text-area",
+                "label": "Source",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "UseCase__c",
+                "control_type": "select",
+                "label": "Use Case",
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"AmazonPartnerNetworkRequest__c\""
+                },
+                "optional": true,
+                "custom": true,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Use Case",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": true,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "UseCase__c"
+                },
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "Website__c",
+                "control_type": "text",
+                "label": "Website",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "ProcessthroughAWS__c",
+                "control_type": "select",
+                "label": "Will opp go through AWS Marketplace?",
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"AmazonPartnerNetworkRequest__c\""
+                },
+                "optional": true,
+                "custom": true,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Will opp go through AWS Marketplace?",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": true,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "ProcessthroughAWS__c"
+                },
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "boolean",
+                "name": "include_combined_attachments",
+                "control_type": "checkbox",
+                "label": "Select combined attachments",
+                "hint": "Select <b>Yes</b> to obtain data from notes, attachments and files associated to the queried records. Default value is <b>Yes</b>.",
+                "optional": true,
+                "extends_schema": true,
+                "render_input": {
+                },
+                "parse_output": {
+                }
+              }
+            ],
+            "visible_config_fields": [
+              "sobject_name",
+              "table_list",
+              "field_list",
+              "limit",
+              "Id"
+            ],
+            "uuid": "198c8e83-9fab-4565-a7af-28c1374ee34a"
+          },
+          {
+            "number": 3,
+            "as": "2cc79f5e",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "3",
+              "retry_interval": "4"
+            },
+            "block": [
+              {
+                "number": 4,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "true",
+                  "stop_reason": "#{_('data.catch.2cc79f5e.message')}"
+                },
+                "uuid": "ca99d0c6-c10e-4181-a79c-722467888acd"
+              }
+            ],
+            "uuid": "ba6836b5-0997-4553-a355-37d75d201ddd"
+          }
+        ],
+        "uuid": "f66b1231-1197-4666-a765-8463ba0c7b10"
+      },
+      {
+        "number": 5,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "equals_to",
+              "lhs": "#{_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.AWSStatus__c')}",
+              "rhs": "Approved",
+              "uuid": "condition-55ee030c-cd3f-48aa-8ef0-62c52539b8dc"
+            },
+            {
+              "operand": "present",
+              "lhs": "#{_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.Opportunity__c')}",
+              "rhs": null,
+              "uuid": "condition-c67e1efe-fc0b-41ae-9be7-c72e50a25bc9"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 6,
+            "provider": "workato_service",
+            "name": "call_service",
+            "as": "315049d6",
+            "title": null,
+            "description": "Call recipe <span class=\"provider\">Callable - Get Slack Users Data By Email</span> ",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "flow_id": "Callable - Get Slack Users Data By Email"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "flow_id": {
+                "zip_name": "util/callable_get_slack_users_data_by_email.recipe.json",
+                "name": "Callable - Get Slack Users Data By Email",
+                "folder": "util"
+              },
+              "request": {
+                "first_name": "#{_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.OpportunityOwnerFirstName__c')}",
+                "last_name": "#{_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.OpportunityOwnerLastName__c')}",
+                "email": "#{_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.Owner.Email')}"
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "object",
+                "name": "reply",
+                "label": "Reply",
+                "properties": [
+                  {
+                    "control_type": "checkbox",
+                    "label": "Ok",
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Ok",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "name": "ok",
+                      "type": "boolean",
+                      "optional": false
+                    },
+                    "name": "ok",
+                    "type": "boolean",
+                    "optional": false
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "ID",
+                        "name": "id",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Team ID",
+                        "name": "team_id",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Name",
+                        "name": "name",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Real name",
+                        "name": "real_name",
+                        "type": "string",
+                        "optional": false
+                      }
+                    ],
+                    "label": "User",
+                    "name": "user",
+                    "type": "object",
+                    "optional": false
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "request",
+                "label": "Recipe input",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "First name",
+                    "name": "first_name",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Last name",
+                    "name": "last_name",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Email",
+                    "name": "email",
+                    "type": "string",
+                    "optional": true
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "flow_id",
+              "request",
+              "request.first_name",
+              "request.last_name",
+              "request.email"
+            ],
+            "uuid": "31086f76-cf21-41f3-8ea0-37dc7a70147c"
+          },
+          {
+            "number": 7,
+            "provider": "workato_variable",
+            "name": "declare_variable",
+            "as": "f50188c6",
+            "title": "  Create variables ismEmail, ismName, apnLink, r7AceOppOwner, awsRepName, repName, repEmail, slackUserName, accountName, oppOwnerFname, oppOwnerLname",
+            "description": "Create variables <span class=\"provider\">ismEmail</span>, <span class=\"provider\">ismName</span>, <span class=\"provider\">apnLink</span>, <span class=\"provider\">r7AceOppOwner</span>, <span class=\"provider\">awsRepName</span>, <span class=\"provider\">repName</span>, <span class=\"provider\">repEmail</span>, <span class=\"provider\">slackUserName</span>, <span class=\"provider\">accountName</span>, <span class=\"provider\">oppOwnerFname</span>, <span class=\"provider\">oppOwnerLname</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "variables": {
+                "schema": "[{\"name\":\"ism_email\",\"type\":\"string\",\"optional\":true,\"label\":\"ismEmail\",\"control_type\":\"text\"},{\"name\":\"ism_name\",\"type\":\"string\",\"optional\":true,\"label\":\"ismName\",\"control_type\":\"text\"},{\"name\":\"apn_link\",\"type\":\"string\",\"optional\":true,\"label\":\"apnLink\",\"control_type\":\"text\"},{\"name\":\"r_7_ace_opp_owner\",\"type\":\"string\",\"optional\":true,\"label\":\"r7AceOppOwner\",\"control_type\":\"text\"},{\"name\":\"aws_rep_name\",\"type\":\"string\",\"optional\":true,\"label\":\"awsRepName\",\"control_type\":\"text\"},{\"name\":\"rep_name\",\"type\":\"string\",\"optional\":true,\"label\":\"repName\",\"control_type\":\"text\"},{\"name\":\"rep_email\",\"type\":\"string\",\"optional\":true,\"label\":\"repEmail\",\"control_type\":\"text\"},{\"name\":\"slack_user_name\",\"type\":\"string\",\"optional\":true,\"label\":\"slackUserName\",\"control_type\":\"text\"},{\"name\":\"account_name\",\"type\":\"string\",\"optional\":true,\"label\":\"accountName\",\"control_type\":\"text\"},{\"name\":\"opp_owner_fname\",\"type\":\"string\",\"optional\":true,\"label\":\"oppOwnerFname\",\"control_type\":\"text\"},{\"name\":\"opp_owner_lname\",\"type\":\"string\",\"optional\":true,\"label\":\"oppOwnerLname\",\"control_type\":\"text\"}]",
+                "data": {
+                  "ism_email": "=_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.AWSISVSuccessManagerEmail__c').present? ? _('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.AWSISVSuccessManagerEmail__c') : \"N/A\"",
+                  "ism_name": "=_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.AWSISVSuccessManagerName__c').present? ? _('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.AWSISVSuccessManagerName__c') : \"N/A\"",
+                  "apn_link": "=lookup(\"SALESFORCE_VARIABLES\", key: \"apn.apnlink\")[\"value\"] +_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.Id')+\"/view\"",
+                  "r_7_ace_opp_owner": "=_('data.workato_service.315049d6.reply.user.name').present? ? \"@\" + _('data.workato_service.315049d6.reply.user.name') : \"<\" + lookup(\"SALESFORCE_VARIABLES\", key: \"ask-aws-partnership.channelLink\")[\"value\"] + \"|a member of the AWS partnership team>\"",
+                  "aws_rep_name": "=_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.AWSAccountOwnerName__c').present? ? \n(_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.AWSAccountOwnerName__c').split()).first  : \"everyone\"",
+                  "rep_name": "=_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.AWSAccountOwnerName__c').present? ? _('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.AWSAccountOwnerName__c') : \"N/A\"",
+                  "rep_email": "=_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.AWSAccountOwnerEmail__c').present? ? _('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.AWSAccountOwnerEmail__c'): \"N/A\"",
+                  "slack_user_name": "=_('data.workato_service.315049d6.reply.user.name').present? ? \"@\" + _('data.workato_service.315049d6.reply.user.name') : (_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.OpportunityOwnerFirstName__c').present? ? \n(_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.OpportunityOwnerFirstName__c') + \" \" +  _('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.OpportunityOwnerLastName__c')) : null)",
+                  "account_name": "=_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.AccountName__c').present? ? _('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.AccountName__c').gsub(\" \", \"+\") : \"N/A\"",
+                  "opp_owner_fname": "=_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.OpportunityOwnerFirstName__c').present? ? _('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.OpportunityOwnerFirstName__c').gsub(\" \", \"+\") : \"\"",
+                  "opp_owner_lname": "=_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.OpportunityOwnerLastName__c').present? ? _('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.OpportunityOwnerLastName__c').gsub(\" \", \"+\") : \"\""
+                }
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "string",
+                "name": "ism_email",
+                "control_type": "text",
+                "label": "ismEmail",
+                "optional": true
+              },
+              {
+                "type": "string",
+                "name": "ism_name",
+                "control_type": "text",
+                "label": "ismName",
+                "optional": true
+              },
+              {
+                "type": "string",
+                "name": "apn_link",
+                "control_type": "text",
+                "label": "apnLink",
+                "optional": true
+              },
+              {
+                "type": "string",
+                "name": "r_7_ace_opp_owner",
+                "control_type": "text",
+                "label": "r7AceOppOwner",
+                "optional": true
+              },
+              {
+                "type": "string",
+                "name": "aws_rep_name",
+                "control_type": "text",
+                "label": "awsRepName",
+                "optional": true
+              },
+              {
+                "type": "string",
+                "name": "rep_name",
+                "control_type": "text",
+                "label": "repName",
+                "optional": true
+              },
+              {
+                "type": "string",
+                "name": "rep_email",
+                "control_type": "text",
+                "label": "repEmail",
+                "optional": true
+              },
+              {
+                "type": "string",
+                "name": "slack_user_name",
+                "control_type": "text",
+                "label": "slackUserName",
+                "optional": true
+              },
+              {
+                "type": "string",
+                "name": "account_name",
+                "control_type": "text",
+                "label": "accountName",
+                "optional": true
+              },
+              {
+                "type": "string",
+                "name": "opp_owner_fname",
+                "control_type": "text",
+                "label": "oppOwnerFname",
+                "optional": true
+              },
+              {
+                "type": "string",
+                "name": "opp_owner_lname",
+                "control_type": "text",
+                "label": "oppOwnerLname",
+                "optional": true
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "variables",
+                "control_type": "form-schema-builder",
+                "label": "Variables",
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Schema",
+                    "extends_schema": true,
+                    "broadcast_change_event": true,
+                    "type": "string",
+                    "name": "schema"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "ismEmail",
+                        "name": "ism_email",
+                        "type": "string",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "ismName",
+                        "name": "ism_name",
+                        "type": "string",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "apnLink",
+                        "name": "apn_link",
+                        "type": "string",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "r7AceOppOwner",
+                        "name": "r_7_ace_opp_owner",
+                        "type": "string",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "awsRepName",
+                        "name": "aws_rep_name",
+                        "type": "string",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "repName",
+                        "name": "rep_name",
+                        "type": "string",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "repEmail",
+                        "name": "rep_email",
+                        "type": "string",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "slackUserName",
+                        "name": "slack_user_name",
+                        "type": "string",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "accountName",
+                        "name": "account_name",
+                        "type": "string",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "oppOwnerFname",
+                        "name": "opp_owner_fname",
+                        "type": "string",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "oppOwnerLname",
+                        "name": "opp_owner_lname",
+                        "type": "string",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      }
+                    ],
+                    "label": "Data",
+                    "type": "object",
+                    "name": "data"
+                  }
+                ],
+                "exclude_fields": [
+                  "hint"
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "variables.data.ism_email",
+              "variables",
+              "variables.schema",
+              "variables.data.ism_name",
+              "variables.data",
+              "variables.data.apn_link",
+              "variables.data.r_7_ace_opp_owner",
+              "variables.data.aws_rep_name",
+              "variables.data.rep_name",
+              "variables.data.rep_email",
+              "variables.data.slack_user_name",
+              "variables.data.account_name",
+              "variables.data.opp_owner_fname",
+              "variables.data.opp_owner_lname"
+            ],
+            "uuid": "08771569-5126-4171-94fe-ca78c74072e4"
+          },
+          {
+            "number": 8,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "contains",
+                  "lhs": "#{_('data.workato_variable.f50188c6.account_name')}",
+                  "rhs": "+&+",
+                  "uuid": "condition-72685a95-6e86-482e-8bd0-f492dcfe0f2f"
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 9,
+                "provider": "workato_variable",
+                "name": "update_variable",
+                "as": "c5a05ea2",
+                "title": null,
+                "description": "Update variable <span class=\"provider\">accountName</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "name": "accountName (step 5)"
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "name": "08771569-5126-4171-94fe-ca78c74072e4:f50188c6:account_name",
+                  "value": "=_('data.workato_variable.f50188c6.account_name').gsub(\"+&+\", \"+and+\")"
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "string",
+                    "name": "value",
+                    "control_type": "text",
+                    "label": "Value",
+                    "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                    "sticky": true,
+                    "optional": true,
+                    "strip_interpolation": true
+                  }
+                ],
+                "uuid": "15224f70-3509-461a-9788-0b28ae770580"
+              }
+            ],
+            "uuid": "06696c10-c7b4-4817-b97d-659f1290c3fe"
+          },
+          {
+            "number": 10,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "equals_to",
+                  "lhs": "#{_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.ACEOppOwnerEmail__c')}",
+                  "rhs": "apn@rapid7.com"
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 11,
+                "provider": "workato_variable",
+                "name": "update_variable",
+                "as": "e4a0e6dd",
+                "title": null,
+                "description": "Update variable <span class=\"provider\">r7AceOppOwner</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "name": "r7AceOppOwner (step 6)"
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "name": "08771569-5126-4171-94fe-ca78c74072e4:f50188c6:r_7_ace_opp_owner",
+                  "value": "=lookup(\"SALESFORCE_VARIABLES\", key: \"apn.aceOppOwner\")[\"value\"]"
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "string",
+                    "name": "value",
+                    "control_type": "text",
+                    "label": "Value",
+                    "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                    "sticky": true,
+                    "optional": true,
+                    "strip_interpolation": true
+                  }
+                ],
+                "uuid": "10f010ea-634a-4557-95fc-58d43c06f32a"
+              }
+            ],
+            "uuid": "c5985eea-0d4b-4c1b-ace9-0311b6141c8d"
+          },
+          {
+            "number": 12,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "starts_with",
+                  "lhs": "#{_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.ConnectwithAWSRep__c')}",
+                  "rhs": "Yes"
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 13,
+                "provider": "slack_bot",
+                "name": "post_bot_message",
+                "as": "4aa9624d",
+                "title": null,
+                "description": null,
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "channel": "aws-opps"
+                },
+                "toggleCfg": {
+                  "channel": true,
+                  "blocks.0.bot_command": false
+                },
+                "input": {
+                  "blocks": [
+                    {
+                      "block_type": "section_with_text",
+                      "section_text": "Hi #{_('data.workato_variable.f50188c6.slack_user_name')}, your opp <#{_('data.workato_variable.f50188c6.apn_link')}|#{_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.get_custom_object(Opportunity__c>id, sobject_name: Opportunity).Name')}> with *#{_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.AccountName__c')}* has been approved by AWS :tada: so you can now reach out to the rep and the ISM (ISMs act as liaisons between AWS reps and partners like Rapid7).",
+                      "button_title": "google",
+                      "bot_command": "j",
+                      "style": "primary"
+                    },
+                    {
+                      "block_type": "section_with_text",
+                      "section_text": "*AWS Rep:* #{_('data.workato_variable.f50188c6.rep_name')} (#{_('data.workato_variable.f50188c6.rep_email')})\n*ISM:* #{_('data.workato_variable.f50188c6.ism_name')} (#{_('data.workato_variable.f50188c6.ism_email')})"
+                    },
+                    {
+                      "block_type": "section_with_text",
+                      "section_text": "Please send an email to both of them *immediately* introducing yourself and provide a few time slots that you’re available for an introductory call (make sure #{_('data.workato_variable.f50188c6.r_7_ace_opp_owner')} is available at those times and included on the invite). Clicking the button below makes this super easy."
+                    },
+                    {
+                      "block_type": "actions",
+                      "actions": [
+                        {
+                          "type": "button",
+                          "button_title": ":email: Generate Email Draft",
+                          "url": "https://mail.google.com/mail/u/0/?fs=1&tf=cm&source=mailto&cc=#{_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.AWSISVSuccessManagerEmail__c')}&su=Rapid7+Opp+With+#{_('data.workato_variable.f50188c6.account_name')}&to=#{_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.AWSAccountOwnerEmail__c')}&bcc=apn@rapid7.com&body=Hi+#{_('data.workato_variable.f50188c6.aws_rep_name')},%0A%0AI%27m+looking+forward+to+connecting+on+Rapid7%27s+opp+with+#{_('data.workato_variable.f50188c6.account_name')}.+Here+are+some+times+I%27m+available:%0A%0A%5BInsert+Times%5D%0A%0ACan+you+let+me+know+if+any+of+these+work+for+you+and+I%27ll+send+out+an+invite?%0A%0AThanks,%0A%0A#{_('data.workato_variable.f50188c6.opp_owner_fname')}+#{_('data.workato_variable.f50188c6.opp_owner_lname')}"
+                        },
+                        {
+                          "type": "button",
+                          "button_title": ":question: What Next?",
+                          "url": "https://rapid7.highspot.com/items/5fb6d36b659e9363bd1a1cdb?lfrm=shp.0#3"
+                        }
+                      ]
+                    },
+                    {
+                      "block_type": "context",
+                      "elements": [
+                        {
+                          "type": "text",
+                          "text": "If a random email app opens, <https://blog.hubspot.com/marketing/set-gmail-as-browser-default-email-client-ht|click here> for instructions on making Gmail your default email client."
+                        }
+                      ]
+                    }
+                  ],
+                  "channel": "#aws-opps"
+                },
+                "uuid": "5e5375f3-ed2f-4c65-a631-f9d0c1bd896b"
+              },
+              {
+                "number": 14,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "present",
+                      "lhs": "#{_('data.workato_service.315049d6.reply.user.id')}",
+                      "rhs": null
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 15,
+                    "provider": "slack_bot",
+                    "name": "post_bot_message",
+                    "as": "94a466af",
+                    "title": null,
+                    "description": null,
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                      "channel": true,
+                      "blocks.0.bot_command": false
+                    },
+                    "input": {
+                      "channel": "#{_('data.workato_service.315049d6.reply.user.id')}",
+                      "blocks": [
+                        {
+                          "block_type": "section_with_text",
+                          "section_text": "Hi @#{_('data.workato_service.315049d6.reply.user.name')}, your opp <#{_('data.workato_variable.f50188c6.apn_link')}|#{_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.get_custom_object(Opportunity__c>id, sobject_name: Opportunity).Name')}> with *#{_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.AccountName__c')}* has been approved by AWS :tada: so you can now reach out to the rep and the ISM (ISMs act as liaisons between AWS reps and partners like Rapid7).",
+                          "button_title": "google",
+                          "bot_command": "j",
+                          "style": "primary"
+                        },
+                        {
+                          "block_type": "section_with_text",
+                          "section_text": "*AWS Rep:* #{_('data.workato_variable.f50188c6.rep_name')} (#{_('data.workato_variable.f50188c6.rep_email')})\n*ISM:* #{_('data.workato_variable.f50188c6.ism_name')} (#{_('data.workato_variable.f50188c6.ism_email')})"
+                        },
+                        {
+                          "block_type": "section_with_text",
+                          "section_text": "Please send an email to both of them *immediately* introducing yourself and provide a few time slots that you’re available for an introductory call (make sure #{_('data.workato_variable.f50188c6.r_7_ace_opp_owner')} is available at those times and included on the invite). Clicking the button below makes this super easy."
+                        },
+                        {
+                          "block_type": "actions",
+                          "actions": [
+                            {
+                              "type": "button",
+                              "button_title": ":email: Generate Email Draft",
+                              "url": "https://mail.google.com/mail/u/0/?fs=1&tf=cm&source=mailto&cc=#{_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.AWSISVSuccessManagerEmail__c')}&su=Rapid7+Opp+With+#{_('data.workato_variable.f50188c6.account_name')}&to=#{_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.AWSAccountOwnerEmail__c')}&bcc=apn@rapid7.com&body=Hi+#{_('data.workato_variable.f50188c6.aws_rep_name')},%0A%0AI%27m+looking+forward+to+connecting+on+Rapid7%27s+opp+with+#{_('data.workato_variable.f50188c6.account_name')}.+Here+are+some+times+I%27m+available:%0A%0A%5BInsert+Times%5D%0A%0ACan+you+let+me+know+if+any+of+these+work+for+you+and+I%27ll+send+out+an+invite?%0A%0AThanks,%0A%0A#{_('data.workato_variable.f50188c6.opp_owner_fname')}+#{_('data.workato_variable.f50188c6.opp_owner_lname')}"
+                            },
+                            {
+                              "type": "button",
+                              "button_title": ":question: What Next?",
+                              "url": "https://rapid7.highspot.com/items/5fb6d36b659e9363bd1a1cdb?lfrm=shp.0#3"
+                            }
+                          ]
+                        },
+                        {
+                          "block_type": "context",
+                          "elements": [
+                            {
+                              "type": "text",
+                              "text": "If a random email app opens, <https://blog.hubspot.com/marketing/set-gmail-as-browser-default-email-client-ht|click here> for instructions on making Gmail your default email client."
+                            }
+                          ]
+                        }
+                      ]
+                    },
+                    "uuid": "2c061dd2-9c68-4d80-a364-1de429cfa605"
+                  }
+                ],
+                "uuid": "e8942667-1ec2-4641-bf7f-b4b640833bae"
+              }
+            ],
+            "uuid": "c44dcd21-2d1e-4ed3-87e1-5d520a27f3a5"
+          },
+          {
+            "number": 16,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "starts_with",
+                  "lhs": "#{_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.ConnectwithAWSRep__c')}",
+                  "rhs": "No"
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 17,
+                "provider": "slack_bot",
+                "name": "post_bot_message",
+                "as": "56084ad0",
+                "title": null,
+                "description": null,
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "channel": "aws-opps"
+                },
+                "toggleCfg": {
+                  "channel": true,
+                  "blocks.0.bot_command": false
+                },
+                "input": {
+                  "blocks": [
+                    {
+                      "block_type": "section_with_text",
+                      "section_text": "Hi #{_('data.workato_variable.f50188c6.slack_user_name')}, your opp <#{_('data.workato_variable.f50188c6.apn_link')}|#{_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.get_custom_object(Opportunity__c>id, sobject_name: Opportunity).Name')}> with *#{_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.AccountName__c')}* has been approved by AWS :tada:. Here is the contact information for the account (as a reminder, ISMs act as liaisons between AWS reps and partners like Rapid7)",
+                      "button_title": "google",
+                      "bot_command": "j",
+                      "style": "primary"
+                    },
+                    {
+                      "block_type": "section_with_text",
+                      "section_text": "*AWS Rep:* #{_('data.workato_variable.f50188c6.rep_name')} (#{_('data.workato_variable.f50188c6.rep_email')})\n*ISM:* #{_('data.workato_variable.f50188c6.ism_name')} (#{_('data.workato_variable.f50188c6.ism_email')})"
+                    },
+                    {
+                      "block_type": "section_with_text",
+                      "section_text": "Although you marked this opportunity as being shared for visibility only, feel free to reach out to the AWS rep and the ISM if you decide that would be valuable. Thanks and let #{_('data.workato_variable.f50188c6.r_7_ace_opp_owner')} know if you have any questions."
+                    }
+                  ],
+                  "channel": "#aws-opps"
+                },
+                "uuid": "a3106efe-c27c-49c4-b885-3ab0cec55845"
+              },
+              {
+                "number": 18,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "present",
+                      "lhs": "#{_('data.workato_service.315049d6.reply.user.id')}",
+                      "rhs": null
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 19,
+                    "provider": "slack_bot",
+                    "name": "post_bot_message",
+                    "as": "a08084da",
+                    "title": null,
+                    "description": null,
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                      "channel": true,
+                      "blocks.0.bot_command": false
+                    },
+                    "input": {
+                      "channel": "#{_('data.workato_service.315049d6.reply.user.id')}",
+                      "blocks": [
+                        {
+                          "block_type": "section_with_text",
+                          "section_text": "Hi @#{_('data.workato_service.315049d6.reply.user.name')}, your opp <#{_('data.workato_variable.f50188c6.apn_link')}|#{_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.get_custom_object(Opportunity__c>id, sobject_name: Opportunity).Name')}> with *#{_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.AccountName__c')}* has been approved by AWS :tada:. Here is the contact information for the account (as a reminder, ISMs act as liaisons between AWS reps and partners like Rapid7)",
+                          "button_title": "google",
+                          "bot_command": "j",
+                          "style": "primary"
+                        },
+                        {
+                          "block_type": "section_with_text",
+                          "section_text": "*AWS Rep:* #{_('data.workato_variable.f50188c6.rep_name')} (#{_('data.workato_variable.f50188c6.rep_email')})\n*ISM:* #{_('data.workato_variable.f50188c6.ism_name')} (#{_('data.workato_variable.f50188c6.ism_email')})"
+                        },
+                        {
+                          "block_type": "section_with_text",
+                          "section_text": "Although you marked this opportunity as being shared for visibility only, feel free to reach out to the AWS rep and the ISM if you decide that would be valuable. Thanks and let #{_('data.workato_variable.f50188c6.r_7_ace_opp_owner')} know if you have any questions."
+                        }
+                      ]
+                    },
+                    "uuid": "c0ef8993-db98-434b-be52-e316c8a59db4"
+                  }
+                ],
+                "uuid": "77fc76af-7483-4924-8348-ba507da4acc1"
+              }
+            ],
+            "uuid": "d5fc86aa-7834-4341-a473-bb1066a5790f"
+          }
+        ],
+        "uuid": "7f3a10f2-0872-41f5-86b0-89ac767aea5a"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_5",
+        "label": "Opportunity"
+      },
+      {
+        "name": "custom_column_1",
+        "label": "APN Id"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Account"
+      },
+      {
+        "name": "custom_column_4",
+        "label": "ACE Opp ID"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "Slack Username"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_5": "#{_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.get_custom_object(Opportunity__c>id, sobject_name: Opportunity).Name')}",
+      "custom_column_1": "#{_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.Id')}",
+      "custom_column_2": "#{_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.AccountName__c')}",
+      "custom_column_4": "#{_('data.salesforce.f4b5647e.AmazonPartnerNetworkRequest__c.first.APNCRMUniqueIdentifier__c')}",
+      "custom_column_3": "=_('data.workato_service.315049d6.reply.user.name').present? ? _('data.workato_service.315049d6.reply.user.name') : \"N/A\""
+    },
+    "uuid": "53622181-7823-4f78-99c6-ef10c74434e3"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "slack_bot",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/workatointegrations.connection.json",
+        "name": "workatointegrations",
+        "folder": "connections"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "salesforce",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/salesforce.connection.json",
+        "name": "Salesforce",
+        "folder": "connections"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

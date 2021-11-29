@@ -1,0 +1,806 @@
+{
+  "name": "Scheduled - Initialize Data for Coupa Department Approver Reconciliation Report",
+  "description": "When there is a new or updated object in Coupa, do action",
+  "version": 2,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "clock",
+    "name": "daily_task",
+    "as": "c03ac4aa",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+      "sunday": true,
+      "monday": true,
+      "tuesday": true,
+      "wednesday": true,
+      "thursday": true,
+      "friday": true,
+      "saturday": true
+    },
+    "input": {
+      "sunday": "false",
+      "monday": "true",
+      "tuesday": "false",
+      "wednesday": "false",
+      "thursday": "false",
+      "friday": "false",
+      "saturday": "false",
+      "time_zone": "Eastern Time (US & Canada)",
+      "minute": "00",
+      "hour": "6"
+    },
+    "block": [
+      {
+        "number": 1,
+        "provider": "lookup_table",
+        "name": "get_entry",
+        "as": "7f99f078",
+        "title": null,
+        "description": "\n      Lookup\n      <span class=\"provider\">entry</span>\n      from\n      <span class=\"provider\">COUPA_VARIABLES</span>\n      lookup table\n    ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "lookup_table_id": "COUPA_VARIABLES"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "lookup_table_id": {
+            "zip_name": "coupa_variables.lookup_table.json",
+            "name": "COUPA_VARIABLES",
+            "folder": ""
+          },
+          "parameters": {
+            "col1": "inactive_approver_report.fetch_dynDepartment.status"
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "integer",
+            "name": "id",
+            "control_type": "number",
+            "label": "Entry ID",
+            "parse_output": "integer_conversion"
+          },
+          {
+            "type": "object",
+            "name": "entry",
+            "label": "Entry",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "key",
+                "name": "col1",
+                "type": "string",
+                "sticky": true
+              },
+              {
+                "control_type": "text",
+                "label": "value",
+                "name": "col2",
+                "type": "string",
+                "sticky": true
+              },
+              {
+                "control_type": "text",
+                "label": "type",
+                "name": "col3",
+                "type": "string",
+                "sticky": true
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "parameters",
+            "label": "Lookup by",
+            "hint": "Provide one or more entry fields to search the entry",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "key",
+                "name": "col1",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "value",
+                "name": "col2",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "type",
+                "name": "col3",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "lookup_table_id",
+          "parameters.col1"
+        ],
+        "hidden_config_fields": [
+          "parameters.col2",
+          "parameters.col3"
+        ],
+        "comment": "Fetch the \"inactive_approver_report.fetch_dynDepartment.status\" variable",
+        "uuid": "8ff8badf-e92d-4216-a021-8051a5599e05"
+      },
+      {
+        "number": 2,
+        "provider": "lookup_table",
+        "name": "update_entry",
+        "as": "b8b16d93",
+        "title": null,
+        "description": "\n      Update\n      <span class=\"provider\">entry</span>\n      in\n      <span class=\"provider\">COUPA_VARIABLES</span>\n      lookup table\n    ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "lookup_table_id": "COUPA_VARIABLES"
+        },
+        "toggleCfg": {
+          "ignore_not_found": true
+        },
+        "input": {
+          "ignore_not_found": "false",
+          "lookup_table_id": {
+            "zip_name": "coupa_variables.lookup_table.json",
+            "name": "COUPA_VARIABLES",
+            "folder": ""
+          },
+          "id": "#{_('data.lookup_table.7f99f078.id')}",
+          "parameters": {
+            "col2": "pending"
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "integer",
+            "name": "id",
+            "control_type": "number",
+            "label": "Entry ID",
+            "parse_output": "integer_conversion"
+          },
+          {
+            "type": "object",
+            "name": "entry",
+            "label": "Entry",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "key",
+                "name": "col1",
+                "type": "string",
+                "sticky": true
+              },
+              {
+                "control_type": "text",
+                "label": "value",
+                "name": "col2",
+                "type": "string",
+                "sticky": true
+              },
+              {
+                "control_type": "text",
+                "label": "type",
+                "name": "col3",
+                "type": "string",
+                "sticky": true
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "parameters",
+            "label": "Entry fields",
+            "hint": "Fill the fields you want to update",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "key",
+                "name": "col1",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "value",
+                "name": "col2",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "type",
+                "name": "col3",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "lookup_table_id",
+          "ignore_not_found",
+          "parameters.col2"
+        ],
+        "hidden_config_fields": [
+          "parameters.col1",
+          "parameters.col3"
+        ],
+        "comment": "Set the \"inactive_approver_report.fetch_dynDepartment.status\" variable to \"pending\"",
+        "uuid": "b53b09bf-d113-4d97-9f78-86fcac7d38c4"
+      },
+      {
+        "number": 3,
+        "provider": "lookup_table",
+        "name": "get_entry",
+        "as": "2a8814d8",
+        "title": null,
+        "description": "\n      Lookup\n      <span class=\"provider\">entry</span>\n      from\n      <span class=\"provider\">NETSUITE_VARIABLES</span>\n      lookup table\n    ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "lookup_table_id": "NETSUITE_VARIABLES"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "lookup_table_id": {
+            "zip_name": "netsuite_variables.lookup_table.json",
+            "name": "NETSUITE_VARIABLES",
+            "folder": ""
+          },
+          "parameters": {
+            "col1": "inactive_approver_report.inactive_employees.total_pages"
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "integer",
+            "name": "id",
+            "control_type": "number",
+            "label": "Entry ID",
+            "parse_output": "integer_conversion"
+          },
+          {
+            "type": "object",
+            "name": "entry",
+            "label": "Entry",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "key",
+                "name": "col1",
+                "type": "string",
+                "sticky": true
+              },
+              {
+                "control_type": "text",
+                "label": "value",
+                "name": "col2",
+                "type": "string",
+                "sticky": true
+              },
+              {
+                "control_type": "text",
+                "label": "type",
+                "name": "col3",
+                "type": "string",
+                "sticky": true
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "parameters",
+            "label": "Lookup by",
+            "hint": "Provide one or more entry fields to search the entry",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "key",
+                "name": "col1",
+                "type": "string",
+                "sticky": true,
+                "optional": true,
+                "parent": "parameters"
+              },
+              {
+                "control_type": "text",
+                "label": "value",
+                "name": "col2",
+                "type": "string",
+                "sticky": true,
+                "optional": true,
+                "parent": "parameters"
+              },
+              {
+                "control_type": "text",
+                "label": "type",
+                "name": "col3",
+                "type": "string",
+                "sticky": true,
+                "optional": true,
+                "parent": "parameters"
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "lookup_table_id",
+          "parameters.col1"
+        ],
+        "hidden_config_fields": [
+          "parameters.col2",
+          "parameters.col3"
+        ],
+        "comment": "Fetch the \"inactive_approver_report.inactive_employees.total_pages\" variable",
+        "uuid": "11be8c63-1d71-4f00-9c5d-2db763d5bd22"
+      },
+      {
+        "number": 4,
+        "provider": "lookup_table",
+        "name": "update_entry",
+        "as": "21ac4ab1",
+        "title": null,
+        "description": "\n      Update\n      <span class=\"provider\">entry</span>\n      in\n      <span class=\"provider\">NETSUITE_VARIABLES</span>\n      lookup table\n    ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "lookup_table_id": "NETSUITE_VARIABLES"
+        },
+        "toggleCfg": {
+          "ignore_not_found": true
+        },
+        "input": {
+          "ignore_not_found": "false",
+          "lookup_table_id": {
+            "zip_name": "netsuite_variables.lookup_table.json",
+            "name": "NETSUITE_VARIABLES",
+            "folder": ""
+          },
+          "id": "#{_('data.lookup_table.2a8814d8.id')}",
+          "parameters": {
+            "col2": "pending"
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "integer",
+            "name": "id",
+            "control_type": "number",
+            "label": "Entry ID",
+            "parse_output": "integer_conversion"
+          },
+          {
+            "type": "object",
+            "name": "entry",
+            "label": "Entry",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "key",
+                "name": "col1",
+                "type": "string",
+                "sticky": true
+              },
+              {
+                "control_type": "text",
+                "label": "value",
+                "name": "col2",
+                "type": "string",
+                "sticky": true
+              },
+              {
+                "control_type": "text",
+                "label": "type",
+                "name": "col3",
+                "type": "string",
+                "sticky": true
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "parameters",
+            "label": "Entry fields",
+            "hint": "Fill the fields you want to update",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "key",
+                "name": "col1",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "value",
+                "name": "col2",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "type",
+                "name": "col3",
+                "type": "string",
+                "sticky": true,
+                "optional": true
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "lookup_table_id",
+          "id",
+          "ignore_not_found",
+          "parameters.col2"
+        ],
+        "hidden_config_fields": [
+          "parameters.col1",
+          "parameters.col3"
+        ],
+        "comment": "Set the \"inactive_approver_report.inactive_employees.total_pages\" variable to \"pending\"",
+        "uuid": "26f5ec00-41b5-411d-92a3-ae7dcae53823"
+      },
+      {
+        "number": 5,
+        "provider": "lookup_table",
+        "name": "search_entries",
+        "as": "9a5ede3b",
+        "title": null,
+        "description": "\n      Search\n      <span class=\"provider\">entries</span>\n      in\n      <span class=\"provider\">NETSUITE_VARIABLES</span>\n      lookup table\n    ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "lookup_table_id": "NETSUITE_VARIABLES"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "lookup_table_id": {
+            "zip_name": "netsuite_variables.lookup_table.json",
+            "name": "NETSUITE_VARIABLES",
+            "folder": ""
+          },
+          "parameters": {
+            "col1": "inactive_approver_report.inactive_employees.page_complete"
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "array",
+            "name": "entries",
+            "label": "Entries",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "number",
+                "label": "Entry ID",
+                "parse_output": "integer_conversion",
+                "type": "integer",
+                "name": "id"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "key",
+                    "name": "col1",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "value",
+                    "name": "col2",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "type",
+                    "name": "col3",
+                    "type": "string",
+                    "sticky": true
+                  }
+                ],
+                "label": "Entry",
+                "type": "object",
+                "name": "entry"
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "parameters",
+            "label": "Search by",
+            "hint": "Provide one or more entry fields to search the entry",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "key",
+                "name": "col1",
+                "type": "string",
+                "sticky": true,
+                "optional": true,
+                "parent": "parameters"
+              },
+              {
+                "control_type": "text",
+                "label": "value",
+                "name": "col2",
+                "type": "string",
+                "sticky": true,
+                "optional": true,
+                "parent": "parameters"
+              },
+              {
+                "control_type": "text",
+                "label": "type",
+                "name": "col3",
+                "type": "string",
+                "sticky": true,
+                "optional": true,
+                "parent": "parameters"
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "lookup_table_id",
+          "parameters.col1"
+        ],
+        "hidden_config_fields": [
+          "parameters.col2",
+          "parameters.col3"
+        ],
+        "comment": "Get all the variables with name \"inactive_approver_report.inactive_employees.page_complete\", we need to delete these since it is used to track when all inactive employees have been fetched",
+        "uuid": "ab9cc70a-fc7a-4f80-8af0-400ef0805e12"
+      },
+      {
+        "number": 6,
+        "as": "c159a71f",
+        "keyword": "foreach",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "clear_scope": "true",
+        "input": {
+        },
+        "block": [
+          {
+            "number": 7,
+            "provider": "lookup_table",
+            "name": "delete_entry",
+            "as": "57a6b8e5",
+            "title": null,
+            "description": "\n      Delete\n      <span class=\"provider\">entry</span>\n      in\n      <span class=\"provider\">NETSUITE_VARIABLES</span>\n      lookup table\n    ",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "lookup_table_id": "NETSUITE_VARIABLES"
+            },
+            "toggleCfg": {
+              "ignore_not_found": true
+            },
+            "input": {
+              "ignore_not_found": "false",
+              "lookup_table_id": {
+                "zip_name": "netsuite_variables.lookup_table.json",
+                "name": "NETSUITE_VARIABLES",
+                "folder": ""
+              },
+              "id": "#{_('data.foreach.c159a71f.id')}"
+            },
+            "uuid": "13942bbf-a31c-4adc-824b-bbd6b1be5722"
+          }
+        ],
+        "source": "#{_('data.lookup_table.9a5ede3b.entries')}",
+        "uuid": "2900ac32-5c25-40cb-af1d-6f3c7b47f22d"
+      },
+      {
+        "number": 8,
+        "provider": "lookup_table",
+        "name": "truncate",
+        "as": "46e3ca40",
+        "title": null,
+        "description": "\n      Truncate\n      <span class=\"provider\">all entries</span>\n      from\n      <span class=\"provider\">NETSUITE_INACTIVE_EMPLOYEES</span>\n      lookup table\n    ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "lookup_table_id": "NETSUITE_INACTIVE_EMPLOYEES"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "lookup_table_id": {
+            "zip_name": "netsuite_inactive_employees.lookup_table.json",
+            "name": "NETSUITE_INACTIVE_EMPLOYEES",
+            "folder": ""
+          }
+        },
+        "uuid": "ee6625b9-3459-4f65-b37b-5fbf2ca46e26"
+      },
+      {
+        "number": 9,
+        "provider": "lookup_table",
+        "name": "truncate",
+        "as": "c108f037",
+        "title": null,
+        "description": "\n      Truncate\n      <span class=\"provider\">all entries</span>\n      from\n      <span class=\"provider\">COUPA_DYN-DEPARTMENT_APPROVERS</span>\n      lookup table\n    ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "lookup_table_id": "COUPA_DYN-DEPARTMENT_APPROVERS"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "lookup_table_id": {
+            "zip_name": "coupa_dyn_department_approvers.lookup_table.json",
+            "name": "COUPA_DYN-DEPARTMENT_APPROVERS",
+            "folder": ""
+          }
+        },
+        "uuid": "56b8913a-693f-4402-b4c6-3c1eb3b1fbaf"
+      },
+      {
+        "number": 10,
+        "provider": "workato_service",
+        "name": "call_service_async",
+        "as": "29793c9d",
+        "title": null,
+        "description": "Call recipe <span class=\"provider\">Callable - Fetch Coupa DynDepartments</span> (do not wait for response)",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "flow_id": "Callable - Fetch Coupa DynDepartments (Mike)"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "flow_id": {
+            "zip_name": "coupa/inactive-approver-report/callable/callable_fetch_all_coupa_dyndepartments_to_lookup_table.recipe.json",
+            "name": "Callable - Fetch All Coupa DynDepartments to Lookup Table",
+            "folder": "coupa/inactive-approver-report/callable"
+          }
+        },
+        "comment": "Kick off the process to get all the DynDepartments from Coupa",
+        "uuid": "eade8637-78d4-4796-9953-3dd8fea92566"
+      },
+      {
+        "number": 11,
+        "provider": "workato_pub_sub",
+        "name": "publish_to_topic",
+        "as": "dc635807",
+        "title": null,
+        "description": "Publish <span class=\"provider\">message</span> to <span class=\"provider\">NetSuite Search Request</span> PubSub topic",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "topic_id": "NetSuite Search Request"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "topic_id": {
+            "zip_name": "netsuite_search_request.topic.json",
+            "name": "NetSuite Search Request",
+            "folder": ""
+          },
+          "message": {
+            "type": "inactive-employee"
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "message",
+            "label": "Message",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Type",
+                "name": "type",
+                "type": "string",
+                "optional": false,
+                "hint": "inactive-employee"
+              },
+              {
+                "control_type": "text",
+                "label": "Search ID",
+                "name": "search_id",
+                "type": "string",
+                "optional": true,
+                "hint": "The Search ID for a specific search you want to use"
+              },
+              {
+                "control_type": "text",
+                "label": "Page number",
+                "name": "page_number",
+                "type": "string",
+                "optional": true,
+                "hint": "The specific page to retrieve when specifying the Search ID"
+              }
+            ]
+          }
+        ],
+        "comment": "Kick off the process to get all inactive employees from NetSuite",
+        "uuid": "d5034ace-9146-467e-b5e1-3522b7e318ee"
+      },
+      {
+        "number": 12,
+        "provider": "workato_app",
+        "name": "start_recipe",
+        "as": "9a90eda4",
+        "title": null,
+        "description": null,
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "recipe_id": "(Mike's Comments) Scheduled Task - Monitor Status and Send Coupa Department Approver Reconciliation Report"
+        },
+        "toggleCfg": {
+          "recipe_id": false
+        },
+        "input": {
+          "recipe_id": "=lookup(\"COUPA_VARIABLES\", key: \"recipe.send_inactive_approver_report\")[\"value\"]"
+        },
+        "comment": "Start the recipe that will monitor the status of the data fetches and then send the report",
+        "uuid": "eb4bd18f-5851-4795-a64e-eedfc0a2037b"
+      }
+    ],
+    "uuid": "0f0d3d72-4dab-4a3c-b924-9050a69aa76c"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "clock",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "lookup_table",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_pub_sub",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_app",
+      "account_id": {
+        "zip_name": "resources/recipeops.connection.json",
+        "name": "RecipeOps",
+        "folder": "resources"
+      }
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "name": "REVENUE_IMPACTING_RECIPES",
+  "schema": [
+    {
+      "control_type": "text",
+      "label": "Name",
+      "name": "col1",
+      "sticky": true,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": " recipe ID",
+      "name": "col2",
+      "sticky": true,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Select",
+      "name": "col3",
+      "sticky": true,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 4",
+      "name": "col4",
+      "sticky": false,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 5",
+      "name": "col5",
+      "sticky": false,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 6",
+      "name": "col6",
+      "sticky": false,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 7",
+      "name": "col7",
+      "sticky": false,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 8",
+      "name": "col8",
+      "sticky": false,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 9",
+      "name": "col9",
+      "sticky": false,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 10",
+      "name": "col10",
+      "sticky": false,
+      "type": "string"
+    }
+  ],
+  "data": "Netsuite Licensing Event - AWS Lambda - Insight Platform Licensing Event,1093676,1\nSNS Post Order Fulfillment Response - Salesforce Product/Subscription Update,1093677,1\nSNS Post Order Fulfillment Response - Netsuite,1093678,1\nNetsuite - AWS Lambda - Insight Platform Autoprovisioning,923132,1\nNetsuite Inbound Event - Salesforce Outbound Event & Order,1242948,1\nNetSuite Partner - Salesforce Partner Account,866115,1\nNetSuite - SalesForce - Cash ARR,874445,1\nNetSuite Sales Order - Salesforce Order,640983,1\nNetSuite - AWS Lambda - Cash ARR,874444,1\nSalesforce Customer Account - NetSuite Customer,1143669,1\nSalesforce - AWS Lambda - Cash ARR,874454,1\nAmazon S3 Opportunity-Inbound-Processed-Results Folder - Slack,1454625,1\nSalesforce APN - AWS S3 Opportunity-Inbound Folder,1353292,1\nCallable - Upsert NetSuite Invoice to VersaPay Invoice,1233245,1\nCallable - Upsert VersaPay Payment to NetSuite,1121118,1\nScheduled Task - Generate and Upload VersaPay Reconciliation File,963143,1\nScheduled Task - Import Customer Health Score from Snowflake to Salesforce,1258121,1\nScheduled Task - Post Termination Notices,1025104,1\nScheduled Task - Workday Terminated Employee Error Report,1033857,1\nCallable - Post Employee Termination Notice,1025107,1\nSalesforce APN - AWS S3 Opportunity-Inbound Folder,1454627,1\nSalesforce APN Record Update - AWS S3 Opportunity-Inbound,1454628,1\nAmazon S3 Opportunity-Outbound Folder - Salesforce APN Request,1454626,1\nNetSuite SalesOrder  - Klarity S3 Bucket,1613594,1\nCallable - Sync D&B Information from Salesforce to Netsuite,1609755,1\nAPI - Accounts - Get Salesforce Account Opportunities,1673367,1\nCallable - Process Salesforce Outbound Event to NetSuite,1260649,1\nNetSuite Job - Salesforce PSO Project,1279081,1\nSalesforce PSO Project Survey - NetSuite Job,1353319,1\nSalesforce Account Team Member - NetSuite Customer Team Member,660541,1\nSalesforce Account Team Member - Upsert MySQL Row (SFDC-MARKETO-ACCOUNTTEAM),1470547,1\nSalesforce Deleted Account Team Member - Upsert MySQL Row (SFDC-MARKETO-ACCOUNTTEAM),1470548,1\nPub/Sub New/Updated NetSuite Object - Department - Coupa Department,1033247,1\nAPI - Job Postings - Get Workday Job Postings,1733006,1\nCallable - Download Customer Health Scores from Snowflake and upload to Salesforce,1258122,1\nCallable - Download Daily ARR Run Rate from Snowflake and upload to Salesforce,1576886,1\nDivvyCloud Salesforce Account - R7 Salesforce Account,1771737,1\nAPI - Quotes- Get Salesforce/Netsuite Quote details,1806301,1\nNew Hire Onboarding - Process Tracking Spreadsheet,1905043,1\nCallable: New Hire Onboarding - Process New Hire from GSheet,1905048,1\n"
+}

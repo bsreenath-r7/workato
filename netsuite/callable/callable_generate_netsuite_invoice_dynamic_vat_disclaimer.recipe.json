@@ -1,0 +1,262 @@
+{
+  "name": "Callable - Generate NetSuite Invoice Dynamic VAT Disclaimer",
+  "description": "When there is a new call for callable recipe, do action",
+  "version": 3,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "c2e660e8",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">Generate NetSuite Invoice Dynamic VAT Disclaimer</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "service_name": "Generate NetSuite Invoice Dynamic VAT Disclaimer",
+      "request_schema_json": "[{\"control_type\":\"text\",\"label\":\"Billing Country\",\"name\":\"billing_country\",\"type\":\"string\",\"optional\":false,\"hint\":\"NetSuite code for Country (i.e. _unitedKingdom, _australia, _france, etc)\"},{\"control_type\":\"text\",\"label\":\"Subsidiary\",\"name\":\"subsidiary_id\",\"type\":\"string\",\"optional\":false,\"hint\":\"Internal ID for the Invoice Subsidiary\"}]",
+      "reply_schema_json": "[{\"control_type\":\"text\",\"label\":\"Dynamic VAT Disclaimer\",\"name\":\"dynamic_vat_disclaimer\",\"type\":\"string\",\"optional\":false}]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Billing Country",
+            "name": "billing_country",
+            "type": "string",
+            "optional": false,
+            "hint": "NetSuite code for Country (i.e. _unitedKingdom, _australia, _france, etc)"
+          },
+          {
+            "control_type": "text",
+            "label": "Subsidiary",
+            "name": "subsidiary_id",
+            "type": "string",
+            "optional": false,
+            "hint": "Internal ID for the Invoice Subsidiary"
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "present",
+              "lhs": "#{_('data.workato_service.c2e660e8.request.billing_country')}",
+              "rhs": null
+            },
+            {
+              "operand": "not_equals_to",
+              "lhs": "#{_('data.workato_service.c2e660e8.request.billing_country')}",
+              "rhs": "_unitedKingdom"
+            },
+            {
+              "operand": "equals_to",
+              "lhs": "#{_('data.workato_service.c2e660e8.request.subsidiary_id')}",
+              "rhs": "10"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 2,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "or",
+              "conditions": [
+                {
+                  "operand": "contains",
+                  "lhs": "=[\"_austria\",\"_belgium\",\"_bulgaria\",\"_croatiaHrvatska\",\"_cyprus\",\"_czechRepublic\",\"_denmark\",\"_estonia\",\"_finland\",\"_france\",\"_germany\",\"_greece\",\"_hungary\",\"_ireland\",\"_italy\",\"_latvia\",\"_lithuania\",\"_malta\",\"_netherlands\",\"_poland\",\"_portugal\",\"_romania\",\"_slovakRepublic\",\"_slovenia\",\"_spain\",\"_sweden\"]",
+                  "rhs": "#{_('data.workato_service.c2e660e8.request.billing_country')}"
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 3,
+                "provider": "workato_service",
+                "name": "send_reply",
+                "as": "bb8a5125",
+                "title": null,
+                "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Generate NetSuite Invoice Dynamic VAT Disclaimer</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "reply_type": "success",
+                  "reply": {
+                    "dynamic_vat_disclaimer": "This invoice is subject to the VAT reverse Charge"
+                  }
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "reply",
+                    "label": "Reply",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Dynamic VAT Disclaimer",
+                        "name": "dynamic_vat_disclaimer",
+                        "type": "string",
+                        "optional": false,
+                        "parent": "reply"
+                      }
+                    ]
+                  }
+                ],
+                "uuid": "3c06d8d0-68ac-4659-b052-fbd00c71f68a"
+              },
+              {
+                "number": 4,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "false"
+                },
+                "uuid": "9faab44e-a259-40bc-856a-d77fb2cb8ddb"
+              },
+              {
+                "number": 5,
+                "keyword": "else",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                },
+                "block": [
+                  {
+                    "number": 6,
+                    "provider": "workato_service",
+                    "name": "send_reply",
+                    "as": "edd184e4",
+                    "title": null,
+                    "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Generate NetSuite Invoice Dynamic VAT Disclaimer</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "reply_type": "success",
+                      "reply": {
+                        "dynamic_vat_disclaimer": "Outside the scope of VAT"
+                      }
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "object",
+                        "name": "reply",
+                        "label": "Reply",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Dynamic VAT Disclaimer",
+                            "name": "dynamic_vat_disclaimer",
+                            "type": "string",
+                            "optional": false,
+                            "parent": "reply"
+                          }
+                        ]
+                      }
+                    ],
+                    "uuid": "b5c5a61a-34b7-480f-95c9-8b49b64d5cf1"
+                  },
+                  {
+                    "number": 7,
+                    "keyword": "stop",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "stop_with_error": "false"
+                    },
+                    "uuid": "21e0eb67-ae15-4731-b559-82d93c4503b8"
+                  }
+                ],
+                "uuid": "5951c63b-f9ee-42da-baf3-02bd244236be"
+              }
+            ],
+            "uuid": "f8eb5c6d-5a09-4680-92eb-b9617bf329fa"
+          }
+        ],
+        "uuid": "1259e825-d266-4fb3-a945-cb390fc424da"
+      },
+      {
+        "number": 8,
+        "provider": "workato_service",
+        "name": "send_reply",
+        "as": "6a75d7e4",
+        "title": null,
+        "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Generate NetSuite Invoice Dynamic VAT Disclaimer</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "reply_type": "success",
+          "reply": {
+            "dynamic_vat_disclaimer": "=\"\""
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "reply",
+            "label": "Reply",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Dynamic VAT Disclaimer",
+                "name": "dynamic_vat_disclaimer",
+                "type": "string",
+                "optional": false,
+                "parent": "reply"
+              }
+            ]
+          }
+        ],
+        "uuid": "50722487-e38a-4b01-bacf-d9addf86ed07"
+      }
+    ],
+    "uuid": "f512bd8f-2c93-451d-a4b6-439e81dc602c"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "account_id": null
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "name": "NETSUITE_1099_ELIGIBLE_ACCOUNTS",
+  "schema": [
+    {
+      "control_type": "text",
+      "label": "selectAll",
+      "name": "col1",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "accountInternalId",
+      "name": "col2",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "number",
+      "name": "col3",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "name",
+      "name": "col4",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "1099MiscCategoryId",
+      "name": "col5",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "isInactive",
+      "name": "col6",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "1099MiscCategoryName",
+      "name": "col7",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 8",
+      "name": "col8",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 9",
+      "name": "col9",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 10",
+      "name": "col10",
+      "type": "string",
+      "sticky": false
+    }
+  ],
+  "data": "1,147,67010,Channel Marketing,-110,false,Box 7. Nonemployee Compensation\n1,152,69220,Cleaning Services,-110,false,Box 7. Nonemployee Compensation\n1,153,61410,Consulting,-110,false,Box 7. Nonemployee Compensation\n1,154,61400,Temps,-110,false,Box 7. Nonemployee Compensation\n1,166,68620,Other Professional Fees,-110,false,Box 7. Nonemployee Compensation\n1,167,69240,Rent Expense,-170,false,Box 1. Rents\n1,168,69030,Rentals - Equipment,-170,false,Box 1. Rents\n1,169,69015,Repairs & Maintenance,-110,false,Box 7. Nonemployee Compensation\n1,197,67020,Content-Video,-110,false,Box 7. Nonemployee Compensation\n1,198,67140,Event Marketing - Event Marketing,-110,false,Box 7. Nonemployee Compensation\n1,199,67220,Marketing Services,-110,false,Box 7. Nonemployee Compensation\n1,200,67310,PR-Agency Fees,-110,false,Box 7. Nonemployee Compensation\n1,201,67099,Customer Marketing-Other,-110,false,Box 7. Nonemployee Compensation\n1,220,68600,Accounting / CPA,-110,false,Box 7. Nonemployee Compensation\n1,221,68650,Legal Fees,-60,false,Box 14. Gross Proceeds Paid to an Attorney\n1,225,68670,Consulting,-110,false,Box 7. Nonemployee Compensation\n1,278,67030,Content-White Papers,-110,false,Box 7. Nonemployee Compensation\n1,279,67040,Content-Analyst Reports,-110,false,Box 7. Nonemployee Compensation\n1,280,67060,Content - Design & Production,-110,false,Box 7. Nonemployee Compensation\n1,281,67070,SEO (1),-110,false,Box 7. Nonemployee Compensation\n1,282,67090,Magazine / Catalog (1),-110,false,Box 7. Nonemployee Compensation\n1,283,67095,Community Website-Design,-110,false,Box 7. Nonemployee Compensation\n1,284,67097,Community Website-Software,-110,false,Box 7. Nonemployee Compensation\n1,286,67150,Exhibit Fees,-110,false,Box 7. Nonemployee Compensation\n1,287,67160,Show Services,-110,false,Box 7. Nonemployee Compensation\n1,292,67240,Demand Creation-Search Mkting,-110,false,Box 7. Nonemployee Compensation\n1,328,67050,Gartner (1),-110,false,Box 7. Nonemployee Compensation\n1,329,69040,Rentals - Conference Facilities,-170,false,Box 1. Rents\n1,388,69250,Rent - Parking,-170,false,Box 1. Rents\n1,395,21350,Accrued Expense- Other,-110,false,Box 7. Nonemployee Compensation\n1,414,69020,Storage /Moving,-110,false,Box 7. Nonemployee Compensation\n1,424,21150,Accrued Contractors,-150,false,Box 3. Other Income\n1,425,21200,Accrued Marketing Programs,-150,false,Box 3. Other Income\n1,426,21250,Accrued Professional Fees,-150,false,Box 3. Other Income\n1,427,21300,Accrued Travel Expenses,-170,false,Box 1. Rents\n1,430,67080,SEM (1),-110,false,Box 7. Nonemployee Compensation\n1,431,67230,Demand Creation-Other,-110,false,Box 7. Nonemployee Compensation\n1,432,67250,Demand Creation-Webcasts,-110,false,Box 7. Nonemployee Compensation\n1,433,67270,Demand Creation-Email/Newsletters,-110,false,Box 7. Nonemployee Compensation\n1,434,67280,Content - Website Tools & Subscriptions,-110,false,Box 7. Nonemployee Compensation\n1,435,67290,Systems,-110,false,Box 7. Nonemployee Compensation\n1,451,50020,Subscriptions / Royalties,-160,false,Box 2. Royalties\n1,469,50050,COGS Software Royalties,-160,false,Box 2. Royalties\n1,569,67210,Event Marketing - UNITED,-110,false,Box 7. Nonemployee Compensation\n"
+}

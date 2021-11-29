@@ -1,0 +1,1597 @@
+{
+  "name": "Admin | Generate a Report of Errors occurred in Revenue impacting Recipes",
+  "description": "When there is a trigger event, do action",
+  "version": 4,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "clock",
+    "name": "scheduled_event",
+    "as": "d6f92346",
+    "title": null,
+    "description": "<span class=\"provider\">Trigger</span> on a <span class=\"provider\">custom schedule</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+      "time_unit": "Custom schedule"
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "time_unit": "custom_schedule",
+      "cron_expression": "0 */8 * * *",
+      "timezone": "America/New_York"
+    },
+    "extended_input_schema": [
+      {
+        "type": "string",
+        "name": "cron_expression",
+        "control_type": "cron",
+        "label": "Cron expression",
+        "hint": "                        Cron expressions are written as: <b>[minute]  [hour]  [day of month]  [month]  [day of week]</b>.\n                        <a href=\"https://crontab.guru/\" target=\"_blank\">Learn more</a>\n",
+        "optional": false
+      },
+      {
+        "type": "string",
+        "name": "timezone",
+        "control_type": "select",
+        "label": "Timezone",
+        "hint": "Select the timezone to use. Leave it blank to use <b>(GMT-08:00) Pacific Time (US & Canada)</b>",
+        "pick_list": [
+          [
+            "International Date Line West",
+            "Etc/GMT+12"
+          ],
+          [
+            "Midway Island",
+            "Pacific/Midway"
+          ],
+          [
+            "American Samoa",
+            "Pacific/Pago_Pago"
+          ],
+          [
+            "Hawaii",
+            "Pacific/Honolulu"
+          ],
+          [
+            "Alaska",
+            "America/Juneau"
+          ],
+          [
+            "Pacific Time (US & Canada)",
+            "America/Los_Angeles"
+          ],
+          [
+            "Tijuana",
+            "America/Tijuana"
+          ],
+          [
+            "Mountain Time (US & Canada)",
+            "America/Denver"
+          ],
+          [
+            "Arizona",
+            "America/Phoenix"
+          ],
+          [
+            "Chihuahua",
+            "America/Chihuahua"
+          ],
+          [
+            "Mazatlan",
+            "America/Mazatlan"
+          ],
+          [
+            "Central Time (US & Canada)",
+            "America/Chicago"
+          ],
+          [
+            "Saskatchewan",
+            "America/Regina"
+          ],
+          [
+            "Guadalajara",
+            "America/Mexico_City"
+          ],
+          [
+            "Mexico City",
+            "America/Mexico_City"
+          ],
+          [
+            "Monterrey",
+            "America/Monterrey"
+          ],
+          [
+            "Central America",
+            "America/Guatemala"
+          ],
+          [
+            "Eastern Time (US & Canada)",
+            "America/New_York"
+          ],
+          [
+            "Indiana (East)",
+            "America/Indiana/Indianapolis"
+          ],
+          [
+            "Bogota",
+            "America/Bogota"
+          ],
+          [
+            "Lima",
+            "America/Lima"
+          ],
+          [
+            "Quito",
+            "America/Lima"
+          ],
+          [
+            "Atlantic Time (Canada)",
+            "America/Halifax"
+          ],
+          [
+            "Caracas",
+            "America/Caracas"
+          ],
+          [
+            "La Paz",
+            "America/La_Paz"
+          ],
+          [
+            "Santiago",
+            "America/Santiago"
+          ],
+          [
+            "Newfoundland",
+            "America/St_Johns"
+          ],
+          [
+            "Brasilia",
+            "America/Sao_Paulo"
+          ],
+          [
+            "Buenos Aires",
+            "America/Argentina/Buenos_Aires"
+          ],
+          [
+            "Montevideo",
+            "America/Montevideo"
+          ],
+          [
+            "Georgetown",
+            "America/Guyana"
+          ],
+          [
+            "Puerto Rico",
+            "America/Puerto_Rico"
+          ],
+          [
+            "Greenland",
+            "America/Godthab"
+          ],
+          [
+            "Mid-Atlantic",
+            "Atlantic/South_Georgia"
+          ],
+          [
+            "Azores",
+            "Atlantic/Azores"
+          ],
+          [
+            "Cape Verde Is.",
+            "Atlantic/Cape_Verde"
+          ],
+          [
+            "Dublin",
+            "Europe/Dublin"
+          ],
+          [
+            "Edinburgh",
+            "Europe/London"
+          ],
+          [
+            "Lisbon",
+            "Europe/Lisbon"
+          ],
+          [
+            "London",
+            "Europe/London"
+          ],
+          [
+            "Casablanca",
+            "Africa/Casablanca"
+          ],
+          [
+            "Monrovia",
+            "Africa/Monrovia"
+          ],
+          [
+            "UTC",
+            "Etc/UTC"
+          ],
+          [
+            "Belgrade",
+            "Europe/Belgrade"
+          ],
+          [
+            "Bratislava",
+            "Europe/Bratislava"
+          ],
+          [
+            "Budapest",
+            "Europe/Budapest"
+          ],
+          [
+            "Ljubljana",
+            "Europe/Ljubljana"
+          ],
+          [
+            "Prague",
+            "Europe/Prague"
+          ],
+          [
+            "Sarajevo",
+            "Europe/Sarajevo"
+          ],
+          [
+            "Skopje",
+            "Europe/Skopje"
+          ],
+          [
+            "Warsaw",
+            "Europe/Warsaw"
+          ],
+          [
+            "Zagreb",
+            "Europe/Zagreb"
+          ],
+          [
+            "Brussels",
+            "Europe/Brussels"
+          ],
+          [
+            "Copenhagen",
+            "Europe/Copenhagen"
+          ],
+          [
+            "Madrid",
+            "Europe/Madrid"
+          ],
+          [
+            "Paris",
+            "Europe/Paris"
+          ],
+          [
+            "Amsterdam",
+            "Europe/Amsterdam"
+          ],
+          [
+            "Berlin",
+            "Europe/Berlin"
+          ],
+          [
+            "Bern",
+            "Europe/Zurich"
+          ],
+          [
+            "Zurich",
+            "Europe/Zurich"
+          ],
+          [
+            "Rome",
+            "Europe/Rome"
+          ],
+          [
+            "Stockholm",
+            "Europe/Stockholm"
+          ],
+          [
+            "Vienna",
+            "Europe/Vienna"
+          ],
+          [
+            "West Central Africa",
+            "Africa/Algiers"
+          ],
+          [
+            "Bucharest",
+            "Europe/Bucharest"
+          ],
+          [
+            "Cairo",
+            "Africa/Cairo"
+          ],
+          [
+            "Helsinki",
+            "Europe/Helsinki"
+          ],
+          [
+            "Kyiv",
+            "Europe/Kiev"
+          ],
+          [
+            "Riga",
+            "Europe/Riga"
+          ],
+          [
+            "Sofia",
+            "Europe/Sofia"
+          ],
+          [
+            "Tallinn",
+            "Europe/Tallinn"
+          ],
+          [
+            "Vilnius",
+            "Europe/Vilnius"
+          ],
+          [
+            "Athens",
+            "Europe/Athens"
+          ],
+          [
+            "Istanbul",
+            "Europe/Istanbul"
+          ],
+          [
+            "Minsk",
+            "Europe/Minsk"
+          ],
+          [
+            "Jerusalem",
+            "Asia/Jerusalem"
+          ],
+          [
+            "Harare",
+            "Africa/Harare"
+          ],
+          [
+            "Pretoria",
+            "Africa/Johannesburg"
+          ],
+          [
+            "Kaliningrad",
+            "Europe/Kaliningrad"
+          ],
+          [
+            "Moscow",
+            "Europe/Moscow"
+          ],
+          [
+            "St. Petersburg",
+            "Europe/Moscow"
+          ],
+          [
+            "Volgograd",
+            "Europe/Volgograd"
+          ],
+          [
+            "Samara",
+            "Europe/Samara"
+          ],
+          [
+            "Kuwait",
+            "Asia/Kuwait"
+          ],
+          [
+            "Riyadh",
+            "Asia/Riyadh"
+          ],
+          [
+            "Nairobi",
+            "Africa/Nairobi"
+          ],
+          [
+            "Baghdad",
+            "Asia/Baghdad"
+          ],
+          [
+            "Tehran",
+            "Asia/Tehran"
+          ],
+          [
+            "Abu Dhabi",
+            "Asia/Muscat"
+          ],
+          [
+            "Muscat",
+            "Asia/Muscat"
+          ],
+          [
+            "Baku",
+            "Asia/Baku"
+          ],
+          [
+            "Tbilisi",
+            "Asia/Tbilisi"
+          ],
+          [
+            "Yerevan",
+            "Asia/Yerevan"
+          ],
+          [
+            "Kabul",
+            "Asia/Kabul"
+          ],
+          [
+            "Ekaterinburg",
+            "Asia/Yekaterinburg"
+          ],
+          [
+            "Islamabad",
+            "Asia/Karachi"
+          ],
+          [
+            "Karachi",
+            "Asia/Karachi"
+          ],
+          [
+            "Tashkent",
+            "Asia/Tashkent"
+          ],
+          [
+            "Chennai",
+            "Asia/Kolkata"
+          ],
+          [
+            "Kolkata",
+            "Asia/Kolkata"
+          ],
+          [
+            "Mumbai",
+            "Asia/Kolkata"
+          ],
+          [
+            "New Delhi",
+            "Asia/Kolkata"
+          ],
+          [
+            "Kathmandu",
+            "Asia/Kathmandu"
+          ],
+          [
+            "Astana",
+            "Asia/Dhaka"
+          ],
+          [
+            "Dhaka",
+            "Asia/Dhaka"
+          ],
+          [
+            "Sri Jayawardenepura",
+            "Asia/Colombo"
+          ],
+          [
+            "Almaty",
+            "Asia/Almaty"
+          ],
+          [
+            "Novosibirsk",
+            "Asia/Novosibirsk"
+          ],
+          [
+            "Rangoon",
+            "Asia/Rangoon"
+          ],
+          [
+            "Bangkok",
+            "Asia/Bangkok"
+          ],
+          [
+            "Hanoi",
+            "Asia/Bangkok"
+          ],
+          [
+            "Jakarta",
+            "Asia/Jakarta"
+          ],
+          [
+            "Krasnoyarsk",
+            "Asia/Krasnoyarsk"
+          ],
+          [
+            "Beijing",
+            "Asia/Shanghai"
+          ],
+          [
+            "Chongqing",
+            "Asia/Chongqing"
+          ],
+          [
+            "Hong Kong",
+            "Asia/Hong_Kong"
+          ],
+          [
+            "Urumqi",
+            "Asia/Urumqi"
+          ],
+          [
+            "Kuala Lumpur",
+            "Asia/Kuala_Lumpur"
+          ],
+          [
+            "Singapore",
+            "Asia/Singapore"
+          ],
+          [
+            "Taipei",
+            "Asia/Taipei"
+          ],
+          [
+            "Perth",
+            "Australia/Perth"
+          ],
+          [
+            "Irkutsk",
+            "Asia/Irkutsk"
+          ],
+          [
+            "Ulaanbaatar",
+            "Asia/Ulaanbaatar"
+          ],
+          [
+            "Seoul",
+            "Asia/Seoul"
+          ],
+          [
+            "Osaka",
+            "Asia/Tokyo"
+          ],
+          [
+            "Sapporo",
+            "Asia/Tokyo"
+          ],
+          [
+            "Tokyo",
+            "Asia/Tokyo"
+          ],
+          [
+            "Yakutsk",
+            "Asia/Yakutsk"
+          ],
+          [
+            "Darwin",
+            "Australia/Darwin"
+          ],
+          [
+            "Adelaide",
+            "Australia/Adelaide"
+          ],
+          [
+            "Canberra",
+            "Australia/Melbourne"
+          ],
+          [
+            "Melbourne",
+            "Australia/Melbourne"
+          ],
+          [
+            "Sydney",
+            "Australia/Sydney"
+          ],
+          [
+            "Brisbane",
+            "Australia/Brisbane"
+          ],
+          [
+            "Hobart",
+            "Australia/Hobart"
+          ],
+          [
+            "Vladivostok",
+            "Asia/Vladivostok"
+          ],
+          [
+            "Guam",
+            "Pacific/Guam"
+          ],
+          [
+            "Port Moresby",
+            "Pacific/Port_Moresby"
+          ],
+          [
+            "Magadan",
+            "Asia/Magadan"
+          ],
+          [
+            "Srednekolymsk",
+            "Asia/Srednekolymsk"
+          ],
+          [
+            "Solomon Is.",
+            "Pacific/Guadalcanal"
+          ],
+          [
+            "New Caledonia",
+            "Pacific/Noumea"
+          ],
+          [
+            "Fiji",
+            "Pacific/Fiji"
+          ],
+          [
+            "Kamchatka",
+            "Asia/Kamchatka"
+          ],
+          [
+            "Marshall Is.",
+            "Pacific/Majuro"
+          ],
+          [
+            "Auckland",
+            "Pacific/Auckland"
+          ],
+          [
+            "Wellington",
+            "Pacific/Auckland"
+          ],
+          [
+            "Nuku'alofa",
+            "Pacific/Tongatapu"
+          ],
+          [
+            "Tokelau Is.",
+            "Pacific/Fakaofo"
+          ],
+          [
+            "Chatham Is.",
+            "Pacific/Chatham"
+          ],
+          [
+            "Samoa",
+            "Pacific/Apia"
+          ]
+        ],
+        "optional": true
+      },
+      {
+        "type": "date_time",
+        "name": "start_after",
+        "control_type": "date_time",
+        "label": "Start after",
+        "hint": "Set date and time to start or leave blank to start immediately. <b>Once recipe has been run or tested, value cannot be changed.</b>",
+        "optional": true,
+        "extends_schema": true,
+        "since_field": true,
+        "render_input": "date_time_conversion",
+        "parse_output": "date_time_conversion"
+      }
+    ],
+    "visible_config_fields": [
+      "time_unit",
+      "cron_expression",
+      "timezone"
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "lookup_table",
+        "name": "search_entries",
+        "as": "75126130",
+        "title": null,
+        "description": "\n      Search\n      <span class=\"provider\">entries</span>\n      in\n      <span class=\"provider\">REVENUE_IMPACTING_RECIPES</span>\n      lookup table\n    ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "lookup_table_id": "REVENUE_IMPACTING_RECIPES"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "lookup_table_id": {
+            "zip_name": "revenue_impacting_recipes.lookup_table.json",
+            "name": "REVENUE_IMPACTING_RECIPES",
+            "folder": ""
+          },
+          "parameters": {
+            "col3": "1"
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "array",
+            "name": "entries",
+            "label": "Entries",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "number",
+                "label": "Entry ID",
+                "parse_output": "integer_conversion",
+                "type": "integer",
+                "name": "id"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "name": "col1",
+                    "sticky": true,
+                    "type": "string"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": " recipe ID",
+                    "name": "col2",
+                    "sticky": true,
+                    "type": "string"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Select",
+                    "name": "col3",
+                    "sticky": true,
+                    "type": "string"
+                  }
+                ],
+                "label": "Entry",
+                "type": "object",
+                "name": "entry"
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "parameters",
+            "label": "Search by",
+            "hint": "Provide one or more entry fields to search the entry",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Name",
+                "name": "col1",
+                "sticky": true,
+                "type": "string",
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": " recipe ID",
+                "name": "col2",
+                "sticky": true,
+                "type": "string",
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "Select",
+                "name": "col3",
+                "sticky": true,
+                "type": "string",
+                "optional": true
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "lookup_table_id",
+          "parameters.col3"
+        ],
+        "hidden_config_fields": [
+          "parameters.col1",
+          "parameters.col2"
+        ],
+        "uuid": "d8fd9bef-6032-43db-810a-32e9a2e32652"
+      },
+      {
+        "number": 2,
+        "provider": "workato_variable",
+        "name": "declare_list",
+        "as": "9d9f1245",
+        "title": " Create Error List list",
+        "description": "Create <span class=\"provider\">Error List</span> list",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "name": "Error List",
+          "list_item_schema_json": "[{\"control_type\":\"text\",\"label\":\"Recipe Name\",\"name\":\"recipe_name\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Recipe Id\",\"name\":\"recipe_id\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Job Link\",\"name\":\"job_link\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Error Type\",\"name\":\"error_type\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Error Message\",\"name\":\"error_message\",\"type\":\"string\",\"optional\":true}]"
+        },
+        "extended_output_schema": [
+          {
+            "type": "array",
+            "name": "list_items",
+            "label": "Error List",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Recipe Name",
+                "name": "recipe_name",
+                "type": "string",
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "Recipe Id",
+                "name": "recipe_id",
+                "type": "string",
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "Job Link",
+                "name": "job_link",
+                "type": "string",
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "Error Type",
+                "name": "error_type",
+                "type": "string",
+                "optional": true
+              },
+              {
+                "control_type": "text",
+                "label": "Error Message",
+                "name": "error_message",
+                "type": "string",
+                "optional": true
+              }
+            ]
+          }
+        ],
+        "uuid": "bd4e6bdf-262e-43ed-ad69-c22fea5e04b3"
+      },
+      {
+        "number": 3,
+        "provider": "workato_list",
+        "name": "create_list",
+        "as": "f79bb0ae",
+        "title": null,
+        "description": null,
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "size": "5"
+        },
+        "comment": "create a helper to setup a do-while loop so we can retrieve more than 1000 jobs",
+        "uuid": "a105bf95-cc54-4469-a77d-6841b439a653"
+      },
+      {
+        "number": 4,
+        "as": "a6465fc7",
+        "keyword": "foreach",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "repeat_mode": "simple",
+        "clear_scope": "false",
+        "input": {
+        },
+        "block": [
+          {
+            "number": 5,
+            "provider": "workato_variable",
+            "name": "declare_variable",
+            "as": "36d72e5a",
+            "title": "  Create variable search_start",
+            "description": "Create variable <span class=\"provider\">search_start</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "date_time",
+              "name": "search_start",
+              "value": "=_('data.clock.d6f92346.scheduled_time') - 8.hours"
+            },
+            "extended_output_schema": [
+              {
+                "type": "date_time",
+                "name": "value",
+                "control_type": "date_time",
+                "label": "search_start",
+                "render_input": "date_time_conversion",
+                "parse_output": "date_time_conversion"
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "date_time",
+                "name": "value",
+                "control_type": "date_time",
+                "label": "Default value",
+                "hint": "Default value for the variable",
+                "sticky": true,
+                "optional": true,
+                "render_input": "date_time_conversion",
+                "parse_output": "date_time_conversion",
+                "strip_interpolation": true
+              }
+            ],
+            "comment": "for each iteration, this is the where the search should start",
+            "uuid": "9005a54c-c9c5-4e0f-ba9a-f15043492494"
+          },
+          {
+            "number": 6,
+            "keyword": "try",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+            },
+            "block": [
+              {
+                "number": 7,
+                "provider": "workato_app",
+                "name": "get_recipe",
+                "as": "9162b656",
+                "title": null,
+                "description": null,
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                  "recipe_id": false
+                },
+                "input": {
+                  "recipe_id": "#{_('data.foreach.a6465fc7.entry.col2')}"
+                },
+                "uuid": "75c1c529-f004-468e-9450-41417a73c491"
+              },
+              {
+                "number": 8,
+                "as": "480e70c7",
+                "keyword": "foreach",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "repeat_mode": "simple",
+                "clear_scope": "false",
+                "input": {
+                },
+                "block": [
+                  {
+                    "number": 9,
+                    "provider": "workato_app",
+                    "name": "list_jobs",
+                    "as": "f1fd044b",
+                    "title": null,
+                    "description": null,
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                      "recipe_id": false
+                    },
+                    "input": {
+                      "status": "failed",
+                      "recipe_id": "#{_('data.foreach.a6465fc7.entry.col2')}",
+                      "started_at_from": "#{_('data.workato_variable.36d72e5a.value')}",
+                      "started_at_to": "#{_('data.clock.d6f92346.scheduled_time')}"
+                    },
+                    "extended_output_schema": [
+                      {
+                        "type": "array",
+                        "name": "jobs",
+                        "label": "Jobs",
+                        "of": "object",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Job ID",
+                            "parse_output": "integer_conversion",
+                            "type": "integer",
+                            "name": "id"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Calling job ID",
+                            "parse_output": "integer_conversion",
+                            "type": "integer",
+                            "name": "calling_job_id"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Status",
+                            "type": "string",
+                            "name": "status"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Title",
+                            "type": "string",
+                            "name": "title"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Started at",
+                            "render_input": "date_time_conversion",
+                            "parse_output": "date_time_conversion",
+                            "type": "date_time",
+                            "name": "started_at"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Completed at",
+                            "render_input": "date_time_conversion",
+                            "parse_output": "date_time_conversion",
+                            "type": "date_time",
+                            "name": "completed_at"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Recipe ID",
+                            "parse_output": "integer_conversion",
+                            "type": "integer",
+                            "name": "flow_id"
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Error ID",
+                                "type": "string",
+                                "name": "error_id"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Error type",
+                                "type": "string",
+                                "name": "error_type"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Error message",
+                                "type": "string",
+                                "name": "message"
+                              }
+                            ],
+                            "label": "Error",
+                            "type": "object",
+                            "name": "error"
+                          }
+                        ]
+                      }
+                    ],
+                    "visible_config_fields": [
+                      "recipe_id",
+                      "status",
+                      "started_at_from",
+                      "started_at_to"
+                    ],
+                    "uuid": "24017712-1736-4f54-a773-5ec9ac96993c"
+                  },
+                  {
+                    "number": 10,
+                    "as": "7408c78b",
+                    "keyword": "foreach",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "repeat_mode": "simple",
+                    "batch_size": "1000",
+                    "clear_scope": "false",
+                    "input": {
+                    },
+                    "block": [
+                      {
+                        "number": 11,
+                        "provider": "workato_variable",
+                        "name": "insert_to_list",
+                        "as": "0eb9aec9",
+                        "title": "Add item to Error List list",
+                        "description": "Add <span class=\"provider\">item</span> to <span class=\"provider\">Error List</span> list",
+                        "keyword": "action",
+                        "dynamicPickListSelection": {
+                          "name": "Error List (step 3)"
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                          "location": "end",
+                          "name": "bd4e6bdf-262e-43ed-ad69-c22fea5e04b3:9d9f1245",
+                          "list_item": {
+                            "recipe_name": "#{_('data.workato_app.9162b656.name')}",
+                            "recipe_id": "#{_('data.workato_app.9162b656.id')}",
+                            "job_link": "https://app.workato.com/recipes/#{_('data.foreach.7408c78b.flow_id')}/job/#{_('data.foreach.7408c78b.id')}",
+                            "error_type": "#{_('data.foreach.7408c78b.error.error_type')}",
+                            "error_message": "#{_('data.foreach.7408c78b.error.message')}"
+                          }
+                        },
+                        "extended_input_schema": [
+                          {
+                            "type": "object",
+                            "name": "list_item",
+                            "label": "List item",
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Recipe Name",
+                                "name": "recipe_name",
+                                "type": "string",
+                                "optional": true,
+                                "parent": "list_item"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Recipe Id",
+                                "name": "recipe_id",
+                                "type": "string",
+                                "optional": true,
+                                "parent": "list_item"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Job Link",
+                                "name": "job_link",
+                                "type": "string",
+                                "optional": true,
+                                "parent": "list_item"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Error Type",
+                                "name": "error_type",
+                                "type": "string",
+                                "optional": true,
+                                "parent": "list_item"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Error Message",
+                                "name": "error_message",
+                                "type": "string",
+                                "optional": true,
+                                "parent": "list_item"
+                              }
+                            ]
+                          }
+                        ],
+                        "visible_config_fields": [
+                          "name",
+                          "location",
+                          "list_item.recipe_name",
+                          "list_item.recipe_id",
+                          "list_item.job_link",
+                          "list_item.error_type",
+                          "list_item.error_message",
+                          "list_item"
+                        ],
+                        "uuid": "ad1ad68c-8e4e-470d-b430-1382437b6e46"
+                      }
+                    ],
+                    "source": "#{_('data.workato_app.f1fd044b.jobs')}",
+                    "uuid": "3413545d-c0c9-411c-bea8-8ed45270b80d"
+                  },
+                  {
+                    "number": 12,
+                    "keyword": "if",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "type": "compound",
+                      "operand": "and",
+                      "conditions": [
+                        {
+                          "operand": "equals_to",
+                          "lhs": "#{_('data.workato_app.f1fd044b.jobs.first.____Size', 'list_meta', '____Size', 'data.workato_app.f1fd044b.jobs')}",
+                          "rhs": "0"
+                        }
+                      ]
+                    },
+                    "block": [
+                      {
+                        "number": 13,
+                        "keyword": "stop",
+                        "dynamicPickListSelection": {
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                          "stop_with_error": "true",
+                          "stop_reason": "Search ended for this recipe. Going for next recipe on the list to get the failed jobs"
+                        },
+                        "comment": "Break out of the loop",
+                        "uuid": "a610d02f-8909-4f79-87c5-1f7c6801706d"
+                      },
+                      {
+                        "number": 14,
+                        "keyword": "else",
+                        "dynamicPickListSelection": {
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                        },
+                        "block": [
+                          {
+                            "number": 15,
+                            "provider": "workato_variable",
+                            "name": "update_variable",
+                            "as": "322c0354",
+                            "title": "  Update variable search_start",
+                            "description": "Update variable <span class=\"provider\">search_start</span>",
+                            "keyword": "action",
+                            "dynamicPickListSelection": {
+                              "name": "search_end (step 6)"
+                            },
+                            "toggleCfg": {
+                            },
+                            "input": {
+                              "name": "9005a54c-c9c5-4e0f-ba9a-f15043492494:36d72e5a",
+                              "value": "=_('data.workato_app.f1fd044b.jobs').last[\"started_at\"].to_time - 1"
+                            },
+                            "extended_input_schema": [
+                              {
+                                "type": "date_time",
+                                "name": "value",
+                                "control_type": "date_time",
+                                "label": "Value",
+                                "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To reset the value, set the value to <b>nil</b> in formula mode.",
+                                "sticky": true,
+                                "optional": true,
+                                "render_input": "date_time_conversion",
+                                "parse_output": "date_time_conversion",
+                                "strip_interpolation": true
+                              }
+                            ],
+                            "comment": "Set the start datetime of the next search to start 1 millisecond before the last result in the previous search. We don't want to miss any failed jobs",
+                            "uuid": "864ffe6b-b15b-49d3-bbd9-6b09a64c09d3"
+                          }
+                        ],
+                        "uuid": "7a5c23db-fe3a-47aa-9a47-17bb9991202e"
+                      }
+                    ],
+                    "comment": "If the size of the failed jobs list is 0...",
+                    "uuid": "241a01e8-d3e4-46cc-b036-308a829ae96f"
+                  }
+                ],
+                "source": "#{_('data.workato_list.f79bb0ae.list')}",
+                "uuid": "2a53572b-2469-4ddd-a4e7-dbc4f2eee309"
+              },
+              {
+                "number": 16,
+                "as": "b6b50837",
+                "keyword": "catch",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "max_retry_count": "0",
+                  "retry_interval": "2"
+                },
+                "block": [
+                  {
+                    "number": 17,
+                    "provider": "logger",
+                    "name": "log_message",
+                    "as": "ade9e138",
+                    "title": null,
+                    "description": null,
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "message": "#{_('data.catch.b6b50837.message')}"
+                    },
+                    "comment": "Going for next recipe on the list to get the failed jobs :-)",
+                    "uuid": "271ee57b-4c59-42b0-b928-0cd44de7b4fa",
+                    "skip": false
+                  }
+                ],
+                "comment": "Do nothing",
+                "uuid": "2f4174f0-4ac8-4b72-89d5-90cf2f1dd0ee"
+              }
+            ],
+            "uuid": "8634d415-3a6b-4abc-8a51-71190dcae301"
+          }
+        ],
+        "source": "#{_('data.lookup_table.75126130.entries')}",
+        "uuid": "61fba9fa-cc7f-496c-a3d0-9071e35339f1"
+      },
+      {
+        "number": 18,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "greater_than",
+              "lhs": "#{_('data.workato_variable.9d9f1245.list_items.first.____Size', 'list_meta', '____Size', 'data.workato_variable.9d9f1245.list_items')}",
+              "rhs": "0"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 19,
+            "provider": "workato_smart_list",
+            "name": "create_list",
+            "as": "48abb7a4",
+            "title": null,
+            "description": "Create <span class=\"provider\">finalErrorList</span> list in <span class=\"provider\">Collection</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "primary_index": [
+                {
+                  "label": "Job link",
+                  "value": "job_link"
+                }
+              ]
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "list_source": "=_('data.workato_variable.9d9f1245.list_items')",
+              "list_name": "finalErrorList",
+              "primary_index": "job_link"
+            },
+            "extended_output_schema": [
+              {
+                "type": "string",
+                "name": "list_name",
+                "control_type": "text",
+                "label": "finalErrorList"
+              },
+              {
+                "type": "object",
+                "name": "columns",
+                "label": "Columns",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Recipe Name",
+                    "optional": true,
+                    "list_data_type": "string",
+                    "type": "string",
+                    "name": "recipe_name"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Recipe Id",
+                    "optional": true,
+                    "list_data_type": "string",
+                    "type": "string",
+                    "name": "recipe_id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Job Link",
+                    "optional": true,
+                    "list_data_type": "string",
+                    "type": "string",
+                    "name": "job_link"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Error Type",
+                    "optional": true,
+                    "list_data_type": "string",
+                    "type": "string",
+                    "name": "error_type"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Error Message",
+                    "optional": true,
+                    "list_data_type": "string",
+                    "type": "string",
+                    "name": "error_message"
+                  }
+                ]
+              },
+              {
+                "type": "integer",
+                "name": "row_count",
+                "control_type": "number",
+                "label": "Row count",
+                "parse_output": "integer_conversion"
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "primary_index",
+                "control_type": "multiselect",
+                "label": "Index primary",
+                "hint": "Collections are like databases. Having index improves query performance. Select one or more fields from list source.",
+                "sticky": true,
+                "pick_list": [
+                  [
+                    "Recipe Name",
+                    "recipe_name"
+                  ],
+                  [
+                    "Recipe Id",
+                    "recipe_id"
+                  ],
+                  [
+                    "Job Link",
+                    "job_link"
+                  ],
+                  [
+                    "Error Type",
+                    "error_type"
+                  ],
+                  [
+                    "Error Message",
+                    "error_message"
+                  ]
+                ],
+                "optional": true,
+                "delimiter": "\n"
+              },
+              {
+                "type": "string",
+                "name": "secondary_index",
+                "control_type": "multiselect",
+                "label": "Index secondary",
+                "hint": "Select one or more fields from list source.",
+                "pick_list": [
+                  [
+                    "Recipe Name",
+                    "recipe_name"
+                  ],
+                  [
+                    "Recipe Id",
+                    "recipe_id"
+                  ],
+                  [
+                    "Job Link",
+                    "job_link"
+                  ],
+                  [
+                    "Error Type",
+                    "error_type"
+                  ],
+                  [
+                    "Error Message",
+                    "error_message"
+                  ]
+                ],
+                "optional": true,
+                "delimiter": "\n"
+              }
+            ],
+            "visible_config_fields": [
+              "list_source",
+              "list_name",
+              "primary_index"
+            ],
+            "uuid": "c312e371-6efd-4a4a-92cc-f86987e12fd2"
+          },
+          {
+            "number": 20,
+            "provider": "workato_smart_list",
+            "name": "query_list",
+            "as": "01841f15",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+              "csv": true,
+              "headers": true
+            },
+            "input": {
+              "headers": "true",
+              "col_sep": "comma",
+              "sql": "SELECT * FROM #{_('data.workato_smart_list.48abb7a4.list_name')} GROUP BY #{_('data.workato_smart_list.48abb7a4.columns.job_link')};  \n",
+              "csv": "true",
+              "result_schema_json": "[{\"name\":\"RecipeName\",\"type\":\"string\",\"optional\":true,\"control_type\":\"text\"},{\"name\":\"RecipeID\",\"type\":\"string\",\"optional\":true,\"control_type\":\"text\"},{\"name\":\"JobLink\",\"type\":\"string\",\"optional\":true,\"control_type\":\"text\"},{\"name\":\"ErrorType\",\"type\":\"string\",\"optional\":true,\"control_type\":\"text\"},{\"name\":\"ErrorMessage\",\"type\":\"string\",\"optional\":true,\"control_type\":\"text\"}]"
+            },
+            "extended_output_schema": [
+              {
+                "type": "string",
+                "name": "rows",
+                "control_type": "text",
+                "label": "Rows (CSV)"
+              }
+            ],
+            "uuid": "820307a2-4ddd-45a4-90e6-1e8cf3781583"
+          },
+          {
+            "number": 21,
+            "provider": "slack_bot",
+            "name": "upload_file",
+            "as": "f3ffeba5",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+              "channels": true
+            },
+            "input": {
+              "initial_comment": "=\"Error log from \"+(_('data.clock.d6f92346.scheduled_time') - 8.hours).strftime(\"%A, %d %B %Y %k:%M\") + \" to \" + _('data.clock.d6f92346.scheduled_time').strftime(\"%A, %d %B %Y %k:%M\")",
+              "filename": "=\"Workato_ErrorLog-\" + _('data.clock.d6f92346.scheduled_time').strftime(\"%Y-%m-%dT%H.%M\") + \".csv\"",
+              "filetype": "csv",
+              "file": "=_('data.workato_smart_list.01841f15.rows')",
+              "channels": "monitor-workato"
+            },
+            "uuid": "75c60e30-7af0-45f3-be93-788294e29ae7",
+            "skip": false
+          }
+        ],
+        "uuid": "63216c9e-3151-4db7-9b32-07762860744e"
+      }
+    ],
+    "uuid": "4c30b705-efcb-477e-bc4c-6079f6282af9"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "clock",
+      "account_id": null,
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "lookup_table",
+      "account_id": null,
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_app",
+      "account_id": {
+        "zip_name": "resources/recipeops.connection.json",
+        "name": "RecipeOps",
+        "folder": "resources"
+      },
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "account_id": null,
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "slack_bot",
+      "account_id": {
+        "zip_name": "connections/workatointegrations.connection.json",
+        "name": "workatointegrations",
+        "folder": "connections"
+      },
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_list",
+      "account_id": null,
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "logger",
+      "account_id": null,
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_smart_list",
+      "account_id": null,
+      "skip_validation": false
+    }
+  ]
+}
