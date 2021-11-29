@@ -1,0 +1,76 @@
+{
+  "name": "ESS_REMOVAL_TICKET_TRACKING",
+  "schema": [
+    {
+      "control_type": "text",
+      "label": "Customer",
+      "name": "col1",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "NetsuiteURL",
+      "name": "col2",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "Total Engines",
+      "name": "col3",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "Decrease Count",
+      "name": "col4",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "Ticket ID",
+      "name": "col5",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 6",
+      "name": "col6",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 7",
+      "name": "col7",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 8",
+      "name": "col8",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 9",
+      "name": "col9",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 10",
+      "name": "col10",
+      "type": "string",
+      "sticky": false
+    }
+  ],
+  "data": "Austin Energy,https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=202933,2,1,77781871\nST Engineering North America,https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=737585,2,1,77791444\nCo-operative Bank Kenya,https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=580047,2,1,77791916\n\"Diebold, Incorporated\",https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=706490,2,1,77793309\n\"Nike, Inc.\",https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=680402,10,6,77793959\n\"United Natural Foods, Inc\",https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=639485,3,2,77919185\nGrupo Salinas,https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=562470,2,1,78817608\nIKEA IT Aktiebolag,https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=645609,2,1,78953662\nLas Vegas Sands Corp.,https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=303406,2,1,79210160\n\"Facebook, Inc.\",https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=347573,2,1,79221455\nTemple University,https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=621728,2,1,79661416\nHoneywell International Inc.,https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=754087,2,1,79661525\nIntact Financial Corporation,https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=748883,3,2,79727311\n\"Tieto, Finland\",https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=578609,5,1,80513476\nPtc Inc.,https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=610115,2,1,80756071\nTed baker clothing,https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=750602,2,1,81760355\nFederal Home Loan Bank of Topeka,https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=706961,2,1,81760397\n\"Ashley Furniture Industries, Inc.\",https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=756449,4,3,81760871\n\"Tetra Tech, Inc.\",https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=711540,2,1,81774610\nWestRock Corporation,https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=665020,2,1,81868960\nUkrnafta,https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=749208,2,1,81868988\nBoral,https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=686955,2,1,81948115\nUGI Corporation,https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=717036,1,1,82139702\nEnterprise Fleet Management,https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=765716,2,1,82251445\nRegional One Health,https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=694408,1,1,82321532\nTata Consultancy Services Limited,https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=687963,2,1,82322343\nNewton Europe Ltd.,https://663271.app.netsuite.com/app/common/custom/custrecordentry.nl?rectype=58&id=562823,2,1,82331100\n"
+}

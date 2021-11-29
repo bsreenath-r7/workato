@@ -1,0 +1,207 @@
+{
+  "name": "Scheduled Task - Import Customer Health Score from Snowflake to Salesforce",
+  "description": "When there is a trigger event, do action",
+  "version": 2,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "clock",
+    "name": "timer",
+    "as": "ea9502bd",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "interval": "60"
+    },
+    "filter": {
+      "conditions": [
+        {
+          "operand": "is_true",
+          "lhs": "=_('data.clock.ea9502bd.time').in_time_zone(\"America/New_York\").strftime(\"%l\").to_i == 7",
+          "rhs": null
+        }
+      ],
+      "operand": "and",
+      "type": "compound"
+    },
+    "block": [
+      {
+        "number": 1,
+        "provider": "snowflake",
+        "name": "search_rows_sql",
+        "as": "11b653ba",
+        "title": "Select rows using custom SQL",
+        "description": "Select <span class=\"provider\">rows</span> using <span class=\"provider\">custom SQL</span> in <span class=\"provider\">Snowflake</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "table": "PUBLIC.HISTORICAL_CUSTOMER_HEALTH_SCORE_OVERALL_FOR_SALESFORCE_UPLOAD_"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "limit": "1",
+          "offset": "0",
+          "sql": "='SELECT count(INTERNAL_ID) AS \"account_count\" FROM '+ lookup(\"SNOWFLAKE_VARIABLES\", key:\"table.customer_health_score\")[\"value\"] + '  WHERE SALESFORCE_ACCOUNT_ID IS NOT NULL'",
+          "output_schema": "[{\"name\":\"account_count\",\"type\":\"integer\",\"optional\":false,\"control_type\":\"integer\"}]"
+        },
+        "extended_output_schema": [
+          {
+            "type": "array",
+            "name": "rows",
+            "label": "Rows",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "integer",
+                "label": "account_count",
+                "parse_output": "parse_integer_output",
+                "details": {
+                  "primary_key": null,
+                  "data_type": "integer",
+                  "column_name": "account_count",
+                  "length": null,
+                  "precision": null,
+                  "scale": null
+                },
+                "hint": "integer",
+                "optional": true,
+                "type": "integer",
+                "name": "account_count_6e59e421"
+              }
+            ],
+            "order_by_hint": false
+          }
+        ],
+        "visible_config_fields": [
+          "sql",
+          "limit",
+          "offset",
+          "output_schema"
+        ],
+        "comment": "Get the number of Accounts that are in the Customer Health Table",
+        "uuid": "9535ab0b-7cec-4eac-90fc-66de9f8473e1"
+      },
+      {
+        "number": 2,
+        "provider": "workato_list",
+        "name": "create_list",
+        "as": "b0955c63",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "size": "=(_('data.snowflake.11b653ba.rows.first.account_count_6e59e421')/lookup(\"SNOWFLAKE_VARIABLES\", key:\"batch_size.customer_health_score\")[\"value\"].to_f).ceil"
+        },
+        "uuid": "d52c4ea6-724f-4faa-b7fe-ee1ba80dc7ac"
+      },
+      {
+        "number": 3,
+        "as": "3f6c85d2",
+        "keyword": "foreach",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "repeat_mode": "simple",
+        "clear_scope": "true",
+        "input": {
+        },
+        "block": [
+          {
+            "number": 4,
+            "provider": "workato_service",
+            "name": "call_service_async",
+            "as": "b075ba25",
+            "title": null,
+            "description": "Call recipe <span class=\"provider\">Callable - Download Customer Health Scores from Snowflake and upload to Salesforce</span> (do not wait for response)",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "flow_id": "Callable - Download Customer Health Scores from Snowflake and upload to Salesforce"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "flow_id": {
+                "zip_name": "snowflake/customer-health-score/callable/callable_download_customer_health_scores_from_snowflake_and_upload_to_salesforce.recipe.json",
+                "name": "Callable - Download Customer Health Scores from Snowflake and upload to Salesforce",
+                "folder": "snowflake/customer-health-score/callable"
+              },
+              "request": {
+                "offset": "=_('data.foreach.3f6c85d2.index', 'foreach_meta')*lookup(\"SNOWFLAKE_VARIABLES\", key:\"batch_size.customer_health_score\")[\"value\"].to_i"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "request",
+                "label": "Recipe input",
+                "properties": [
+                  {
+                    "control_type": "integer",
+                    "label": "Offset",
+                    "parse_output": "integer_conversion",
+                    "name": "offset",
+                    "type": "integer",
+                    "optional": true,
+                    "hint": "Starting offset for retrieving customer health scores from Snowflake.  Used when the total number of rows in the table exceeds the specified batch size.",
+                    "parent": "request"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "flow_id",
+              "request.offset"
+            ],
+            "uuid": "b77c7a88-16d4-486c-9581-5b45ca7076ad"
+          }
+        ],
+        "source": "#{_('data.workato_list.b0955c63.list')}",
+        "comment": "Split the downloads based on the batch size",
+        "uuid": "88e20c90-6b36-4cc8-90cb-3d4b70ad9fee"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Account Count"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.snowflake.11b653ba.rows.first.account_count_6e59e421')}"
+    },
+    "uuid": "d96f4201-9ec0-4142-838b-05080cedc505"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "clock",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "snowflake",
+      "account_id": {
+        "zip_name": "resources/snowflake.connection.json",
+        "name": "Snowflake",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_list",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "account_id": null
+    }
+  ]
+}

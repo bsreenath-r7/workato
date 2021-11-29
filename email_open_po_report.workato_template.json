@@ -1,0 +1,78 @@
+{
+  "name": "Email - Open PO Report",
+  "schema": [
+    {
+      "name": "purchase_orders",
+      "type": "array",
+      "of": "object",
+      "label": "Purchase orders",
+      "optional": false,
+      "properties": [
+        {
+          "control_type": "text",
+          "label": "Po ID",
+          "name": "po_id",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "control_type": "text",
+          "label": "Po number",
+          "name": "po_number",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "control_type": "text",
+          "label": "Date created",
+          "name": "date_created",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "control_type": "text",
+          "label": "Vendor name",
+          "name": "vendor_name",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "control_type": "text",
+          "label": "Total po",
+          "name": "total_po",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "control_type": "text",
+          "label": "Total invoiced",
+          "name": "total_invoiced",
+          "type": "string",
+          "optional": true
+        },
+        {
+          "control_type": "text",
+          "label": "Total remaining",
+          "name": "total_remaining",
+          "type": "string",
+          "optional": true
+        }
+      ]
+    },
+    {
+      "control_type": "text",
+      "label": "Requisitioner email",
+      "name": "requisitioner_email",
+      "type": "string",
+      "optional": false
+    },
+    {
+      "control_type": "text",
+      "label": "Coupa URL",
+      "name": "coupa_url",
+      "type": "string",
+      "optional": false
+    }
+  ],
+  "content": "Hello Moose!\n\n<p>You are receiving this email because you have one or more open purchase orders (POs) listed below.  Please review the list and (1) send any invoices with its related PO# to accountspayable@rapid7.com or (2) notify accountspayable@rapid7.com whether the PO should be closed.</p>\n\n<h3>Open Purchase Orders for {{requisitioner_email}}</h3>\n\n<table>\n  <tr>\n    <th style=\"padding: 0 1em; text-align: left;\">PO #</th>\n    <th style=\"padding: 0 1em; text-align: left;\">Created</th>\n    <th style=\"padding: 0 1em; text-align: left;\">Vendor</th>\n    <th style=\"padding: 0 1em; text-align: right;\">PO Amount</th>\n    <th style=\"padding: 0 1em; text-align: right;\">Invoiced Amount</th>\n    <th style=\"padding: 0 1em; text-align: right;\">Amount Remaining</th>\n  </tr>\n  {{#purchase_orders}}\n  <tr>\n    <td style=\"padding: 0 1em; text-align: left;\"><a href=\"{{coupa_url}}/order_headers/{{po_id}}\">{{po_number}}</a></td>\n    <td style=\"padding: 0 1em; text-align: left;\">{{date_created}}</td>\n    <td style=\"padding: 0 1em; text-align: left;\">{{vendor_name}}</td>\n    <td style=\"padding: 0 1em; text-align: right;\">{{total_po}}</td>\n    <td style=\"padding: 0 1em; text-align: right;\">{{total_invoiced}}</td>\n    <td style=\"padding: 0 1em; text-align: right;\">{{total_remaining}}</td>\n  </tr>\n  {{/purchase_orders}}\n</table>\n \n<p>As a reminder, all Rapid7 purchases require an approved purchase order at the time of procuring the goods or services.  No vendor invoice will be processed without an approved purchase order.  In addition, if you have requested any goods or services from a vendor you must create a requisition immediately to ensure timely payments to your vendors.  Lastly, the timely creation of requisitions and proper management of open purchase orders assures accurate financial results within your budget.</p>\n\n<p>If you have any questions regarding the open purchase orders noted above or uncertain whether others in your team/department have set up other vendor purchase orders, please contact accountspayable@rapid7.com who will assist in investigating and resolving these questions.\n\n<p>\n\tThanks!<br />\n\tAccounts Payable Department<br />\n\taccountspayable@rapid7.com<br />\n</p>"
+}

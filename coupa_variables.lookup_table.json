@@ -1,0 +1,76 @@
+{
+  "name": "COUPA_VARIABLES",
+  "schema": [
+    {
+      "control_type": "text",
+      "label": "key",
+      "name": "col1",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "value",
+      "name": "col2",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "type",
+      "name": "col3",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 4",
+      "name": "col4",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 5",
+      "name": "col5",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 6",
+      "sticky": false,
+      "type": "string",
+      "name": "col6"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 7",
+      "sticky": false,
+      "type": "string",
+      "name": "col7"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 8",
+      "sticky": false,
+      "type": "string",
+      "name": "col8"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 9",
+      "sticky": false,
+      "type": "string",
+      "name": "col9"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 10",
+      "sticky": false,
+      "type": "string",
+      "name": "col10"
+    }
+  ],
+  "data": "open_po_report.testing_email,\"\",\nopen_po_report.status,finished,status_variable\nopen_po_report.fetch_po_thread_1.status,finished,status_variable\nopen_po_report.fetch_po_thread_2.status,finished,status_variable\nopen_po_report.fetch_po_thread_3.status,finished,status_variable\nopen_po_report.fetch_po_thread_4.status,finished,status_variable\nopen_po_report.fetch_po_thread_5.status,finished,status_variable\nopen_po_report.coupa_url,https://rapid7.coupahost.com,\nopen_po_report.summary_report.email,bsreenath@rapid7.com; accountspayable@rapid7.com,\ninactive_approver_report.fetch_dynDepartment.status,finished,\nrecipe.send_open_po_report,1024322,\nrecipe.send_po_summary_email,1024323,\ninactive_approver_report.email,Elaine_Chevalier@rapid7.com; Austin_Brumber@rapid7.com; Samira_Pontes@rapid7.com; Bob_Shanahan@rapid7.com,\nrecipe.send_inactive_approver_report,1042932,\ninactive_approver_report.fetch_dynDepartment.status,finished,\nvalidation_setup.email,jonathan_coiteux@rapid7.com; sean_annese@rapid7.com,\nvalidation_setup.email.subject_prepend,PRODUCTION - ,\n"
+}

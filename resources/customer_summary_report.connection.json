@@ -1,0 +1,6 @@
+{
+  "name": "Customer Summary Report",
+  "provider": "aws_lambda",
+  "secure_gateway_tunnel_name": null,
+  "root_folder": false
+}

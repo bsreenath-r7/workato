@@ -1,0 +1,956 @@
+{
+  "name": "Callable - Fetch Coupa Lookup Values",
+  "description": "When there is a new classification record in NetSuite, custom action in Coupa",
+  "version": 1,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "f30e90fc",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">Fetch Coupa Lookup Values</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "service_name": "Fetch Coupa Lookup Values",
+      "request_schema_json": "[{\"name\":\"LookupName\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]",
+      "reply_schema_json": "[{\"properties\":[{\"control_type\":\"integer\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"integer\",\"name\":\"id\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Active\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Active\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"active\"},\"type\":\"boolean\",\"name\":\"active\"},{\"control_type\":\"text\",\"label\":\"Name\",\"type\":\"string\",\"name\":\"name\"},{\"control_type\":\"integer\",\"label\":\"External ref num\",\"parse_output\":\"float_conversion\",\"type\":\"integer\",\"name\":\"external_ref_num\",\"optional\":false},{\"control_type\":\"integer\",\"label\":\"External ref code\",\"parse_output\":\"float_conversion\",\"type\":\"integer\",\"name\":\"external_ref_code\",\"optional\":false},{\"control_type\":\"integer\",\"label\":\"Lookup ID\",\"parse_output\":\"float_conversion\",\"type\":\"integer\",\"name\":\"lookup_id\",\"optional\":false},{\"properties\":[{\"control_type\":\"integer\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"integer\",\"name\":\"id\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Active\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Active\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"active\"},\"type\":\"boolean\",\"name\":\"active\"},{\"control_type\":\"text\",\"label\":\"Name\",\"type\":\"string\",\"name\":\"name\"}],\"label\":\"Lookup\",\"type\":\"object\",\"name\":\"lookup\"}],\"label\":\"Lookup records\",\"name\":\"LookupRecords\",\"type\":\"array\",\"optional\":false,\"hint\":\"Can be a list of all Coupa Locations or Subsidiaries\"}]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Lookup name",
+            "name": "LookupName",
+            "type": "string",
+            "optional": false
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "workato_variable",
+        "name": "declare_list",
+        "as": "9e8de905",
+        "title": "Create result_lookups list",
+        "description": "Create <span class=\"provider\">result_lookups</span> list",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "list_item_schema_json": "[{\"control_type\":\"integer\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"integer\",\"name\":\"id\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Active\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Active\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"active\"},\"type\":\"boolean\",\"name\":\"active\"},{\"control_type\":\"text\",\"label\":\"Name\",\"type\":\"string\",\"name\":\"name\"},{\"control_type\":\"integer\",\"label\":\"External ref num\",\"parse_output\":\"float_conversion\",\"type\":\"integer\",\"name\":\"external_ref_num\",\"optional\":false},{\"control_type\":\"integer\",\"label\":\"External ref code\",\"parse_output\":\"float_conversion\",\"type\":\"integer\",\"name\":\"external_ref_code\",\"optional\":false},{\"control_type\":\"integer\",\"label\":\"Lookup ID\",\"parse_output\":\"float_conversion\",\"type\":\"integer\",\"name\":\"lookup_id\",\"optional\":false},{\"properties\":[{\"control_type\":\"integer\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"integer\",\"name\":\"id\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Active\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Active\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"active\"},\"type\":\"boolean\",\"name\":\"active\"},{\"control_type\":\"text\",\"label\":\"Name\",\"type\":\"string\",\"name\":\"name\"}],\"label\":\"Lookup\",\"type\":\"object\",\"name\":\"lookup\"}]",
+          "name": "result_lookups"
+        },
+        "extended_output_schema": [
+          {
+            "type": "array",
+            "name": "list_items",
+            "label": "result_lookups",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "integer",
+                "label": "ID",
+                "parse_output": "float_conversion",
+                "type": "integer",
+                "name": "id",
+                "optional": false
+              },
+              {
+                "control_type": "text",
+                "label": "Active",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Active",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "type": "boolean",
+                  "name": "active"
+                },
+                "type": "boolean",
+                "name": "active"
+              },
+              {
+                "control_type": "text",
+                "label": "Name",
+                "type": "string",
+                "name": "name"
+              },
+              {
+                "control_type": "integer",
+                "label": "External ref num",
+                "parse_output": "float_conversion",
+                "type": "integer",
+                "name": "external_ref_num",
+                "optional": false
+              },
+              {
+                "control_type": "integer",
+                "label": "External ref code",
+                "parse_output": "float_conversion",
+                "type": "integer",
+                "name": "external_ref_code",
+                "optional": false
+              },
+              {
+                "control_type": "integer",
+                "label": "Lookup ID",
+                "parse_output": "float_conversion",
+                "type": "integer",
+                "name": "lookup_id",
+                "optional": false
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "integer",
+                    "label": "ID",
+                    "parse_output": "float_conversion",
+                    "type": "integer",
+                    "name": "id",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Active",
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Active",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "active"
+                    },
+                    "type": "boolean",
+                    "name": "active"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "type": "string",
+                    "name": "name"
+                  }
+                ],
+                "label": "Lookup",
+                "type": "object",
+                "name": "lookup"
+              }
+            ]
+          }
+        ],
+        "comment": "Create a list variable to hold all the lookup values to return",
+        "uuid": "5f52159e-91f8-405f-95f7-dd34e4b2c5cc"
+      },
+      {
+        "number": 2,
+        "provider": "workato_list",
+        "name": "create_list",
+        "as": "322067ad",
+        "title": null,
+        "description": null,
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "size": "500"
+        },
+        "comment": "To get 50 coupa Locations/Subsidiaries in each iteration",
+        "uuid": "6a22ee85-d2c8-42ad-adb3-b462e6d66874"
+      },
+      {
+        "number": 3,
+        "provider": "workato_variable",
+        "name": "declare_variable",
+        "as": "8e3e0648",
+        "title": "Create variable offset",
+        "description": "Create variable <span class=\"provider\">offset</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "integer",
+          "name": "offset",
+          "value": "0"
+        },
+        "extended_output_schema": [
+          {
+            "type": "integer",
+            "name": "value",
+            "control_type": "number",
+            "label": "offset",
+            "parse_output": "integer_conversion"
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "integer",
+            "name": "value",
+            "control_type": "number",
+            "label": "Default value",
+            "hint": "Default value for the variable",
+            "sticky": true,
+            "optional": true,
+            "parse_output": "integer_conversion",
+            "strip_interpolation": true
+          }
+        ],
+        "comment": "Pagination for the Location/Subsidiary lookups",
+        "uuid": "ecb3df7d-91f0-48ad-af2c-a503dde549d0"
+      },
+      {
+        "number": 4,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 5,
+            "as": "1988e95b",
+            "keyword": "foreach",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "clear_scope": false,
+            "input": {
+            },
+            "block": [
+              {
+                "number": 6,
+                "provider": "coupa",
+                "name": "__adhoc_http_action",
+                "as": "04a36144",
+                "title": "Custom action",
+                "description": "Custom <span class=\"provider\">action</span> in <span class=\"provider\">Coupa</span> (Custom)",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "mnemonic": "Custom action",
+                  "verb": "get",
+                  "path": "/api/lookup_values?lookup[name]=#{_('data.workato_service.f30e90fc.request.LookupName')}&offset=#{_('data.workato_variable.8e3e0648.value')}",
+                  "output": "[{\"name\":\"array\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Array\",\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\"},{\"control_type\":\"text\",\"label\":\"Active\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Active\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"active\"},\"type\":\"boolean\",\"name\":\"active\"},{\"control_type\":\"text\",\"label\":\"Name\",\"type\":\"string\",\"name\":\"name\"},{\"control_type\":\"text\",\"label\":\"External-ref-num\",\"type\":\"string\",\"name\":\"external-ref-num\"},{\"control_type\":\"text\",\"label\":\"External-ref-code\",\"type\":\"string\",\"name\":\"external-ref-code\"},{\"control_type\":\"number\",\"label\":\"Lookup-id\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"lookup-id\"},{\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\"},{\"control_type\":\"text\",\"label\":\"Active\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Active\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"active\"},\"type\":\"boolean\",\"name\":\"active\"},{\"control_type\":\"text\",\"label\":\"Name\",\"type\":\"string\",\"name\":\"name\"}],\"label\":\"Lookup\",\"type\":\"object\",\"name\":\"lookup\"}]}]"
+                },
+                "extended_output_schema": [
+                  {
+                    "type": "array",
+                    "name": "array",
+                    "label": "Array",
+                    "optional": true,
+                    "of": "object",
+                    "properties": [
+                      {
+                        "control_type": "number",
+                        "label": "ID",
+                        "parse_output": "float_conversion",
+                        "optional": true,
+                        "type": "number",
+                        "name": "id"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Active",
+                        "parse_output": {
+                        },
+                        "render_input": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Active",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "type": "boolean",
+                          "name": "active"
+                        },
+                        "optional": true,
+                        "type": "number",
+                        "name": "active"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Name",
+                        "optional": true,
+                        "type": "string",
+                        "name": "name"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "External-ref-num",
+                        "optional": true,
+                        "type": "string",
+                        "name": "external-ref-num"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "External-ref-code",
+                        "optional": true,
+                        "type": "string",
+                        "name": "external-ref-code"
+                      },
+                      {
+                        "control_type": "number",
+                        "label": "Lookup-id",
+                        "parse_output": "float_conversion",
+                        "optional": true,
+                        "type": "number",
+                        "name": "lookup-id"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "number",
+                            "label": "ID",
+                            "parse_output": "float_conversion",
+                            "optional": true,
+                            "type": "number",
+                            "name": "id"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Active",
+                            "parse_output": {
+                            },
+                            "render_input": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Active",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "type": "boolean",
+                              "name": "active"
+                            },
+                            "optional": true,
+                            "type": "number",
+                            "name": "active"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Name",
+                            "optional": true,
+                            "type": "string",
+                            "name": "name"
+                          }
+                        ],
+                        "label": "Lookup",
+                        "optional": true,
+                        "type": "object",
+                        "name": "lookup"
+                      }
+                    ]
+                  }
+                ],
+                "extended_input_schema": [
+                  {
+                    "type": "string",
+                    "name": "path",
+                    "control_type": "text",
+                    "label": "Path",
+                    "hint": "Base URI is <b>https://rapid7-test.coupahost.com/</b> - path will be appended to this URI. Use absolute URI to override this base URI.",
+                    "optional": false
+                  },
+                  {
+                    "type": "string",
+                    "name": "response_type",
+                    "control_type": "select",
+                    "label": "Reply type",
+                    "default": "json",
+                    "sticky": false,
+                    "pick_list": [
+                      [
+                        "JSON response",
+                        "json"
+                      ],
+                      [
+                        "Raw response",
+                        "raw"
+                      ]
+                    ],
+                    "optional": true,
+                    "extends_schema": true
+                  },
+                  {
+                    "type": "object",
+                    "name": "input",
+                    "control_type": "form-schema-builder",
+                    "label": "URL parameters",
+                    "sticky": true,
+                    "optional": true,
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Schema",
+                        "extends_schema": true,
+                        "sticky": true,
+                        "optional": true,
+                        "type": "string",
+                        "name": "schema"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "array",
+                    "name": "request_headers",
+                    "control_type": "key_value",
+                    "label": "Request headers",
+                    "optional": true,
+                    "of": "object",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Name",
+                        "optional": true,
+                        "type": "string",
+                        "name": "name"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Value",
+                        "optional": true,
+                        "type": "string",
+                        "name": "value"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "string",
+                    "name": "output",
+                    "control_type": "schema-designer",
+                    "label": "Output",
+                    "sticky": true,
+                    "optional": true,
+                    "extends_schema": true,
+                    "schema_neutral": true
+                  },
+                  {
+                    "type": "string",
+                    "name": "response_headers",
+                    "control_type": "schema-designer",
+                    "label": "Response headers",
+                    "sticky": false,
+                    "optional": true,
+                    "extends_schema": true,
+                    "schema_neutral": true
+                  }
+                ],
+                "visible_config_fields": [
+                  "mnemonic",
+                  "verb",
+                  "path",
+                  "input",
+                  "output",
+                  "input.schema"
+                ],
+                "comment": "Get the next 50 lookup values (based on filter from input)",
+                "uuid": "dd6b07e4-2881-42e2-9e6c-e1cd78ce40a4"
+              },
+              {
+                "number": 7,
+                "as": "aaed76ce",
+                "keyword": "foreach",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "clear_scope": "true",
+                "input": {
+                },
+                "block": [
+                  {
+                    "number": 8,
+                    "provider": "workato_variable",
+                    "name": "insert_to_list",
+                    "as": "4e613f28",
+                    "title": "Add item to result_lookups list",
+                    "description": "Add <span class=\"provider\">item</span> to <span class=\"provider\">result_lookups</span> list",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "name": " (step 1)"
+                    },
+                    "toggleCfg": {
+                      "list_item.active": true,
+                      "list_item.lookup.active": true
+                    },
+                    "input": {
+                      "location": "end",
+                      "name": "5f52159e-91f8-405f-95f7-dd34e4b2c5cc:9e8de905",
+                      "list_item": {
+                        "id": "=_('data.foreach.aaed76ce.id').to_i",
+                        "active": "#{_('data.foreach.aaed76ce.active')}",
+                        "name": "#{_('data.foreach.aaed76ce.name')}",
+                        "external_ref_num": "#{_('data.foreach.aaed76ce.external-ref-num')}",
+                        "external_ref_code": "#{_('data.foreach.aaed76ce.external-ref-code')}",
+                        "lookup_id": "#{_('data.foreach.aaed76ce.lookup-id')}",
+                        "lookup": {
+                          "id": "=_('data.foreach.aaed76ce.lookup.id').to_i",
+                          "active": "#{_('data.foreach.aaed76ce.lookup.active')}",
+                          "name": "#{_('data.foreach.aaed76ce.lookup.name')}"
+                        }
+                      }
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "object",
+                        "name": "list_item",
+                        "label": "List item",
+                        "properties": [
+                          {
+                            "control_type": "integer",
+                            "label": "ID",
+                            "parse_output": "float_conversion",
+                            "type": "integer",
+                            "name": "id",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Active",
+                            "render_input": {
+                            },
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Active",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "type": "boolean",
+                              "name": "active"
+                            },
+                            "type": "boolean",
+                            "name": "active"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Name",
+                            "type": "string",
+                            "name": "name"
+                          },
+                          {
+                            "control_type": "integer",
+                            "label": "External ref num",
+                            "parse_output": "float_conversion",
+                            "type": "integer",
+                            "name": "external_ref_num",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "integer",
+                            "label": "External ref code",
+                            "parse_output": "float_conversion",
+                            "type": "integer",
+                            "name": "external_ref_code",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "integer",
+                            "label": "Lookup ID",
+                            "parse_output": "float_conversion",
+                            "type": "integer",
+                            "name": "lookup_id",
+                            "optional": false
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "integer",
+                                "label": "ID",
+                                "parse_output": "float_conversion",
+                                "type": "integer",
+                                "name": "id",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Active",
+                                "render_input": {
+                                },
+                                "parse_output": {
+                                },
+                                "toggle_hint": "Select from option list",
+                                "toggle_field": {
+                                  "label": "Active",
+                                  "control_type": "text",
+                                  "toggle_hint": "Use custom value",
+                                  "type": "boolean",
+                                  "name": "active"
+                                },
+                                "type": "boolean",
+                                "name": "active"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Name",
+                                "type": "string",
+                                "name": "name"
+                              }
+                            ],
+                            "label": "Lookup",
+                            "type": "object",
+                            "name": "lookup"
+                          }
+                        ]
+                      }
+                    ],
+                    "uuid": "4a73ebe0-16a1-43fb-9f53-9e0eb84912cc"
+                  }
+                ],
+                "source": "#{_('data.coupa.04a36144.array')}",
+                "uuid": "13ae6d0e-d50d-46d8-a05f-e600cf744bdc"
+              },
+              {
+                "number": 9,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "less_than",
+                      "lhs": "#{_('data.coupa.04a36144.array.first.____Size', 'list_meta', '____Size', 'data.coupa.04a36144.array')}",
+                      "rhs": "50"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 10,
+                    "keyword": "stop",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "stop_with_error": "true",
+                      "stop_reason": "All matching lookup values fetched from Coupa"
+                    },
+                    "uuid": "8e7e0ff5-5c27-4475-a5f8-72ababb3caaa"
+                  }
+                ],
+                "comment": "If there are no more lookup values to fetch, then break out of this loop",
+                "uuid": "bff1deff-4179-4e9e-bf3d-6a25c55815a1"
+              },
+              {
+                "number": 11,
+                "provider": "workato_variable",
+                "name": "update_variable",
+                "as": "5a9b22c0",
+                "title": "Update variable offset",
+                "description": "Update variable <span class=\"provider\">offset</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "name": "offset (step 3)"
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "name": "ecb3df7d-91f0-48ad-af2c-a503dde549d0:8e3e0648",
+                  "value": "=_('data.workato_variable.8e3e0648.value')+50"
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "integer",
+                    "name": "value",
+                    "control_type": "number",
+                    "label": "Value",
+                    "hint": "Provide value for the variable",
+                    "parse_output": "integer_conversion",
+                    "strip_interpolation": true
+                  }
+                ],
+                "uuid": "05084efd-5744-498b-a1f8-3be0fe986362"
+              }
+            ],
+            "source": "#{_('data.workato_list.322067ad.list')}",
+            "uuid": "9a865b7f-5251-4e6a-97f0-03952667a173"
+          },
+          {
+            "number": 12,
+            "as": "cdc88e06",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "0",
+              "retry_interval": "2"
+            },
+            "block": [
+              {
+                "number": 13,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "not_equals_to",
+                      "lhs": "#{_('data.catch.cdc88e06.message')}",
+                      "rhs": "All matching lookup values fetched from Coupa"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 14,
+                    "keyword": "stop",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "stop_with_error": "true",
+                      "stop_reason": "#{_('data.catch.cdc88e06.message')}"
+                    },
+                    "uuid": "a84d30d6-0d75-4780-99d9-5a8079077276"
+                  }
+                ],
+                "uuid": "96ac8725-7429-4268-b835-1b585686b2fe"
+              }
+            ],
+            "uuid": "25496b34-edd3-4477-918a-4a2083649818"
+          }
+        ],
+        "uuid": "60a38247-d0be-4a2e-955b-464212574622"
+      },
+      {
+        "number": 15,
+        "provider": "workato_service",
+        "name": "send_reply",
+        "as": "c2859a3b",
+        "title": null,
+        "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Fetch Coupa Lookup Values</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+          "reply.LookupRecords.active": true,
+          "reply.LookupRecords.lookup.active": true
+        },
+        "input": {
+          "reply_type": "success",
+          "reply": {
+            "LookupRecords": {
+              "id": "#{_('data.workato_variable.9e8de905.list_items.first.id')}",
+              "active": "#{_('data.workato_variable.9e8de905.list_items.first.active')}",
+              "name": "#{_('data.workato_variable.9e8de905.list_items.first.name')}",
+              "external_ref_num": "#{_('data.workato_variable.9e8de905.list_items.first.external_ref_num')}",
+              "external_ref_code": "#{_('data.workato_variable.9e8de905.list_items.first.external_ref_code')}",
+              "lookup_id": "#{_('data.workato_variable.9e8de905.list_items.first.lookup_id')}",
+              "lookup": {
+                "id": "#{_('data.workato_variable.9e8de905.list_items.first.lookup.id')}",
+                "active": "#{_('data.workato_variable.9e8de905.list_items.first.lookup.active')}",
+                "name": "#{_('data.workato_variable.9e8de905.list_items.first.lookup.name')}"
+              },
+              "____source": "#{_('data.workato_variable.9e8de905.list_items')}"
+            }
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "reply",
+            "label": "Reply",
+            "properties": [
+              {
+                "name": "LookupRecords",
+                "type": "array",
+                "of": "object",
+                "label": "Lookup records",
+                "optional": false,
+                "hint": "Can be a list of all Coupa Locations or Subsidiaries",
+                "properties": [
+                  {
+                    "control_type": "integer",
+                    "label": "ID",
+                    "parse_output": "float_conversion",
+                    "type": "integer",
+                    "name": "id",
+                    "optional": false,
+                    "parent": "reply.LookupRecords"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Active",
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Active",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "active",
+                      "parent": "reply.LookupRecords"
+                    },
+                    "type": "boolean",
+                    "name": "active",
+                    "parent": "reply.LookupRecords"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "type": "string",
+                    "name": "name",
+                    "parent": "reply.LookupRecords"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "External ref num",
+                    "parse_output": "float_conversion",
+                    "type": "integer",
+                    "name": "external_ref_num",
+                    "optional": false,
+                    "parent": "reply.LookupRecords"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "External ref code",
+                    "parse_output": "float_conversion",
+                    "type": "integer",
+                    "name": "external_ref_code",
+                    "optional": false,
+                    "parent": "reply.LookupRecords"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "Lookup ID",
+                    "parse_output": "float_conversion",
+                    "type": "integer",
+                    "name": "lookup_id",
+                    "optional": false,
+                    "parent": "reply.LookupRecords"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "integer",
+                        "label": "ID",
+                        "parse_output": "float_conversion",
+                        "type": "integer",
+                        "name": "id",
+                        "optional": false,
+                        "parent": "reply.LookupRecords.lookup"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Active",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Active",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "type": "boolean",
+                          "name": "active",
+                          "parent": "reply.LookupRecords.lookup"
+                        },
+                        "type": "boolean",
+                        "name": "active",
+                        "parent": "reply.LookupRecords.lookup"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Name",
+                        "type": "string",
+                        "name": "name",
+                        "parent": "reply.LookupRecords.lookup"
+                      }
+                    ],
+                    "label": "Lookup",
+                    "type": "object",
+                    "name": "lookup",
+                    "parent": "reply.LookupRecords"
+                  }
+                ],
+                "parent": "reply"
+              }
+            ]
+          }
+        ],
+        "uuid": "f5029487-445c-40f1-b3eb-9d1f696523da"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Lookup Name"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "=_('data.workato_service.f30e90fc.request.LookupName')"
+    },
+    "uuid": "75d87e00-32bf-471c-a27e-9dc8e000a580"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_list",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "coupa",
+      "account_id": {
+        "zip_name": "resources/coupa.connection.json",
+        "name": "Coupa",
+        "folder": "resources"
+      }
+    }
+  ]
+}

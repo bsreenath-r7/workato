@@ -1,0 +1,76 @@
+{
+  "name": "ONBOARDING_NEW_HIRES_VARIABLES",
+  "schema": [
+    {
+      "control_type": "text",
+      "label": "Variable_Name",
+      "name": "col1",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "Type",
+      "name": "col2",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "Value1",
+      "name": "col3",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "Value2",
+      "name": "col4",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "Desc",
+      "name": "col5",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 6",
+      "name": "col6",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 7",
+      "name": "col7",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 8",
+      "name": "col8",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 9",
+      "name": "col9",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 10",
+      "name": "col10",
+      "type": "string",
+      "sticky": false
+    }
+  ],
+  "data": "googleTrackingSpeadsheetID,ID,1ojkoMTDe7Pn2UGcrc-1L3HsyuozjUdjGL8NKIUsnIJ4,,This is the id of the Google Spreadsheet that contains the New Hire Tracking Data\ngoogleTrackingSheetName,Name,All tracking 2021,,This is the name from the associated google spreadsheet where the tracking data exists\nslackChannelNameForErrors,Slack Channel Name,newhireonboarding_errors,,This is the slack channel name for the slack channel that will receive the errors related to the integration\nworkdayOnboardingMasterReportURL,Report URL,https://services1.myworkday.com/ccx/service/customreport2/mymoose/cowens/Onboarding_Master?Business_Process_Statuses%21WID=e2d08afc53614c37b32b31270bb8bee3!b90bc51be01d4ae99b603b02b073714d&Business_Process_Types%21WID=e6591cf3a39e44f0b01c711957f72e76!26627c6715f84ddba510f25c433aeb2b!08e574a19f6b400fac5dbe71ea854f1d!3a0b3e5481f64f29996a6c2a48d527fb!1758d7cf019a4c6a827fbba824a2866c&Organization%21WID=ac8f2e0f1f1c10db14b1adc1df0027a4&Latest__Employee_Hire_Date=2022-05-12-07%3A00&Earliest_Employee_Hire_Date=2021-11-12-08%3A00&Include_Subordinate_Organizations=1&format=json,,This is the report URL that will contain the onboarding master report that is used to help populate the data on the tracking sheet\nslackChannelIDForNewMooseChannel,Slack Channel ID,newmoose,C678DHJAG,This will be the slack channel ID for the newmoose slack channel that will be used in the integration\nslackChannelIDForRemoteOnboardingChannel,Slack Channel ID,remoteonboarding,CUYL7M5LH,This will be the slack channel ID for the remoteonboarding slack channel that will be used in the integration\n"
+}

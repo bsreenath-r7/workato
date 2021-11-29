@@ -1,0 +1,327 @@
+{
+  "name": "Jira Comment - Salesforce Jira Issue/Case Comment",
+  "description": "When there is a trigger event, do action",
+  "version": 22,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "workato_webhooks",
+    "name": "new_event",
+    "as": "b1d299be",
+    "title": null,
+    "description": "<span class=\"provider\">New/updated comments</span> via <span class=\"provider\">HTTP webhook</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "request": {
+        "webhook_type": "json",
+        "payload_schema": "[{\"control_type\":\"text\",\"label\":\"Webhook event\",\"type\":\"string\",\"name\":\"webhookEvent\"},{\"control_type\":\"text\",\"label\":\"Issue event type name\",\"type\":\"string\",\"name\":\"issue_event_type_name\"},{\"properties\":[{\"control_type\":\"text\",\"label\":\"Key\",\"type\":\"string\",\"name\":\"key\"}],\"label\":\"Issue\",\"type\":\"object\",\"name\":\"issue\"},{\"properties\":[{\"control_type\":\"text\",\"label\":\"Body\",\"type\":\"string\",\"name\":\"body\"},{\"control_type\":\"text\",\"label\":\"Created\",\"render_input\":\"date_time_conversion\",\"parse_output\":\"date_time_conversion\",\"type\":\"date_time\",\"name\":\"created\"},{\"control_type\":\"text\",\"label\":\"Updated\",\"render_input\":\"date_time_conversion\",\"parse_output\":\"date_time_conversion\",\"type\":\"date_time\",\"name\":\"updated\"}],\"label\":\"Comment\",\"type\":\"object\",\"name\":\"comment\"}]",
+        "headers_schema": "[]"
+      },
+      "webhook_suffix": "New/Updated Comments"
+    },
+    "filter": {
+      "conditions": [
+        {
+          "operand": "contains",
+          "lhs": "=[\"issue_comment_edited\", \"issue_commented\"]",
+          "rhs": "#{_('data.workato_webhooks.b1d299be.payload.issue_event_type_name')}",
+          "uuid": "condition-f4a9112b-302f-4974-af18-bdbba80ed7c4"
+        },
+        {
+          "operand": "present",
+          "lhs": "=lookup(\"JIRA_VARIABLES\", key: \"project.\"+_('data.workato_webhooks.b1d299be.payload.issue.key').split(\"-\")[0])[\"value\"]",
+          "rhs": "=",
+          "uuid": "condition-333e2928-99b6-4020-a533-1e014fd7be65"
+        }
+      ],
+      "operand": "and",
+      "type": "compound"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "headers",
+        "label": "Headers",
+        "properties": [
+
+        ]
+      },
+      {
+        "type": "object",
+        "name": "payload",
+        "label": "Payload",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Webhook event",
+            "type": "string",
+            "name": "webhookEvent"
+          },
+          {
+            "control_type": "text",
+            "label": "Issue event type name",
+            "type": "string",
+            "name": "issue_event_type_name"
+          },
+          {
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Key",
+                "type": "string",
+                "name": "key"
+              }
+            ],
+            "label": "Issue",
+            "type": "object",
+            "name": "issue"
+          },
+          {
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Body",
+                "type": "string",
+                "name": "body"
+              },
+              {
+                "control_type": "text",
+                "label": "Created",
+                "render_input": "date_time_conversion",
+                "parse_output": "date_time_conversion",
+                "type": "date_time",
+                "name": "created"
+              },
+              {
+                "control_type": "text",
+                "label": "Updated",
+                "render_input": "date_time_conversion",
+                "parse_output": "date_time_conversion",
+                "type": "date_time",
+                "name": "updated"
+              }
+            ],
+            "label": "Comment",
+            "type": "object",
+            "name": "comment"
+          }
+        ]
+      }
+    ],
+    "extended_input_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Payload configuration",
+        "properties": [
+          {
+            "control_type": "select",
+            "label": "Webhook type",
+            "pick_list": [
+              [
+                "GET request",
+                "get"
+              ],
+              [
+                "PUT/POST with JSON payload",
+                "json"
+              ],
+              [
+                "PUT/POST with XML payload",
+                "xml"
+              ],
+              [
+                "PUT/POST with FORM encoded payload",
+                "form"
+              ],
+              [
+                "PUT/POST with raw binary data",
+                "rawdata"
+              ],
+              [
+                "PUT/POST with unicode text data",
+                "rawdatatxt"
+              ]
+            ],
+            "hint": "Select the HTTP method and payload data type used by webhook. <a href=\"https://support.workato.com/support/solutions/articles/1000241356-http-real-time-webhook-type\" target=\"_blank\">Learn more</a>",
+            "default": "json",
+            "extends_schema": true,
+            "type": "string",
+            "name": "webhook_type"
+          },
+          {
+            "control_type": "schema-designer",
+            "label": "Payload schema",
+            "sample_data_type": "json_http",
+            "extends_schema": true,
+            "empty_schema_title": "Describe all fields in your response.",
+            "optional": true,
+            "sticky": true,
+            "type": "string",
+            "name": "payload_schema"
+          },
+          {
+            "control_type": "schema-designer",
+            "label": "Headers",
+            "extends_schema": true,
+            "empty_schema_title": "Describe all the webhook headers",
+            "optional": true,
+            "sticky": true,
+            "type": "string",
+            "name": "headers_schema"
+          }
+        ],
+        "override": true
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "present",
+              "lhs": "#{_('data.workato_webhooks.b1d299be.payload.comment.body')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "workato_service",
+            "name": "call_service",
+            "as": "44003186",
+            "title": null,
+            "description": "Call recipe <span class=\"provider\">Add Salesforce Case Comment for Cases Related to Jira</span> ",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "flow_id": "Add Salesforce Case Comment for Cases Related to Jira"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "flow_id": {
+                "zip_name": "jira/callable/callable_add_salesforce_case_comment_for_cases_related_to_jira.recipe.json",
+                "name": "Callable - Add Salesforce Case Comment for Cases Related to Jira",
+                "folder": "jira/callable"
+              },
+              "request": {
+                "jira_key": "#{_('data.workato_webhooks.b1d299be.payload.issue.key')}",
+                "comment": "=_('data.workato_webhooks.b1d299be.payload.issue.key')+\" has \"+ (_('data.workato_webhooks.b1d299be.payload.issue_event_type_name').match?(/issue_commented/) ? \"a new \" : \"an edited \") +\" comment, click https://issues.corp.rapid7.com/browse/\"+_('data.workato_webhooks.b1d299be.payload.issue.key')+\" to view the ticket.\n\nComment below:\n\"+_('data.workato_webhooks.b1d299be.payload.comment.body')"
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "object",
+                "name": "reply",
+                "label": "Reply",
+                "properties": [
+                  {
+                    "name": "cases_updated",
+                    "type": "array",
+                    "of": "object",
+                    "label": "Cases updated",
+                    "optional": true,
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Case ID",
+                        "name": "case_id",
+                        "type": "string",
+                        "optional": false
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Case number",
+                        "name": "case_number",
+                        "type": "string",
+                        "optional": false
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "request",
+                "label": "Recipe input",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Jira key",
+                    "name": "jira_key",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Comment",
+                    "name": "comment",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request"
+                  }
+                ]
+              }
+            ],
+            "uuid": "4538f959-9ebb-417f-80e1-276ec785f868"
+          }
+        ],
+        "comment": "Make sure the comment has a body.",
+        "uuid": "f2df702a-004e-41bd-b304-9c24eedfa830"
+      }
+    ],
+    "comment": "Realtime event update for comment via jira webhook",
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Jira Key"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Event Type Name"
+      },
+      {
+        "name": "custom_column_4",
+        "label": "Comment Add To Case(s)"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_webhooks.b1d299be.payload.issue.key')}",
+      "custom_column_2": "#{_('data.workato_webhooks.b1d299be.payload.issue_event_type_name')}",
+      "custom_column_4": "=_('data.workato_service.44003186.reply.cases_updated').pluck(\"case_number\").join(\", \")"
+    },
+    "uuid": "da7e3f38-c5dc-43bd-9141-1f12b3df32d4",
+    "wizardFinished": true
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_webhooks",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

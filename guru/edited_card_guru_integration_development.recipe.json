@@ -1,0 +1,146 @@
+{
+  "name": "[Edited Card] Guru Integration Development ",
+  "description": "When there is a trigger event, do action",
+  "version": 1,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "guru_connector_36450_1634904606",
+    "name": "new_card_updated",
+    "as": "b6d543b7",
+    "title": null,
+    "description": null,
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+    },
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "workato_service",
+            "name": "call_service",
+            "as": "663a152c",
+            "title": null,
+            "description": "Call recipe <span class=\"provider\">Sync Guru Card Content to Salesforce Knowledges</span> ",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "flow_id": "Sync Guru Card Content to Salesforce Knowledges"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "flow_id": {
+                "zip_name": "guru/callable/callable_sync_guru_card_content_to_salesforce_knowledges.recipe.json",
+                "name": "Callable - Sync Guru Card Content to Salesforce Knowledges",
+                "folder": "guru/callable"
+              },
+              "request": {
+                "card_id": "#{_('data.guru_connector_36450_1634904606.b6d543b7.results.first.properties.cardId')}",
+                "collection_id": "#{_('data.guru_connector_36450_1634904606.b6d543b7.results.first.properties.collectionId')}",
+                "action_type": "#{_('data.guru_connector_36450_1634904606.b6d543b7.results.first.eventType')}"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "request",
+                "label": "Recipe input",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Card ID",
+                    "name": "card_id",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Collection ID",
+                    "name": "collection_id",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Action type",
+                    "name": "action_type",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request"
+                  }
+                ]
+              }
+            ],
+            "uuid": "2bc1428d-7783-4332-9f1a-f1b4fc2dad54"
+          },
+          {
+            "number": 3,
+            "as": "6e6dd894",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "0",
+              "retry_interval": "2"
+            },
+            "block": [
+              {
+                "number": 4,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "true",
+                  "stop_reason": "#{_('data.catch.6e6dd894.message')}"
+                },
+                "uuid": "81056144-e016-4db5-8834-b3391789f3d5"
+              }
+            ],
+            "uuid": "de31b9ae-ecda-4378-b14c-25bc4136b5dd"
+          }
+        ],
+        "uuid": "2fdbae01-d80f-4317-b9fc-b6da384d05d5"
+      }
+    ],
+    "uuid": "95d24e1e-6118-4beb-9c00-c54d11973af8"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "guru_connector_36450_1634904606",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "resources/guru.connection.json",
+        "name": "Guru",
+        "folder": "resources",
+        "custom": true
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "name": "OTHER_VENDORS_SOLD",
+  "schema": [
+    {
+      "control_type": "text",
+      "label": "sfdc_other_vendors_sold",
+      "name": "col1",
+      "sticky": true,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "ns_other_vendors_sold_id",
+      "name": "col2",
+      "sticky": true,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 3",
+      "name": "col3",
+      "sticky": false,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 4",
+      "name": "col4",
+      "sticky": false,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 5",
+      "name": "col5",
+      "sticky": false,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 6",
+      "sticky": false,
+      "type": "string",
+      "name": "col6"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 7",
+      "sticky": false,
+      "type": "string",
+      "name": "col7"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 8",
+      "sticky": false,
+      "type": "string",
+      "name": "col8"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 9",
+      "sticky": false,
+      "type": "string",
+      "name": "col9"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 10",
+      "sticky": false,
+      "type": "string",
+      "name": "col10"
+    }
+  ],
+  "data": "Tenable,1\nQualys,2\nCore Security,3\nLogRhythm,4\nTanium,5\nSplunk,6\nFireEye,7\nSecureWorks,8\nExabeam,9\nIntel Security (McAfee),10\nForeScout,11\nCyberArk,12\n"
+}

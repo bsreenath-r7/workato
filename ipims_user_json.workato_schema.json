@@ -1,0 +1,66 @@
+{
+  "name": "iPIMs User JSON",
+  "schema": [
+    {
+      "control_type": "text",
+      "label": "SFDC Contact ID",
+      "type": "string",
+      "name": "id"
+    },
+    {
+      "control_type": "text",
+      "label": "SFDC User ID",
+      "type": "string",
+      "name": "userId"
+    },
+    {
+      "control_type": "text",
+      "label": "SFDC Username",
+      "type": "string",
+      "name": "username"
+    },
+    {
+      "control_type": "text",
+      "label": "First Name",
+      "type": "string",
+      "name": "firstName"
+    },
+    {
+      "control_type": "text",
+      "label": "Last Name",
+      "type": "string",
+      "name": "lastName"
+    },
+    {
+      "control_type": "text",
+      "label": "Email",
+      "type": "string",
+      "name": "email"
+    },
+    {
+      "properties": [
+        {
+          "control_type": "text",
+          "label": "SFDC Account ID",
+          "type": "string",
+          "name": "id"
+        },
+        {
+          "control_type": "text",
+          "label": "Name",
+          "type": "string",
+          "name": "name"
+        },
+        {
+          "control_type": "text",
+          "label": "Platform Customer ID",
+          "type": "string",
+          "name": "customerId"
+        }
+      ],
+      "label": "Account",
+      "type": "object",
+      "name": "account"
+    }
+  ]
+}

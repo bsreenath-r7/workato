@@ -1,0 +1,2202 @@
+{
+  "name": "Callable - Search NetSuite Contacts",
+  "description": "When there is a trigger event, do action",
+  "version": 7,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "receive_request",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">Search NetSuite Contacts</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+      "rest_enabled": true
+    },
+    "input": {
+      "rest_enabled": "false",
+      "service_name": "Search NetSuite Contacts",
+      "request_schema_json": "[{\"control_type\":\"text\",\"label\":\"Customer Internal ID\",\"parse_output\":\"integer_conversion\",\"name\":\"ns_customer_internal_id\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Contact Email\",\"name\":\"ns_contact_email\",\"type\":\"string\",\"optional\":true,\"hint\":\"If specified, only contacts with this email will be returned\"}]",
+      "reply_schema_json": "[{\"name\":\"Contacts\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Contacts\",\"optional\":false,\"hint\":\"List of Contacts matching search parameters.\",\"properties\":[{\"control_type\":\"text\",\"label\":\"Customer Internal ID\",\"parse_output\":\"integer_conversion\",\"name\":\"customer_internal_id\",\"type\":\"string\"},{\"control_type\":\"text\",\"label\":\"Contact Internal ID\",\"name\":\"ns_contact_internal_id\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Contact Email\",\"name\":\"contact_email\",\"type\":\"string\"}]}]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Customer Internal ID",
+            "parse_output": "integer_conversion",
+            "name": "ns_customer_internal_id",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Contact Email",
+            "name": "ns_contact_email",
+            "type": "string",
+            "optional": true,
+            "hint": "If specified, only contacts with this email will be returned"
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "netsuite",
+            "name": "search_object_v2",
+            "as": "search_object_v2",
+            "title": "Search Contacts",
+            "description": "Search <span class=\"provider\">Contacts</span> in <span class=\"provider\">NetSuite</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "netsuite_object": "Contact",
+              "field_list": [
+                {
+                  "label": "Email",
+                  "value": "email"
+                },
+                {
+                  "label": "Company",
+                  "value": "company"
+                },
+                {
+                  "label": "Internal ID",
+                  "value": "internalId"
+                }
+              ]
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "netsuite_object": "Contact",
+              "search_settings": {
+                "string_fields": "is",
+                "integer_fields": "equalTo",
+                "list_fields": "anyOf"
+              },
+              "field_list": "email\ncompany\ninternalId",
+              "company": "=_('data.workato_service.receive_request.request.ns_customer_internal_id').present? ? _('data.workato_service.receive_request.request.ns_customer_internal_id') : skip",
+              "limit": "200",
+              "email": "=_('data.workato_service.receive_request.request.ns_contact_email').present? ? _('data.workato_service.receive_request.request.ns_contact_email') : skip"
+            },
+            "extended_output_schema": [
+              {
+                "type": "array",
+                "name": "Contacts",
+                "label": "Contacts",
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Company",
+                    "optional": true,
+                    "ns_content_type": "element",
+                    "ns_tag": "platformCommon",
+                    "ns_search_type": "SearchColumnSelectField",
+                    "type": "string",
+                    "name": "company"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Email",
+                    "optional": true,
+                    "ns_content_type": "element",
+                    "ns_tag": "platformCommon",
+                    "ns_search_type": "SearchColumnStringField",
+                    "type": "string",
+                    "name": "email"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Internal ID",
+                    "optional": true,
+                    "ns_content_type": "element",
+                    "ns_tag": "platformCommon",
+                    "ns_search_type": "SearchColumnSelectField",
+                    "type": "string",
+                    "name": "internalId"
+                  },
+                  {
+                    "properties": [
+
+                    ],
+                    "label": "Custom fields",
+                    "optional": true,
+                    "type": "object",
+                    "name": "custom_fields"
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "address",
+                "control_type": "text",
+                "label": "Address",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "addressee",
+                "control_type": "text",
+                "label": "Addressee",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "addressLabel",
+                "control_type": "text",
+                "label": "Address label",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "addressPhone",
+                "control_type": "text",
+                "label": "Address phone",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "attention",
+                "control_type": "text",
+                "label": "Attention",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "boolean",
+                "name": "availableOffline",
+                "control_type": "checkbox",
+                "label": "Available offline",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Available offline",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "platformCommon",
+                  "ns_search_type": "SearchBooleanField",
+                  "type": "boolean",
+                  "name": "availableOffline"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchBooleanField"
+              },
+              {
+                "type": "string",
+                "name": "category",
+                "control_type": "text",
+                "label": "Category",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "city",
+                "control_type": "text",
+                "label": "City",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "comments",
+                "control_type": "text",
+                "label": "Comments",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "company",
+                "control_type": "text",
+                "label": "Company",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "contactRole",
+                "control_type": "text",
+                "label": "Contact role",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "contactSource",
+                "control_type": "text",
+                "label": "Contact source",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "country",
+                "control_type": "text",
+                "label": "Country",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchEnumMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "county",
+                "control_type": "text",
+                "label": "County",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "email",
+                "control_type": "text",
+                "label": "Email",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "employer",
+                "control_type": "text",
+                "label": "Employer",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "entityId",
+                "control_type": "text",
+                "label": "Entity ID",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "externalId",
+                "control_type": "text",
+                "label": "External ID",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "externalIdString",
+                "control_type": "text",
+                "label": "External ID string",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "fax",
+                "control_type": "text",
+                "label": "Fax",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "firstName",
+                "control_type": "text",
+                "label": "First name",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "boolean",
+                "name": "giveAccess",
+                "control_type": "checkbox",
+                "label": "Give access",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Give access",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "platformCommon",
+                  "ns_search_type": "SearchBooleanField",
+                  "type": "boolean",
+                  "name": "giveAccess"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchBooleanField"
+              },
+              {
+                "type": "string",
+                "name": "globalSubscriptionStatus",
+                "control_type": "text",
+                "label": "Global subscription status",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchEnumMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "group",
+                "control_type": "text",
+                "label": "Group",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchMultiSelectField"
+              },
+              {
+                "type": "boolean",
+                "name": "hasDuplicates",
+                "control_type": "checkbox",
+                "label": "Has duplicates",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Has duplicates",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "platformCommon",
+                  "ns_search_type": "SearchBooleanField",
+                  "type": "boolean",
+                  "name": "hasDuplicates"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchBooleanField"
+              },
+              {
+                "type": "string",
+                "name": "image",
+                "control_type": "text",
+                "label": "Image",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "internalId",
+                "control_type": "text",
+                "label": "Internal ID",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchMultiSelectField"
+              },
+              {
+                "type": "number",
+                "name": "internalIdNumber",
+                "control_type": "text",
+                "label": "Internal ID number",
+                "optional": true,
+                "parse_output": "float_conversion",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchLongField"
+              },
+              {
+                "type": "boolean",
+                "name": "isDefaultBilling",
+                "control_type": "checkbox",
+                "label": "Is default billing",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Is default billing",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "platformCommon",
+                  "ns_search_type": "SearchBooleanField",
+                  "type": "boolean",
+                  "name": "isDefaultBilling"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchBooleanField"
+              },
+              {
+                "type": "boolean",
+                "name": "isDefaultShipping",
+                "control_type": "checkbox",
+                "label": "Is default shipping",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Is default shipping",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "platformCommon",
+                  "ns_search_type": "SearchBooleanField",
+                  "type": "boolean",
+                  "name": "isDefaultShipping"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchBooleanField"
+              },
+              {
+                "type": "boolean",
+                "name": "isInactive",
+                "control_type": "checkbox",
+                "label": "Is inactive",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Is inactive",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "platformCommon",
+                  "ns_search_type": "SearchBooleanField",
+                  "type": "boolean",
+                  "name": "isInactive"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchBooleanField"
+              },
+              {
+                "type": "boolean",
+                "name": "isPrivate",
+                "control_type": "checkbox",
+                "label": "Is private",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Is private",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "platformCommon",
+                  "ns_search_type": "SearchBooleanField",
+                  "type": "boolean",
+                  "name": "isPrivate"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchBooleanField"
+              },
+              {
+                "type": "string",
+                "name": "language",
+                "control_type": "text",
+                "label": "Language",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchEnumMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "lastName",
+                "control_type": "text",
+                "label": "Last name",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "level",
+                "control_type": "text",
+                "label": "Level",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchEnumMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "middleName",
+                "control_type": "text",
+                "label": "Middle name",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "owner",
+                "control_type": "text",
+                "label": "Owner",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "permission",
+                "control_type": "text",
+                "label": "Permission",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchEnumMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "phone",
+                "control_type": "text",
+                "label": "Phone",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "phoneticName",
+                "control_type": "text",
+                "label": "Phonetic name",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "salutation",
+                "control_type": "text",
+                "label": "Salutation",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "state",
+                "control_type": "text",
+                "label": "State",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "subsidiary",
+                "control_type": "text",
+                "label": "Subsidiary",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "title",
+                "control_type": "text",
+                "label": "Title",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "type",
+                "control_type": "text",
+                "label": "Type",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchEnumMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "zipCode",
+                "control_type": "text",
+                "label": "Zip code",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "object",
+                "name": "custom_fields",
+                "label": "Custom fields",
+                "optional": true,
+                "properties": [
+
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "netsuite_object",
+              "field_list",
+              "search_settings",
+              "search_settings.string_fields",
+              "search_settings.integer_fields",
+              "search_settings.list_fields",
+              "company",
+              "email"
+            ],
+            "hidden_config_fields": [
+              "limit",
+              "custom_list",
+              "custom_column_list"
+            ],
+            "uuid": "e0d0ccc4-9db3-436a-a8f8-936486da2782"
+          },
+          {
+            "number": 3,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "less_than",
+                  "lhs": "#{_('data.netsuite.search_object_v2.totalPages')}",
+                  "rhs": "2"
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 4,
+                "provider": "workato_service",
+                "name": "send_reply",
+                "as": "send_reply",
+                "title": null,
+                "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Search NetSuite Contacts</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "reply_type": "success",
+                  "reply": {
+                    "Contacts": {
+                      "____source": "#{_('data.netsuite.search_object_v2.Contacts')}",
+                      "customer_internal_id": "#{_('data.netsuite.search_object_v2.Contacts.first.company')}",
+                      "contact_email": "#{_('data.netsuite.search_object_v2.Contacts.first.email')}",
+                      "ns_contact_internal_id": "#{_('data.netsuite.search_object_v2.Contacts.first.internalId')}"
+                    }
+                  }
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "reply",
+                    "label": "Reply",
+                    "properties": [
+                      {
+                        "name": "Contacts",
+                        "type": "array",
+                        "of": "object",
+                        "label": "Contacts",
+                        "optional": false,
+                        "hint": "List of Contacts matching search parameters.",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Customer Internal ID",
+                            "parse_output": "integer_conversion",
+                            "name": "customer_internal_id",
+                            "type": "string"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Contact Internal ID",
+                            "name": "ns_contact_internal_id",
+                            "type": "string",
+                            "optional": true
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Contact Email",
+                            "name": "contact_email",
+                            "type": "string"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "visible_config_fields": [
+                  "reply_type",
+                  "reply.Contacts.ns_contact_internal_id"
+                ],
+                "uuid": "b0b055b4-f2da-4601-a977-947138a834a2"
+              }
+            ],
+            "comment": "If there are 200 or less contact results, return all the contact results",
+            "uuid": "637cb271-907f-4606-9dda-362a6617607c"
+          },
+          {
+            "number": 5,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "greater_than",
+                  "lhs": "#{_('data.netsuite.search_object_v2.totalPages')}",
+                  "rhs": "1"
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 6,
+                "provider": "workato_list",
+                "name": "create_list",
+                "as": "create_list",
+                "title": null,
+                "description": null,
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "size": "#{_('data.netsuite.search_object_v2.totalPages')}"
+                },
+                "comment": "create a variable for the number of search pages",
+                "uuid": "66e1fe23-a650-46a1-8775-660110901b7b"
+              },
+              {
+                "number": 7,
+                "as": "foreach",
+                "keyword": "foreach",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "clear_scope": false,
+                "input": {
+                },
+                "block": [
+                  {
+                    "number": 8,
+                    "provider": "workato_list",
+                    "name": "accumulate_list_items",
+                    "as": "accumulate_list_items__1",
+                    "title": "Append item to DEBUG",
+                    "description": "Append <span class=\"provider\">item</span> to <span class=\"provider\">DEBUG</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "name": "DEBUG",
+                      "list_item": {
+                        "schema": "[{\"name\":\"page_number\",\"type\":\"string\",\"optional\":true,\"label\":\"page number\",\"control_type\":\"text\"}]",
+                        "data": {
+                          "page_number": "#{_('data.foreach.foreach.index', 'foreach_meta')}"
+                        }
+                      }
+                    },
+                    "extended_output_schema": [
+                      {
+                        "type": "array",
+                        "name": "list_items",
+                        "label": "Items",
+                        "of": "object",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "page number",
+                            "name": "page_number",
+                            "type": "string",
+                            "optional": true
+                          }
+                        ]
+                      }
+                    ],
+                    "extended_input_schema": [
+                      {
+                        "type": "object",
+                        "name": "list_item",
+                        "control_type": "form-schema-builder",
+                        "label": "List item fields",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Schema",
+                            "extends_schema": true,
+                            "type": "string",
+                            "name": "schema"
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "page number",
+                                "name": "page_number",
+                                "type": "string",
+                                "optional": true
+                              }
+                            ],
+                            "label": "Data",
+                            "type": "object",
+                            "name": "data"
+                          }
+                        ],
+                        "override": true
+                      }
+                    ],
+                    "visible_config_fields": [
+                      "name",
+                      "list_item.data.page_number"
+                    ],
+                    "uuid": "4adda35c-87e4-459d-bd93-c9cf41e06bb8"
+                  },
+                  {
+                    "number": 9,
+                    "provider": "netsuite",
+                    "name": "search_object_v2",
+                    "as": "search_object_v2__1",
+                    "title": "Search Contacts",
+                    "description": "Search <span class=\"provider\">Contacts</span> in <span class=\"provider\">NetSuite</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "netsuite_object": "Contact",
+                      "field_list": [
+                        {
+                          "label": "Email",
+                          "value": "email"
+                        },
+                        {
+                          "label": "Company",
+                          "value": "company"
+                        },
+                        {
+                          "label": "Internal ID",
+                          "value": "internalId"
+                        }
+                      ]
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "netsuite_object": "Contact",
+                      "search_settings": {
+                        "string_fields": "is",
+                        "integer_fields": "equalTo",
+                        "list_fields": "anyOf"
+                      },
+                      "field_list": "email\ncompany\ninternalId",
+                      "company": "=_('data.workato_service.receive_request.request.ns_customer_internal_id').present? ? _('data.workato_service.receive_request.request.ns_customer_internal_id') : skip",
+                      "limit": "200",
+                      "email": "=_('data.workato_service.receive_request.request.ns_contact_email').present? ? _('data.workato_service.receive_request.request.ns_contact_email') : skip",
+                      "searchId": "#{_('data.netsuite.search_object_v2.searchId')}",
+                      "pageIndex": "=_('data.foreach.foreach.index', 'foreach_meta')+1"
+                    },
+                    "extended_output_schema": [
+                      {
+                        "type": "array",
+                        "name": "Contacts",
+                        "label": "Contacts",
+                        "of": "object",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Company",
+                            "optional": true,
+                            "ns_content_type": "element",
+                            "ns_tag": "platformCommon",
+                            "ns_search_type": "SearchColumnSelectField",
+                            "type": "string",
+                            "name": "company"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Email",
+                            "optional": true,
+                            "ns_content_type": "element",
+                            "ns_tag": "platformCommon",
+                            "ns_search_type": "SearchColumnStringField",
+                            "type": "string",
+                            "name": "email"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Internal ID",
+                            "optional": true,
+                            "ns_content_type": "element",
+                            "ns_tag": "platformCommon",
+                            "ns_search_type": "SearchColumnSelectField",
+                            "type": "string",
+                            "name": "internalId"
+                          },
+                          {
+                            "properties": [
+
+                            ],
+                            "label": "Custom fields",
+                            "optional": true,
+                            "type": "object",
+                            "name": "custom_fields"
+                          }
+                        ]
+                      }
+                    ],
+                    "extended_input_schema": [
+                      {
+                        "type": "string",
+                        "name": "address",
+                        "control_type": "text",
+                        "label": "Address",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchStringField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "addressee",
+                        "control_type": "text",
+                        "label": "Addressee",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchStringField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "addressLabel",
+                        "control_type": "text",
+                        "label": "Address label",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchStringField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "addressPhone",
+                        "control_type": "text",
+                        "label": "Address phone",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchStringField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "attention",
+                        "control_type": "text",
+                        "label": "Attention",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchStringField"
+                      },
+                      {
+                        "type": "boolean",
+                        "name": "availableOffline",
+                        "control_type": "checkbox",
+                        "label": "Available offline",
+                        "optional": true,
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Available offline",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "optional": true,
+                          "ns_content_type": "element",
+                          "ns_tag": "platformCommon",
+                          "ns_search_type": "SearchBooleanField",
+                          "type": "boolean",
+                          "name": "availableOffline"
+                        },
+                        "render_input": "render_boolean",
+                        "parse_output": "parse_boolean",
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchBooleanField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "category",
+                        "control_type": "text",
+                        "label": "Category",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchMultiSelectField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "city",
+                        "control_type": "text",
+                        "label": "City",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchStringField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "comments",
+                        "control_type": "text",
+                        "label": "Comments",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchStringField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "company",
+                        "control_type": "text",
+                        "label": "Company",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchMultiSelectField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "contactRole",
+                        "control_type": "text",
+                        "label": "Contact role",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchMultiSelectField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "contactSource",
+                        "control_type": "text",
+                        "label": "Contact source",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchMultiSelectField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "country",
+                        "control_type": "text",
+                        "label": "Country",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchEnumMultiSelectField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "county",
+                        "control_type": "text",
+                        "label": "County",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchStringField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "email",
+                        "control_type": "text",
+                        "label": "Email",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchStringField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "employer",
+                        "control_type": "text",
+                        "label": "Employer",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchStringField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "entityId",
+                        "control_type": "text",
+                        "label": "Entity ID",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchStringField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "externalId",
+                        "control_type": "text",
+                        "label": "External ID",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchMultiSelectField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "externalIdString",
+                        "control_type": "text",
+                        "label": "External ID string",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchStringField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "fax",
+                        "control_type": "text",
+                        "label": "Fax",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchStringField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "firstName",
+                        "control_type": "text",
+                        "label": "First name",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchStringField"
+                      },
+                      {
+                        "type": "boolean",
+                        "name": "giveAccess",
+                        "control_type": "checkbox",
+                        "label": "Give access",
+                        "optional": true,
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Give access",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "optional": true,
+                          "ns_content_type": "element",
+                          "ns_tag": "platformCommon",
+                          "ns_search_type": "SearchBooleanField",
+                          "type": "boolean",
+                          "name": "giveAccess"
+                        },
+                        "render_input": "render_boolean",
+                        "parse_output": "parse_boolean",
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchBooleanField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "globalSubscriptionStatus",
+                        "control_type": "text",
+                        "label": "Global subscription status",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchEnumMultiSelectField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "group",
+                        "control_type": "text",
+                        "label": "Group",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchMultiSelectField"
+                      },
+                      {
+                        "type": "boolean",
+                        "name": "hasDuplicates",
+                        "control_type": "checkbox",
+                        "label": "Has duplicates",
+                        "optional": true,
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Has duplicates",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "optional": true,
+                          "ns_content_type": "element",
+                          "ns_tag": "platformCommon",
+                          "ns_search_type": "SearchBooleanField",
+                          "type": "boolean",
+                          "name": "hasDuplicates"
+                        },
+                        "render_input": "render_boolean",
+                        "parse_output": "parse_boolean",
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchBooleanField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "image",
+                        "control_type": "text",
+                        "label": "Image",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchStringField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "internalId",
+                        "control_type": "text",
+                        "label": "Internal ID",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchMultiSelectField"
+                      },
+                      {
+                        "type": "number",
+                        "name": "internalIdNumber",
+                        "control_type": "text",
+                        "label": "Internal ID number",
+                        "optional": true,
+                        "parse_output": "float_conversion",
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchLongField"
+                      },
+                      {
+                        "type": "boolean",
+                        "name": "isDefaultBilling",
+                        "control_type": "checkbox",
+                        "label": "Is default billing",
+                        "optional": true,
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is default billing",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "optional": true,
+                          "ns_content_type": "element",
+                          "ns_tag": "platformCommon",
+                          "ns_search_type": "SearchBooleanField",
+                          "type": "boolean",
+                          "name": "isDefaultBilling"
+                        },
+                        "render_input": "render_boolean",
+                        "parse_output": "parse_boolean",
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchBooleanField"
+                      },
+                      {
+                        "type": "boolean",
+                        "name": "isDefaultShipping",
+                        "control_type": "checkbox",
+                        "label": "Is default shipping",
+                        "optional": true,
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is default shipping",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "optional": true,
+                          "ns_content_type": "element",
+                          "ns_tag": "platformCommon",
+                          "ns_search_type": "SearchBooleanField",
+                          "type": "boolean",
+                          "name": "isDefaultShipping"
+                        },
+                        "render_input": "render_boolean",
+                        "parse_output": "parse_boolean",
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchBooleanField"
+                      },
+                      {
+                        "type": "boolean",
+                        "name": "isInactive",
+                        "control_type": "checkbox",
+                        "label": "Is inactive",
+                        "optional": true,
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is inactive",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "optional": true,
+                          "ns_content_type": "element",
+                          "ns_tag": "platformCommon",
+                          "ns_search_type": "SearchBooleanField",
+                          "type": "boolean",
+                          "name": "isInactive"
+                        },
+                        "render_input": "render_boolean",
+                        "parse_output": "parse_boolean",
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchBooleanField"
+                      },
+                      {
+                        "type": "boolean",
+                        "name": "isPrivate",
+                        "control_type": "checkbox",
+                        "label": "Is private",
+                        "optional": true,
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is private",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "optional": true,
+                          "ns_content_type": "element",
+                          "ns_tag": "platformCommon",
+                          "ns_search_type": "SearchBooleanField",
+                          "type": "boolean",
+                          "name": "isPrivate"
+                        },
+                        "render_input": "render_boolean",
+                        "parse_output": "parse_boolean",
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchBooleanField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "language",
+                        "control_type": "text",
+                        "label": "Language",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchEnumMultiSelectField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "lastName",
+                        "control_type": "text",
+                        "label": "Last name",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchStringField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "level",
+                        "control_type": "text",
+                        "label": "Level",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchEnumMultiSelectField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "middleName",
+                        "control_type": "text",
+                        "label": "Middle name",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchStringField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "owner",
+                        "control_type": "text",
+                        "label": "Owner",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchMultiSelectField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "permission",
+                        "control_type": "text",
+                        "label": "Permission",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchEnumMultiSelectField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "phone",
+                        "control_type": "text",
+                        "label": "Phone",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchStringField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "phoneticName",
+                        "control_type": "text",
+                        "label": "Phonetic name",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchStringField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "salutation",
+                        "control_type": "text",
+                        "label": "Salutation",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchStringField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "state",
+                        "control_type": "text",
+                        "label": "State",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchStringField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "subsidiary",
+                        "control_type": "text",
+                        "label": "Subsidiary",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchMultiSelectField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "title",
+                        "control_type": "text",
+                        "label": "Title",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchStringField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "type",
+                        "control_type": "text",
+                        "label": "Type",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchEnumMultiSelectField"
+                      },
+                      {
+                        "type": "string",
+                        "name": "zipCode",
+                        "control_type": "text",
+                        "label": "Zip code",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "platformCommon",
+                        "ns_search_type": "SearchStringField"
+                      },
+                      {
+                        "type": "object",
+                        "name": "custom_fields",
+                        "label": "Custom fields",
+                        "optional": true,
+                        "properties": [
+
+                        ]
+                      }
+                    ],
+                    "visible_config_fields": [
+                      "netsuite_object",
+                      "field_list",
+                      "search_settings",
+                      "search_settings.string_fields",
+                      "search_settings.integer_fields",
+                      "search_settings.list_fields",
+                      "company",
+                      "email",
+                      "limit",
+                      "searchId",
+                      "pageIndex"
+                    ],
+                    "hidden_config_fields": [
+                      "custom_list",
+                      "custom_column_list"
+                    ],
+                    "uuid": "b5245d59-546d-4401-8f84-277980c79f6e"
+                  },
+                  {
+                    "number": 10,
+                    "as": "foreach__1",
+                    "keyword": "foreach",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "clear_scope": false,
+                    "input": {
+                    },
+                    "block": [
+                      {
+                        "number": 11,
+                        "provider": "workato_list",
+                        "name": "accumulate_list_items",
+                        "as": "accumulate_list_items",
+                        "title": "Append item to Contacts",
+                        "description": "Append <span class=\"provider\">item</span> to <span class=\"provider\">Contacts</span>",
+                        "keyword": "action",
+                        "dynamicPickListSelection": {
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                          "name": "Contacts",
+                          "list_item": {
+                            "schema": "[{\"name\":\"customer_internal_id\",\"type\":\"string\",\"optional\":true,\"label\":\"Customer Internal ID\",\"control_type\":\"text\"},{\"name\":\"contact_email\",\"type\":\"string\",\"optional\":true,\"label\":\"Contact Email\",\"control_type\":\"text\"},{\"name\":\"contact_internal_id\",\"type\":\"string\",\"optional\":true,\"label\":\"Contact Internal ID\",\"control_type\":\"text\"}]",
+                            "data": {
+                              "customer_internal_id": "#{_('data.foreach.foreach__1.company')}",
+                              "contact_email": "#{_('data.foreach.foreach__1.email')}",
+                              "contact_internal_id": "#{_('data.foreach.foreach__1.internalId')}"
+                            }
+                          }
+                        },
+                        "extended_output_schema": [
+                          {
+                            "type": "array",
+                            "name": "list_items",
+                            "label": "Items",
+                            "of": "object",
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Customer Internal ID",
+                                "name": "customer_internal_id",
+                                "type": "string",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Contact Email",
+                                "name": "contact_email",
+                                "type": "string",
+                                "optional": true
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Contact Internal ID",
+                                "name": "contact_internal_id",
+                                "type": "string",
+                                "optional": true
+                              }
+                            ]
+                          }
+                        ],
+                        "extended_input_schema": [
+                          {
+                            "type": "object",
+                            "name": "list_item",
+                            "control_type": "form-schema-builder",
+                            "label": "List item fields",
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Schema",
+                                "extends_schema": true,
+                                "type": "string",
+                                "name": "schema"
+                              },
+                              {
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "Customer Internal ID",
+                                    "name": "customer_internal_id",
+                                    "type": "string",
+                                    "optional": true
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Contact Email",
+                                    "name": "contact_email",
+                                    "type": "string",
+                                    "optional": true
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Contact Internal ID",
+                                    "name": "contact_internal_id",
+                                    "type": "string",
+                                    "optional": true
+                                  }
+                                ],
+                                "label": "Data",
+                                "type": "object",
+                                "name": "data"
+                              }
+                            ],
+                            "override": true
+                          }
+                        ],
+                        "visible_config_fields": [
+                          "name",
+                          "list_item.data.customer_internal_id",
+                          "list_item",
+                          "list_item.schema",
+                          "list_item.data.contact_email",
+                          "list_item.data.contact_internal_id"
+                        ],
+                        "uuid": "8c879e0a-67ed-415a-b043-e5c3d9ecd7ca"
+                      }
+                    ],
+                    "source": "#{_('data.netsuite.search_object_v2__1.Contacts')}",
+                    "uuid": "6876aa96-e961-476c-adc4-e0c01e994a88"
+                  }
+                ],
+                "source": "#{_('data.workato_list.create_list.list')}",
+                "comment": "get all the search pages of results",
+                "uuid": "6784ff67-5cd0-47a1-8b93-7e53260a8703"
+              },
+              {
+                "number": 12,
+                "provider": "workato_service",
+                "name": "send_reply",
+                "as": "send_reply__2",
+                "title": null,
+                "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Search NetSuite Contacts</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "reply_type": "success",
+                  "reply": {
+                    "Contacts": {
+                      "____source": "#{_('data.workato_list.accumulate_list_items.list_items')}",
+                      "customer_internal_id": "#{_('data.workato_list.accumulate_list_items.list_items.first.customer_internal_id')}",
+                      "contact_email": "#{_('data.workato_list.accumulate_list_items.list_items.first.contact_email')}",
+                      "ns_contact_internal_id": "#{_('data.workato_list.accumulate_list_items.list_items.first.contact_internal_id')}"
+                    }
+                  }
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "reply",
+                    "label": "Reply",
+                    "properties": [
+                      {
+                        "name": "Contacts",
+                        "type": "array",
+                        "of": "object",
+                        "label": "Contacts",
+                        "optional": false,
+                        "hint": "List of Contacts matching search parameters.",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Customer Internal ID",
+                            "parse_output": "integer_conversion",
+                            "name": "customer_internal_id",
+                            "type": "string"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Contact Internal ID",
+                            "name": "ns_contact_internal_id",
+                            "type": "string",
+                            "optional": true
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Contact Email",
+                            "name": "contact_email",
+                            "type": "string"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "visible_config_fields": [
+                  "reply_type",
+                  "reply.Contacts.ns_contact_internal_id"
+                ],
+                "uuid": "9ffdbf31-623d-4910-a20d-3576473daf5f"
+              }
+            ],
+            "comment": "If there are over 200 contact results, loop through the results",
+            "uuid": "9b1185af-e237-4dd5-9520-d67783632b61"
+          },
+          {
+            "number": 13,
+            "as": "catch",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "0",
+              "retry_interval": "2"
+            },
+            "block": [
+              {
+                "number": 14,
+                "provider": "workato_service",
+                "name": "call_service",
+                "as": "call_service",
+                "title": null,
+                "description": "Call recipe <span class=\"provider\">Log Error to MySQL Failed Jobs</span> ",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "flow_id": "Log Error to MySQL Failed Jobs"
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "flow_id": {
+                    "zip_name": "util/callable_log_error_to_mysql_failed_jobs.recipe.json",
+                    "name": "Callable | Log Error to MySQL Failed Jobs",
+                    "folder": "util"
+                  },
+                  "request": {
+                    "recipe_id": "#{_('data.workato.job_context.recipe_id')}",
+                    "recipe_job_id": "#{_('data.workato.job_context.job_id')}",
+                    "recipe_job_created_at": "#{_('data.workato.job_context.job_created_at')}",
+                    "recipe_job_url": "#{_('data.workato.job_context.job_url')}",
+                    "calling_recipe_id": "#{_('data.workato_service.receive_request.context.calling_recipe_id')}",
+                    "calling_job_id": "#{_('data.workato_service.receive_request.context.calling_job_id')}",
+                    "error_type": "#{_('data.catch.catch.type')}",
+                    "error_message": "#{_('data.catch.catch.message')}",
+                    "recipe_name": "Callable - Search NetSuite Contacts"
+                  }
+                },
+                "extended_output_schema": [
+                  {
+                    "type": "object",
+                    "name": "reply",
+                    "label": "Reply",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "MySQL Failed Job ID",
+                        "name": "mysql_failed_job_id",
+                        "type": "string",
+                        "optional": false
+                      }
+                    ]
+                  }
+                ],
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "request",
+                    "label": "Recipe input",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Recipe ID",
+                        "name": "recipe_id",
+                        "type": "string",
+                        "optional": false,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Recipe Name",
+                        "name": "recipe_name",
+                        "type": "string",
+                        "optional": false,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Recipe Job ID",
+                        "name": "recipe_job_id",
+                        "type": "string",
+                        "optional": false,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "date",
+                        "label": "Recipe Job Created At",
+                        "render_input": "date_conversion",
+                        "parse_output": "date_conversion",
+                        "name": "recipe_job_created_at",
+                        "type": "date_time",
+                        "optional": false,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Recipe Job URL",
+                        "name": "recipe_job_url",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Parent Job ID",
+                        "name": "parent_job_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Calling Recipe ID",
+                        "name": "calling_recipe_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Calling Job ID",
+                        "name": "calling_job_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Error Type",
+                        "name": "error_type",
+                        "type": "string",
+                        "optional": false,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Error Message",
+                        "name": "error_message",
+                        "type": "string",
+                        "optional": false,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "integer",
+                        "label": "Error Retry Count",
+                        "parse_output": "integer_conversion",
+                        "name": "error_retry_count",
+                        "type": "integer",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Element DUNS",
+                        "name": "element_duns",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Element NS Contact Internal ID",
+                        "name": "element_ns_contact_internal_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Element NS Customer Internal ID",
+                        "name": "element_ns_customer_internal_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Element NS Employee ID",
+                        "name": "element_ns_employee_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Element SFDC Account ID",
+                        "name": "element_sfdc_account_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Element SFDC Case ID",
+                        "name": "element_sfdc_case_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Element SFDC Case Attachment ID",
+                        "name": "element_sfdc_case_attachment_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Element SFDC Case Comment ID",
+                        "name": "element_sfdc_case_comment_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Element SFDC Contact ID",
+                        "name": "element_sfdc_contact_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Element SFDC Team Role",
+                        "name": "element_sfdc_team_role",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      }
+                    ]
+                  }
+                ],
+                "visible_config_fields": [
+                  "flow_id",
+                  "request.recipe_job_url",
+                  "request.calling_recipe_id",
+                  "request.calling_job_id"
+                ],
+                "uuid": "715e1bd5-5974-4966-821c-b2fe4d56a838"
+              },
+              {
+                "number": 15,
+                "provider": "workato_service",
+                "name": "send_reply",
+                "as": "send_reply__1",
+                "title": null,
+                "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Search NetSuite Contacts</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "reply_type": "error",
+                  "message": "#{_('data.catch.catch.message')}"
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "string",
+                    "name": "message",
+                    "control_type": "text",
+                    "label": "Message",
+                    "hint": "Error message"
+                  },
+                  {
+                    "type": "string",
+                    "name": "code",
+                    "control_type": "text",
+                    "label": "Error code",
+                    "hint": "Use this field to set custom HTTP error code for service replies. E.g: 404/422 etc. This field is applicable to REST service recipes.",
+                    "optional": true
+                  },
+                  {
+                    "type": "boolean",
+                    "name": "custom_error_response",
+                    "control_type": "checkbox",
+                    "label": "Custom error response?",
+                    "hint": "By default, Workato sends 'reply_type' and 'message' fields in response. When set to 'Yes', the content of the 'Message' field is sent as response body. This field is applicable to REST service recipes.",
+                    "optional": true,
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Custom error response?",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "optional": true,
+                      "hint": "By default, Workato sends 'reply_type' and 'message' fields in response. When set to 'Yes', the content of the 'Message' field is sent as response body. This field is applicable to REST service recipes.",
+                      "type": "boolean",
+                      "name": "custom_error_response"
+                    },
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    }
+                  }
+                ],
+                "uuid": "54c63d4e-33bc-415f-b076-0740ff606fcf"
+              },
+              {
+                "number": 16,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "true",
+                  "stop_reason": "#{_('data.catch.catch.message')}"
+                },
+                "uuid": "607adcdc-bdbb-4707-b244-a6dbf30507bf"
+              }
+            ],
+            "uuid": "47b7696b-ec92-485a-a696-61e4d7d9a123"
+          }
+        ],
+        "uuid": "6a32aa06-ef68-448d-ab8e-7e6d4f407e2f"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "NS Customer Internal ID"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Contact Email"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "# Contacts Found"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_service.receive_request.request.ns_customer_internal_id')}",
+      "custom_column_2": "#{_('data.workato_service.receive_request.request.ns_contact_email')}",
+      "custom_column_3": "=_('data.workato_list.accumulate_list_items.list_items.first.____Size', 'list_meta', '____Size', 'data.workato_list.accumulate_list_items.list_items')>0 ? _('data.workato_list.accumulate_list_items.list_items.first.____Size', 'list_meta', '____Size', 'data.workato_list.accumulate_list_items.list_items') : _('data.netsuite.search_object_v2.Contacts.first.____Size', 'list_meta', '____Size', 'data.netsuite.search_object_v2.Contacts')"
+    },
+    "uuid": "7ce17c7f-36de-4ece-9a37-ef8fa04c9fb1"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "netsuite",
+      "account_id": {
+        "zip_name": "resources/netsuite.connection.json",
+        "name": "NetSuite",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_list",
+      "account_id": null
+    }
+  ]
+}

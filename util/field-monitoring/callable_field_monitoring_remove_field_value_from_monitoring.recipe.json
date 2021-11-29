@@ -1,0 +1,532 @@
+{
+  "name": "Callable - Field Monitoring - Remove Field Value from Monitoring",
+  "description": "When there is a trigger event, do action",
+  "version": 4,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "1eb5ffe8",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">Callable - Field Monitoring - Remove Field Value from Monitoring</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "service_name": "Callable - Field Monitoring - Remove Field Value from Monitoring",
+      "request_schema_json": "[{\"properties\":[{\"control_type\":\"text\",\"label\":\"System Name\",\"name\":\"system_name\",\"hint\":\"Name of the System (i.e. salesforce, netsuite, workday, etc\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Object ID\",\"name\":\"object_id\",\"hint\":\"Unique Identifier of the object within the system that is being monitoried (i.e. for Salesforce, this would be the Record Id of the object)\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Field Name\",\"name\":\"field_name\",\"hint\":\"Name of the Field (i.e. if monitoring the Account name in Salesforce, the field name would be 'name')\",\"type\":\"string\",\"optional\":false}],\"label\":\"Field Definition\",\"name\":\"field_definition\",\"type\":\"object\",\"hint\":\"The system_name, object_id, and field_name will be used as primary keys to uniquely identify the value being monitored.\",\"optional\":false}]",
+      "reply_schema_json": "[{\"control_type\":\"checkbox\",\"label\":\"Field Previously Monitored?\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Field Being Monitored?\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"name\":\"was_field_being_monitored\",\"hint\":\"Indicates whether the field was present in the field_monitoring database\",\"type\":\"boolean\",\"optional\":false},\"name\":\"was_field_previously_monitored\",\"hint\":\"Indicates whether the field was present in the field_monitoring database\",\"type\":\"boolean\",\"optional\":false},{\"control_type\":\"checkbox\",\"label\":\"Field Upserted to Database for future change checks?\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Field Removed from Database?\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"name\":\"was_field_removed_from_monitoring_database\",\"type\":\"boolean\",\"optional\":false,\"hint\":\"Indicates whether the specified was upserted into the monitoring database for future change checks.\"},\"name\":\"was_field_removed_from_monitoring_database\",\"type\":\"boolean\",\"optional\":false,\"hint\":\"Indicates whether the specified was removed from the monitoring database.\"}]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "System Name",
+                "name": "system_name",
+                "hint": "Name of the System (i.e. salesforce, netsuite, workday, etc",
+                "type": "string",
+                "optional": false
+              },
+              {
+                "control_type": "text",
+                "label": "Object ID",
+                "name": "object_id",
+                "hint": "Unique Identifier of the object within the system that is being monitoried (i.e. for Salesforce, this would be the Record Id of the object)",
+                "type": "string",
+                "optional": false
+              },
+              {
+                "control_type": "text",
+                "label": "Field Name",
+                "name": "field_name",
+                "hint": "Name of the Field (i.e. if monitoring the Account name in Salesforce, the field name would be 'name')",
+                "type": "string",
+                "optional": false
+              }
+            ],
+            "label": "Field Definition",
+            "name": "field_definition",
+            "type": "object",
+            "hint": "The system_name, object_id, and field_name will be used as primary keys to uniquely identify the value being monitored.",
+            "optional": false
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "workato_variable",
+        "name": "declare_variable",
+        "as": "3fa2b27a",
+        "title": "Create variable result_wasValueRemoved",
+        "description": "Create variable <span class=\"provider\">result_wasValueRemoved</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+          "value": true
+        },
+        "input": {
+          "type": "boolean",
+          "name": "result_wasValueRemoved",
+          "value": "false"
+        },
+        "extended_output_schema": [
+          {
+            "type": "boolean",
+            "name": "value",
+            "control_type": "checkbox",
+            "label": "result_wasValueRemoved",
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "result_wasValueRemoved",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "type": "boolean",
+              "name": "value"
+            },
+            "render_input": {
+            },
+            "parse_output": {
+            }
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "boolean",
+            "name": "value",
+            "control_type": "checkbox",
+            "label": "Default value",
+            "hint": "Default value for the variable",
+            "sticky": true,
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Default value",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "hint": "Default value for the variable",
+              "strip_interpolation": true,
+              "sticky": true,
+              "optional": true,
+              "type": "boolean",
+              "name": "value"
+            },
+            "render_input": {
+            },
+            "parse_output": {
+            },
+            "strip_interpolation": true
+          }
+        ],
+        "uuid": "f939a6cc-895d-40f2-999b-667d172fe4f4"
+      },
+      {
+        "number": 2,
+        "provider": "workato_variable",
+        "name": "declare_variable",
+        "as": "042973d8",
+        "title": "Create variable result_wasValuePreviouslyMonitored",
+        "description": "Create variable <span class=\"provider\">result_wasValuePreviouslyMonitored</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+          "value": true
+        },
+        "input": {
+          "type": "boolean",
+          "name": "result_wasValuePreviouslyMonitored",
+          "value": "false"
+        },
+        "extended_output_schema": [
+          {
+            "type": "boolean",
+            "name": "value",
+            "control_type": "checkbox",
+            "label": "result_wasValuePreviouslyMonitored",
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "result_wasValuePreviouslyMonitored",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "type": "boolean",
+              "name": "value"
+            },
+            "render_input": {
+            },
+            "parse_output": {
+            }
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "boolean",
+            "name": "value",
+            "control_type": "checkbox",
+            "label": "Default value",
+            "hint": "Default value for the variable",
+            "sticky": true,
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Default value",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "hint": "Default value for the variable",
+              "strip_interpolation": true,
+              "sticky": true,
+              "optional": true,
+              "type": "boolean",
+              "name": "value"
+            },
+            "render_input": {
+            },
+            "parse_output": {
+            },
+            "strip_interpolation": true
+          }
+        ],
+        "uuid": "a5a2127c-7dc7-4bd5-8eb2-4eb650760370"
+      },
+      {
+        "number": 3,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 4,
+            "provider": "mysql",
+            "name": "delete_rows",
+            "as": "8d6106dd",
+            "title": "Delete rows in field_monitoring",
+            "description": "Delete <span class=\"provider\">rows</span> in <span class=\"provider\">field_monitoring</span> table in <span class=\"provider\">MySQL</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "table": "field_monitoring"
+            },
+            "toggleCfg": {
+              "table": true
+            },
+            "input": {
+              "table": "field_monitoring",
+              "where": "system_name='#{_('data.workato_service.1eb5ffe8.request.field_definition.system_name')}' AND object_id='#{_('data.workato_service.1eb5ffe8.request.field_definition.object_id')}' AND field_name='#{_('data.workato_service.1eb5ffe8.request.field_definition.field_name')}'"
+            },
+            "comment": "See if the value was previously being monitored.",
+            "uuid": "ea14ab34-9b20-489e-b057-087840f35bc5"
+          },
+          {
+            "number": 5,
+            "provider": "workato_variable",
+            "name": "update_variable",
+            "as": "3af8dc9e",
+            "title": "Update variable result_wasValueRemoved",
+            "description": "Update variable <span class=\"provider\">result_wasValueRemoved</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "name": "result_wasValueUpserted (step 4)"
+            },
+            "toggleCfg": {
+              "value": true
+            },
+            "input": {
+              "name": "f939a6cc-895d-40f2-999b-667d172fe4f4:3fa2b27a",
+              "value": "true"
+            },
+            "extended_input_schema": [
+              {
+                "type": "boolean",
+                "name": "value",
+                "control_type": "checkbox",
+                "label": "Value",
+                "hint": "Provide value for the variable",
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Value",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "hint": "Provide value for the variable",
+                  "strip_interpolation": true,
+                  "type": "boolean",
+                  "name": "value"
+                },
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "strip_interpolation": true
+              }
+            ],
+            "comment": "no error? then YES",
+            "uuid": "79231476-e35b-449d-bfb2-fe33c73a68bd"
+          },
+          {
+            "number": 6,
+            "provider": "workato_variable",
+            "name": "update_variable",
+            "as": "689f2a62",
+            "title": "Update variable result_wasValuePreviouslyMonitored",
+            "description": "Update variable <span class=\"provider\">result_wasValuePreviouslyMonitored</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "name": "result_wasValuePreviouslyMonitored (step 2)"
+            },
+            "toggleCfg": {
+              "value": false
+            },
+            "input": {
+              "name": "a5a2127c-7dc7-4bd5-8eb2-4eb650760370:042973d8",
+              "value": "=(_('data.mysql.8d6106dd.rows_deleted').present? && _('data.mysql.8d6106dd.rows_deleted')>0) ? \"true\" : \"false\""
+            },
+            "extended_input_schema": [
+              {
+                "type": "boolean",
+                "name": "value",
+                "control_type": "checkbox",
+                "label": "Value",
+                "hint": "Provide value for the variable",
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Value",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "hint": "Provide value for the variable",
+                  "strip_interpolation": true,
+                  "type": "boolean",
+                  "name": "value"
+                },
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "strip_interpolation": true
+              }
+            ],
+            "uuid": "59fe9f99-6ddd-48e1-a6e3-ae60bc8b7582"
+          },
+          {
+            "number": 7,
+            "provider": "workato_service",
+            "name": "send_reply",
+            "as": "2c9cee2f",
+            "title": null,
+            "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Callable - Field Monitoring - Remove Field Value from Monitoring</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+              "reply.was_field_upserted_to_monitoring_database": false,
+              "reply.was_field_removed_from_monitoring_database": false
+            },
+            "input": {
+              "reply_type": "success",
+              "reply": {
+                "was_field_being_monitored": "#{_('data.workato_variable.042973d8.value')}",
+                "was_field_removed_from_monitoring_database": "#{_('data.workato_variable.3fa2b27a.value')}"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "reply",
+                "label": "Reply",
+                "properties": [
+                  {
+                    "control_type": "checkbox",
+                    "label": "Field Previously Monitored?",
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Field Being Monitored?",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "name": "was_field_being_monitored",
+                      "hint": "Indicates whether the field was present in the field_monitoring database",
+                      "type": "boolean",
+                      "optional": false,
+                      "parent": "reply"
+                    },
+                    "name": "was_field_previously_monitored",
+                    "hint": "Indicates whether the field was present in the field_monitoring database",
+                    "type": "boolean",
+                    "optional": false,
+                    "parent": "reply"
+                  },
+                  {
+                    "control_type": "checkbox",
+                    "label": "Field Upserted to Database for future change checks?",
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Field Removed from Database?",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "name": "was_field_removed_from_monitoring_database",
+                      "type": "boolean",
+                      "optional": false,
+                      "hint": "Indicates whether the specified was upserted into the monitoring database for future change checks.",
+                      "parent": "reply"
+                    },
+                    "name": "was_field_removed_from_monitoring_database",
+                    "type": "boolean",
+                    "optional": false,
+                    "hint": "Indicates whether the specified was removed from the monitoring database.",
+                    "parent": "reply"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "reply_type",
+              "reply.field_last_updated"
+            ],
+            "uuid": "4af2bdf4-308a-4d1f-96e8-108cbb336c06"
+          },
+          {
+            "number": 8,
+            "as": "2f73bf05",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "0",
+              "retry_interval": "2"
+            },
+            "block": [
+              {
+                "number": 9,
+                "provider": "workato_service",
+                "name": "send_reply",
+                "as": "43ba49f1",
+                "title": null,
+                "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Callable - Field Monitoring - Remove Field Value from Monitoring</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "reply_type": "error",
+                  "message": "#{_('data.catch.2f73bf05.message')}"
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "string",
+                    "name": "message",
+                    "control_type": "text",
+                    "label": "Message",
+                    "hint": "Error message"
+                  },
+                  {
+                    "type": "string",
+                    "name": "code",
+                    "control_type": "text",
+                    "label": "Error code",
+                    "hint": "Use this field to set custom HTTP error code for service replies. E.g: 404/422 etc. This field is applicable to REST service recipes.",
+                    "optional": true
+                  },
+                  {
+                    "type": "boolean",
+                    "name": "custom_error_response",
+                    "control_type": "checkbox",
+                    "label": "Custom error response?",
+                    "hint": "By default, Workato sends 'reply_type' and 'message' fields in response. When set to 'Yes', the content of the 'Message' field is sent as response body. This field is applicable to REST service recipes.",
+                    "optional": true,
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Custom error response?",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "optional": true,
+                      "hint": "By default, Workato sends 'reply_type' and 'message' fields in response. When set to 'Yes', the content of the 'Message' field is sent as response body. This field is applicable to REST service recipes.",
+                      "type": "boolean",
+                      "name": "custom_error_response"
+                    },
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    }
+                  }
+                ],
+                "comment": "Return pretty error from callable recipe.",
+                "uuid": "5c3ed8cb-05dc-4bfd-83b2-028119ccef51"
+              }
+            ],
+            "uuid": "ad55da04-9942-4471-8dc7-f1bf0a917568"
+          }
+        ],
+        "uuid": "41668fef-9a9d-40bd-accb-0cb294384f76"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "System / Object ID / Field"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Field Monitored?"
+      },
+      {
+        "name": "custom_column_4",
+        "label": "Field Removed?"
+      },
+      {
+        "name": "custom_column_5",
+        "label": "Notes"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_service.1eb5ffe8.request.field_definition.system_name')} /  #{_('data.workato_service.1eb5ffe8.request.field_definition.object_id')} / #{_('data.workato_service.1eb5ffe8.request.field_definition.field_name')}",
+      "custom_column_2": "#{_('data.workato_variable.042973d8.value')}",
+      "custom_column_4": "#{_('data.workato_variable.3fa2b27a.value')}",
+      "custom_column_5": "=_('data.catch.2f73bf05.message').present? ? (\"Error: \"+_('data.catch.2f73bf05.message')) : \"\""
+    },
+    "uuid": "033149b7-ac1f-466d-bd91-655344a9cf47"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "mysql",
+      "account_id": {
+        "zip_name": "resources/mysql.connection.json",
+        "name": "MySQL",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "account_id": null
+    }
+  ]
+}

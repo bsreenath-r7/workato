@@ -1,0 +1,254 @@
+{
+  "name": "Callable Recipe  Dm Opp Owner and Manager when OM status is changed to Rejected",
+  "description": "When there is a new/updated object in Salesforce, do action",
+  "version": 4,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "72e2c798",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">Callable recipe when opportunity review status is rejected</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+      "rest_enabled": true
+    },
+    "input": {
+      "rest_enabled": "false",
+      "service_name": "Callable recipe when opportunity review status is rejected",
+      "request_schema_json": "[{\"name\":\"Id\",\"type\":\"string\",\"optional\":false,\"hint\":\"\",\"control_type\":\"text\"}]",
+      "reply_schema_json": "[{\"name\":\"Response\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "ID",
+            "name": "Id",
+            "type": "string",
+            "optional": false,
+            "hint": ""
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "aws_lambda",
+            "name": "invoke_function",
+            "as": "bf41d8c2",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "FunctionName": "workato_slackOppDM_2"
+            },
+            "toggleCfg": {
+              "list_item.data.om": true
+            },
+            "input": {
+              "FunctionName": "workato_slackOppDM_2",
+              "list_item": {
+                "schema": "[{\"name\":\"om\",\"type\":\"string\",\"optional\":true,\"label\":\"om\",\"control_type\":\"text\"},{\"name\":\"opportunity_id\",\"type\":\"string\",\"optional\":true,\"label\":\"opportunity_id\",\"control_type\":\"text\"}]",
+                "data": {
+                  "om": "True",
+                  "opportunity_id": "#{_('data.workato_service.72e2c798.request.Id')}"
+                }
+              },
+              "output_schema": "[{\"name\":\"response\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]",
+              "InvocationType": "RequestResponse"
+            },
+            "extended_output_schema": [
+              {
+                "type": "string",
+                "name": "response",
+                "control_type": "text",
+                "label": "Response",
+                "optional": false
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "list_item",
+                "control_type": "form-schema-builder",
+                "label": "Function input",
+                "sticky": true,
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Schema",
+                    "sticky": true,
+                    "extends_schema": true,
+                    "optional": true,
+                    "type": "string",
+                    "name": "schema",
+                    "parent": "list_item"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "om",
+                        "optional": true,
+                        "type": "string",
+                        "name": "om",
+                        "parent": "list_item.data"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "opportunity_id",
+                        "optional": true,
+                        "type": "string",
+                        "name": "opportunity_id",
+                        "parent": "list_item.data"
+                      }
+                    ],
+                    "label": "Data",
+                    "sticky": true,
+                    "optional": true,
+                    "type": "object",
+                    "name": "data",
+                    "parent": "list_item"
+                  }
+                ],
+                "override": true
+              },
+              {
+                "type": "string",
+                "name": "InvocationType",
+                "control_type": "select",
+                "label": "Invocation type",
+                "hint": "If Asynchrounous event is selected, no response will be received.",
+                "sticky": true,
+                "pick_list": [
+                  [
+                    "RequestResponse",
+                    "RequestResponse"
+                  ],
+                  [
+                    "Asynchronous event",
+                    "Event"
+                  ]
+                ],
+                "optional": true
+              },
+              {
+                "type": "string",
+                "name": "Client_Context",
+                "control_type": "text-area",
+                "label": "Client context",
+                "hint": "Used to pass client-specific information to the lambda function. Enter in JSON format",
+                "optional": true
+              }
+            ],
+            "visible_config_fields": [
+              "FunctionName",
+              "list_item",
+              "list_item.schema",
+              "list_item.data",
+              "output_schema",
+              "InvocationType",
+              "list_item.data.om",
+              "list_item.data.opportunity_id"
+            ],
+            "uuid": "3e2388ed-b00e-4ab9-b7d1-b5c86e72470d"
+          },
+          {
+            "number": 3,
+            "provider": "logger",
+            "name": "log_message",
+            "as": "e67e3b76",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "message": "Response from Opportunity OM is: #{_('data.aws_lambda.bf41d8c2.response')}"
+            },
+            "uuid": "b7a1e72e-24e0-49ce-b4a7-ca5baa71f68d"
+          },
+          {
+            "number": 4,
+            "as": "catch",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "0",
+              "retry_interval": "2"
+            },
+            "block": [
+              {
+                "number": 5,
+                "provider": "logger",
+                "name": "log_message",
+                "as": "log_message",
+                "title": null,
+                "description": null,
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "message": "#{_('data.catch.catch.message')}"
+                },
+                "uuid": "5a895439-ddc3-4543-b468-ad61bf321f76"
+              }
+            ],
+            "uuid": "756b14ca-42dd-4fd5-8bac-452a649f239d"
+          }
+        ],
+        "uuid": "4b284adb-8996-4b14-8ca2-48bba9790b52"
+      }
+    ],
+    "uuid": "7147111e-c189-49ac-949f-02bd01ef935c"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "logger",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "aws_lambda",
+      "account_id": {
+        "zip_name": "resources/customer_summary_report.connection.json",
+        "name": "Customer Summary Report",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "account_id": null
+    }
+  ]
+}

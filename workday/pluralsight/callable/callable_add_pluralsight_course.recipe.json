@@ -1,0 +1,2853 @@
+{
+  "name": "Callable - Add Pluralsight Course",
+  "description": "When there is a trigger event, do action",
+  "version": 23,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "a25ad783",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">Callable - Add Pluralsight Course</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "service_name": "Callable - Add Pluralsight Course",
+      "request_schema_json": "[{\"name\":\"id\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"title\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"description\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"duration_in_seconds\",\"type\":\"integer\",\"optional\":false,\"control_type\":\"integer\"},{\"name\":\"row_number\",\"type\":\"string\",\"optional\":true,\"control_type\":\"text\"}]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "ID",
+            "name": "id",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Title",
+            "name": "title",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Description",
+            "name": "description",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "integer",
+            "label": "Duration in seconds",
+            "parse_output": "integer_conversion",
+            "name": "duration_in_seconds",
+            "type": "integer",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Row number",
+            "name": "row_number",
+            "type": "string",
+            "optional": true
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "workday",
+            "name": "call_operation",
+            "as": "076549ef",
+            "title": null,
+            "description": "<span class=\"provider\">Manage Learning Course</span> in <span class=\"provider\">Workday</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "web_service": "Manage Learning Course"
+            },
+            "toggleCfg": {
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Make_Lesson_Mandatory": true
+            },
+            "input": {
+              "web_service": "Learning/Manage_Learning_Course/Manage_Learning_Course_Request/Manage_Learning_Course_Response",
+              "Manage_Learning_Course_Data": {
+                "Put_Learning_Digital_Course_Request": {
+                  "Learning_Digital_Course_Data": {
+                    "Course_Title": "#{_('data.workato_service.a25ad783.request.title')}",
+                    "Description": "#{_('data.workato_service.a25ad783.request.description')}",
+                    "Total_Course_Duration": "=_('data.workato_service.a25ad783.request.duration_in_seconds')<10800 ? (_('data.workato_service.a25ad783.request.duration_in_seconds')/60).round(0)+1 : (_('data.workato_service.a25ad783.request.duration_in_seconds')/3600).round(0)+(_('data.workato_service.a25ad783.request.duration_in_seconds')%3600>0 ? 1 : 0 )",
+                    "Course_Lesson_Data": {
+                      "External_Content_Lesson_Data": {
+                        "External_Content_URL": "http://app.pluralsight.com/sso/rapid7?returnUrl=courses/#{_('data.workato_service.a25ad783.request.id')}",
+                        "Learning_Course_Lesson_Title": "#{_('data.workato_service.a25ad783.request.title')}"
+                      },
+                      "Make_Lesson_Mandatory": "true",
+                      "Lesson_Order": "1"
+                    },
+                    "Topic_Reference": "=lookup(\"WORKDAY_VARIABLES\", key: \"learning.topic.pluralsight.wid\")[\"value\"]",
+                    "Registrable_Status_Reference": "=lookup(\"WORKDAY_VARIABLES\", key:\"learning.registrable_status.default.wid\")[\"value\"]",
+                    "Time_Value_Reference": "=_('data.workato_service.a25ad783.request.duration_in_seconds')<10800 ? lookup(\"WORKDAY_VARIABLES\", key:\"learning.time_value_reference.minutes.wid\")[\"value\"] : lookup(\"WORKDAY_VARIABLES\", key:\"learning.time_value_reference.hours.wid\")[\"value\"]"
+                  }
+                }
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "string",
+                "name": "Course_Event_Reference_IID",
+                "control_type": "text",
+                "label": "Course event reference (IID)",
+                "sticky": false,
+                "optional": true
+              },
+              {
+                "type": "string",
+                "name": "Course_Event_Reference_WID",
+                "control_type": "text",
+                "label": "Course event reference (WID)",
+                "sticky": false,
+                "optional": true
+              },
+              {
+                "type": "string",
+                "name": "Course_Event_Reference",
+                "control_type": "text",
+                "label": "Course event reference",
+                "sticky": false,
+                "optional": true
+              },
+              {
+                "type": "string",
+                "name": "Course_Reference_WID",
+                "control_type": "text",
+                "label": "Course reference (WID)",
+                "sticky": false,
+                "optional": true
+              },
+              {
+                "type": "string",
+                "name": "Course_Reference_Learning_Course",
+                "control_type": "text",
+                "label": "Course reference (Learning_Course)",
+                "sticky": false,
+                "optional": true
+              },
+              {
+                "type": "string",
+                "name": "Course_Reference_Learning_Course_ID",
+                "control_type": "text",
+                "label": "Course reference (Learning_Course_ID)",
+                "sticky": false,
+                "optional": true
+              },
+              {
+                "type": "string",
+                "name": "Course_Reference",
+                "control_type": "text",
+                "label": "Course reference",
+                "sticky": false,
+                "optional": true
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "Manage_Learning_Course_Data",
+                "label": "Manage learning course data",
+                "hint": "Contains all the request data to add or update learning courses.",
+                "sticky": true,
+                "optional": true,
+                "properties": [
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Learning blended course reference",
+                        "sticky": false,
+                        "optional": true,
+                        "type": "string",
+                        "name": "Learning_Blended_Course_Reference",
+                        "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "ID",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "string",
+                            "name": "ID",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "date",
+                            "label": "Effective date",
+                            "render_input": "date_conversion",
+                            "parse_output": "date_conversion",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "date_time",
+                            "name": "Effective_Date",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Version label",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "string",
+                            "name": "Version_Label",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Version notes",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "string",
+                            "name": "Version_Notes",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Inactive",
+                            "render_input": "boolean_conversion",
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Inactive",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "render_input": "boolean_conversion",
+                              "render_output": "boolean_conversion",
+                              "sticky": false,
+                              "optional": true,
+                              "type": "boolean",
+                              "name": "Inactive",
+                              "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                            },
+                            "render_output": "boolean_conversion",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "boolean",
+                            "name": "Inactive",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Course title",
+                            "sticky": true,
+                            "optional": true,
+                            "type": "string",
+                            "name": "Course_Title",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Skill level reference",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "string",
+                            "name": "Skill_Level_Reference",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Description",
+                            "sticky": true,
+                            "optional": true,
+                            "type": "string",
+                            "name": "Description",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Course number",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "string",
+                            "name": "Course_Number",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Topic reference",
+                            "sticky": true,
+                            "hint": "This field accepts single or multiple IDs. You can provide multiple IDs separated by a comma or array of IDs(in formula mode).",
+                            "optional": true,
+                            "type": "string",
+                            "name": "Topic_Reference",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Language reference",
+                            "sticky": false,
+                            "hint": "This field accepts single or multiple IDs. You can provide multiple IDs separated by a comma or array of IDs(in formula mode).",
+                            "optional": true,
+                            "type": "string",
+                            "name": "Language_Reference",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Security category reference",
+                            "sticky": false,
+                            "hint": "This field accepts single or multiple IDs. You can provide multiple IDs separated by a comma or array of IDs(in formula mode).",
+                            "optional": true,
+                            "type": "string",
+                            "name": "Security_Category_Reference",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Registrable status reference",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "string",
+                            "name": "Registrable_Status_Reference",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "On demand",
+                            "render_input": "boolean_conversion",
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "On demand",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "render_input": "boolean_conversion",
+                              "render_output": "boolean_conversion",
+                              "sticky": false,
+                              "optional": true,
+                              "type": "boolean",
+                              "name": "On_Demand",
+                              "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                            },
+                            "render_output": "boolean_conversion",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "boolean",
+                            "name": "On_Demand",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Minimum enrollment capacity",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "string",
+                            "name": "Minimum_Enrollment_Capacity",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Maximum enrollment capacity",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "string",
+                            "name": "Maximum_Enrollment_Capacity",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Waitlist capacity",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "string",
+                            "name": "Waitlist_Capacity",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Unlimited capacity",
+                            "render_input": "boolean_conversion",
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Unlimited capacity",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "render_input": "boolean_conversion",
+                              "render_output": "boolean_conversion",
+                              "sticky": false,
+                              "optional": true,
+                              "type": "boolean",
+                              "name": "Unlimited_Capacity",
+                              "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                            },
+                            "render_output": "boolean_conversion",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "boolean",
+                            "name": "Unlimited_Capacity",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Learning expiration rule order",
+                                "sticky": true,
+                                "optional": true,
+                                "type": "string",
+                                "name": "Learning_Expiration_Rule_Order",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Advanced_Expiration_Rules"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Learner group rule reference",
+                                "sticky": true,
+                                "optional": true,
+                                "type": "string",
+                                "name": "Learner_Group_Rule_Reference",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Advanced_Expiration_Rules"
+                              },
+                              {
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "Format reference",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Format_Reference",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Advanced_Expiration_Rules.Expiration_Duration"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Value",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Value",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Advanced_Expiration_Rules.Expiration_Duration"
+                                  }
+                                ],
+                                "label": "Expiration duration",
+                                "sticky": false,
+                                "hint": "Contains a course expiry period that is relative to the date a learner successfully completes this course.",
+                                "optional": true,
+                                "type": "object",
+                                "name": "Expiration_Duration",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Advanced_Expiration_Rules"
+                              },
+                              {
+                                "control_type": "date",
+                                "label": "Expiration date",
+                                "render_input": "date_conversion",
+                                "parse_output": "date_conversion",
+                                "sticky": false,
+                                "optional": true,
+                                "type": "date_time",
+                                "name": "Expiration_Date",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Advanced_Expiration_Rules"
+                              }
+                            ],
+                            "label": "Advanced expiration rules",
+                            "sticky": false,
+                            "hint": "Contains an advanced expiration rule that will apply a custom expiration date/duration to specific learning enrollment",
+                            "optional": true,
+                            "type": "object",
+                            "name": "Advanced_Expiration_Rules",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Other unit type reference",
+                                "sticky": true,
+                                "optional": true,
+                                "type": "string",
+                                "name": "Other_Unit_Type_Reference",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Learning_Other_Unit_Type_Data"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Other unit value",
+                                "sticky": true,
+                                "optional": true,
+                                "type": "string",
+                                "name": "Other_Unit_Value",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Learning_Other_Unit_Type_Data"
+                              }
+                            ],
+                            "label": "Learning other unit type data",
+                            "sticky": false,
+                            "hint": "Contains data for Other Unit Type values for the course.",
+                            "optional": true,
+                            "type": "object",
+                            "name": "Learning_Other_Unit_Type_Data",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Sales item reference",
+                            "sticky": false,
+                            "hint": "This field accepts single or multiple IDs. You can provide multiple IDs separated by a comma or array of IDs(in formula mode).",
+                            "optional": true,
+                            "type": "string",
+                            "name": "Sales_Item_Reference",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Competency reference",
+                            "sticky": false,
+                            "hint": "This field accepts single or multiple IDs. You can provide multiple IDs separated by a comma or array of IDs(in formula mode).",
+                            "optional": true,
+                            "type": "string",
+                            "name": "Competency_Reference",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Skill reference",
+                            "sticky": false,
+                            "hint": "This field accepts single or multiple IDs. You can provide multiple IDs separated by a comma or array of IDs(in formula mode).",
+                            "optional": true,
+                            "type": "string",
+                            "name": "Skill_Reference",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "select",
+                            "label": "Contact person reference employee ID",
+                            "sticky": false,
+                            "pick_list_params": {
+                              "obj_type": "\"Employee_ID\""
+                            },
+                            "pick_list": "objects",
+                            "toggle_hint": "Pick value from a list",
+                            "toggle_field": {
+                              "name": "Contact_Person_Reference_Employee_ID",
+                              "label": "Contact person reference employee ID",
+                              "toggle_hint": "Enter custom value",
+                              "type": "string",
+                              "control_type": "text",
+                              "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                            },
+                            "optional": true,
+                            "type": "string",
+                            "name": "Contact_Person_Reference_Employee_ID",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Time value reference",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "string",
+                            "name": "Time_Value_Reference",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Total course duration",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "string",
+                            "name": "Total_Course_Duration",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Enable auto enrollment from waitlist",
+                            "render_input": "boolean_conversion",
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Enable auto enrollment from waitlist",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "render_input": "boolean_conversion",
+                              "render_output": "boolean_conversion",
+                              "sticky": false,
+                              "optional": true,
+                              "type": "boolean",
+                              "name": "Enable_Auto_Enrollment_from_Waitlist",
+                              "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                            },
+                            "render_output": "boolean_conversion",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "boolean",
+                            "name": "Enable_Auto_Enrollment_from_Waitlist",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Learning image reference",
+                                "sticky": false,
+                                "optional": true,
+                                "type": "string",
+                                "name": "Learning_Image_Reference",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Image_Data"
+                              },
+                              {
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "Image ID",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Image_ID",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Image_Data.Learning_Image_Upload_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "File name",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "File_Name",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Image_Data.Learning_Image_Upload_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Content type",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Content_Type",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Image_Data.Learning_Image_Upload_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Image",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Image",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Image_Data.Learning_Image_Upload_Data"
+                                  }
+                                ],
+                                "label": "Learning image upload data",
+                                "sticky": false,
+                                "hint": "Contains the cover image for the learning item.",
+                                "optional": true,
+                                "type": "object",
+                                "name": "Learning_Image_Upload_Data",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Image_Data"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Workdrive document content reference",
+                                "sticky": false,
+                                "optional": true,
+                                "type": "string",
+                                "name": "Workdrive_Document_Content_Reference",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Image_Data"
+                              }
+                            ],
+                            "label": "Course image data",
+                            "sticky": false,
+                            "hint": "Contains the cover image for the course.",
+                            "optional": true,
+                            "type": "object",
+                            "name": "Course_Image_Data",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Legacy course",
+                            "render_input": "boolean_conversion",
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Legacy course",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "render_input": "boolean_conversion",
+                              "render_output": "boolean_conversion",
+                              "sticky": false,
+                              "optional": true,
+                              "type": "boolean",
+                              "name": "Legacy_Course",
+                              "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                            },
+                            "render_output": "boolean_conversion",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "boolean",
+                            "name": "Legacy_Course",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Allowed instructor reference",
+                            "sticky": false,
+                            "hint": "This field accepts single or multiple IDs. You can provide multiple IDs separated by a comma or array of IDs(in formula mode).",
+                            "optional": true,
+                            "type": "string",
+                            "name": "Allowed_Instructor_Reference",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Allowed assessors reference",
+                            "sticky": false,
+                            "hint": "This field accepts single or multiple IDs. You can provide multiple IDs separated by a comma or array of IDs(in formula mode).",
+                            "optional": true,
+                            "type": "string",
+                            "name": "Allowed_Assessors_Reference",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Allowed location reference",
+                            "sticky": false,
+                            "hint": "This field accepts single or multiple IDs. You can provide multiple IDs separated by a comma or array of IDs(in formula mode).",
+                            "optional": true,
+                            "type": "string",
+                            "name": "Allowed_Location_Reference",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Exclude from recommendations",
+                            "render_input": "boolean_conversion",
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Exclude from recommendations",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "render_input": "boolean_conversion",
+                              "render_output": "boolean_conversion",
+                              "sticky": false,
+                              "optional": true,
+                              "type": "boolean",
+                              "name": "Exclude_from_Recommendations",
+                              "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                            },
+                            "render_output": "boolean_conversion",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "boolean",
+                            "name": "Exclude_from_Recommendations",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Lesson order",
+                                "sticky": true,
+                                "optional": true,
+                                "type": "string",
+                                "name": "Lesson_Order",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data"
+                              },
+                              {
+                                "control_type": "checkbox",
+                                "label": "Make lesson mandatory",
+                                "render_input": "boolean_conversion",
+                                "parse_output": {
+                                },
+                                "toggle_hint": "Select from option list",
+                                "toggle_field": {
+                                  "label": "Make lesson mandatory",
+                                  "control_type": "text",
+                                  "toggle_hint": "Use custom value",
+                                  "render_input": "boolean_conversion",
+                                  "render_output": "boolean_conversion",
+                                  "sticky": false,
+                                  "optional": true,
+                                  "type": "boolean",
+                                  "name": "Make_Lesson_Mandatory",
+                                  "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data"
+                                },
+                                "render_output": "boolean_conversion",
+                                "sticky": false,
+                                "optional": true,
+                                "type": "boolean",
+                                "name": "Make_Lesson_Mandatory",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data"
+                              },
+                              {
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "Title",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Title",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Instructor_Led_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Description",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Description",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Instructor_Led_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "checkbox",
+                                    "label": "Instructor led unit track attendance",
+                                    "render_input": "boolean_conversion",
+                                    "parse_output": {
+                                    },
+                                    "toggle_hint": "Select from option list",
+                                    "toggle_field": {
+                                      "label": "Instructor led unit track attendance",
+                                      "control_type": "text",
+                                      "toggle_hint": "Use custom value",
+                                      "render_input": "boolean_conversion",
+                                      "render_output": "boolean_conversion",
+                                      "sticky": false,
+                                      "optional": true,
+                                      "type": "boolean",
+                                      "name": "Instructor_Led_Unit_Track_Attendance",
+                                      "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Instructor_Led_Lesson_Data"
+                                    },
+                                    "render_output": "boolean_conversion",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "boolean",
+                                    "name": "Instructor_Led_Unit_Track_Attendance",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Instructor_Led_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "checkbox",
+                                    "label": "Instructor led unit track grades",
+                                    "render_input": "boolean_conversion",
+                                    "parse_output": {
+                                    },
+                                    "toggle_hint": "Select from option list",
+                                    "toggle_field": {
+                                      "label": "Instructor led unit track grades",
+                                      "control_type": "text",
+                                      "toggle_hint": "Use custom value",
+                                      "render_input": "boolean_conversion",
+                                      "render_output": "boolean_conversion",
+                                      "sticky": false,
+                                      "optional": true,
+                                      "type": "boolean",
+                                      "name": "Instructor_Led_Unit_Track_Grades",
+                                      "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Instructor_Led_Lesson_Data"
+                                    },
+                                    "render_output": "boolean_conversion",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "boolean",
+                                    "name": "Instructor_Led_Unit_Track_Grades",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Instructor_Led_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Learning grading scheme for learning course reference",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Learning_Grading_Scheme_for_Learning_Course_Reference",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Instructor_Led_Lesson_Data"
+                                  }
+                                ],
+                                "label": "Instructor led lesson data",
+                                "sticky": false,
+                                "hint": "Contains details of instructor-led classroom training lessons in the course.",
+                                "optional": true,
+                                "type": "object",
+                                "name": "Instructor_Led_Lesson_Data",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data"
+                              },
+                              {
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "Title",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Title",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Instructor_Led_Webinar_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "checkbox",
+                                    "label": "Webinar lesson unit track attendance",
+                                    "render_input": "boolean_conversion",
+                                    "parse_output": {
+                                    },
+                                    "toggle_hint": "Select from option list",
+                                    "toggle_field": {
+                                      "label": "Webinar lesson unit track attendance",
+                                      "control_type": "text",
+                                      "toggle_hint": "Use custom value",
+                                      "render_input": "boolean_conversion",
+                                      "render_output": "boolean_conversion",
+                                      "sticky": false,
+                                      "optional": true,
+                                      "type": "boolean",
+                                      "name": "Webinar_Lesson_Unit_Track_Attendance",
+                                      "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Instructor_Led_Webinar_Lesson_Data"
+                                    },
+                                    "render_output": "boolean_conversion",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "boolean",
+                                    "name": "Webinar_Lesson_Unit_Track_Attendance",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Instructor_Led_Webinar_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "checkbox",
+                                    "label": "Webinar lesson unit track grades",
+                                    "render_input": "boolean_conversion",
+                                    "parse_output": {
+                                    },
+                                    "toggle_hint": "Select from option list",
+                                    "toggle_field": {
+                                      "label": "Webinar lesson unit track grades",
+                                      "control_type": "text",
+                                      "toggle_hint": "Use custom value",
+                                      "render_input": "boolean_conversion",
+                                      "render_output": "boolean_conversion",
+                                      "sticky": false,
+                                      "optional": true,
+                                      "type": "boolean",
+                                      "name": "Webinar_Lesson_Unit_Track_Grades",
+                                      "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Instructor_Led_Webinar_Lesson_Data"
+                                    },
+                                    "render_output": "boolean_conversion",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "boolean",
+                                    "name": "Webinar_Lesson_Unit_Track_Grades",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Instructor_Led_Webinar_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Learning grading scheme for learning course reference",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Learning_Grading_Scheme_for_Learning_Course_Reference",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Instructor_Led_Webinar_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Description",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Description",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Instructor_Led_Webinar_Lesson_Data"
+                                  }
+                                ],
+                                "label": "Instructor led webinar lesson data",
+                                "sticky": false,
+                                "hint": "Contains details of instructor-led webinar lessons in the course.",
+                                "optional": true,
+                                "type": "object",
+                                "name": "Instructor_Led_Webinar_Lesson_Data",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data"
+                              },
+                              {
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "External content URL",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "External_Content_URL",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.External_Content_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Learning course lesson title",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Learning_Course_Lesson_Title",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.External_Content_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "External content description",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "External_Content_Description",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.External_Content_Lesson_Data"
+                                  }
+                                ],
+                                "label": "External content lesson data",
+                                "sticky": false,
+                                "hint": "Contains details about external-content lessons in the course.",
+                                "optional": true,
+                                "type": "object",
+                                "name": "External_Content_Lesson_Data",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data"
+                              },
+                              {
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "Learning course lesson title",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Learning_Course_Lesson_Title",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Media_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Media content description",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Media_Content_Description",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Media_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "checkbox",
+                                    "label": "Provide course grade",
+                                    "render_input": "boolean_conversion",
+                                    "parse_output": {
+                                    },
+                                    "toggle_hint": "Select from option list",
+                                    "toggle_field": {
+                                      "label": "Provide course grade",
+                                      "control_type": "text",
+                                      "toggle_hint": "Use custom value",
+                                      "render_input": "boolean_conversion",
+                                      "render_output": "boolean_conversion",
+                                      "sticky": false,
+                                      "optional": true,
+                                      "type": "boolean",
+                                      "name": "Provide_Course_Grade",
+                                      "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Media_Lesson_Data"
+                                    },
+                                    "render_output": "boolean_conversion",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "boolean",
+                                    "name": "Provide_Course_Grade",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Media_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Media reference",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Media_Reference",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Media_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Learning workdrive content reference",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Learning_Workdrive_Content_Reference",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Media_Lesson_Data"
+                                  }
+                                ],
+                                "label": "Media lesson data",
+                                "sticky": false,
+                                "hint": "Contains details about media lessons in the course.",
+                                "optional": true,
+                                "type": "object",
+                                "name": "Media_Lesson_Data",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data"
+                              },
+                              {
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "Survey reference",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Survey_Reference",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Survey_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Description",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Description",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Survey_Lesson_Data"
+                                  }
+                                ],
+                                "label": "Survey lesson data",
+                                "sticky": false,
+                                "hint": "Contains details about the survey lessons in the course.",
+                                "optional": true,
+                                "type": "object",
+                                "name": "Survey_Lesson_Data",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data"
+                              },
+                              {
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "Learning course lesson title",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Learning_Course_Lesson_Title",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data"
+                                  },
+                                  {
+                                    "properties": [
+                                      {
+                                        "control_type": "text",
+                                        "label": "Filename",
+                                        "sticky": false,
+                                        "optional": true,
+                                        "type": "string",
+                                        "name": "Filename",
+                                        "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data.Materials"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "File content",
+                                        "sticky": false,
+                                        "optional": true,
+                                        "type": "string",
+                                        "name": "File_Content",
+                                        "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data.Materials"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Comment",
+                                        "sticky": false,
+                                        "optional": true,
+                                        "type": "string",
+                                        "name": "Comment",
+                                        "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data.Materials"
+                                      }
+                                    ],
+                                    "label": "Materials",
+                                    "sticky": false,
+                                    "hint": "Learning Training Activity Attachment Data for Web Services.",
+                                    "optional": true,
+                                    "type": "object",
+                                    "name": "Materials",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "checkbox",
+                                    "label": "Training activity unit track attendance",
+                                    "render_input": "boolean_conversion",
+                                    "parse_output": {
+                                    },
+                                    "toggle_hint": "Select from option list",
+                                    "toggle_field": {
+                                      "label": "Training activity unit track attendance",
+                                      "control_type": "text",
+                                      "toggle_hint": "Use custom value",
+                                      "render_input": "boolean_conversion",
+                                      "render_output": "boolean_conversion",
+                                      "sticky": false,
+                                      "optional": true,
+                                      "type": "boolean",
+                                      "name": "Training_Activity_Unit_Track_Attendance",
+                                      "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data"
+                                    },
+                                    "render_output": "boolean_conversion",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "boolean",
+                                    "name": "Training_Activity_Unit_Track_Attendance",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "checkbox",
+                                    "label": "Training activity unit track grades",
+                                    "render_input": "boolean_conversion",
+                                    "parse_output": {
+                                    },
+                                    "toggle_hint": "Select from option list",
+                                    "toggle_field": {
+                                      "label": "Training activity unit track grades",
+                                      "control_type": "text",
+                                      "toggle_hint": "Use custom value",
+                                      "render_input": "boolean_conversion",
+                                      "render_output": "boolean_conversion",
+                                      "sticky": false,
+                                      "optional": true,
+                                      "type": "boolean",
+                                      "name": "Training_Activity_Unit_Track_Grades",
+                                      "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data"
+                                    },
+                                    "render_output": "boolean_conversion",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "boolean",
+                                    "name": "Training_Activity_Unit_Track_Grades",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Learning grading scheme reference",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Learning_Grading_Scheme_Reference",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Learning training activity type reference",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Learning_Training_Activity_Type_Reference",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Description",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Description",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data"
+                                  }
+                                ],
+                                "label": "Training activity lesson data",
+                                "sticky": false,
+                                "hint": "Contains details about the Training Activity lessons in the course.",
+                                "optional": true,
+                                "type": "object",
+                                "name": "Training_Activity_Lesson_Data",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data"
+                              }
+                            ],
+                            "label": "Course lesson data",
+                            "sticky": false,
+                            "hint": "Contains information about the lessons on the course.",
+                            "optional": true,
+                            "type": "object",
+                            "name": "Course_Lesson_Data",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "control_type": "date",
+                            "label": "Expiration date",
+                            "render_input": "date_conversion",
+                            "parse_output": "date_conversion",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "date_time",
+                            "name": "Expiration_Date",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Format reference",
+                                "sticky": true,
+                                "optional": true,
+                                "type": "string",
+                                "name": "Format_Reference",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Expiration_Duration"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Value",
+                                "sticky": true,
+                                "optional": true,
+                                "type": "string",
+                                "name": "Value",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Expiration_Duration"
+                              }
+                            ],
+                            "label": "Expiration duration",
+                            "sticky": false,
+                            "hint": "Contains a course expiry period that is relative to the date a learner successfully completes this course.",
+                            "optional": true,
+                            "type": "object",
+                            "name": "Expiration_Duration",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data"
+                          }
+                        ],
+                        "label": "Learning course data",
+                        "sticky": true,
+                        "hint": "Contains detailed information about a course.",
+                        "optional": true,
+                        "type": "object",
+                        "name": "Learning_Course_Data",
+                        "parent": "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request"
+                      }
+                    ],
+                    "label": "Put learning blended course request",
+                    "sticky": true,
+                    "hint": "Contains all the request data to add or update blended courses.",
+                    "optional": true,
+                    "type": "object",
+                    "name": "Put_Learning_Blended_Course_Request",
+                    "parent": "Manage_Learning_Course_Data"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Learning digital course reference",
+                        "sticky": false,
+                        "optional": true,
+                        "type": "string",
+                        "name": "Learning_Digital_Course_Reference",
+                        "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "ID",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "string",
+                            "name": "ID",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "date",
+                            "label": "Effective date",
+                            "render_input": "date_conversion",
+                            "parse_output": "date_conversion",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "date_time",
+                            "name": "Effective_Date",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Version label",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "string",
+                            "name": "Version_Label",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Version notes",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "string",
+                            "name": "Version_Notes",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Inactive",
+                            "render_input": "boolean_conversion",
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Inactive",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "render_input": "boolean_conversion",
+                              "render_output": "boolean_conversion",
+                              "sticky": false,
+                              "optional": true,
+                              "type": "boolean",
+                              "name": "Inactive",
+                              "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                            },
+                            "render_output": "boolean_conversion",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "boolean",
+                            "name": "Inactive",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Course title",
+                            "sticky": true,
+                            "optional": true,
+                            "type": "string",
+                            "name": "Course_Title",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Skill level reference",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "string",
+                            "name": "Skill_Level_Reference",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Description",
+                            "sticky": true,
+                            "optional": true,
+                            "type": "string",
+                            "name": "Description",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Course number",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "string",
+                            "name": "Course_Number",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Topic reference",
+                            "sticky": true,
+                            "hint": "This field accepts single or multiple IDs. You can provide multiple IDs separated by a comma or array of IDs(in formula mode).",
+                            "optional": true,
+                            "type": "string",
+                            "name": "Topic_Reference",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Language reference",
+                            "sticky": false,
+                            "hint": "This field accepts single or multiple IDs. You can provide multiple IDs separated by a comma or array of IDs(in formula mode).",
+                            "optional": true,
+                            "type": "string",
+                            "name": "Language_Reference",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Security category reference",
+                            "sticky": false,
+                            "hint": "This field accepts single or multiple IDs. You can provide multiple IDs separated by a comma or array of IDs(in formula mode).",
+                            "optional": true,
+                            "type": "string",
+                            "name": "Security_Category_Reference",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Registrable status reference",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "string",
+                            "name": "Registrable_Status_Reference",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "On demand",
+                            "render_input": "boolean_conversion",
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "On demand",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "render_input": "boolean_conversion",
+                              "render_output": "boolean_conversion",
+                              "sticky": false,
+                              "optional": true,
+                              "type": "boolean",
+                              "name": "On_Demand",
+                              "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                            },
+                            "render_output": "boolean_conversion",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "boolean",
+                            "name": "On_Demand",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Minimum enrollment capacity",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "string",
+                            "name": "Minimum_Enrollment_Capacity",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Maximum enrollment capacity",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "string",
+                            "name": "Maximum_Enrollment_Capacity",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Waitlist capacity",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "string",
+                            "name": "Waitlist_Capacity",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Unlimited capacity",
+                            "render_input": "boolean_conversion",
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Unlimited capacity",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "render_input": "boolean_conversion",
+                              "render_output": "boolean_conversion",
+                              "sticky": false,
+                              "optional": true,
+                              "type": "boolean",
+                              "name": "Unlimited_Capacity",
+                              "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                            },
+                            "render_output": "boolean_conversion",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "boolean",
+                            "name": "Unlimited_Capacity",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Learning expiration rule order",
+                                "sticky": true,
+                                "optional": true,
+                                "type": "string",
+                                "name": "Learning_Expiration_Rule_Order",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Advanced_Expiration_Rules"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Learner group rule reference",
+                                "sticky": true,
+                                "optional": true,
+                                "type": "string",
+                                "name": "Learner_Group_Rule_Reference",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Advanced_Expiration_Rules"
+                              },
+                              {
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "Format reference",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Format_Reference",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Advanced_Expiration_Rules.Expiration_Duration"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Value",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Value",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Advanced_Expiration_Rules.Expiration_Duration"
+                                  }
+                                ],
+                                "label": "Expiration duration",
+                                "sticky": false,
+                                "hint": "Contains a course expiry period that is relative to the date a learner successfully completes this course.",
+                                "optional": true,
+                                "type": "object",
+                                "name": "Expiration_Duration",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Advanced_Expiration_Rules"
+                              },
+                              {
+                                "control_type": "date",
+                                "label": "Expiration date",
+                                "render_input": "date_conversion",
+                                "parse_output": "date_conversion",
+                                "sticky": false,
+                                "optional": true,
+                                "type": "date_time",
+                                "name": "Expiration_Date",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Advanced_Expiration_Rules"
+                              }
+                            ],
+                            "label": "Advanced expiration rules",
+                            "sticky": false,
+                            "hint": "Contains an advanced expiration rule that will apply a custom expiration date/duration to specific learning enrollment",
+                            "optional": true,
+                            "type": "object",
+                            "name": "Advanced_Expiration_Rules",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Other unit type reference",
+                                "sticky": true,
+                                "optional": true,
+                                "type": "string",
+                                "name": "Other_Unit_Type_Reference",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Learning_Other_Unit_Type_Data"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Other unit value",
+                                "sticky": true,
+                                "optional": true,
+                                "type": "string",
+                                "name": "Other_Unit_Value",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Learning_Other_Unit_Type_Data"
+                              }
+                            ],
+                            "label": "Learning other unit type data",
+                            "sticky": false,
+                            "hint": "Contains data for Other Unit Type values for the course.",
+                            "optional": true,
+                            "type": "object",
+                            "name": "Learning_Other_Unit_Type_Data",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Sales item reference",
+                            "sticky": false,
+                            "hint": "This field accepts single or multiple IDs. You can provide multiple IDs separated by a comma or array of IDs(in formula mode).",
+                            "optional": true,
+                            "type": "string",
+                            "name": "Sales_Item_Reference",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Competency reference",
+                            "sticky": false,
+                            "hint": "This field accepts single or multiple IDs. You can provide multiple IDs separated by a comma or array of IDs(in formula mode).",
+                            "optional": true,
+                            "type": "string",
+                            "name": "Competency_Reference",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Skill reference",
+                            "sticky": false,
+                            "hint": "This field accepts single or multiple IDs. You can provide multiple IDs separated by a comma or array of IDs(in formula mode).",
+                            "optional": true,
+                            "type": "string",
+                            "name": "Skill_Reference",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "select",
+                            "label": "Contact person reference employee ID",
+                            "sticky": false,
+                            "pick_list_params": {
+                              "obj_type": "\"Employee_ID\""
+                            },
+                            "pick_list": "objects",
+                            "toggle_hint": "Pick value from a list",
+                            "toggle_field": {
+                              "name": "Contact_Person_Reference_Employee_ID",
+                              "label": "Contact person reference employee ID",
+                              "toggle_hint": "Enter custom value",
+                              "type": "string",
+                              "control_type": "text",
+                              "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                            },
+                            "optional": true,
+                            "type": "string",
+                            "name": "Contact_Person_Reference_Employee_ID",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Time value reference",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "string",
+                            "name": "Time_Value_Reference",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Total course duration",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "string",
+                            "name": "Total_Course_Duration",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Enable auto enrollment from waitlist",
+                            "render_input": "boolean_conversion",
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Enable auto enrollment from waitlist",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "render_input": "boolean_conversion",
+                              "render_output": "boolean_conversion",
+                              "sticky": false,
+                              "optional": true,
+                              "type": "boolean",
+                              "name": "Enable_Auto_Enrollment_from_Waitlist",
+                              "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                            },
+                            "render_output": "boolean_conversion",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "boolean",
+                            "name": "Enable_Auto_Enrollment_from_Waitlist",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Learning image reference",
+                                "sticky": false,
+                                "optional": true,
+                                "type": "string",
+                                "name": "Learning_Image_Reference",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Image_Data"
+                              },
+                              {
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "Image ID",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Image_ID",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Image_Data.Learning_Image_Upload_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "File name",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "File_Name",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Image_Data.Learning_Image_Upload_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Content type",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Content_Type",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Image_Data.Learning_Image_Upload_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Image",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Image",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Image_Data.Learning_Image_Upload_Data"
+                                  }
+                                ],
+                                "label": "Learning image upload data",
+                                "sticky": false,
+                                "hint": "Contains the cover image for the learning item.",
+                                "optional": true,
+                                "type": "object",
+                                "name": "Learning_Image_Upload_Data",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Image_Data"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Workdrive document content reference",
+                                "sticky": false,
+                                "optional": true,
+                                "type": "string",
+                                "name": "Workdrive_Document_Content_Reference",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Image_Data"
+                              }
+                            ],
+                            "label": "Course image data",
+                            "sticky": false,
+                            "hint": "Contains the cover image for the course.",
+                            "optional": true,
+                            "type": "object",
+                            "name": "Course_Image_Data",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Legacy course",
+                            "render_input": "boolean_conversion",
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Legacy course",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "render_input": "boolean_conversion",
+                              "render_output": "boolean_conversion",
+                              "sticky": false,
+                              "optional": true,
+                              "type": "boolean",
+                              "name": "Legacy_Course",
+                              "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                            },
+                            "render_output": "boolean_conversion",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "boolean",
+                            "name": "Legacy_Course",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Allowed instructor reference",
+                            "sticky": false,
+                            "hint": "This field accepts single or multiple IDs. You can provide multiple IDs separated by a comma or array of IDs(in formula mode).",
+                            "optional": true,
+                            "type": "string",
+                            "name": "Allowed_Instructor_Reference",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Allowed assessors reference",
+                            "sticky": false,
+                            "hint": "This field accepts single or multiple IDs. You can provide multiple IDs separated by a comma or array of IDs(in formula mode).",
+                            "optional": true,
+                            "type": "string",
+                            "name": "Allowed_Assessors_Reference",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Allowed location reference",
+                            "sticky": false,
+                            "hint": "This field accepts single or multiple IDs. You can provide multiple IDs separated by a comma or array of IDs(in formula mode).",
+                            "optional": true,
+                            "type": "string",
+                            "name": "Allowed_Location_Reference",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "checkbox",
+                            "label": "Exclude from recommendations",
+                            "render_input": "boolean_conversion",
+                            "parse_output": {
+                            },
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Exclude from recommendations",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "render_input": "boolean_conversion",
+                              "render_output": "boolean_conversion",
+                              "sticky": false,
+                              "optional": true,
+                              "type": "boolean",
+                              "name": "Exclude_from_Recommendations",
+                              "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                            },
+                            "render_output": "boolean_conversion",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "boolean",
+                            "name": "Exclude_from_Recommendations",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Lesson order",
+                                "sticky": true,
+                                "optional": true,
+                                "type": "string",
+                                "name": "Lesson_Order",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data"
+                              },
+                              {
+                                "control_type": "checkbox",
+                                "label": "Make lesson mandatory",
+                                "render_input": "boolean_conversion",
+                                "parse_output": {
+                                },
+                                "toggle_hint": "Select from option list",
+                                "toggle_field": {
+                                  "label": "Make lesson mandatory",
+                                  "control_type": "text",
+                                  "toggle_hint": "Use custom value",
+                                  "render_input": "boolean_conversion",
+                                  "render_output": "boolean_conversion",
+                                  "sticky": false,
+                                  "optional": true,
+                                  "type": "boolean",
+                                  "name": "Make_Lesson_Mandatory",
+                                  "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data"
+                                },
+                                "render_output": "boolean_conversion",
+                                "sticky": false,
+                                "optional": true,
+                                "type": "boolean",
+                                "name": "Make_Lesson_Mandatory",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data"
+                              },
+                              {
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "Title",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Title",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Instructor_Led_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Description",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Description",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Instructor_Led_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "checkbox",
+                                    "label": "Instructor led unit track attendance",
+                                    "render_input": "boolean_conversion",
+                                    "parse_output": {
+                                    },
+                                    "toggle_hint": "Select from option list",
+                                    "toggle_field": {
+                                      "label": "Instructor led unit track attendance",
+                                      "control_type": "text",
+                                      "toggle_hint": "Use custom value",
+                                      "render_input": "boolean_conversion",
+                                      "render_output": "boolean_conversion",
+                                      "sticky": false,
+                                      "optional": true,
+                                      "type": "boolean",
+                                      "name": "Instructor_Led_Unit_Track_Attendance",
+                                      "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Instructor_Led_Lesson_Data"
+                                    },
+                                    "render_output": "boolean_conversion",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "boolean",
+                                    "name": "Instructor_Led_Unit_Track_Attendance",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Instructor_Led_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "checkbox",
+                                    "label": "Instructor led unit track grades",
+                                    "render_input": "boolean_conversion",
+                                    "parse_output": {
+                                    },
+                                    "toggle_hint": "Select from option list",
+                                    "toggle_field": {
+                                      "label": "Instructor led unit track grades",
+                                      "control_type": "text",
+                                      "toggle_hint": "Use custom value",
+                                      "render_input": "boolean_conversion",
+                                      "render_output": "boolean_conversion",
+                                      "sticky": false,
+                                      "optional": true,
+                                      "type": "boolean",
+                                      "name": "Instructor_Led_Unit_Track_Grades",
+                                      "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Instructor_Led_Lesson_Data"
+                                    },
+                                    "render_output": "boolean_conversion",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "boolean",
+                                    "name": "Instructor_Led_Unit_Track_Grades",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Instructor_Led_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Learning grading scheme for learning course reference",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Learning_Grading_Scheme_for_Learning_Course_Reference",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Instructor_Led_Lesson_Data"
+                                  }
+                                ],
+                                "label": "Instructor led lesson data",
+                                "sticky": false,
+                                "hint": "Contains details of instructor-led classroom training lessons in the course.",
+                                "optional": true,
+                                "type": "object",
+                                "name": "Instructor_Led_Lesson_Data",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data"
+                              },
+                              {
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "Title",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Title",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Instructor_Led_Webinar_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "checkbox",
+                                    "label": "Webinar lesson unit track attendance",
+                                    "render_input": "boolean_conversion",
+                                    "parse_output": {
+                                    },
+                                    "toggle_hint": "Select from option list",
+                                    "toggle_field": {
+                                      "label": "Webinar lesson unit track attendance",
+                                      "control_type": "text",
+                                      "toggle_hint": "Use custom value",
+                                      "render_input": "boolean_conversion",
+                                      "render_output": "boolean_conversion",
+                                      "sticky": false,
+                                      "optional": true,
+                                      "type": "boolean",
+                                      "name": "Webinar_Lesson_Unit_Track_Attendance",
+                                      "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Instructor_Led_Webinar_Lesson_Data"
+                                    },
+                                    "render_output": "boolean_conversion",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "boolean",
+                                    "name": "Webinar_Lesson_Unit_Track_Attendance",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Instructor_Led_Webinar_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "checkbox",
+                                    "label": "Webinar lesson unit track grades",
+                                    "render_input": "boolean_conversion",
+                                    "parse_output": {
+                                    },
+                                    "toggle_hint": "Select from option list",
+                                    "toggle_field": {
+                                      "label": "Webinar lesson unit track grades",
+                                      "control_type": "text",
+                                      "toggle_hint": "Use custom value",
+                                      "render_input": "boolean_conversion",
+                                      "render_output": "boolean_conversion",
+                                      "sticky": false,
+                                      "optional": true,
+                                      "type": "boolean",
+                                      "name": "Webinar_Lesson_Unit_Track_Grades",
+                                      "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Instructor_Led_Webinar_Lesson_Data"
+                                    },
+                                    "render_output": "boolean_conversion",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "boolean",
+                                    "name": "Webinar_Lesson_Unit_Track_Grades",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Instructor_Led_Webinar_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Learning grading scheme for learning course reference",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Learning_Grading_Scheme_for_Learning_Course_Reference",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Instructor_Led_Webinar_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Description",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Description",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Instructor_Led_Webinar_Lesson_Data"
+                                  }
+                                ],
+                                "label": "Instructor led webinar lesson data",
+                                "sticky": false,
+                                "hint": "Contains details of instructor-led webinar lessons in the course.",
+                                "optional": true,
+                                "type": "object",
+                                "name": "Instructor_Led_Webinar_Lesson_Data",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data"
+                              },
+                              {
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "External content URL",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "External_Content_URL",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.External_Content_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Learning course lesson title",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Learning_Course_Lesson_Title",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.External_Content_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "External content description",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "External_Content_Description",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.External_Content_Lesson_Data"
+                                  }
+                                ],
+                                "label": "External content lesson data",
+                                "sticky": false,
+                                "hint": "Contains details about external-content lessons in the course.",
+                                "optional": true,
+                                "type": "object",
+                                "name": "External_Content_Lesson_Data",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data"
+                              },
+                              {
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "Learning course lesson title",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Learning_Course_Lesson_Title",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Media_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Media content description",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Media_Content_Description",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Media_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "checkbox",
+                                    "label": "Provide course grade",
+                                    "render_input": "boolean_conversion",
+                                    "parse_output": {
+                                    },
+                                    "toggle_hint": "Select from option list",
+                                    "toggle_field": {
+                                      "label": "Provide course grade",
+                                      "control_type": "text",
+                                      "toggle_hint": "Use custom value",
+                                      "render_input": "boolean_conversion",
+                                      "render_output": "boolean_conversion",
+                                      "sticky": false,
+                                      "optional": true,
+                                      "type": "boolean",
+                                      "name": "Provide_Course_Grade",
+                                      "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Media_Lesson_Data"
+                                    },
+                                    "render_output": "boolean_conversion",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "boolean",
+                                    "name": "Provide_Course_Grade",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Media_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Media reference",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Media_Reference",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Media_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Learning workdrive content reference",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Learning_Workdrive_Content_Reference",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Media_Lesson_Data"
+                                  }
+                                ],
+                                "label": "Media lesson data",
+                                "sticky": false,
+                                "hint": "Contains details about media lessons in the course.",
+                                "optional": true,
+                                "type": "object",
+                                "name": "Media_Lesson_Data",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data"
+                              },
+                              {
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "Survey reference",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Survey_Reference",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Survey_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Description",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Description",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Survey_Lesson_Data"
+                                  }
+                                ],
+                                "label": "Survey lesson data",
+                                "sticky": false,
+                                "hint": "Contains details about the survey lessons in the course.",
+                                "optional": true,
+                                "type": "object",
+                                "name": "Survey_Lesson_Data",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data"
+                              },
+                              {
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "Learning course lesson title",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Learning_Course_Lesson_Title",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data"
+                                  },
+                                  {
+                                    "properties": [
+                                      {
+                                        "control_type": "text",
+                                        "label": "Filename",
+                                        "sticky": false,
+                                        "optional": true,
+                                        "type": "string",
+                                        "name": "Filename",
+                                        "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data.Materials"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "File content",
+                                        "sticky": false,
+                                        "optional": true,
+                                        "type": "string",
+                                        "name": "File_Content",
+                                        "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data.Materials"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Comment",
+                                        "sticky": false,
+                                        "optional": true,
+                                        "type": "string",
+                                        "name": "Comment",
+                                        "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data.Materials"
+                                      }
+                                    ],
+                                    "label": "Materials",
+                                    "sticky": false,
+                                    "hint": "Learning Training Activity Attachment Data for Web Services.",
+                                    "optional": true,
+                                    "type": "object",
+                                    "name": "Materials",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "checkbox",
+                                    "label": "Training activity unit track attendance",
+                                    "render_input": "boolean_conversion",
+                                    "parse_output": {
+                                    },
+                                    "toggle_hint": "Select from option list",
+                                    "toggle_field": {
+                                      "label": "Training activity unit track attendance",
+                                      "control_type": "text",
+                                      "toggle_hint": "Use custom value",
+                                      "render_input": "boolean_conversion",
+                                      "render_output": "boolean_conversion",
+                                      "sticky": false,
+                                      "optional": true,
+                                      "type": "boolean",
+                                      "name": "Training_Activity_Unit_Track_Attendance",
+                                      "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data"
+                                    },
+                                    "render_output": "boolean_conversion",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "boolean",
+                                    "name": "Training_Activity_Unit_Track_Attendance",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "checkbox",
+                                    "label": "Training activity unit track grades",
+                                    "render_input": "boolean_conversion",
+                                    "parse_output": {
+                                    },
+                                    "toggle_hint": "Select from option list",
+                                    "toggle_field": {
+                                      "label": "Training activity unit track grades",
+                                      "control_type": "text",
+                                      "toggle_hint": "Use custom value",
+                                      "render_input": "boolean_conversion",
+                                      "render_output": "boolean_conversion",
+                                      "sticky": false,
+                                      "optional": true,
+                                      "type": "boolean",
+                                      "name": "Training_Activity_Unit_Track_Grades",
+                                      "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data"
+                                    },
+                                    "render_output": "boolean_conversion",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "boolean",
+                                    "name": "Training_Activity_Unit_Track_Grades",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Learning grading scheme reference",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Learning_Grading_Scheme_Reference",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Learning training activity type reference",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Learning_Training_Activity_Type_Reference",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Description",
+                                    "sticky": false,
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "Description",
+                                    "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data"
+                                  }
+                                ],
+                                "label": "Training activity lesson data",
+                                "sticky": false,
+                                "hint": "Contains details about the Training Activity lessons in the course.",
+                                "optional": true,
+                                "type": "object",
+                                "name": "Training_Activity_Lesson_Data",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data"
+                              }
+                            ],
+                            "label": "Course lesson data",
+                            "sticky": false,
+                            "hint": "Contains information about the lessons on the course.",
+                            "optional": true,
+                            "type": "object",
+                            "name": "Course_Lesson_Data",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "control_type": "date",
+                            "label": "Expiration date",
+                            "render_input": "date_conversion",
+                            "parse_output": "date_conversion",
+                            "sticky": false,
+                            "optional": true,
+                            "type": "date_time",
+                            "name": "Expiration_Date",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Format reference",
+                                "sticky": true,
+                                "optional": true,
+                                "type": "string",
+                                "name": "Format_Reference",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Expiration_Duration"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Value",
+                                "sticky": true,
+                                "optional": true,
+                                "type": "string",
+                                "name": "Value",
+                                "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Expiration_Duration"
+                              }
+                            ],
+                            "label": "Expiration duration",
+                            "sticky": false,
+                            "hint": "Contains a course expiry period that is relative to the date a learner successfully completes this course.",
+                            "optional": true,
+                            "type": "object",
+                            "name": "Expiration_Duration",
+                            "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data"
+                          }
+                        ],
+                        "label": "Learning digital course data",
+                        "sticky": true,
+                        "hint": "Contains detailed information about a course.",
+                        "optional": true,
+                        "type": "object",
+                        "name": "Learning_Digital_Course_Data",
+                        "parent": "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request"
+                      }
+                    ],
+                    "label": "Put learning digital course request",
+                    "sticky": true,
+                    "hint": "Contains all the request data to add or update a digital course.",
+                    "optional": true,
+                    "type": "object",
+                    "name": "Put_Learning_Digital_Course_Request",
+                    "parent": "Manage_Learning_Course_Data"
+                  }
+                ]
+              },
+              {
+                "type": "object",
+                "name": "Business_Process_Parameters",
+                "label": "Business process parameters",
+                "hint": "Container for the processing options for a business process. If no options are submitted (or the options are submitted as 'false') then the business process is simply initiated as if it where submitted on-line with approvals, reviews, notifications and to-do's in place. If the Initiator is an Integration System User, any validations you configured on the Initiation step are ignored.",
+                "sticky": false,
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "checkbox",
+                    "label": "Auto complete",
+                    "render_input": "boolean_conversion",
+                    "parse_output": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Auto complete",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "render_input": "boolean_conversion",
+                      "render_output": "boolean_conversion",
+                      "sticky": false,
+                      "optional": true,
+                      "type": "boolean",
+                      "name": "Auto_Complete",
+                      "parent": "Business_Process_Parameters"
+                    },
+                    "render_output": "boolean_conversion",
+                    "sticky": false,
+                    "optional": true,
+                    "type": "boolean",
+                    "name": "Auto_Complete",
+                    "parent": "Business_Process_Parameters"
+                  },
+                  {
+                    "control_type": "checkbox",
+                    "label": "Run now",
+                    "render_input": "boolean_conversion",
+                    "parse_output": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Run now",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "render_input": "boolean_conversion",
+                      "render_output": "boolean_conversion",
+                      "sticky": false,
+                      "optional": true,
+                      "type": "boolean",
+                      "name": "Run_Now",
+                      "parent": "Business_Process_Parameters"
+                    },
+                    "render_output": "boolean_conversion",
+                    "sticky": false,
+                    "optional": true,
+                    "type": "boolean",
+                    "name": "Run_Now",
+                    "parent": "Business_Process_Parameters"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Comment",
+                        "sticky": false,
+                        "optional": true,
+                        "type": "string",
+                        "name": "Comment",
+                        "parent": "Business_Process_Parameters.Comment_Data"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Worker reference",
+                        "sticky": false,
+                        "optional": true,
+                        "type": "string",
+                        "name": "Worker_Reference",
+                        "parent": "Business_Process_Parameters.Comment_Data"
+                      }
+                    ],
+                    "label": "Comment data",
+                    "sticky": false,
+                    "hint": "Captures a comment for the Business Process.",
+                    "optional": true,
+                    "type": "object",
+                    "name": "Comment_Data",
+                    "parent": "Business_Process_Parameters"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "File name",
+                        "sticky": true,
+                        "optional": true,
+                        "type": "string",
+                        "name": "File_Name",
+                        "parent": "Business_Process_Parameters.Business_Process_Attachment_Data"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Event attachment description",
+                        "sticky": false,
+                        "optional": true,
+                        "type": "string",
+                        "name": "Event_Attachment_Description",
+                        "parent": "Business_Process_Parameters.Business_Process_Attachment_Data"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Event attachment category reference",
+                        "sticky": false,
+                        "optional": true,
+                        "type": "string",
+                        "name": "Event_Attachment_Category_Reference",
+                        "parent": "Business_Process_Parameters.Business_Process_Attachment_Data"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "File",
+                        "sticky": false,
+                        "optional": true,
+                        "type": "string",
+                        "name": "File",
+                        "parent": "Business_Process_Parameters.Business_Process_Attachment_Data"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Content type",
+                        "sticky": false,
+                        "optional": true,
+                        "type": "string",
+                        "name": "Content_Type",
+                        "parent": "Business_Process_Parameters.Business_Process_Attachment_Data"
+                      }
+                    ],
+                    "label": "Business process attachment data",
+                    "sticky": false,
+                    "hint": "Element for the attachments pertaining to a Event entered through a web service.",
+                    "optional": true,
+                    "type": "object",
+                    "name": "Business_Process_Attachment_Data",
+                    "parent": "Business_Process_Parameters"
+                  }
+                ]
+              },
+              {
+                "type": "string",
+                "name": "FieldsWithMultipleValues",
+                "control_type": "multiselect",
+                "label": "Fields with multiple values",
+                "sticky": true,
+                "pick_list": [
+                  [
+                    "Manage Learning Course Data/Put Learning Blended Course Request/Learning Course Data/Advanced Expiration Rules",
+                    "Manage_Learning_Course_Data/Put_Learning_Blended_Course_Request/Learning_Course_Data/Advanced_Expiration_Rules"
+                  ],
+                  [
+                    "Manage Learning Course Data/Put Learning Blended Course Request/Learning Course Data/Learning Other Unit Type Data",
+                    "Manage_Learning_Course_Data/Put_Learning_Blended_Course_Request/Learning_Course_Data/Learning_Other_Unit_Type_Data"
+                  ],
+                  [
+                    "Manage Learning Course Data/Put Learning Blended Course Request/Learning Course Data/Course Lesson Data/Training Activity Lesson Data/Materials",
+                    "Manage_Learning_Course_Data/Put_Learning_Blended_Course_Request/Learning_Course_Data/Course_Lesson_Data/Training_Activity_Lesson_Data/Materials"
+                  ],
+                  [
+                    "Manage Learning Course Data/Put Learning Blended Course Request/Learning Course Data/Course Lesson Data",
+                    "Manage_Learning_Course_Data/Put_Learning_Blended_Course_Request/Learning_Course_Data/Course_Lesson_Data"
+                  ],
+                  [
+                    "Manage Learning Course Data/Put Learning Digital Course Request/Learning Digital Course Data/Advanced Expiration Rules",
+                    "Manage_Learning_Course_Data/Put_Learning_Digital_Course_Request/Learning_Digital_Course_Data/Advanced_Expiration_Rules"
+                  ],
+                  [
+                    "Manage Learning Course Data/Put Learning Digital Course Request/Learning Digital Course Data/Learning Other Unit Type Data",
+                    "Manage_Learning_Course_Data/Put_Learning_Digital_Course_Request/Learning_Digital_Course_Data/Learning_Other_Unit_Type_Data"
+                  ],
+                  [
+                    "Manage Learning Course Data/Put Learning Digital Course Request/Learning Digital Course Data/Course Lesson Data/Training Activity Lesson Data/Materials",
+                    "Manage_Learning_Course_Data/Put_Learning_Digital_Course_Request/Learning_Digital_Course_Data/Course_Lesson_Data/Training_Activity_Lesson_Data/Materials"
+                  ],
+                  [
+                    "Manage Learning Course Data/Put Learning Digital Course Request/Learning Digital Course Data/Course Lesson Data",
+                    "Manage_Learning_Course_Data/Put_Learning_Digital_Course_Request/Learning_Digital_Course_Data/Course_Lesson_Data"
+                  ],
+                  [
+                    "Business Process Parameters/Business Process Attachment Data",
+                    "Business_Process_Parameters/Business_Process_Attachment_Data"
+                  ]
+                ],
+                "optional": true,
+                "extends_schema": true
+              }
+            ],
+            "visible_config_fields": [
+              "web_service",
+              "Manage_Learning_Course_Data",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Title",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Description",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Topic_Reference",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Advanced_Expiration_Rules.Learning_Expiration_Rule_Order",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Advanced_Expiration_Rules.Learner_Group_Rule_Reference",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Learning_Other_Unit_Type_Data.Other_Unit_Type_Reference",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Learning_Other_Unit_Type_Data.Other_Unit_Value",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Image_Data.Learning_Image_Upload_Data.File_Name",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Image_Data.Learning_Image_Upload_Data.Content_Type",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Image_Data.Learning_Image_Upload_Data.Image",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Lesson_Order",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Instructor_Led_Lesson_Data.Title",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Instructor_Led_Webinar_Lesson_Data.Title",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.External_Content_Lesson_Data.External_Content_URL",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.External_Content_Lesson_Data.Learning_Course_Lesson_Title",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Media_Lesson_Data.Learning_Course_Lesson_Title",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Media_Lesson_Data.Media_Reference",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Media_Lesson_Data.Learning_Workdrive_Content_Reference",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Survey_Lesson_Data.Survey_Reference",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data.Learning_Course_Lesson_Title",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Title",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Description",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Topic_Reference",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Advanced_Expiration_Rules.Learning_Expiration_Rule_Order",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Advanced_Expiration_Rules.Learner_Group_Rule_Reference",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Learning_Other_Unit_Type_Data.Other_Unit_Type_Reference",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Learning_Other_Unit_Type_Data.Other_Unit_Value",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Image_Data.Learning_Image_Upload_Data.File_Name",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Image_Data.Learning_Image_Upload_Data.Content_Type",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Image_Data.Learning_Image_Upload_Data.Image",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Lesson_Order",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Instructor_Led_Lesson_Data.Title",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Instructor_Led_Webinar_Lesson_Data.Title",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.External_Content_Lesson_Data.External_Content_URL",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.External_Content_Lesson_Data.Learning_Course_Lesson_Title",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Media_Lesson_Data.Learning_Course_Lesson_Title",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Media_Lesson_Data.Media_Reference",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Media_Lesson_Data.Learning_Workdrive_Content_Reference",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Survey_Lesson_Data.Survey_Reference",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Training_Activity_Lesson_Data.Learning_Course_Lesson_Title",
+              "Business_Process_Parameters.Business_Process_Attachment_Data.File_Name",
+              "FieldsWithMultipleValues",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Total_Course_Duration",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.External_Content_Lesson_Data",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Registrable_Status_Reference",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Time_Value_Reference",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.Make_Lesson_Mandatory",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Course_Lesson_Data.External_Content_Lesson_Data.External_Content_Description"
+            ],
+            "hidden_config_fields": [
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Advanced_Expiration_Rules.Expiration_Duration.Format_Reference",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Advanced_Expiration_Rules.Expiration_Duration.Value",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Expiration_Duration.Format_Reference",
+              "Manage_Learning_Course_Data.Put_Learning_Blended_Course_Request.Learning_Course_Data.Expiration_Duration.Value",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Advanced_Expiration_Rules.Expiration_Duration.Format_Reference",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Advanced_Expiration_Rules.Expiration_Duration.Value",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Expiration_Duration.Format_Reference",
+              "Manage_Learning_Course_Data.Put_Learning_Digital_Course_Request.Learning_Digital_Course_Data.Expiration_Duration.Value"
+            ],
+            "uuid": "c25dcf68-0aae-4393-b879-db22a50e2722"
+          },
+          {
+            "number": 3,
+            "as": "68ef2323",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "0",
+              "retry_interval": "2"
+            },
+            "block": [
+              {
+                "number": 4,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "is_not_true",
+                      "lhs": "=_('data.catch.68ef2323.message').downcase.match?(/^.*?\\bcourse title\\b.*?\\bunique\\b.*?$/)",
+                      "rhs": "Course Title must be unique"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 5,
+                    "provider": "slack",
+                    "name": "post_message_to_channel",
+                    "as": "8d4cf28b",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                      "channel": false
+                    },
+                    "input": {
+                      "parse": "false",
+                      "channel": "=lookup(\"WORKDAY_VARIABLES\", key: \"notification.pluralsight_failure\")[\"value\"]",
+                      "text": "Failure trying to add Pluralsight course `#{_('data.workato_service.a25ad783.request.title')}` (Row #{_('data.workato_service.a25ad783.request.row_number')}) due to the following error: ```#{_('data.catch.68ef2323.message')}```"
+                    },
+                    "uuid": "bd27418f-966f-4ff6-aca5-d92abe32985d",
+                    "skip": false
+                  }
+                ],
+                "comment": "Do not post to slack if the error message is \"Course Title must be unique\".  For some reason, workato can not match this exact phrase so I had to search for phrases that include \"course title\" and \"unique\".",
+                "uuid": "378a90da-9dea-4876-8f52-9492fdbe5194"
+              }
+            ],
+            "uuid": "90b480cc-26f9-4199-b6c8-715da627e303"
+          }
+        ],
+        "uuid": "74e70bc4-3a89-484c-8c31-73ba5f13109f"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_4",
+        "label": "Row Number"
+      },
+      {
+        "name": "custom_column_1",
+        "label": "ID"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Title"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "Workday Course WID"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_4": "#{_('data.workato_service.a25ad783.request.row_number')}",
+      "custom_column_1": "#{_('data.workato_service.a25ad783.request.id')}",
+      "custom_column_2": "#{_('data.workato_service.a25ad783.request.title')}",
+      "custom_column_3": "=_('data.catch.68ef2323.message').present? ? \"Error: \"+_('data.catch.68ef2323.message') : \"Success: \"+_('data.workday.076549ef.Course_Reference_WID')"
+    },
+    "uuid": "80189731-2e29-47ea-922e-bceafcd0ed7c"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workday",
+      "account_id": {
+        "zip_name": "resources/workday.connection.json",
+        "name": "Workday",
+        "folder": "resources"
+      },
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "slack",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/slack_v2.connection.json",
+        "name": "Slack - v2",
+        "folder": "connections"
+      }
+    }
+  ]
+}

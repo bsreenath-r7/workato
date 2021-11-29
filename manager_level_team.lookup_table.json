@@ -1,0 +1,76 @@
+{
+  "name": "MANAGER_LEVEL_TEAM",
+  "schema": [
+    {
+      "control_type": "text",
+      "label": "sfdc_manager_level_team",
+      "name": "col1",
+      "sticky": true,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "ns_manager_level_team_id",
+      "name": "col2",
+      "sticky": true,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 3",
+      "name": "col3",
+      "sticky": false,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 4",
+      "name": "col4",
+      "sticky": false,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 5",
+      "name": "col5",
+      "sticky": false,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 6",
+      "sticky": false,
+      "type": "string",
+      "name": "col6"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 7",
+      "sticky": false,
+      "type": "string",
+      "name": "col7"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 8",
+      "sticky": false,
+      "type": "string",
+      "name": "col8"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 9",
+      "sticky": false,
+      "type": "string",
+      "name": "col9"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 10",
+      "sticky": false,
+      "type": "string",
+      "name": "col10"
+    }
+  ],
+  "data": "Named East,1\nNamed West,2\nMid-Market - West Central,3\nMid-Market - Northeast,4\nMid-Market - Southeast,5\nMid-Market - Northwest,6\nMid-Market - Southwest,7\nEnterprise - West,8\nEnterprise - NY,9\nEnterprise - Central,10\nEnterprise - Northeast,11\nEnterprise - Midwest,12\nEnterprise - Unknown,13\nFederal,14\nS. Asia,15\nN. Asia,16\nANZ,17\nEMEA,18\nLATAM,19\nEnterprise - Southeast,20\nNamed Central,21\nNamed - Unkonwn,22\nMid-Market - Unknown,23\nSLED,24\nNamed South Central,25\nAPAC Unknown,26\nUnknown,27\nNamed Unknown,28\nWest Named North,29\nWest Named South,30\nWest Mid-Market,31\nCentral Named North,32\nCentral Named South,33\nCentral Mid-Market,34\nEast Named North,35\nEast Named South,36\nEast Mid-Market,37\nNational,38\nAPAC,39\nIDR West,40\nIDR Central,41\nIDR East,42\nCanada Enterprise,92\nWest Canada,44\nWest Majors,45\nEast Majors,46\nCentral Majors,47\nAPAC ANZ,48\nAPAC China,49\nAPAC India,50\nAPAC Japan,51\nAPAC Korea,52\nAPAC Southeast Asia,53\nEMEA Eastern Europe,55\nEMEA Middle East & Africa,56\nEMEA Southern Europe,57\nEMEA UK & Nordics,58\nCentral Mid-Market North,59\nCentral Mid-Market South,60\nEast Mid-Market North,61\nEast Mid-Market South,62\nEMEA-Scandinavia/Nordics,65\nEMEA-UK-Ireland,66\nCentral Enterprise,67\nEast Enterprise,68\nSLED East,69\nWest Enterprise,71\nWest Mid-Market North,72\nWest Mid-Market South,73\nEast Mid-Market North 1,74\nEast Mid-Market North 2,75\nEMEA-UK-Ireland-Mid-Market,76\nEMEA-UK-Ireland-Enterprise,77\nEast Mid-Market Canada,78\nAPAC ANZ North,79\nAPAC ANZ South,80\nEMEA Southern Europe France,81\nEMEA Southern Europe Iberia,82\nWest Enterprise Canada,83\nEMEA Middle East,85\nEMEA Africa,86\nWest Mid-Market Canada,87\nEast Mid-Market North NY/NJ,89\nEast Mid-Market North New England,88\nEMEA DACH,90\nEMEA Benelux,91\nCentral Enterprise North,96\nCentral Enterprise South,97\nEast Enterprise North,98\nEast Enterprise South,99\nWest Enterprise North,100\nWest Enterprise South,101\nEMEA Mediterranean,102\nCanada Mid-Market,93\nAPAC ROA,103\nAPAC Japan & Korea,104\nCanada Commercial,105\nCentral Large Account,106\nCentral Commercial,107\nEast Large Account,108\nEast Commercial,109\nSLED West,110\nEMEA East,111\nEMEA West,112\nEMEA Nordics,113\nEMEA UKI,114\nWest Commercial,115\nWest Large Account,116\n"
+}

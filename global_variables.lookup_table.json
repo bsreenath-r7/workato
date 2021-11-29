@@ -1,0 +1,76 @@
+{
+  "name": "GLOBAL_VARIABLES",
+  "schema": [
+    {
+      "control_type": "text",
+      "label": "key",
+      "name": "col1",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "value",
+      "name": "col2",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "app",
+      "name": "col3",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "select",
+      "name": "col4",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "notes",
+      "name": "col5",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 6",
+      "name": "col6",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 7",
+      "name": "col7",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 8",
+      "name": "col8",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 9",
+      "name": "col9",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 10",
+      "name": "col10",
+      "type": "string",
+      "sticky": false
+    }
+  ],
+  "data": "forecast.report,insightconnect,Clari,1,\nforecast.report,deal_owner,Clari,1,\nforecast.report,divvy,Clari,1,\nforecast.report,services,Clari,1,\"\"\nwebhook.logs,https://us.webhook.logs.insight.rapid7.com/v1/noformat/f1fb1d8b-b5fe-4805-b31b-546d723fb4bd,Insight,\"\",\nipims.get.org,https://api.ipims-prod-0.eu-central-1.ipims.r7ops.com/api/api/2/organizations/,awslambda,,\n"
+}

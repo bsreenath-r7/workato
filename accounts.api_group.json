@@ -1,0 +1,5 @@
+{
+  "name": "Accounts",
+  "version": "1.0",
+  "description": "This collection holds all the account-based endpoints.\nFor example: Subscription Visibility - an Account Service with Products and Subscriptions"
+}

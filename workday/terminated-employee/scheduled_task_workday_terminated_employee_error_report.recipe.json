@@ -1,0 +1,935 @@
+{
+  "name": "Scheduled Task - Workday Terminated Employee Error Report",
+  "description": "When there is a trigger event, do action",
+  "version": 21,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "clock",
+    "name": "daily_task",
+    "as": "ff68a2f8",
+    "title": null,
+    "description": null,
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+      "sunday": true,
+      "monday": true,
+      "tuesday": true,
+      "wednesday": true,
+      "thursday": true,
+      "friday": true,
+      "saturday": true
+    },
+    "input": {
+      "sunday": "false",
+      "monday": "true",
+      "tuesday": "true",
+      "wednesday": "true",
+      "thursday": "true",
+      "friday": "true",
+      "saturday": "false",
+      "time_zone": "Eastern Time (US & Canada)",
+      "hour": "8",
+      "minute": "0"
+    },
+    "block": [
+      {
+        "number": 1,
+        "provider": "workato_variable",
+        "name": "declare_list",
+        "as": "3a89b913",
+        "title": " Create errors list",
+        "description": "Create <span class=\"provider\">errors</span> list",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "name": "errors",
+          "list_item_schema_json": "[{\"name\":\"employee_number\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"control_type\":\"text\",\"label\":\"Employee First Name\",\"name\":\"employee_firstname\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Employee Last Name\",\"name\":\"employee_lastname\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"date\",\"label\":\"Termination Date\",\"name\":\"termination_date\",\"type\":\"date_time\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Application\",\"name\":\"application\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Status Message\",\"name\":\"status_message\",\"type\":\"string\",\"optional\":false}]"
+        },
+        "extended_output_schema": [
+          {
+            "type": "array",
+            "name": "list_items",
+            "label": "errors",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Employee number",
+                "name": "employee_number",
+                "type": "string",
+                "optional": false
+              },
+              {
+                "control_type": "text",
+                "label": "Employee First Name",
+                "name": "employee_firstname",
+                "type": "string",
+                "optional": false
+              },
+              {
+                "control_type": "text",
+                "label": "Employee Last Name",
+                "name": "employee_lastname",
+                "type": "string",
+                "optional": false
+              },
+              {
+                "control_type": "date",
+                "label": "Termination Date",
+                "render_input": "date_conversion",
+                "parse_output": "date_conversion",
+                "name": "termination_date",
+                "type": "date_time",
+                "optional": false
+              },
+              {
+                "control_type": "text",
+                "label": "Application",
+                "name": "application",
+                "type": "string",
+                "optional": false
+              },
+              {
+                "control_type": "text",
+                "label": "Status Message",
+                "name": "status_message",
+                "type": "string",
+                "optional": false
+              }
+            ]
+          }
+        ],
+        "uuid": "8b6b60e9-d346-4806-bef0-d99942941ffa"
+      },
+      {
+        "number": 2,
+        "provider": "mysql",
+        "name": "search_rows",
+        "as": "d2ef121a",
+        "title": "Select rows in workday_terminated_employees_status",
+        "description": "Select <span class=\"provider\">rows</span> in <span class=\"provider\">workday_terminated_employees_status</span> table in <span class=\"provider\">MySQL</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "table": "workday_terminated_employees_status"
+        },
+        "toggleCfg": {
+          "table": true
+        },
+        "input": {
+          "limit": "1000",
+          "offset": "0",
+          "table": "workday_terminated_employees_status",
+          "where": "status = 'ERROR'"
+        },
+        "extended_output_schema": [
+          {
+            "type": "array",
+            "name": "rows",
+            "label": "Rows",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "date_time",
+                "label": "date_lastModified",
+                "render_input": "convert_date_time",
+                "parse_output": "parse_time_value",
+                "details": {
+                  "data_type": "timestamp(3)",
+                  "column_name": "date_lastModified"
+                },
+                "optional": true,
+                "hint": "timestamp(3)",
+                "type": "date_time",
+                "name": "date_lastmodified_5151a09e"
+              },
+              {
+                "control_type": "text",
+                "label": "notes",
+                "details": {
+                  "data_type": "varchar(500)",
+                  "column_name": "notes"
+                },
+                "optional": true,
+                "hint": "varchar(500)",
+                "type": "string",
+                "name": "notes"
+              },
+              {
+                "control_type": "text",
+                "label": "solarwinds_link",
+                "details": {
+                  "data_type": "varchar(255)",
+                  "column_name": "solarwinds_link"
+                },
+                "optional": true,
+                "hint": "varchar(255)",
+                "type": "string",
+                "name": "solarwinds_link"
+              },
+              {
+                "control_type": "integer",
+                "label": "solarwinds_number",
+                "parse_output": "parse_integer_output",
+                "details": {
+                  "data_type": "int(11)",
+                  "column_name": "solarwinds_number"
+                },
+                "render_input": "parse_integer_output",
+                "optional": true,
+                "hint": "int(11)",
+                "type": "integer",
+                "name": "solarwinds_number"
+              },
+              {
+                "control_type": "text",
+                "label": "status",
+                "details": {
+                  "data_type": "varchar(45)",
+                  "column_name": "status"
+                },
+                "hint": "varchar(45)",
+                "optional": true,
+                "type": "string",
+                "name": "status"
+              },
+              {
+                "control_type": "text",
+                "label": "system",
+                "details": {
+                  "data_type": "varchar(45)",
+                  "column_name": "system"
+                },
+                "event_title": true,
+                "optional": true,
+                "hint": "varchar(45), primary key",
+                "type": "string",
+                "name": "system"
+              },
+              {
+                "control_type": "integer",
+                "label": "workday_id",
+                "parse_output": "parse_integer_output",
+                "details": {
+                  "data_type": "int(11)",
+                  "column_name": "workday_id"
+                },
+                "render_input": "parse_integer_output",
+                "event_title": true,
+                "optional": true,
+                "hint": "int(11), primary key",
+                "type": "integer",
+                "name": "workday_id"
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "parameters",
+            "control_type": "form-schema-builder",
+            "label": "Parameters",
+            "hint": "First provide the full name assigned to your bind variable in the WHERE condition. e.g. <b>id</b>\n                    Second, provide the actual parameter value. Parameter values can be static or datapills.\n                    Select the <b>closest corresponding data type</b> that your database is expecting for the bind variable",
+            "sticky": true,
+            "optional": true,
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Schema",
+                "extends_schema": true,
+                "type": "string",
+                "name": "schema"
+              },
+              {
+                "properties": [
+
+                ],
+                "label": "Data",
+                "optional": true,
+                "type": "object",
+                "name": "data"
+              }
+            ],
+            "override": true
+          }
+        ],
+        "visible_config_fields": [
+          "table",
+          "parameters",
+          "limit",
+          "offset",
+          "where"
+        ],
+        "uuid": "059e65b9-273b-44ea-a00d-1a0db01244de"
+      },
+      {
+        "number": 3,
+        "as": "f6ba5bf5",
+        "keyword": "foreach",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "repeat_mode": "simple",
+        "clear_scope": "true",
+        "input": {
+        },
+        "block": [
+          {
+            "number": 4,
+            "provider": "mysql",
+            "name": "search_rows",
+            "as": "adf3f876",
+            "title": "Select rows in workday_terminated_employees",
+            "description": "Select <span class=\"provider\">rows</span> in <span class=\"provider\">workday_terminated_employees</span> table in <span class=\"provider\">MySQL</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "table": "workday_terminated_employees"
+            },
+            "toggleCfg": {
+              "table": true
+            },
+            "input": {
+              "limit": "1",
+              "offset": "0",
+              "table": "workday_terminated_employees",
+              "where": "workday_id = #{_('data.foreach.f6ba5bf5.workday_id')}"
+            },
+            "extended_output_schema": [
+              {
+                "type": "array",
+                "name": "rows",
+                "label": "Rows",
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "integer",
+                    "label": "deleteme_netsuite_employee_internal_id",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "deleteme_netsuite_employee_internal_id"
+                    },
+                    "render_input": "parse_integer_output",
+                    "optional": true,
+                    "hint": "int(11)",
+                    "type": "integer",
+                    "name": "deleteme_netsuite_employee_internal_id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "deleteme_status_concur",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "deleteme_status_concur"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "deleteme_status_concur"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "deleteme_status_coupa",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "deleteme_status_coupa"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "deleteme_status_coupa"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "deleteme_status_netsuite",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "deleteme_status_netsuite"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "deleteme_status_netsuite"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "deleteme_termination_reason",
+                    "details": {
+                      "data_type": "varchar(500)",
+                      "column_name": "deleteme_termination_reason"
+                    },
+                    "optional": true,
+                    "hint": "varchar(500)",
+                    "type": "string",
+                    "name": "deleteme_termination_reason"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "employee_firstname",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "employee_firstname"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "employee_firstname"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "employee_lastname",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "employee_lastname"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "employee_lastname"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "row_id",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "row_id"
+                    },
+                    "render_input": "parse_integer_output",
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "int(11), primary key",
+                    "type": "integer",
+                    "name": "row_id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "status",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "status"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "status"
+                  },
+                  {
+                    "control_type": "date_time",
+                    "label": "status_last_modified",
+                    "render_input": "convert_date_time",
+                    "parse_output": "parse_date_time",
+                    "details": {
+                      "data_type": "datetime",
+                      "column_name": "status_last_modified"
+                    },
+                    "optional": true,
+                    "hint": "datetime",
+                    "type": "date_time",
+                    "name": "status_last_modified"
+                  },
+                  {
+                    "control_type": "date_time",
+                    "label": "termination_date",
+                    "render_input": "convert_date_time",
+                    "parse_output": "parse_date_time",
+                    "details": {
+                      "data_type": "datetime",
+                      "column_name": "termination_date"
+                    },
+                    "hint": "datetime",
+                    "optional": true,
+                    "type": "date_time",
+                    "name": "termination_date"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "workday_id",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "workday_id"
+                    },
+                    "render_input": "parse_integer_output",
+                    "hint": "int(11)",
+                    "optional": true,
+                    "type": "integer",
+                    "name": "workday_id"
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "parameters",
+                "control_type": "form-schema-builder",
+                "label": "Parameters",
+                "hint": "First provide the full name assigned to your bind variable in the WHERE condition. e.g. <b>id</b>\n                    Second, provide the actual parameter value. Parameter values can be static or datapills.\n                    Select the <b>closest corresponding data type</b> that your database is expecting for the bind variable",
+                "sticky": true,
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Schema",
+                    "extends_schema": true,
+                    "type": "string",
+                    "name": "schema"
+                  },
+                  {
+                    "properties": [
+
+                    ],
+                    "label": "Data",
+                    "optional": true,
+                    "type": "object",
+                    "name": "data"
+                  }
+                ],
+                "override": true
+              }
+            ],
+            "uuid": "95899acb-ad3a-40e7-bcc7-2b2215fc339e"
+          },
+          {
+            "number": 5,
+            "provider": "workato_variable",
+            "name": "insert_to_list",
+            "as": "967dc16c",
+            "title": "Add item to errors list",
+            "description": "Add <span class=\"provider\">item</span> to <span class=\"provider\">errors</span> list",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "name": "errors (step 1)"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "location": "end",
+              "name": "8b6b60e9-d346-4806-bef0-d99942941ffa:3a89b913",
+              "list_item": {
+                "employee_firstname": "#{_('data.mysql.adf3f876.rows.first.employee_firstname')}",
+                "employee_lastname": "#{_('data.mysql.adf3f876.rows.first.employee_lastname')}",
+                "termination_date": "#{_('data.mysql.adf3f876.rows.first.termination_date')}",
+                "application": "#{_('data.foreach.f6ba5bf5.system')}",
+                "status_message": "#{_('data.foreach.f6ba5bf5.notes')}",
+                "employee_number": "#{_('data.mysql.adf3f876.rows.first.workday_id')}"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "list_item",
+                "label": "List item",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Employee number",
+                    "name": "employee_number",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "list_item"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Employee First Name",
+                    "name": "employee_firstname",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "list_item"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Employee Last Name",
+                    "name": "employee_lastname",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "list_item"
+                  },
+                  {
+                    "control_type": "date",
+                    "label": "Termination Date",
+                    "render_input": "date_conversion",
+                    "parse_output": "date_conversion",
+                    "name": "termination_date",
+                    "type": "date_time",
+                    "optional": false,
+                    "parent": "list_item"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Application",
+                    "name": "application",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "list_item"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Status Message",
+                    "name": "status_message",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "list_item"
+                  }
+                ]
+              }
+            ],
+            "uuid": "eff01198-a447-467e-8afd-f279cd138bd1"
+          }
+        ],
+        "source": "#{_('data.mysql.d2ef121a.rows')}",
+        "uuid": "fadaa00b-a779-415e-8cc7-0b156097a2c4"
+      },
+      {
+        "number": 6,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "greater_than",
+              "lhs": "#{_('data.workato_variable.3a89b913.list_items.first.____Size', 'list_meta', '____Size', 'data.workato_variable.3a89b913.list_items')}",
+              "rhs": "0"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 7,
+            "provider": "workato_template",
+            "name": "create_document",
+            "as": "433fd7b2",
+            "title": null,
+            "description": "Create <span class=\"provider\">message</span> using <span class=\"provider\">Email - Terminated Employees Error Report</span> template",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "template_id": "Email - Terminated Employees Error Report"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "template_id": {
+                "zip_name": "email_terminated_employees_error_report.workato_template.json",
+                "name": "Email - Terminated Employees Error Report",
+                "folder": ""
+              },
+              "template_input": {
+                "errors": {
+                  "____source": "#{_('data.workato_variable.3a89b913.list_items')}",
+                  "employee_firstname": "#{_('data.workato_variable.3a89b913.list_items.first.employee_firstname')}",
+                  "employee_lastname": "#{_('data.workato_variable.3a89b913.list_items.first.employee_lastname')}",
+                  "termination_date": "=_('data.workato_variable.3a89b913.list_items.first.termination_date').strftime(\"%Y-%m-%d\")",
+                  "application": "#{_('data.workato_variable.3a89b913.list_items.first.application')}",
+                  "status_message": "#{_('data.workato_variable.3a89b913.list_items.first.status_message')}",
+                  "employee_number": "#{_('data.workato_variable.3a89b913.list_items.first.employee_number')}"
+                }
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "template_input",
+                "label": "Template input",
+                "properties": [
+                  {
+                    "name": "errors",
+                    "type": "array",
+                    "of": "object",
+                    "label": "Errors",
+                    "optional": false,
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Employee number",
+                        "name": "employee_number",
+                        "type": "string",
+                        "optional": false,
+                        "parent": "template_input.errors"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Employee First Name",
+                        "name": "employee_firstname",
+                        "type": "string",
+                        "optional": false,
+                        "parent": "template_input.errors"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Employee Last Name",
+                        "name": "employee_lastname",
+                        "type": "string",
+                        "optional": false,
+                        "parent": "template_input.errors"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Termination Date",
+                        "name": "termination_date",
+                        "type": "string",
+                        "optional": false,
+                        "parent": "template_input.errors"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Application",
+                        "name": "application",
+                        "type": "string",
+                        "optional": false,
+                        "parent": "template_input.errors"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Status Message",
+                        "name": "status_message",
+                        "type": "string",
+                        "optional": false,
+                        "parent": "template_input.errors"
+                      }
+                    ],
+                    "parent": "template_input"
+                  }
+                ]
+              }
+            ],
+            "comment": "Create the email template.",
+            "uuid": "e685c641-4dc9-4bd8-a713-1d09d2050144"
+          },
+          {
+            "number": 8,
+            "provider": "lookup_table",
+            "name": "get_entry",
+            "as": "0035bc44",
+            "title": null,
+            "description": "\n      Lookup\n      <span class=\"provider\">entry</span>\n      from\n      <span class=\"provider\">WORKDAY_VARIABLES</span>\n      lookup table\n    ",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "lookup_table_id": "WORKDAY_VARIABLES"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "lookup_table_id": {
+                "zip_name": "workday_variables.lookup_table.json",
+                "name": "WORKDAY_VARIABLES",
+                "folder": ""
+              },
+              "parameters": {
+                "col1": "email.terminated_employee.error_report"
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "integer",
+                "name": "id",
+                "control_type": "number",
+                "label": "Entry ID",
+                "parse_output": "integer_conversion"
+              },
+              {
+                "type": "object",
+                "name": "entry",
+                "label": "Entry",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "key",
+                    "name": "col1",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "value",
+                    "name": "col2",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "notes",
+                    "name": "col3",
+                    "type": "string",
+                    "sticky": true
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "parameters",
+                "label": "Lookup by",
+                "hint": "Provide one or more entry fields to search the entry",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "key",
+                    "name": "col1",
+                    "type": "string",
+                    "sticky": true,
+                    "optional": true,
+                    "parent": "parameters"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "value",
+                    "name": "col2",
+                    "type": "string",
+                    "sticky": true,
+                    "optional": true,
+                    "parent": "parameters"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "notes",
+                    "name": "col3",
+                    "type": "string",
+                    "sticky": true,
+                    "optional": true,
+                    "parent": "parameters"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "lookup_table_id",
+              "parameters.col1",
+              "parameters"
+            ],
+            "hidden_config_fields": [
+              "parameters.col2",
+              "parameters.col3"
+            ],
+            "comment": "get the recipient email address",
+            "uuid": "534ff610-8c1c-4efe-a67a-856da116a214"
+          },
+          {
+            "number": 9,
+            "keyword": "try",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+            },
+            "block": [
+              {
+                "number": 10,
+                "provider": "email",
+                "name": "send_mail",
+                "as": "746fd4ff",
+                "title": null,
+                "description": null,
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "email_type": "html",
+                  "to": "#{_('data.lookup_table.0035bc44.entry.col2')}",
+                  "subject": "Employee Termination Error Report - Could Not Auto-Inactivate Users",
+                  "body": "#{_('data.workato_template.433fd7b2.document')}"
+                },
+                "visible_config_fields": [
+                  "email_type"
+                ],
+                "comment": "sending the error reports.",
+                "uuid": "021ffa46-a89e-4d7b-a144-a55f3b661533"
+              },
+              {
+                "number": 11,
+                "as": "aaff275a",
+                "keyword": "catch",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "max_retry_count": "3",
+                  "retry_interval": "10"
+                },
+                "block": [
+                  {
+                    "number": 12,
+                    "keyword": "stop",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "stop_with_error": "true",
+                      "stop_reason": "#{_('data.catch.aaff275a.message')}"
+                    },
+                    "uuid": "08cf2d17-daa6-4f77-9964-64f0f134d681"
+                  }
+                ],
+                "uuid": "66ecf957-2497-4790-8d8c-a65ab78eaf8e"
+              }
+            ],
+            "uuid": "08dd58d3-1065-4f5b-b2c2-968fe58c7662"
+          }
+        ],
+        "uuid": "8f848c2b-dc69-416a-9b20-32f07b9fd329"
+      }
+    ],
+    "uuid": "9905f94e-b423-4f3a-aee9-335f9720aad2"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "clock",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "mysql",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "resources/mysql.connection.json",
+        "name": "MySQL",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_template",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "lookup_table",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "email",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

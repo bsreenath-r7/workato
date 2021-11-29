@@ -1,0 +1,6 @@
+{
+  "name": "Amazon S3 (ACE)",
+  "provider": "amazon_s3",
+  "secure_gateway_tunnel_name": null,
+  "root_folder": false
+}

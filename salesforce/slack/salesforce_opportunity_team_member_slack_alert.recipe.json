@@ -1,0 +1,747 @@
+{
+  "name": "Salesforce Opportunity Team Member - Slack alert",
+  "description": "When there is a trigger event, do action",
+  "version": 2,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "salesforce",
+    "name": "new_custom_object",
+    "as": "0eede6e9",
+    "title": "New Opportunity Team Member",
+    "description": "New <span class=\"provider\">Opportunity Team Member</span> in <span class=\"provider\">Salesforce</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+      "sobject_name": "Opportunity Team Member"
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "sobject_name": "OpportunityTeamMember",
+      "since_offset": "-3600"
+    },
+    "filter": {
+      "conditions": [
+        {
+          "operand": "present",
+          "lhs": "=lookup(\"SALESFORCE_VARIABLES\", key: \"opportunityTeamMember.role\")[\"value\"].split(\",\").index(_('data.salesforce.0eede6e9.TeamMemberRole'))",
+          "rhs": "",
+          "uuid": "condition-2311df7f-4872-4a9b-b4ca-68b48c2d31ba"
+        }
+      ],
+      "operand": "and",
+      "type": "compound"
+    },
+    "extended_output_schema": [
+      {
+        "type": "string",
+        "name": "CreatedById",
+        "control_type": "text",
+        "label": "Created By ID",
+        "optional": true,
+        "custom": false,
+        "foreign_key": "User",
+        "fetch_with": "get_custom_object(id, sobject_name: User)",
+        "join_point_label": "Created  by",
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "object",
+        "name": "get_custom_object+CreatedById",
+        "label": "Created  by",
+        "properties": [
+
+        ],
+        "fetch_with": "get_custom_object(CreatedById>id, sobject_name: User)",
+        "join_point": true
+      },
+      {
+        "type": "date_time",
+        "name": "CreatedDate",
+        "control_type": "date_time",
+        "label": "Created Date",
+        "optional": true,
+        "custom": false,
+        "render_input": "render_iso8601_timestamp",
+        "parse_output": "parse_iso8601_timestamp",
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "CurrencyIsoCode",
+        "control_type": "select",
+        "label": "Currency ISO Code",
+        "pick_list": "sobject_field_values_list",
+        "pick_list_params": {
+          "sobject_name": "\"OpportunityTeamMember\""
+        },
+        "optional": true,
+        "custom": false,
+        "toggle_hint": "Select from list",
+        "toggle_field": {
+          "control_type": "text",
+          "label": "Currency ISO Code",
+          "toggle_hint": "Enter custom value",
+          "optional": true,
+          "custom": false,
+          "sfdc_createable": true,
+          "sfdc_updateable": true,
+          "type": "string",
+          "name": "CurrencyIsoCode"
+        },
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "boolean",
+        "name": "IsDeleted",
+        "control_type": "checkbox",
+        "label": "Deleted",
+        "optional": true,
+        "custom": false,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Deleted",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "custom": false,
+          "sfdc_createable": false,
+          "sfdc_updateable": false,
+          "type": "boolean",
+          "name": "IsDeleted"
+        },
+        "render_input": {
+        },
+        "parse_output": {
+        },
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "LastModifiedById",
+        "control_type": "text",
+        "label": "Last Modified By ID",
+        "optional": true,
+        "custom": false,
+        "foreign_key": "User",
+        "fetch_with": "get_custom_object(id, sobject_name: User)",
+        "join_point_label": "Last  modified  by",
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "object",
+        "name": "get_custom_object+LastModifiedById",
+        "label": "Last  modified  by",
+        "properties": [
+
+        ],
+        "fetch_with": "get_custom_object(LastModifiedById>id, sobject_name: User)",
+        "join_point": true
+      },
+      {
+        "type": "date_time",
+        "name": "LastModifiedDate",
+        "control_type": "date_time",
+        "label": "Last Modified Date",
+        "optional": true,
+        "custom": false,
+        "render_input": "render_iso8601_timestamp",
+        "parse_output": "parse_iso8601_timestamp",
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "OpportunityAccessLevel",
+        "control_type": "select",
+        "label": "Opportunity Access",
+        "pick_list": "sobject_field_values_list",
+        "pick_list_params": {
+          "sobject_name": "\"OpportunityTeamMember\""
+        },
+        "optional": true,
+        "custom": false,
+        "toggle_hint": "Select from list",
+        "toggle_field": {
+          "control_type": "text",
+          "label": "Opportunity Access",
+          "toggle_hint": "Enter custom value",
+          "optional": true,
+          "custom": false,
+          "sfdc_createable": true,
+          "sfdc_updateable": true,
+          "type": "string",
+          "name": "OpportunityAccessLevel"
+        },
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "string",
+        "name": "OpportunityId",
+        "control_type": "text",
+        "label": "Opportunity ID",
+        "custom": false,
+        "foreign_key": "Opportunity",
+        "fetch_with": "get_custom_object(id, sobject_name: Opportunity)",
+        "join_point_label": "Opportunity",
+        "sfdc_createable": true,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "object",
+        "name": "get_custom_object+OpportunityId",
+        "label": "Opportunity",
+        "properties": [
+
+        ],
+        "fetch_with": "get_custom_object(OpportunityId>id, sobject_name: Opportunity)",
+        "join_point": true
+      },
+      {
+        "type": "string",
+        "name": "Id",
+        "control_type": "text",
+        "label": "Opportunity Team Member ID",
+        "optional": true,
+        "custom": false,
+        "key_scope": "OpportunityTeamMember",
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "Name",
+        "control_type": "text",
+        "label": "Opportunity Team Member Name",
+        "optional": true,
+        "custom": false,
+        "event_title": true,
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "date_time",
+        "name": "SystemModstamp",
+        "control_type": "date_time",
+        "label": "System Modstamp",
+        "optional": true,
+        "custom": false,
+        "render_input": "render_iso8601_timestamp",
+        "parse_output": "parse_iso8601_timestamp",
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "TeamMemberRole",
+        "control_type": "select",
+        "label": "Team Role",
+        "pick_list": "sobject_field_values_list",
+        "pick_list_params": {
+          "sobject_name": "\"OpportunityTeamMember\""
+        },
+        "optional": true,
+        "custom": false,
+        "toggle_hint": "Select from list",
+        "toggle_field": {
+          "control_type": "text",
+          "label": "Team Role",
+          "toggle_hint": "Enter custom value",
+          "optional": true,
+          "custom": false,
+          "sfdc_createable": true,
+          "sfdc_updateable": true,
+          "type": "string",
+          "name": "TeamMemberRole"
+        },
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "string",
+        "name": "Title",
+        "control_type": "text",
+        "label": "Title",
+        "optional": true,
+        "custom": false,
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "PhotoUrl",
+        "control_type": "url",
+        "label": "Url for thumbnail sized photo",
+        "optional": true,
+        "custom": false,
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "UserId",
+        "control_type": "text",
+        "label": "User ID",
+        "custom": false,
+        "foreign_key": "User",
+        "fetch_with": "get_custom_object(id, sobject_name: User)",
+        "join_point_label": "User",
+        "sfdc_createable": true,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "object",
+        "name": "get_custom_object+UserId",
+        "label": "User",
+        "properties": [
+
+        ],
+        "fetch_with": "get_custom_object(UserId>id, sobject_name: User)",
+        "join_point": true
+      },
+      {
+        "type": "string",
+        "name": "CaseSafeID__c",
+        "control_type": "text",
+        "label": "CaseSafeID - Opp Team Member",
+        "optional": true,
+        "custom": true,
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "string",
+        "name": "LegacyMigrationID__c",
+        "control_type": "text",
+        "label": "Legacy Migration ID",
+        "optional": true,
+        "custom": true,
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      },
+      {
+        "type": "number",
+        "name": "PowerOfOne__c",
+        "control_type": "number",
+        "label": "PowerOfOne - Opp Team Member",
+        "optional": true,
+        "custom": true,
+        "parse_output": "float_conversion",
+        "sfdc_createable": false,
+        "sfdc_updateable": false
+      },
+      {
+        "type": "boolean",
+        "name": "SourcedByBDR__c",
+        "control_type": "checkbox",
+        "label": "Sourced By BDR",
+        "optional": true,
+        "custom": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Sourced By BDR",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "custom": true,
+          "sfdc_createable": true,
+          "sfdc_updateable": true,
+          "type": "boolean",
+          "name": "SourcedByBDR__c"
+        },
+        "render_input": {
+        },
+        "parse_output": {
+        },
+        "sfdc_createable": true,
+        "sfdc_updateable": true
+      }
+    ],
+    "extended_input_schema": [
+      {
+        "type": "string",
+        "name": "since_offset",
+        "control_type": "select",
+        "label": "When first started, this recipe should pick up events from",
+        "hint": "When starting the recipe for the first time, picks up Salesforce records from the specified date and time. <b>Once the recipe has been run or tested, this value cannot be changed.</b>",
+        "default": -3600,
+        "pick_list": [
+          [
+            "Recipe start",
+            0
+          ],
+          [
+            "An hour ago",
+            -3600
+          ],
+          [
+            "Yesterday",
+            -86400
+          ],
+          [
+            "Last week",
+            -604800
+          ],
+          [
+            "Last month",
+            -2629746
+          ],
+          [
+            "Beginning of time",
+            "no_limit"
+          ]
+        ],
+        "toggle_hint": "Select from list",
+        "toggle_field": {
+          "control_type": "date_time",
+          "label": "When first started, this recipe should pick up events from",
+          "render_input": "convert_date_time",
+          "parse_output": "convert_date_time",
+          "toggle_hint": "Enter custom value",
+          "since_field": true,
+          "hint": "When starting the recipe for the first time, picks up Salesforce records from the specified date and time. <b>Once the recipe has been run or tested, this value cannot be changed.</b>",
+          "type": "date_time",
+          "name": "since"
+        },
+        "since_field": true
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "workato_service",
+            "name": "call_service",
+            "as": "0db554ca",
+            "title": null,
+            "description": "Call recipe <span class=\"provider\">Callable - Get employee details from Workday</span> ",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "flow_id": "Callable - Get employee details from Workday"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "flow_id": {
+                "zip_name": "util/callable_get_employee_details_from_workday.recipe.json",
+                "name": "Callable - Get employee details from Workday",
+                "folder": "util"
+              },
+              "request": {
+                "shortEmail": "#{_('data.salesforce.0eede6e9.get_custom_object(UserId>id, sobject_name: User).Email')}",
+                "longEmail": "#{_('data.salesforce.0eede6e9.get_custom_object(UserId>id, sobject_name: User).Email')}",
+                "employeeId": "#{_('data.salesforce.0eede6e9.get_custom_object(UserId>id, sobject_name: User).EmployeeID__c')}"
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "object",
+                "name": "reply",
+                "label": "Reply",
+                "properties": [
+                  {
+                    "name": "report",
+                    "type": "array",
+                    "of": "object",
+                    "label": "Report",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Employee ID",
+                        "type": "string",
+                        "name": "Employee_ID"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Short email",
+                        "type": "string",
+                        "name": "shortEmail"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Long email",
+                        "type": "string",
+                        "name": "longEmail"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Username",
+                        "type": "string",
+                        "name": "username"
+                      }
+                    ]
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "request",
+                "label": "Recipe input",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Short email",
+                    "name": "shortEmail",
+                    "type": "string",
+                    "optional": true,
+                    "parent": "request"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Long email",
+                    "name": "longEmail",
+                    "type": "string",
+                    "optional": true,
+                    "parent": "request"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Employee ID",
+                    "name": "employeeId",
+                    "type": "string",
+                    "optional": true,
+                    "parent": "request"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "flow_id",
+              "request.shortEmail",
+              "request.longEmail",
+              "request.employeeId"
+            ],
+            "uuid": "de63874a-9707-4e6a-a96d-ef919b8d352b"
+          },
+          {
+            "number": 3,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "present",
+                  "lhs": "#{_('data.workato_service.0db554ca.reply.report.first.username')}",
+                  "rhs": "",
+                  "uuid": "condition-d22c818e-a611-4c69-8088-7f525fa4a69c"
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 4,
+                "provider": "slack_bot",
+                "name": "post_bot_message",
+                "as": "6115ae4e",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                  "channel": true
+                },
+                "input": {
+                  "channel": "@#{_('data.workato_service.0db554ca.reply.report.first.username')}",
+                  "attachment_fields": [
+                    {
+                      "title": "Opportunity Name",
+                      "value": "<#{_('data.workato.job_context.account_properties.salesforce_url', 'account_property', 'salesforce.url')}lightning/r/Opportunity/#{_('data.salesforce.0eede6e9.OpportunityId')}/view | #{_('data.salesforce.0eede6e9.get_custom_object(OpportunityId>id, sobject_name: Opportunity).Name')}>"
+                    },
+                    {
+                      "title": "Account",
+                      "value": "<#{_('data.workato.job_context.account_properties.salesforce_url', 'account_property', 'salesforce.url')}lightning/r/Account/#{_('data.salesforce.0eede6e9.get_custom_object(OpportunityId>id, sobject_name: Opportunity).AccountId')}/view | #{_('data.salesforce.0eede6e9.get_custom_object(OpportunityId>id, sobject_name: Opportunity).get_custom_object(AccountId>id, sobject_name: Account).Name')}>"
+                    },
+                    {
+                      "title": "Opportunity Owner",
+                      "value": "#{_('data.salesforce.0eede6e9.get_custom_object(OpportunityId>id, sobject_name: Opportunity).get_custom_object(OwnerId>id, sobject_name: User).Name')}"
+                    }
+                  ],
+                  "text": "You have been added to an opportunity team in Salesforce"
+                },
+                "visible_config_fields": [
+                  "blocks",
+                  "blocks.block_type",
+                  "blocks.section_text",
+                  "blocks.image_url",
+                  "blocks.alt_text",
+                  "blocks.button_title",
+                  "blocks.url",
+                  "blocks.bot_command",
+                  "blocks.params",
+                  "blocks.style",
+                  "blocks.attachment_fields",
+                  "blocks.attachment_fields.value",
+                  "blocks.placeholder_text",
+                  "blocks.menu_type",
+                  "blocks.dynamic_menu_recipe",
+                  "blocks.field_name",
+                  "blocks.options",
+                  "blocks.options.title",
+                  "blocks.options.bot_command",
+                  "blocks.options.params",
+                  "blocks.options.init_value",
+                  "blocks.init_option",
+                  "blocks.initial_date",
+                  "blocks.options.value",
+                  "blocks.init_options",
+                  "blocks.image_title",
+                  "blocks.external_id",
+                  "blocks.elements",
+                  "blocks.elements.type",
+                  "blocks.elements.text",
+                  "blocks.elements.image_url",
+                  "blocks.elements.alt_text",
+                  "blocks.actions",
+                  "blocks.actions.type",
+                  "blocks.actions.button_title",
+                  "blocks.actions.url",
+                  "blocks.actions.bot_command",
+                  "blocks.actions.params",
+                  "blocks.actions.style",
+                  "blocks.actions.placeholder_text",
+                  "blocks.actions.initial_date",
+                  "blocks.actions.field_name",
+                  "blocks.actions.options",
+                  "blocks.actions.options.params",
+                  "blocks.actions.menu_type",
+                  "blocks.actions.dynamic_menu_recipe",
+                  "blocks.objects",
+                  "blocks.objects.blocks",
+                  "blocks.objects.blocks.block_type",
+                  "blocks.objects.blocks.section_text",
+                  "blocks.objects.blocks.image_url",
+                  "blocks.objects.blocks.alt_text",
+                  "blocks.objects.blocks.button_title",
+                  "blocks.objects.blocks.url",
+                  "blocks.objects.blocks.bot_command",
+                  "blocks.objects.blocks.params",
+                  "blocks.objects.blocks.style",
+                  "blocks.objects.blocks.attachment_fields",
+                  "blocks.objects.blocks.attachment_fields.value",
+                  "blocks.objects.blocks.placeholder_text",
+                  "blocks.objects.blocks.menu_type",
+                  "blocks.objects.blocks.dynamic_menu_recipe",
+                  "blocks.objects.blocks.field_name",
+                  "blocks.objects.blocks.options",
+                  "blocks.objects.blocks.options.title",
+                  "blocks.objects.blocks.options.bot_command",
+                  "blocks.objects.blocks.options.params",
+                  "blocks.objects.blocks.options.init_value",
+                  "blocks.objects.blocks.init_option",
+                  "blocks.objects.blocks.initial_date",
+                  "blocks.objects.blocks.image_title",
+                  "blocks.objects.blocks.elements",
+                  "blocks.objects.blocks.elements.type",
+                  "blocks.objects.blocks.elements.text",
+                  "blocks.objects.blocks.elements.image_url",
+                  "blocks.objects.blocks.elements.alt_text",
+                  "blocks.objects.blocks.actions",
+                  "blocks.objects.blocks.actions.type",
+                  "blocks.objects.blocks.actions.button_title",
+                  "blocks.objects.blocks.actions.url",
+                  "blocks.objects.blocks.actions.bot_command",
+                  "blocks.objects.blocks.actions.params",
+                  "blocks.objects.blocks.actions.style",
+                  "blocks.objects.blocks.actions.placeholder_text",
+                  "blocks.objects.blocks.actions.initial_date",
+                  "blocks.objects.blocks.actions.field_name",
+                  "blocks.objects.blocks.actions.options",
+                  "blocks.objects.blocks.actions.options.params",
+                  "blocks.objects.blocks.actions.menu_type",
+                  "blocks.objects.blocks.actions.dynamic_menu_recipe",
+                  "text",
+                  "message.title",
+                  "message.title_link",
+                  "message.attachment_text",
+                  "message.color",
+                  "attachment_fields",
+                  "attachment_buttons",
+                  "attachment_items.message.title",
+                  "attachment_items.message.title_link",
+                  "attachment_items.message.attachment_text",
+                  "attachment_items.message.color",
+                  "attachment_items.attachment_fields",
+                  "attachment_items.attachment_buttons",
+                  "advanced.ts",
+                  "attachment_fields.value",
+                  "attachment_fields.title"
+                ],
+                "uuid": "489d49fd-d2d1-4116-b389-dd9864046ddb"
+              }
+            ],
+            "uuid": "e8833d6a-b528-47fc-83ca-57307d4366d3"
+          },
+          {
+            "number": 5,
+            "as": "b5508e4c",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "3",
+              "retry_interval": "10"
+            },
+            "block": [
+
+            ],
+            "uuid": "64eb3cd4-98e0-4014-b265-b376ab50b388"
+          }
+        ],
+        "uuid": "2e3e922f-5579-4d72-a7f2-dbdb346a41ca"
+      }
+    ],
+    "uuid": "9ca5a2f3-42ee-4ec7-84db-7b7f10c00dd2"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "salesforce",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/salesforce.connection.json",
+        "name": "Salesforce",
+        "folder": "connections"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "slack_bot",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/workatointegrations.connection.json",
+        "name": "workatointegrations",
+        "folder": "connections"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

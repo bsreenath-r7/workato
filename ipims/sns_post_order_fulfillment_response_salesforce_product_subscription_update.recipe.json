@@ -1,0 +1,2319 @@
+{
+  "name": "SNS Post Order Fulfillment Response - Salesforce Product/Subscription Update",
+  "description": "When there is a new event via HTTP webhook, do action",
+  "version": 8,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "workato_webhooks",
+    "name": "new_event",
+    "as": "9175f299",
+    "title": null,
+    "description": "<span class=\"provider\">Order fulfillment response salesforce</span> via <span class=\"provider\">HTTP webhook</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "request": {
+        "webhook_type": "json",
+        "payload_schema": "[{\"control_type\":\"text\",\"label\":\"Type\",\"type\":\"string\",\"name\":\"Type\"},{\"control_type\":\"text\",\"label\":\"Message ID\",\"type\":\"string\",\"name\":\"MessageId\"},{\"control_type\":\"text\",\"label\":\"Topic arn\",\"type\":\"string\",\"name\":\"TopicArn\"},{\"control_type\":\"text\",\"label\":\"Subject\",\"type\":\"string\",\"name\":\"Subject\"},{\"control_type\":\"text\",\"label\":\"Message\",\"type\":\"string\",\"name\":\"Message\"},{\"control_type\":\"text\",\"label\":\"Timestamp\",\"render_input\":\"date_time_conversion\",\"parse_output\":\"date_time_conversion\",\"type\":\"date_time\",\"name\":\"Timestamp\"},{\"control_type\":\"text\",\"label\":\"Signature version\",\"type\":\"string\",\"name\":\"SignatureVersion\"},{\"control_type\":\"text\",\"label\":\"Signature\",\"type\":\"string\",\"name\":\"Signature\"},{\"control_type\":\"text\",\"label\":\"Signing cert URL\",\"type\":\"string\",\"name\":\"SigningCertURL\"},{\"control_type\":\"text\",\"label\":\"Unsubscribe URL\",\"type\":\"string\",\"name\":\"UnsubscribeURL\"}]"
+      },
+      "webhook_suffix": "Order Fulfillment Response Salesforce"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "headers",
+        "label": "Headers",
+        "properties": [
+
+        ]
+      },
+      {
+        "type": "object",
+        "name": "payload",
+        "label": "Payload",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Type",
+            "type": "string",
+            "name": "Type"
+          },
+          {
+            "control_type": "text",
+            "label": "Message ID",
+            "type": "string",
+            "name": "MessageId"
+          },
+          {
+            "control_type": "text",
+            "label": "Topic arn",
+            "type": "string",
+            "name": "TopicArn"
+          },
+          {
+            "control_type": "text",
+            "label": "Subject",
+            "type": "string",
+            "name": "Subject"
+          },
+          {
+            "control_type": "text",
+            "label": "Message",
+            "type": "string",
+            "name": "Message"
+          },
+          {
+            "control_type": "text",
+            "label": "Timestamp",
+            "render_input": "date_time_conversion",
+            "parse_output": "date_time_conversion",
+            "type": "date_time",
+            "name": "Timestamp"
+          },
+          {
+            "control_type": "text",
+            "label": "Signature version",
+            "type": "string",
+            "name": "SignatureVersion"
+          },
+          {
+            "control_type": "text",
+            "label": "Signature",
+            "type": "string",
+            "name": "Signature"
+          },
+          {
+            "control_type": "text",
+            "label": "Signing cert URL",
+            "type": "string",
+            "name": "SigningCertURL"
+          },
+          {
+            "control_type": "text",
+            "label": "Unsubscribe URL",
+            "type": "string",
+            "name": "UnsubscribeURL"
+          }
+        ]
+      }
+    ],
+    "extended_input_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Payload configuration",
+        "properties": [
+          {
+            "control_type": "select",
+            "label": "Webhook type",
+            "pick_list": [
+              [
+                "GET request",
+                "get"
+              ],
+              [
+                "PUT/POST with JSON payload",
+                "json"
+              ],
+              [
+                "PUT/POST with XML payload",
+                "xml"
+              ],
+              [
+                "PUT/POST with FORM encoded payload",
+                "form"
+              ],
+              [
+                "PUT/POST with raw binary data",
+                "rawdata"
+              ],
+              [
+                "PUT/POST with unicode text data",
+                "rawdatatxt"
+              ]
+            ],
+            "hint": "Select the HTTP method and payload data type used by webhook. <a href=\"https://support.workato.com/support/solutions/articles/1000241356-http-real-time-webhook-type\" target=\"_blank\">Learn more</a>",
+            "default": "json",
+            "extends_schema": true,
+            "type": "string",
+            "name": "webhook_type"
+          },
+          {
+            "control_type": "schema-designer",
+            "label": "Payload schema",
+            "sample_data_type": "json_http",
+            "extends_schema": true,
+            "empty_schema_title": "Describe all fields in your response.",
+            "optional": true,
+            "sticky": true,
+            "type": "string",
+            "name": "payload_schema"
+          },
+          {
+            "control_type": "schema-designer",
+            "label": "Headers",
+            "extends_schema": true,
+            "empty_schema_title": "Describe all the webhook headers",
+            "optional": true,
+            "sticky": true,
+            "type": "string",
+            "name": "headers_schema"
+          }
+        ],
+        "override": true
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "json_parser",
+        "name": "parse_json",
+        "as": "68b3b8ce",
+        "title": null,
+        "description": null,
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "sample_document": "{\n   \"subscription\":{\n      \"id\":\"10912026\",\n      \"licensingEventId\":\"110503\",\n      \"status\":\"FAILURE\",\n      \"number\":\"S782073\",\n      \"source\":\"NETSUITE\",\n      \"object\":\"SALES_ORDER\",\n      \"customer\":{\n         \"id\":\"1544527\",\n         \"name\":\"2nd Watch\",\n         \"ipimsCustomerId\":\"\"\n      },\n      \"errorInformation\":{\n         \"errorType\":\"VALIDATION\",\n         \"errorDescription\":\"Netsuite id: 676559 already exists. Cannot provision new InsightVM product, id: 676559 already in use on an existing license\",\n         \"message\":{\n            \"subscription\":{\n               \"id\":\"10912026\",\n               \"licensingEventId\":\"110503\",\n               \"source\":\"NETSUITE\",\n               \"number\":\"S782073\",\n               \"object\":\"SALES_ORDER\",\n               \"customer\":{\n                  \"id\":\"1544527\",\n                  \"name\":\"2nd Watch\",\n                  \"ipimsOrgId\":\"\",\n                  \"ipimsCustomerId\":\"\"\n               },\n               \"products\":[\n                  {\n                     \"type\":\"PURCHASED\",\n                     \"licenseId\":\"NXL676559\",\n                     \"id\":\"676559\",\n                     \"startDate\":\"\",\n                     \"productFamily\":\"Nexpose\",\n                     \"attributes\":{\n                        \"numberOfHostedNodes\":\"0\",\n                        \"scanEngineCount\":\"999\",\n                        \"assetBuffer\":\"200\",\n                        \"licenseModel\":\"GENLIC\",\n                        \"adaptiveSecurity\":\"true\",\n                        \"agents\":\"false\",\n                        \"centrics\":\"false\",\n                        \"cis\":\"true\",\n                        \"cloud\":\"false\",\n                        \"community\":\"false\",\n                        \"customreporting\":\"true\",\n                        \"disastigs\":\"true\",\n                        \"discovery\":\"true\",\n                        \"earlyAccess\":\"false\",\n                        \"editor\":\"true\",\n                        \"enginePool\":\"true\",\n                        \"exposureAnalytics\":\"true\",\n                        \"express\":\"false\",\n                        \"fdcc\":\"true\",\n                        \"liveNode\":\"true\",\n                        \"mobile\":\"true\",\n                        \"msspDiscovery\":\"false\",\n                        \"multitenancy\":\"false\",\n                        \"pci\":\"true\",\n                        \"policyScan\":\"true\",\n                        \"remediationAnalytics\":\"false\",\n                        \"richDataExport\":\"true\",\n                        \"scada\":\"true\",\n                        \"usgcb\":\"true\",\n                        \"webScan\":\"true\",\n                        \"virtualization\":\"true\",\n                        \"numberOfNodes\":\"10000\"\n                     },\n                     \"orderType\":\"paid\",\n                     \"expirationDate\":\"1639728000000\",\n                     \"contact\":{\n                        \"email\":\"mike@2ndwatch.com\",\n                        \"firstName\":\"Mike\",\n                        \"lastName\":\"Bliesner\",\n                        \"id\":\"1544528\"\n                     },\n                     \"datacenterLocation\":\"\",\n                     \"lineSequenceId\":\"23861\",\n                     \"productKey\":\"5YYZ-W1JK-Y3TQ-X0YY\",\n                     \"productSerialNumber\":\"32CBF9769E9DE9DE644FC16CF579BEAB97D06371\"\n                  },\n                  {\n                     \"type\":\"PURCHASED\",\n                     \"licenseId\":\"NXL676559\",\n                     \"id\":\"676559\",\n                     \"startDate\":\"\",\n                     \"productFamily\":\"InsightVM\",\n                     \"attributes\":{\n                        \"numberOfHostedNodes\":\"\",\n                        \"scanEngineCount\":\"\",\n                        \"assetBuffer\":\"\",\n                        \"licenseModel\":\"\",\n                        \"adaptiveSecurity\":\"\",\n                        \"agents\":\"\",\n                        \"centrics\":\"\",\n                        \"cis\":\"\",\n                        \"cloud\":\"\",\n                        \"community\":\"\",\n                        \"customreporting\":\"\",\n                        \"disastigs\":\"\",\n                        \"discovery\":\"\",\n                        \"earlyAccess\":\"\",\n                        \"editor\":\"\",\n                        \"enginePool\":\"\",\n                        \"exposureAnalytics\":\"\",\n                        \"express\":\"\",\n                        \"fdcc\":\"\",\n                        \"liveNode\":\"\",\n                        \"mobile\":\"\",\n                        \"msspDiscovery\":\"\",\n                        \"multitenancy\":\"\",\n                        \"pci\":\"\",\n                        \"policyScan\":\"\",\n                        \"remediationAnalytics\":\"\",\n                        \"richDataExport\":\"\",\n                        \"scada\":\"\",\n                        \"usgcb\":\"\",\n                        \"webScan\":\"\",\n                        \"virtualization\":\"\",\n                        \"numberOfNodes\":\"\"\n                     },\n                     \"orderType\":\"paid\",\n                     \"expirationDate\":\"1639728000000\",\n                     \"contact\":{\n                        \"email\":\"mike@2ndwatch.com\",\n                        \"firstName\":\"Mike\",\n                        \"lastName\":\"Bliesner\",\n                        \"id\":\"1544528\"\n                     },\n                     \"datacenterLocation\":\"us\",\n                     \"lineSequenceId\":\"23861\",\n                     \"productKey\":\"\",\n                     \"productSerialNumber\":\"\"\n                  }\n               ]\n            }\n         }\n      },\n      \"products\":[\n         {\n            \"id\":\"676559\",\n            \"type\":\"PURCHASED\",\n            \"licenseId\":\"NXL676559\",\n            \"lineSequenceId\":\"23861\",\n            \"orderType\":\"paid\",\n            \"productFamily\":\"Nexpose\",\n            \"productToken\":\"4D668B835821EE0B0000\",\n            \"startDate\":null,\n            \"expirationDate\":1639728000000,\n            \"productKey\":\"5YYZ-W1JK-Y3TQ-X0YY\",\n            \"productSerialNumber\":\"32CBF9769E9DE9DE644FC16CF579BEAB97D06371\",\n            \"contact\":{\n               \"id\":\"1544528\",\n               \"firstName\":\"Mike\",\n               \"lastName\":\"Bliesner\",\n               \"email\":\"mike@2ndwatch.com\",\n               \"fullName\":\"Mike Bliesner\"\n            },\n            \"attributes\":{\n               \"licenseModel\":\"GENLIC\",\n               \"scanEngineCount\":999,\n               \"msspDiscovery\":\"false\",\n               \"earlyAccess\":\"false\",\n               \"numberOfHostedNodes\":\"0\",\n               \"express\":\"false\",\n               \"remediationAnalytics\":\"false\",\n               \"numberOfNodes\":\"10000\",\n               \"cis\":\"true\",\n               \"exposureAnalytics\":\"true\",\n               \"multitenancy\":\"false\",\n               \"scada\":\"true\",\n               \"usgcb\":\"true\",\n               \"cloud\":\"false\",\n               \"pci\":\"true\",\n               \"webScan\":\"true\",\n               \"assetBuffer\":\"200\",\n               \"editor\":\"true\",\n               \"virtualization\":\"true\",\n               \"richDataExport\":\"true\",\n               \"mobile\":\"true\",\n               \"community\":\"false\",\n               \"customreporting\":\"true\",\n               \"enginePool\":\"true\",\n               \"agents\":\"false\",\n               \"fdcc\":\"true\",\n               \"liveNode\":\"true\",\n               \"disastigs\":\"true\",\n               \"policyScan\":\"true\",\n               \"discovery\":\"true\",\n               \"centrics\":\"false\",\n               \"adaptiveSecurity\":\"true\"\n            },\n            \"package\":{\n               \"packageName\":\"IDR-ULT-SUB\",\n               \"packageId\":\"SUPK-VH87-SV74-NZHN-JCK3\"\n            }\n         }\n      ]\n   }\n}",
+          "document": "#{_('data.workato_webhooks.9175f299.payload.Message')}"
+        },
+        "extended_output_schema": [
+          {
+            "type": "object",
+            "name": "document",
+            "label": "Document",
+            "properties": [
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "ID",
+                    "type": "string",
+                    "name": "id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Licensing event ID",
+                    "type": "string",
+                    "name": "licensingEventId"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Status",
+                    "type": "string",
+                    "name": "status"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Number",
+                    "type": "string",
+                    "name": "number"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Source",
+                    "type": "string",
+                    "name": "source"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Object",
+                    "type": "string",
+                    "name": "object"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "ID",
+                        "type": "string",
+                        "name": "id"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Name",
+                        "type": "string",
+                        "name": "name"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Ipims customer ID",
+                        "type": "string",
+                        "name": "ipimsCustomerId"
+                      }
+                    ],
+                    "label": "Customer",
+                    "type": "object",
+                    "name": "customer"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Error type",
+                        "type": "string",
+                        "name": "errorType"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Error description",
+                        "type": "string",
+                        "name": "errorDescription"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "ID",
+                                "type": "string",
+                                "name": "id"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Licensing event ID",
+                                "type": "string",
+                                "name": "licensingEventId"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Source",
+                                "type": "string",
+                                "name": "source"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Number",
+                                "type": "string",
+                                "name": "number"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Object",
+                                "type": "string",
+                                "name": "object"
+                              },
+                              {
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "ID",
+                                    "type": "string",
+                                    "name": "id"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Name",
+                                    "type": "string",
+                                    "name": "name"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Ipims org ID",
+                                    "type": "string",
+                                    "name": "ipimsOrgId"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Ipims customer ID",
+                                    "type": "string",
+                                    "name": "ipimsCustomerId"
+                                  }
+                                ],
+                                "label": "Customer",
+                                "type": "object",
+                                "name": "customer"
+                              },
+                              {
+                                "name": "products",
+                                "type": "array",
+                                "of": "object",
+                                "label": "Products",
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "Type",
+                                    "type": "string",
+                                    "name": "type"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "License ID",
+                                    "type": "string",
+                                    "name": "licenseId"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "ID",
+                                    "type": "string",
+                                    "name": "id"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Start date",
+                                    "type": "string",
+                                    "name": "startDate"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Product family",
+                                    "type": "string",
+                                    "name": "productFamily"
+                                  },
+                                  {
+                                    "properties": [
+                                      {
+                                        "control_type": "text",
+                                        "label": "Number of hosted nodes",
+                                        "type": "string",
+                                        "name": "numberOfHostedNodes"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Scan engine count",
+                                        "type": "string",
+                                        "name": "scanEngineCount"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Asset buffer",
+                                        "type": "string",
+                                        "name": "assetBuffer"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "License model",
+                                        "type": "string",
+                                        "name": "licenseModel"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Adaptive security",
+                                        "type": "string",
+                                        "name": "adaptiveSecurity"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Agents",
+                                        "type": "string",
+                                        "name": "agents"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Centrics",
+                                        "type": "string",
+                                        "name": "centrics"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Cis",
+                                        "type": "string",
+                                        "name": "cis"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Cloud",
+                                        "type": "string",
+                                        "name": "cloud"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Community",
+                                        "type": "string",
+                                        "name": "community"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Customreporting",
+                                        "type": "string",
+                                        "name": "customreporting"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Disastigs",
+                                        "type": "string",
+                                        "name": "disastigs"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Discovery",
+                                        "type": "string",
+                                        "name": "discovery"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Early access",
+                                        "type": "string",
+                                        "name": "earlyAccess"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Editor",
+                                        "type": "string",
+                                        "name": "editor"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Engine pool",
+                                        "type": "string",
+                                        "name": "enginePool"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Exposure analytics",
+                                        "type": "string",
+                                        "name": "exposureAnalytics"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Express",
+                                        "type": "string",
+                                        "name": "express"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Fdcc",
+                                        "type": "string",
+                                        "name": "fdcc"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Live node",
+                                        "type": "string",
+                                        "name": "liveNode"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Mobile",
+                                        "type": "string",
+                                        "name": "mobile"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Mssp discovery",
+                                        "type": "string",
+                                        "name": "msspDiscovery"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Multitenancy",
+                                        "type": "string",
+                                        "name": "multitenancy"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Pci",
+                                        "type": "string",
+                                        "name": "pci"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Policy scan",
+                                        "type": "string",
+                                        "name": "policyScan"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Remediation analytics",
+                                        "type": "string",
+                                        "name": "remediationAnalytics"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Rich data export",
+                                        "type": "string",
+                                        "name": "richDataExport"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Scada",
+                                        "type": "string",
+                                        "name": "scada"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Usgcb",
+                                        "type": "string",
+                                        "name": "usgcb"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Web scan",
+                                        "type": "string",
+                                        "name": "webScan"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Virtualization",
+                                        "type": "string",
+                                        "name": "virtualization"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Number of nodes",
+                                        "type": "string",
+                                        "name": "numberOfNodes"
+                                      }
+                                    ],
+                                    "label": "Attributes",
+                                    "type": "object",
+                                    "name": "attributes"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Order type",
+                                    "type": "string",
+                                    "name": "orderType"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Expiration date",
+                                    "type": "string",
+                                    "name": "expirationDate"
+                                  },
+                                  {
+                                    "properties": [
+                                      {
+                                        "control_type": "text",
+                                        "label": "Email",
+                                        "type": "string",
+                                        "name": "email"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "First name",
+                                        "type": "string",
+                                        "name": "firstName"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Last name",
+                                        "type": "string",
+                                        "name": "lastName"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "ID",
+                                        "type": "string",
+                                        "name": "id"
+                                      }
+                                    ],
+                                    "label": "Contact",
+                                    "type": "object",
+                                    "name": "contact"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Datacenter location",
+                                    "type": "string",
+                                    "name": "datacenterLocation"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Line sequence ID",
+                                    "type": "string",
+                                    "name": "lineSequenceId"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Product key",
+                                    "type": "string",
+                                    "name": "productKey"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Product serial number",
+                                    "type": "string",
+                                    "name": "productSerialNumber"
+                                  }
+                                ]
+                              }
+                            ],
+                            "label": "Subscription",
+                            "type": "object",
+                            "name": "subscription"
+                          }
+                        ],
+                        "label": "Message",
+                        "type": "object",
+                        "name": "message"
+                      }
+                    ],
+                    "label": "Error information",
+                    "type": "object",
+                    "name": "errorInformation"
+                  },
+                  {
+                    "name": "products",
+                    "type": "array",
+                    "of": "object",
+                    "label": "Products",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "ID",
+                        "type": "string",
+                        "name": "id"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Type",
+                        "type": "string",
+                        "name": "type"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "License ID",
+                        "type": "string",
+                        "name": "licenseId"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Line sequence ID",
+                        "type": "string",
+                        "name": "lineSequenceId"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Order type",
+                        "type": "string",
+                        "name": "orderType"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Product family",
+                        "type": "string",
+                        "name": "productFamily"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Product token",
+                        "type": "string",
+                        "name": "productToken"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Start date",
+                        "type": "string",
+                        "name": "startDate"
+                      },
+                      {
+                        "control_type": "number",
+                        "label": "Expiration date",
+                        "parse_output": "float_conversion",
+                        "type": "number",
+                        "name": "expirationDate"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Product key",
+                        "type": "string",
+                        "name": "productKey"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Product serial number",
+                        "type": "string",
+                        "name": "productSerialNumber"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "ID",
+                            "type": "string",
+                            "name": "id"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "First name",
+                            "type": "string",
+                            "name": "firstName"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Last name",
+                            "type": "string",
+                            "name": "lastName"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Email",
+                            "type": "string",
+                            "name": "email"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Full name",
+                            "type": "string",
+                            "name": "fullName"
+                          }
+                        ],
+                        "label": "Contact",
+                        "type": "object",
+                        "name": "contact"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "License model",
+                            "type": "string",
+                            "name": "licenseModel"
+                          },
+                          {
+                            "control_type": "number",
+                            "label": "Scan engine count",
+                            "parse_output": "float_conversion",
+                            "type": "number",
+                            "name": "scanEngineCount"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Mssp discovery",
+                            "type": "string",
+                            "name": "msspDiscovery"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Early access",
+                            "type": "string",
+                            "name": "earlyAccess"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Number of hosted nodes",
+                            "type": "string",
+                            "name": "numberOfHostedNodes"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Express",
+                            "type": "string",
+                            "name": "express"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Remediation analytics",
+                            "type": "string",
+                            "name": "remediationAnalytics"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Number of nodes",
+                            "type": "string",
+                            "name": "numberOfNodes"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Cis",
+                            "type": "string",
+                            "name": "cis"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Exposure analytics",
+                            "type": "string",
+                            "name": "exposureAnalytics"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Multitenancy",
+                            "type": "string",
+                            "name": "multitenancy"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Scada",
+                            "type": "string",
+                            "name": "scada"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Usgcb",
+                            "type": "string",
+                            "name": "usgcb"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Cloud",
+                            "type": "string",
+                            "name": "cloud"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Pci",
+                            "type": "string",
+                            "name": "pci"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Web scan",
+                            "type": "string",
+                            "name": "webScan"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Asset buffer",
+                            "type": "string",
+                            "name": "assetBuffer"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Editor",
+                            "type": "string",
+                            "name": "editor"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Virtualization",
+                            "type": "string",
+                            "name": "virtualization"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Rich data export",
+                            "type": "string",
+                            "name": "richDataExport"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Mobile",
+                            "type": "string",
+                            "name": "mobile"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Community",
+                            "type": "string",
+                            "name": "community"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Customreporting",
+                            "type": "string",
+                            "name": "customreporting"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Engine pool",
+                            "type": "string",
+                            "name": "enginePool"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Agents",
+                            "type": "string",
+                            "name": "agents"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Fdcc",
+                            "type": "string",
+                            "name": "fdcc"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Live node",
+                            "type": "string",
+                            "name": "liveNode"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Disastigs",
+                            "type": "string",
+                            "name": "disastigs"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Policy scan",
+                            "type": "string",
+                            "name": "policyScan"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Discovery",
+                            "type": "string",
+                            "name": "discovery"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Centrics",
+                            "type": "string",
+                            "name": "centrics"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Adaptive security",
+                            "type": "string",
+                            "name": "adaptiveSecurity"
+                          }
+                        ],
+                        "label": "Attributes",
+                        "type": "object",
+                        "name": "attributes"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Package name",
+                            "type": "string",
+                            "name": "packageName"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Package ID",
+                            "type": "string",
+                            "name": "packageId"
+                          }
+                        ],
+                        "label": "Package",
+                        "type": "object",
+                        "name": "package"
+                      }
+                    ]
+                  }
+                ],
+                "label": "Subscription",
+                "type": "object",
+                "name": "subscription"
+              }
+            ]
+          }
+        ],
+        "uuid": "09a0ab8c-a497-4227-b367-8ab63b87dae9"
+      },
+      {
+        "number": 2,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "present",
+              "lhs": "#{_('data.json_parser.68b3b8ce.document.subscription.status')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 3,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "equals_to",
+                  "lhs": "#{_('data.json_parser.68b3b8ce.document.subscription.status')}",
+                  "rhs": "SUCCESS"
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 4,
+                "provider": "workato_variable",
+                "name": "declare_list",
+                "as": "d8791062",
+                "title": " Create products list",
+                "description": "Create <span class=\"provider\">products</span> list",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "name": "products",
+                  "list_item_schema_json": "[{\"control_type\":\"text\",\"label\":\"Line sequence ID\",\"name\":\"lineSequenceId\",\"type\":\"string\",\"optional\":false,\"hint\":\"lineSequenceId from IPIMS post\"},{\"control_type\":\"text\",\"label\":\"Product key\",\"name\":\"productKey\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Product token\",\"name\":\"productToken\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Package ID\",\"name\":\"packageId\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"date\",\"label\":\"Start date\",\"render_input\":\"date_conversion\",\"parse_output\":\"date_conversion\",\"name\":\"startDate\",\"type\":\"date_time\",\"optional\":true},{\"control_type\":\"date\",\"label\":\"End date\",\"render_input\":\"date_conversion\",\"parse_output\":\"date_conversion\",\"name\":\"endDate\",\"type\":\"date_time\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Status\",\"name\":\"status\",\"type\":\"string\",\"optional\":false}]"
+                },
+                "extended_output_schema": [
+                  {
+                    "type": "array",
+                    "name": "list_items",
+                    "label": "products",
+                    "of": "object",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Line sequence ID",
+                        "name": "lineSequenceId",
+                        "type": "string",
+                        "optional": false,
+                        "hint": "lineSequenceId from IPIMS post"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Product key",
+                        "name": "productKey",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Product token",
+                        "name": "productToken",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Package ID",
+                        "name": "packageId",
+                        "type": "string",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "date",
+                        "label": "Start date",
+                        "render_input": "date_conversion",
+                        "parse_output": "date_conversion",
+                        "name": "startDate",
+                        "type": "date_time",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "date",
+                        "label": "End date",
+                        "render_input": "date_conversion",
+                        "parse_output": "date_conversion",
+                        "name": "endDate",
+                        "type": "date_time",
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Status",
+                        "name": "status",
+                        "type": "string",
+                        "optional": false
+                      }
+                    ]
+                  }
+                ],
+                "uuid": "5b3bfdc0-ac41-4d76-85b0-b06adc94bc5b"
+              },
+              {
+                "number": 5,
+                "as": "3c1d89de",
+                "keyword": "foreach",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "clear_scope": false,
+                "input": {
+                },
+                "block": [
+                  {
+                    "number": 6,
+                    "provider": "workato_variable",
+                    "name": "insert_to_list",
+                    "as": "082381f9",
+                    "title": "Add item to products list",
+                    "description": "Add <span class=\"provider\">item</span> to <span class=\"provider\">products</span> list",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "name": "products (step 3)"
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "location": "end",
+                      "name": "5b3bfdc0-ac41-4d76-85b0-b06adc94bc5b:d8791062",
+                      "list_item": {
+                        "productKey": "#{_('data.foreach.3c1d89de.productKey')}",
+                        "productToken": "#{_('data.foreach.3c1d89de.productToken')}",
+                        "startDate": "=_('data.foreach.3c1d89de.startDate').present? ? (_('data.foreach.3c1d89de.startDate')/1000).to_time : skip",
+                        "endDate": "=_('data.foreach.3c1d89de.expirationDate').present? ? (_('data.foreach.3c1d89de.expirationDate')/1000).to_time : skip",
+                        "lineSequenceId": "#{_('data.foreach.3c1d89de.lineSequenceId')}",
+                        "status": "#{_('data.json_parser.68b3b8ce.document.subscription.status')}",
+                        "packageId": "#{_('data.foreach.3c1d89de.package.packageId')}"
+                      }
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "object",
+                        "name": "list_item",
+                        "label": "List item",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Line sequence ID",
+                            "name": "lineSequenceId",
+                            "type": "string",
+                            "optional": false,
+                            "hint": "lineSequenceId from IPIMS post"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Product key",
+                            "name": "productKey",
+                            "type": "string",
+                            "optional": true
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Product token",
+                            "name": "productToken",
+                            "type": "string",
+                            "optional": true
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Package ID",
+                            "name": "packageId",
+                            "type": "string",
+                            "optional": true
+                          },
+                          {
+                            "control_type": "date",
+                            "label": "Start date",
+                            "render_input": "date_conversion",
+                            "parse_output": "date_conversion",
+                            "name": "startDate",
+                            "type": "date_time",
+                            "optional": true
+                          },
+                          {
+                            "control_type": "date",
+                            "label": "End date",
+                            "render_input": "date_conversion",
+                            "parse_output": "date_conversion",
+                            "name": "endDate",
+                            "type": "date_time",
+                            "optional": true
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Status",
+                            "name": "status",
+                            "type": "string",
+                            "optional": false
+                          }
+                        ]
+                      }
+                    ],
+                    "visible_config_fields": [
+                      "name",
+                      "location",
+                      "list_item",
+                      "list_item.productKey",
+                      "list_item.productToken",
+                      "list_item.startDate",
+                      "list_item.endDate",
+                      "list_item.lineSequenceId",
+                      "list_item.errorMessage",
+                      "list_item.status",
+                      "list_item.packageId"
+                    ],
+                    "uuid": "10825d91-2f3f-4192-bf91-bda7007e1276"
+                  }
+                ],
+                "source": "#{_('data.json_parser.68b3b8ce.document.subscription.products')}",
+                "uuid": "b592da7c-c173-4806-9d40-bfb2ef75a958"
+              },
+              {
+                "number": 7,
+                "provider": "workato_custom_code",
+                "name": "invoke_custom_ruby_code",
+                "as": "6a9a02b2",
+                "title": null,
+                "description": "Execute <span class=\"provider\">ruby</span> code: <span class=\"provider\">Consolidate Products by Line Sequence ID</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "code": "initial_list = input[\"products\"] || {}\nconsolidated_list = {}\noutput = []\ndebug = []\n\ninitial_list.each do |i|\n  lineSequenceId = i[\"lineSequenceId\"]\n  debug << {\"line\" => \"Check to see if lineSequenceId \"+lineSequenceId+\" is already in consolidated list.\"}\n  \n  if (consolidated_list[lineSequenceId].present? )\n    debug << {\"line\" => \"lineSequenceId \"+lineSequenceId+\" is in consolidated list. Updating values.\"}\n  \n\t# this order item is already has an entry, so just update the values if they are present\n\tif (i[\"productToken\"].present?)\n    \tconsolidated_list[lineSequenceId][\"productToken\"] = i[\"productToken\"]\n    end\n    if (i[\"productKey\"].present?)\n    \tconsolidated_list[lineSequenceId][\"productKey\"] = i[\"productKey\"]\n    end\n    if (i[\"packageId\"].present?)\n    \tconsolidated_list[lineSequenceId][\"packageId\"] = i[\"packageId\"]\n    end\n    if (i[\"startDate\"].present?)\n    \tconsolidated_list[lineSequenceId][\"startDate\"] = i[\"startDate\"]\n    end\n    if (i[\"endDate\"].present?)\n    \tconsolidated_list[lineSequenceId][\"endDate\"] = i[\"endDate\"]\n    end\n  else\n    # this order item does not have an entry, add it to the consolidated list\n    \n    debug << {\"line\" => \"lineSequenceId \"+lineSequenceId+\" NOT in consolidated list. Adding to list.\"}\n    consolidated_list[lineSequenceId] = i\n  end\nend\n\n#create the output array\nconsolidated_list.each do |key, value|\n  debug << {\"line\" => \"Adding \"+key+\" to output.\"}\n  output << value\nend\n\n{ consolidated_products: output, debug: debug}",
+                  "name": "Consolidate Products by Line Sequence ID",
+                  "code_input": {
+                    "schema": "[{\"name\":\"products\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Products\",\"optional\":false,\"properties\":[{\"control_type\":\"text\",\"label\":\"Line sequence ID\",\"name\":\"lineSequenceId\",\"optional\":false,\"type\":\"string\"},{\"control_type\":\"text\",\"label\":\"Product key\",\"name\":\"productKey\",\"optional\":true,\"type\":\"string\"},{\"control_type\":\"text\",\"label\":\"Product token\",\"name\":\"productToken\",\"optional\":true,\"type\":\"string\"},{\"control_type\":\"text\",\"label\":\"Package Id\",\"name\":\"packageId\",\"optional\":true,\"type\":\"string\"},{\"control_type\":\"text\",\"label\":\"Start date\",\"name\":\"startDate\",\"optional\":true,\"type\":\"string\"},{\"control_type\":\"text\",\"label\":\"End date\",\"name\":\"endDate\",\"optional\":true,\"type\":\"string\"},{\"control_type\":\"text\",\"label\":\"Status\",\"name\":\"status\",\"optional\":true,\"type\":\"string\"}]}]",
+                    "data": {
+                      "products": {
+                        "____source": "#{_('data.workato_variable.d8791062.list_items')}",
+                        "lineSequenceId": "#{_('data.workato_variable.d8791062.list_items.first.lineSequenceId')}",
+                        "productKey": "#{_('data.workato_variable.d8791062.list_items.first.productKey')}",
+                        "productToken": "#{_('data.workato_variable.d8791062.list_items.first.productToken')}",
+                        "startDate": "#{_('data.workato_variable.d8791062.list_items.first.startDate')}",
+                        "endDate": "#{_('data.workato_variable.d8791062.list_items.first.endDate')}",
+                        "packageId": "#{_('data.workato_variable.d8791062.list_items.first.packageId')}"
+                      }
+                    }
+                  },
+                  "code_output_schema_json": "[{\"name\":\"consolidated_products\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Consolidated products\",\"properties\":[{\"control_type\":\"text\",\"label\":\"Line Sequence ID\",\"name\":\"lineSequenceId\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Product Key\",\"name\":\"productKey\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Product Token\",\"name\":\"productToken\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Package Id\",\"name\":\"packageId\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"date\",\"label\":\"Start Date\",\"render_input\":\"date_conversion\",\"parse_output\":\"date_conversion\",\"name\":\"startDate\",\"type\":\"date_time\",\"optional\":true},{\"control_type\":\"date\",\"label\":\"End Date\",\"render_input\":\"date_conversion\",\"parse_output\":\"date_conversion\",\"name\":\"endDate\",\"type\":\"date_time\",\"optional\":true}]},{\"name\":\"debug\",\"type\":\"array\",\"of\":\"object\",\"label\":\"debug\",\"properties\":[{\"control_type\":\"text\",\"label\":\"line\",\"name\":\"line\",\"type\":\"string\"}]}]"
+                },
+                "extended_output_schema": [
+                  {
+                    "type": "object",
+                    "name": "output",
+                    "label": "Output",
+                    "properties": [
+                      {
+                        "name": "consolidated_products",
+                        "type": "array",
+                        "of": "object",
+                        "label": "Consolidated products",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Line Sequence ID",
+                            "name": "lineSequenceId",
+                            "type": "string",
+                            "optional": false
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Product Key",
+                            "name": "productKey",
+                            "type": "string",
+                            "optional": true
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Product Token",
+                            "name": "productToken",
+                            "type": "string",
+                            "optional": true
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Package Id",
+                            "name": "packageId",
+                            "type": "string",
+                            "optional": true
+                          },
+                          {
+                            "control_type": "date",
+                            "label": "Start Date",
+                            "render_input": "date_conversion",
+                            "parse_output": "date_conversion",
+                            "name": "startDate",
+                            "type": "date_time",
+                            "optional": true
+                          },
+                          {
+                            "control_type": "date",
+                            "label": "End Date",
+                            "render_input": "date_conversion",
+                            "parse_output": "date_conversion",
+                            "name": "endDate",
+                            "type": "date_time",
+                            "optional": true
+                          }
+                        ]
+                      },
+                      {
+                        "name": "debug",
+                        "type": "array",
+                        "of": "object",
+                        "label": "debug",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "line",
+                            "name": "line",
+                            "type": "string"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ],
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "code_input",
+                    "control_type": "form-schema-builder",
+                    "label": "Input",
+                    "sticky": true,
+                    "optional": true,
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Schema",
+                        "extends_schema": true,
+                        "type": "string",
+                        "name": "schema",
+                        "parent": "code_input"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "name": "products",
+                            "type": "array",
+                            "of": "object",
+                            "label": "Products",
+                            "optional": false,
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Line sequence ID",
+                                "name": "lineSequenceId",
+                                "optional": false,
+                                "type": "string",
+                                "parent": "code_input.data.products"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Product key",
+                                "name": "productKey",
+                                "optional": true,
+                                "type": "string",
+                                "parent": "code_input.data.products"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Product token",
+                                "name": "productToken",
+                                "optional": true,
+                                "type": "string",
+                                "parent": "code_input.data.products"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Package Id",
+                                "name": "packageId",
+                                "optional": true,
+                                "type": "string",
+                                "parent": "code_input.data.products"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Start date",
+                                "name": "startDate",
+                                "optional": true,
+                                "type": "string",
+                                "parent": "code_input.data.products"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "End date",
+                                "name": "endDate",
+                                "optional": true,
+                                "type": "string",
+                                "parent": "code_input.data.products"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Status",
+                                "name": "status",
+                                "optional": true,
+                                "type": "string",
+                                "parent": "code_input.data.products"
+                              }
+                            ],
+                            "parent": "code_input.data"
+                          }
+                        ],
+                        "label": "Data",
+                        "type": "object",
+                        "name": "data",
+                        "parent": "code_input"
+                      }
+                    ],
+                    "override": true
+                  }
+                ],
+                "visible_config_fields": [
+                  "name",
+                  "code_input",
+                  "code_output_schema_json",
+                  "code",
+                  "code_input.data.products",
+                  "code_input.schema",
+                  "code_input.data",
+                  "code_input.data.products.lineSequenceId",
+                  "code_input.data.products.productKey",
+                  "code_input.data.products.productToken",
+                  "code_input.data.products.startDate",
+                  "code_input.data.products.endDate",
+                  "code_input.data.status",
+                  "code_input.data.package_id",
+                  "code_input.data.sdfs"
+                ],
+                "uuid": "22585721-7a63-416f-a8e5-c693f72cfcf1"
+              },
+              {
+                "number": 8,
+                "as": "6e1557ed",
+                "keyword": "foreach",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "repeat_mode": "simple",
+                "clear_scope": "true",
+                "input": {
+                },
+                "block": [
+                  {
+                    "number": 9,
+                    "provider": "workato_list",
+                    "name": "accumulate_list_items",
+                    "as": "a9392683",
+                    "title": "Accumulate items to Line Sequence Ids list",
+                    "description": "Accumulate <span class=\"provider\">items</span> to <span class=\"provider\">Line Sequence Ids</span> list",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "name": "Line Sequence Ids",
+                      "list_item": {
+                        "schema": "[{\"name\":\"OrderItemsNumbers\",\"type\":\"string\",\"optional\":true,\"label\":\"Order Items Numbers\",\"control_type\":\"text\"}]",
+                        "data": {
+                          "OrderItemsNumbers": "#{_('data.foreach.6e1557ed.lineSequenceId')}"
+                        }
+                      }
+                    },
+                    "extended_output_schema": [
+                      {
+                        "type": "array",
+                        "name": "list_items",
+                        "label": "Items",
+                        "of": "object",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Order Items Numbers",
+                            "name": "OrderItemsNumbers",
+                            "type": "string",
+                            "optional": true
+                          }
+                        ]
+                      }
+                    ],
+                    "extended_input_schema": [
+                      {
+                        "type": "object",
+                        "name": "list_item",
+                        "control_type": "form-schema-builder",
+                        "label": "List item fields",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Schema",
+                            "extends_schema": true,
+                            "type": "string",
+                            "name": "schema",
+                            "parent": "list_item"
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Order Items Numbers",
+                                "name": "OrderItemsNumbers",
+                                "type": "string",
+                                "optional": true,
+                                "parent": "list_item.data"
+                              }
+                            ],
+                            "label": "Data",
+                            "type": "object",
+                            "name": "data",
+                            "parent": "list_item"
+                          }
+                        ],
+                        "override": true
+                      }
+                    ],
+                    "visible_config_fields": [
+                      "name",
+                      "list_item.data.product_family",
+                      "list_item",
+                      "list_item.schema",
+                      "list_item.data",
+                      "list_item.data.OrderItemsNumbers"
+                    ],
+                    "uuid": "f60cbd52-986d-4e29-b727-3f45a7c19cfc"
+                  },
+                  {
+                    "number": 10,
+                    "keyword": "try",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                    },
+                    "block": [
+                      {
+                        "number": 11,
+                        "provider": "workato_service",
+                        "name": "call_service",
+                        "as": "8b51d5f1",
+                        "title": null,
+                        "description": "Call recipe <span class=\"provider\">Send License Fulfillment Response to Salesforce</span> ",
+                        "keyword": "action",
+                        "dynamicPickListSelection": {
+                          "flow_id": "Send License Fulfillment Response to Salesforce"
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                          "flow_id": {
+                            "zip_name": "ipims/callable/callable_call_salesforce_license_fulfillment_response_service.recipe.json",
+                            "name": "Callable - Call Salesforce License Fulfillment Response Service",
+                            "folder": "ipims/callable"
+                          },
+                          "request": {
+                            "product_key": "#{_('data.foreach.6e1557ed.productKey')}",
+                            "product_token": "#{_('data.foreach.6e1557ed.productToken')}",
+                            "start_date": "=_('data.foreach.6e1557ed.startDate')",
+                            "end_date": "=_('data.foreach.6e1557ed.endDate')",
+                            "line_sequence_id": "#{_('data.foreach.6e1557ed.lineSequenceId')}",
+                            "package_id": "#{_('data.foreach.6e1557ed.packageId')}"
+                          }
+                        },
+                        "extended_input_schema": [
+                          {
+                            "type": "object",
+                            "name": "request",
+                            "label": "Recipe input",
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Line Sequence ID",
+                                "name": "line_sequence_id",
+                                "type": "string",
+                                "optional": true,
+                                "parent": "request"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Product key",
+                                "name": "product_key",
+                                "type": "string",
+                                "optional": true,
+                                "parent": "request"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Product token",
+                                "name": "product_token",
+                                "type": "string",
+                                "optional": true,
+                                "parent": "request"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Package ID",
+                                "name": "package_id",
+                                "type": "string",
+                                "optional": true,
+                                "parent": "request"
+                              },
+                              {
+                                "control_type": "date",
+                                "label": "Start date",
+                                "render_input": "date_conversion",
+                                "parse_output": "date_conversion",
+                                "name": "start_date",
+                                "type": "date_time",
+                                "optional": true,
+                                "parent": "request"
+                              },
+                              {
+                                "control_type": "date",
+                                "label": "End date",
+                                "render_input": "date_conversion",
+                                "parse_output": "date_conversion",
+                                "name": "end_date",
+                                "type": "date_time",
+                                "optional": true,
+                                "parent": "request"
+                              }
+                            ]
+                          }
+                        ],
+                        "visible_config_fields": [
+                          "flow_id",
+                          "request",
+                          "request.order_item_number",
+                          "request.product_key",
+                          "request.product_token",
+                          "request.start_date",
+                          "request.end_date",
+                          "request.order_items_numbers",
+                          "request.line_sequence_id",
+                          "request.package_id"
+                        ],
+                        "uuid": "34ad088e-6f2b-4cec-9453-a33f9cddef4d"
+                      },
+                      {
+                        "number": 12,
+                        "as": "95938da7",
+                        "keyword": "catch",
+                        "dynamicPickListSelection": {
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                          "max_retry_count": "0",
+                          "retry_interval": "2"
+                        },
+                        "block": [
+                          {
+                            "number": 13,
+                            "provider": "workato_list",
+                            "name": "accumulate_list_items",
+                            "as": "86e4e05a",
+                            "title": "Accumulate items to errors list",
+                            "description": "Accumulate <span class=\"provider\">items</span> to <span class=\"provider\">errors</span> list",
+                            "keyword": "action",
+                            "dynamicPickListSelection": {
+                            },
+                            "toggleCfg": {
+                            },
+                            "input": {
+                              "name": "errors",
+                              "list_item": {
+                                "schema": "[{\"name\":\"index\",\"type\":\"integer\",\"optional\":true,\"label\":\"Index\",\"control_type\":\"integer\"},{\"name\":\"lineSequenceId\",\"type\":\"string\",\"optional\":true,\"label\":\"lineSequenceId\",\"control_type\":\"text\"},{\"name\":\"error\",\"type\":\"string\",\"optional\":true,\"label\":\"Error\",\"control_type\":\"text\"}]",
+                                "data": {
+                                  "error": "#{_('data.catch.95938da7.message')}",
+                                  "index": "#{_('data.foreach.6e1557ed.index', 'foreach_meta')}",
+                                  "lineSequenceId": "#{_('data.foreach.6e1557ed.lineSequenceId')}"
+                                }
+                              }
+                            },
+                            "extended_output_schema": [
+                              {
+                                "type": "array",
+                                "name": "list_items",
+                                "label": "Items",
+                                "of": "object",
+                                "properties": [
+                                  {
+                                    "control_type": "integer",
+                                    "label": "Index",
+                                    "parse_output": "integer_conversion",
+                                    "name": "index",
+                                    "type": "integer",
+                                    "optional": true
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "lineSequenceId",
+                                    "name": "lineSequenceId",
+                                    "type": "string",
+                                    "optional": true
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "Error",
+                                    "name": "error",
+                                    "type": "string",
+                                    "optional": true
+                                  }
+                                ]
+                              }
+                            ],
+                            "extended_input_schema": [
+                              {
+                                "type": "object",
+                                "name": "list_item",
+                                "control_type": "form-schema-builder",
+                                "label": "List item fields",
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "Schema",
+                                    "extends_schema": true,
+                                    "type": "string",
+                                    "name": "schema",
+                                    "parent": "list_item"
+                                  },
+                                  {
+                                    "properties": [
+                                      {
+                                        "control_type": "integer",
+                                        "label": "Index",
+                                        "parse_output": "integer_conversion",
+                                        "name": "index",
+                                        "type": "integer",
+                                        "optional": true,
+                                        "parent": "list_item.data"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "lineSequenceId",
+                                        "name": "lineSequenceId",
+                                        "type": "string",
+                                        "optional": true,
+                                        "parent": "list_item.data"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Error",
+                                        "name": "error",
+                                        "type": "string",
+                                        "optional": true,
+                                        "parent": "list_item.data"
+                                      }
+                                    ],
+                                    "label": "Data",
+                                    "type": "object",
+                                    "name": "data",
+                                    "parent": "list_item"
+                                  }
+                                ],
+                                "override": true
+                              }
+                            ],
+                            "visible_config_fields": [
+                              "name",
+                              "list_item.data.index",
+                              "list_item",
+                              "list_item.schema",
+                              "list_item.data.error",
+                              "list_item.data",
+                              "list_item.data.order_items_numbers",
+                              "list_item.data.lineSequenceId"
+                            ],
+                            "uuid": "55c6c1ef-350b-445a-a0c9-4e7de7207065"
+                          }
+                        ],
+                        "uuid": "ee2cbf71-757f-4be9-895e-bc8fb832ae23"
+                      }
+                    ],
+                    "uuid": "9c26f9e8-f53b-4d14-9db3-b14b2df6c08d"
+                  }
+                ],
+                "source": "#{_('data.workato_custom_code.6a9a02b2.output.consolidated_products')}",
+                "uuid": "492b22ad-8610-4a93-8082-fca103723e8c"
+              }
+            ],
+            "uuid": "34a36d0e-1f6c-4f96-bd08-1679cb1460f5"
+          },
+          {
+            "number": 14,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "present",
+                  "lhs": "#{_('data.json_parser.68b3b8ce.document.subscription.products.first.lineSequenceId')}",
+                  "rhs": null
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 15,
+                "provider": "salesforce",
+                "name": "search_sobjects_soql",
+                "as": "44c005b5",
+                "title": "Search Subscriptions using SOQL query WHERE clause",
+                "description": "Search <span class=\"provider\">Subscriptions</span> using SOQL query WHERE clause in <span class=\"provider\">Salesforce</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "sobject_name": "Subscription",
+                  "field_list": [
+                    {
+                      "label": "Contract",
+                      "value": "SBQQ__Contract__c"
+                    }
+                  ]
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "limit": "1",
+                  "sobject_name": "SBQQ__Subscription__c",
+                  "field_list": "SBQQ__Contract__c",
+                  "query": "=\"SBQQ__OrderProduct__r.OrderItemNumber LIKE '%\"+_('data.json_parser.68b3b8ce.document.subscription.products.first.lineSequenceId').split(\",\")[0]+\"'\""
+                },
+                "extended_output_schema": [
+                  {
+                    "type": "array",
+                    "name": "SBQQ__Subscription__c",
+                    "label": "Subscriptions",
+                    "of": "object",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Contract",
+                        "optional": true,
+                        "custom": true,
+                        "sfdc_createable": true,
+                        "sfdc_updateable": true,
+                        "type": "string",
+                        "name": "SBQQ__Contract__c"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "number",
+                            "label": "Total size",
+                            "parse_output": "integer_conversion",
+                            "type": "integer",
+                            "name": "totalSize"
+                          },
+                          {
+                            "name": "records",
+                            "type": "array",
+                            "of": "object",
+                            "label": "Files",
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "ID",
+                                "type": "string",
+                                "name": "Id"
+                              },
+                              {
+                                "control_type": "number",
+                                "label": "Content size",
+                                "parse_output": "integer_conversion",
+                                "type": "integer",
+                                "name": "ContentSize"
+                              },
+                              {
+                                "control_type": "url",
+                                "label": "Content URL",
+                                "type": "string",
+                                "name": "ContentUrl"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "File extension",
+                                "type": "string",
+                                "name": "FileExtension"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "File type",
+                                "type": "string",
+                                "name": "FileType"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Parent ID",
+                                "type": "string",
+                                "name": "ParentId"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Record type",
+                                "type": "string",
+                                "name": "RecordType"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Title",
+                                "type": "string",
+                                "name": "Title"
+                              }
+                            ]
+                          }
+                        ],
+                        "label": "Combined attachments",
+                        "sfdc_field_type": "CombinedAttachment",
+                        "type": "object",
+                        "name": "CombinedAttachments"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "integer",
+                    "name": "list_size",
+                    "control_type": "number",
+                    "label": "List size",
+                    "parse_output": "integer_conversion"
+                  }
+                ],
+                "extended_input_schema": [
+                  {
+                    "type": "boolean",
+                    "name": "include_combined_attachments",
+                    "control_type": "checkbox",
+                    "label": "Select combined attachments",
+                    "hint": "Select <b>Yes</b> to obtain data from notes, attachments and files associated to the queried records. Default value is <b>Yes</b>.",
+                    "optional": true,
+                    "extends_schema": true,
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    }
+                  }
+                ],
+                "uuid": "879eac7a-8f40-46ab-9619-849391717f67"
+              },
+              {
+                "number": 16,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "greater_than",
+                      "lhs": "#{_('data.salesforce.44c005b5.SBQQ__Subscription__c.first.____Size', 'list_meta', '____Size', 'data.salesforce.44c005b5.SBQQ__Subscription__c')}",
+                      "rhs": "0"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 17,
+                    "provider": "salesforce",
+                    "name": "create_custom_object",
+                    "as": "95d6aa85",
+                    "title": "Create Fulfillment response",
+                    "description": "Create <span class=\"provider\">Fulfillment response</span> in <span class=\"provider\">Salesforce</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "sobject_name": "Fulfillment response"
+                    },
+                    "toggleCfg": {
+                      "Status__c": false
+                    },
+                    "input": {
+                      "sobject_name": "Fulfillment_Response__c",
+                      "Contract__c": "#{_('data.salesforce.44c005b5.SBQQ__Subscription__c.first.SBQQ__Contract__c')}",
+                      "Description__c": "=_('data.workato_list.86e4e05a.list_items.first.error').present?? _('data.workato_list.86e4e05a.list_items.first.error').slice(0,512) : (_('data.json_parser.68b3b8ce.document.subscription.errorInformation.errorDescription') or \"\").slice(0,512)",
+                      "Status__c": "=_('data.workato_list.86e4e05a.list_items.first.error').present?? 'FAILURE' : _('data.json_parser.68b3b8ce.document.subscription.status')"
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "string",
+                        "name": "CreatedById",
+                        "control_type": "text",
+                        "label": "Created By ID",
+                        "optional": true,
+                        "custom": false,
+                        "sfdc_createable": true,
+                        "sfdc_updateable": false
+                      },
+                      {
+                        "type": "date_time",
+                        "name": "CreatedDate",
+                        "control_type": "date_time",
+                        "label": "Created Date",
+                        "optional": true,
+                        "custom": false,
+                        "render_input": "render_iso8601_timestamp",
+                        "parse_output": "parse_iso8601_timestamp",
+                        "sfdc_createable": true,
+                        "sfdc_updateable": false
+                      },
+                      {
+                        "type": "string",
+                        "name": "CurrencyIsoCode",
+                        "control_type": "select",
+                        "label": "Currency ISO Code",
+                        "pick_list": "sobject_field_values_list",
+                        "pick_list_params": {
+                          "sobject_name": "\"Fulfillment_Response__c\""
+                        },
+                        "optional": true,
+                        "custom": false,
+                        "toggle_hint": "Select from list",
+                        "toggle_field": {
+                          "control_type": "text",
+                          "label": "Currency ISO Code",
+                          "toggle_hint": "Enter custom value",
+                          "optional": true,
+                          "custom": false,
+                          "sfdc_createable": true,
+                          "sfdc_updateable": true,
+                          "type": "string",
+                          "name": "CurrencyIsoCode"
+                        },
+                        "sfdc_createable": true,
+                        "sfdc_updateable": true
+                      },
+                      {
+                        "type": "string",
+                        "name": "LastModifiedById",
+                        "control_type": "text",
+                        "label": "Last Modified By ID",
+                        "optional": true,
+                        "custom": false,
+                        "sfdc_createable": true,
+                        "sfdc_updateable": false
+                      },
+                      {
+                        "type": "date_time",
+                        "name": "LastModifiedDate",
+                        "control_type": "date_time",
+                        "label": "Last Modified Date",
+                        "optional": true,
+                        "custom": false,
+                        "render_input": "render_iso8601_timestamp",
+                        "parse_output": "parse_iso8601_timestamp",
+                        "sfdc_createable": true,
+                        "sfdc_updateable": false
+                      },
+                      {
+                        "type": "string",
+                        "name": "OwnerId",
+                        "control_type": "text",
+                        "label": "Owner ID",
+                        "optional": true,
+                        "custom": false,
+                        "sfdc_createable": true,
+                        "sfdc_updateable": true
+                      },
+                      {
+                        "type": "string",
+                        "name": "CompanyName__c",
+                        "control_type": "text",
+                        "label": "Company Name",
+                        "optional": true,
+                        "custom": true,
+                        "sfdc_createable": true,
+                        "sfdc_updateable": true
+                      },
+                      {
+                        "type": "string",
+                        "name": "Contract__c",
+                        "control_type": "text",
+                        "label": "Contract",
+                        "optional": true,
+                        "custom": true,
+                        "sfdc_createable": true,
+                        "sfdc_updateable": true
+                      },
+                      {
+                        "type": "string",
+                        "name": "Description__c",
+                        "control_type": "text-area",
+                        "label": "Description",
+                        "optional": true,
+                        "custom": true,
+                        "sfdc_createable": true,
+                        "sfdc_updateable": true
+                      },
+                      {
+                        "type": "string",
+                        "name": "Email__c",
+                        "control_type": "text",
+                        "label": "Email",
+                        "optional": true,
+                        "custom": true,
+                        "sfdc_createable": true,
+                        "sfdc_updateable": true
+                      },
+                      {
+                        "type": "date_time",
+                        "name": "EventDate__c",
+                        "control_type": "date",
+                        "label": "Event Date",
+                        "optional": true,
+                        "custom": true,
+                        "render_input": "render_iso8601_date",
+                        "parse_output": "parse_iso8601_date",
+                        "sfdc_createable": true,
+                        "sfdc_updateable": true
+                      },
+                      {
+                        "type": "string",
+                        "name": "EventType__c",
+                        "control_type": "text",
+                        "label": "Event Type",
+                        "optional": true,
+                        "custom": true,
+                        "sfdc_createable": true,
+                        "sfdc_updateable": true
+                      },
+                      {
+                        "type": "string",
+                        "name": "Opportunity__c",
+                        "control_type": "text",
+                        "label": "Opportunity",
+                        "optional": true,
+                        "custom": true,
+                        "sfdc_createable": true,
+                        "sfdc_updateable": true
+                      },
+                      {
+                        "type": "string",
+                        "name": "Order__c",
+                        "control_type": "text",
+                        "label": "Order",
+                        "optional": true,
+                        "custom": true,
+                        "sfdc_createable": true,
+                        "sfdc_updateable": true
+                      },
+                      {
+                        "type": "string",
+                        "name": "OrgID__c",
+                        "control_type": "text",
+                        "label": "Org ID",
+                        "optional": true,
+                        "custom": true,
+                        "sfdc_createable": true,
+                        "sfdc_updateable": true
+                      },
+                      {
+                        "type": "string",
+                        "name": "Payload__c",
+                        "control_type": "text-area",
+                        "label": "Payload",
+                        "optional": true,
+                        "custom": true,
+                        "sfdc_createable": true,
+                        "sfdc_updateable": true
+                      },
+                      {
+                        "type": "string",
+                        "name": "PlatformCustomerID__c",
+                        "control_type": "text",
+                        "label": "Platform Customer ID",
+                        "optional": true,
+                        "custom": true,
+                        "sfdc_createable": true,
+                        "sfdc_updateable": true
+                      },
+                      {
+                        "type": "string",
+                        "name": "Status__c",
+                        "control_type": "select",
+                        "label": "Status",
+                        "pick_list": "sobject_field_values_list",
+                        "pick_list_params": {
+                          "sobject_name": "\"Fulfillment_Response__c\""
+                        },
+                        "optional": true,
+                        "custom": true,
+                        "toggle_hint": "Select from list",
+                        "toggle_field": {
+                          "control_type": "text",
+                          "label": "Status",
+                          "toggle_hint": "Enter custom value",
+                          "optional": true,
+                          "custom": true,
+                          "sfdc_createable": true,
+                          "sfdc_updateable": true,
+                          "type": "string",
+                          "name": "Status__c"
+                        },
+                        "sfdc_createable": true,
+                        "sfdc_updateable": true
+                      }
+                    ],
+                    "visible_config_fields": [
+                      "sobject_name",
+                      "Status__c",
+                      "Description__c",
+                      "Contract__c"
+                    ],
+                    "uuid": "1f14bc74-43f4-4868-a228-a19301fca8bc"
+                  }
+                ],
+                "uuid": "015284da-7d12-450d-98ce-41c3160fba0c"
+              }
+            ],
+            "uuid": "873938ec-f917-4e4f-ab6c-4eb4acf17ead"
+          }
+        ],
+        "uuid": "d03a7fb8-1998-4743-bdb1-8774bffb237e"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_2",
+        "label": "Sales Order"
+      },
+      {
+        "name": "custom_column_1",
+        "label": "OrderItemsNumbers Updates"
+      },
+      {
+        "name": "custom_column_4",
+        "label": "# Errors"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_2": "#{_('data.json_parser.68b3b8ce.document.subscription.number')}",
+      "custom_column_1": "=_('data.workato_list.a9392683.list_items').pluck(\"OrderItemsNumbers\").to_s ",
+      "custom_column_4": "#{_('data.workato_list.86e4e05a.list_items.first.____Size', 'list_meta', '____Size', 'data.workato_list.86e4e05a.list_items')}"
+    },
+    "uuid": "5e1e7659-ef0a-4e8f-96f5-d570dbea92c2",
+    "wizardFinished": true
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_webhooks",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "json_parser",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_list",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_custom_code",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "salesforce",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/salesforce.connection.json",
+        "name": "Salesforce",
+        "folder": "connections"
+      }
+    }
+  ]
+}

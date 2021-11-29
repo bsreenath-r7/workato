@@ -1,0 +1,223 @@
+{
+  "name": "Callable - Automation : Remove HTML tags to extract Summary, Solution Detail",
+  "description": "When there is a trigger event, do action",
+  "version": 1,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "51c44231",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">Automation to remove HTML tags & extract Summary, Solution Detail</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "service_name": "Automation to remove HTML tags & extract Summary, Solution Detail",
+      "request_schema_json": "[{\"name\":\"htmlContent\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]",
+      "reply_schema_json": "[{\"name\":\"standardSummary\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"SolutionDetail\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"customSummary\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Html content",
+            "name": "htmlContent",
+            "type": "string",
+            "optional": false
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "workato_variable",
+        "name": "declare_variable",
+        "as": "28b6d72a",
+        "title": "  Create variables standardSummary, Solution_detail, customSummary",
+        "description": "Create variables <span class=\"provider\">standardSummary</span>, <span class=\"provider\">Solution_detail</span>, <span class=\"provider\">customSummary</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "variables": {
+            "schema": "[{\"control_type\":\"text\",\"label\":\"standardSummary\",\"name\":\"standard_summary\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Solution_detail\",\"name\":\"solution_detail\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"customSummary\",\"name\":\"custom_summary\",\"type\":\"string\",\"optional\":true}]",
+            "data": {
+              "solution_detail": "=_('data.workato_service.51c44231.request.htmlContent').gsub(/<hr class=\"ghq-card-content__horizontal-rule\" data-ghq-card-content-type=\"DIVIDER\">/,\"^\").split(\"^\")[1]",
+              "custom_summary": "=_('data.workato_service.51c44231.request.htmlContent').gsub(/<hr class=\"ghq-card-content__horizontal-rule\" data-ghq-card-content-type=\"DIVIDER\">/,\"^\").split(\"^\")[0]",
+              "standard_summary": "=_('data.workato_service.51c44231.request.htmlContent').gsub(/<.+?>/, \"\").split(\"Solution Detail\").first.gsub(\"Summary\", \"\")"
+            }
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "string",
+            "name": "standard_summary",
+            "control_type": "text",
+            "label": "standardSummary",
+            "optional": true
+          },
+          {
+            "type": "string",
+            "name": "solution_detail",
+            "control_type": "text",
+            "label": "Solution_detail",
+            "optional": true
+          },
+          {
+            "type": "string",
+            "name": "custom_summary",
+            "control_type": "text",
+            "label": "customSummary",
+            "optional": true
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "variables",
+            "control_type": "form-schema-builder",
+            "label": "Variables",
+            "optional": true,
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Schema",
+                "extends_schema": true,
+                "broadcast_change_event": true,
+                "type": "string",
+                "name": "schema"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "standardSummary",
+                    "name": "standard_summary",
+                    "type": "string",
+                    "optional": true,
+                    "hint": "Defaults to nil if not supplied.",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Solution_detail",
+                    "name": "solution_detail",
+                    "type": "string",
+                    "optional": true,
+                    "hint": "Defaults to nil if not supplied.",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "customSummary",
+                    "name": "custom_summary",
+                    "type": "string",
+                    "optional": true,
+                    "hint": "Defaults to nil if not supplied.",
+                    "sticky": true
+                  }
+                ],
+                "label": "Data",
+                "type": "object",
+                "name": "data"
+              }
+            ],
+            "exclude_fields": [
+              "hint"
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "variables.data.summary",
+          "variables",
+          "variables.schema",
+          "variables.data.solution_detail",
+          "variables.data",
+          "variables.data.custom_summary",
+          "variables.data.std_summary",
+          "variables.data.standard_summary"
+        ],
+        "uuid": "4454fe8c-b886-4ae1-955c-94f73cb5b9db"
+      },
+      {
+        "number": 2,
+        "provider": "workato_service",
+        "name": "send_reply",
+        "as": "10b4ad28",
+        "title": null,
+        "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Automation to remove HTML tags & extract Summary, Solution Detail</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "reply_type": "success",
+          "reply": {
+            "SolutionDetail": "#{_('data.workato_variable.28b6d72a.solution_detail')}",
+            "customSummary": "#{_('data.workato_variable.28b6d72a.custom_summary')}",
+            "standardSummary": "#{_('data.workato_variable.28b6d72a.standard_summary')}"
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "reply",
+            "label": "Reply",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Standard summary",
+                "name": "standardSummary",
+                "type": "string",
+                "optional": false
+              },
+              {
+                "control_type": "text",
+                "label": "Solution detail",
+                "name": "SolutionDetail",
+                "type": "string",
+                "optional": false
+              },
+              {
+                "control_type": "text",
+                "label": "Custom summary",
+                "name": "customSummary",
+                "type": "string",
+                "optional": false
+              }
+            ]
+          }
+        ],
+        "uuid": "918b6b29-13f1-4ac9-85e9-4d6fc63c2238"
+      }
+    ],
+    "uuid": "0c907198-8675-4a9d-944b-eb912892bd0c"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

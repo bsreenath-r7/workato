@@ -1,0 +1,1249 @@
+{
+  "name": "Salesforce - Alerts for Installed Packages Expiration",
+  "description": "When there is a trigger event, do action",
+  "version": 4,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "clock",
+    "name": "scheduled_event",
+    "as": "dcdf9a18",
+    "title": null,
+    "description": "<span class=\"provider\">Trigger</span> every 1 days at <span class=\"provider\">08:00:00 AM</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+      "time_unit": "Days"
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "time_unit": "days",
+      "trigger_every": "1",
+      "trigger_at": "08:00:00"
+    },
+    "extended_input_schema": [
+      {
+        "type": "string",
+        "name": "trigger_every",
+        "control_type": "integer",
+        "label": "Trigger every",
+        "hint": "Define repeating schedule. Enter whole numbers only.\n                        This field can be set to a minimum of 5 minutes.",
+        "default": "5",
+        "optional": false,
+        "extends_schema": true
+      },
+      {
+        "type": "string",
+        "name": "trigger_at",
+        "control_type": "time",
+        "label": "Trigger at",
+        "hint": "Set a time to schedule the job.",
+        "optional": false,
+        "extends_schema": true
+      },
+      {
+        "type": "date_time",
+        "name": "start_after",
+        "control_type": "date_time",
+        "label": "Start after",
+        "hint": "Set date and time to start or leave blank to start immediately. <b>Once recipe has been run or tested, value cannot be changed.</b>",
+        "optional": true,
+        "extends_schema": true,
+        "since_field": true,
+        "render_input": "date_time_conversion",
+        "parse_output": "date_time_conversion"
+      },
+      {
+        "type": "string",
+        "name": "timezone",
+        "control_type": "select",
+        "label": "Timezone",
+        "hint": "Select the timezone to use. Leave it blank to use <b>(GMT-08:00) Pacific Time (US & Canada)</b>",
+        "pick_list": [
+          [
+            "International Date Line West",
+            "Etc/GMT+12"
+          ],
+          [
+            "Midway Island",
+            "Pacific/Midway"
+          ],
+          [
+            "American Samoa",
+            "Pacific/Pago_Pago"
+          ],
+          [
+            "Hawaii",
+            "Pacific/Honolulu"
+          ],
+          [
+            "Alaska",
+            "America/Juneau"
+          ],
+          [
+            "Pacific Time (US & Canada)",
+            "America/Los_Angeles"
+          ],
+          [
+            "Tijuana",
+            "America/Tijuana"
+          ],
+          [
+            "Mountain Time (US & Canada)",
+            "America/Denver"
+          ],
+          [
+            "Arizona",
+            "America/Phoenix"
+          ],
+          [
+            "Chihuahua",
+            "America/Chihuahua"
+          ],
+          [
+            "Mazatlan",
+            "America/Mazatlan"
+          ],
+          [
+            "Central Time (US & Canada)",
+            "America/Chicago"
+          ],
+          [
+            "Saskatchewan",
+            "America/Regina"
+          ],
+          [
+            "Guadalajara",
+            "America/Mexico_City"
+          ],
+          [
+            "Mexico City",
+            "America/Mexico_City"
+          ],
+          [
+            "Monterrey",
+            "America/Monterrey"
+          ],
+          [
+            "Central America",
+            "America/Guatemala"
+          ],
+          [
+            "Eastern Time (US & Canada)",
+            "America/New_York"
+          ],
+          [
+            "Indiana (East)",
+            "America/Indiana/Indianapolis"
+          ],
+          [
+            "Bogota",
+            "America/Bogota"
+          ],
+          [
+            "Lima",
+            "America/Lima"
+          ],
+          [
+            "Quito",
+            "America/Lima"
+          ],
+          [
+            "Atlantic Time (Canada)",
+            "America/Halifax"
+          ],
+          [
+            "Caracas",
+            "America/Caracas"
+          ],
+          [
+            "La Paz",
+            "America/La_Paz"
+          ],
+          [
+            "Santiago",
+            "America/Santiago"
+          ],
+          [
+            "Newfoundland",
+            "America/St_Johns"
+          ],
+          [
+            "Brasilia",
+            "America/Sao_Paulo"
+          ],
+          [
+            "Buenos Aires",
+            "America/Argentina/Buenos_Aires"
+          ],
+          [
+            "Montevideo",
+            "America/Montevideo"
+          ],
+          [
+            "Georgetown",
+            "America/Guyana"
+          ],
+          [
+            "Puerto Rico",
+            "America/Puerto_Rico"
+          ],
+          [
+            "Greenland",
+            "America/Godthab"
+          ],
+          [
+            "Mid-Atlantic",
+            "Atlantic/South_Georgia"
+          ],
+          [
+            "Azores",
+            "Atlantic/Azores"
+          ],
+          [
+            "Cape Verde Is.",
+            "Atlantic/Cape_Verde"
+          ],
+          [
+            "Dublin",
+            "Europe/Dublin"
+          ],
+          [
+            "Edinburgh",
+            "Europe/London"
+          ],
+          [
+            "Lisbon",
+            "Europe/Lisbon"
+          ],
+          [
+            "London",
+            "Europe/London"
+          ],
+          [
+            "Casablanca",
+            "Africa/Casablanca"
+          ],
+          [
+            "Monrovia",
+            "Africa/Monrovia"
+          ],
+          [
+            "UTC",
+            "Etc/UTC"
+          ],
+          [
+            "Belgrade",
+            "Europe/Belgrade"
+          ],
+          [
+            "Bratislava",
+            "Europe/Bratislava"
+          ],
+          [
+            "Budapest",
+            "Europe/Budapest"
+          ],
+          [
+            "Ljubljana",
+            "Europe/Ljubljana"
+          ],
+          [
+            "Prague",
+            "Europe/Prague"
+          ],
+          [
+            "Sarajevo",
+            "Europe/Sarajevo"
+          ],
+          [
+            "Skopje",
+            "Europe/Skopje"
+          ],
+          [
+            "Warsaw",
+            "Europe/Warsaw"
+          ],
+          [
+            "Zagreb",
+            "Europe/Zagreb"
+          ],
+          [
+            "Brussels",
+            "Europe/Brussels"
+          ],
+          [
+            "Copenhagen",
+            "Europe/Copenhagen"
+          ],
+          [
+            "Madrid",
+            "Europe/Madrid"
+          ],
+          [
+            "Paris",
+            "Europe/Paris"
+          ],
+          [
+            "Amsterdam",
+            "Europe/Amsterdam"
+          ],
+          [
+            "Berlin",
+            "Europe/Berlin"
+          ],
+          [
+            "Bern",
+            "Europe/Zurich"
+          ],
+          [
+            "Zurich",
+            "Europe/Zurich"
+          ],
+          [
+            "Rome",
+            "Europe/Rome"
+          ],
+          [
+            "Stockholm",
+            "Europe/Stockholm"
+          ],
+          [
+            "Vienna",
+            "Europe/Vienna"
+          ],
+          [
+            "West Central Africa",
+            "Africa/Algiers"
+          ],
+          [
+            "Bucharest",
+            "Europe/Bucharest"
+          ],
+          [
+            "Cairo",
+            "Africa/Cairo"
+          ],
+          [
+            "Helsinki",
+            "Europe/Helsinki"
+          ],
+          [
+            "Kyiv",
+            "Europe/Kiev"
+          ],
+          [
+            "Riga",
+            "Europe/Riga"
+          ],
+          [
+            "Sofia",
+            "Europe/Sofia"
+          ],
+          [
+            "Tallinn",
+            "Europe/Tallinn"
+          ],
+          [
+            "Vilnius",
+            "Europe/Vilnius"
+          ],
+          [
+            "Athens",
+            "Europe/Athens"
+          ],
+          [
+            "Istanbul",
+            "Europe/Istanbul"
+          ],
+          [
+            "Minsk",
+            "Europe/Minsk"
+          ],
+          [
+            "Jerusalem",
+            "Asia/Jerusalem"
+          ],
+          [
+            "Harare",
+            "Africa/Harare"
+          ],
+          [
+            "Pretoria",
+            "Africa/Johannesburg"
+          ],
+          [
+            "Kaliningrad",
+            "Europe/Kaliningrad"
+          ],
+          [
+            "Moscow",
+            "Europe/Moscow"
+          ],
+          [
+            "St. Petersburg",
+            "Europe/Moscow"
+          ],
+          [
+            "Volgograd",
+            "Europe/Volgograd"
+          ],
+          [
+            "Samara",
+            "Europe/Samara"
+          ],
+          [
+            "Kuwait",
+            "Asia/Kuwait"
+          ],
+          [
+            "Riyadh",
+            "Asia/Riyadh"
+          ],
+          [
+            "Nairobi",
+            "Africa/Nairobi"
+          ],
+          [
+            "Baghdad",
+            "Asia/Baghdad"
+          ],
+          [
+            "Tehran",
+            "Asia/Tehran"
+          ],
+          [
+            "Abu Dhabi",
+            "Asia/Muscat"
+          ],
+          [
+            "Muscat",
+            "Asia/Muscat"
+          ],
+          [
+            "Baku",
+            "Asia/Baku"
+          ],
+          [
+            "Tbilisi",
+            "Asia/Tbilisi"
+          ],
+          [
+            "Yerevan",
+            "Asia/Yerevan"
+          ],
+          [
+            "Kabul",
+            "Asia/Kabul"
+          ],
+          [
+            "Ekaterinburg",
+            "Asia/Yekaterinburg"
+          ],
+          [
+            "Islamabad",
+            "Asia/Karachi"
+          ],
+          [
+            "Karachi",
+            "Asia/Karachi"
+          ],
+          [
+            "Tashkent",
+            "Asia/Tashkent"
+          ],
+          [
+            "Chennai",
+            "Asia/Kolkata"
+          ],
+          [
+            "Kolkata",
+            "Asia/Kolkata"
+          ],
+          [
+            "Mumbai",
+            "Asia/Kolkata"
+          ],
+          [
+            "New Delhi",
+            "Asia/Kolkata"
+          ],
+          [
+            "Kathmandu",
+            "Asia/Kathmandu"
+          ],
+          [
+            "Astana",
+            "Asia/Dhaka"
+          ],
+          [
+            "Dhaka",
+            "Asia/Dhaka"
+          ],
+          [
+            "Sri Jayawardenepura",
+            "Asia/Colombo"
+          ],
+          [
+            "Almaty",
+            "Asia/Almaty"
+          ],
+          [
+            "Novosibirsk",
+            "Asia/Novosibirsk"
+          ],
+          [
+            "Rangoon",
+            "Asia/Rangoon"
+          ],
+          [
+            "Bangkok",
+            "Asia/Bangkok"
+          ],
+          [
+            "Hanoi",
+            "Asia/Bangkok"
+          ],
+          [
+            "Jakarta",
+            "Asia/Jakarta"
+          ],
+          [
+            "Krasnoyarsk",
+            "Asia/Krasnoyarsk"
+          ],
+          [
+            "Beijing",
+            "Asia/Shanghai"
+          ],
+          [
+            "Chongqing",
+            "Asia/Chongqing"
+          ],
+          [
+            "Hong Kong",
+            "Asia/Hong_Kong"
+          ],
+          [
+            "Urumqi",
+            "Asia/Urumqi"
+          ],
+          [
+            "Kuala Lumpur",
+            "Asia/Kuala_Lumpur"
+          ],
+          [
+            "Singapore",
+            "Asia/Singapore"
+          ],
+          [
+            "Taipei",
+            "Asia/Taipei"
+          ],
+          [
+            "Perth",
+            "Australia/Perth"
+          ],
+          [
+            "Irkutsk",
+            "Asia/Irkutsk"
+          ],
+          [
+            "Ulaanbaatar",
+            "Asia/Ulaanbaatar"
+          ],
+          [
+            "Seoul",
+            "Asia/Seoul"
+          ],
+          [
+            "Osaka",
+            "Asia/Tokyo"
+          ],
+          [
+            "Sapporo",
+            "Asia/Tokyo"
+          ],
+          [
+            "Tokyo",
+            "Asia/Tokyo"
+          ],
+          [
+            "Yakutsk",
+            "Asia/Yakutsk"
+          ],
+          [
+            "Darwin",
+            "Australia/Darwin"
+          ],
+          [
+            "Adelaide",
+            "Australia/Adelaide"
+          ],
+          [
+            "Canberra",
+            "Australia/Melbourne"
+          ],
+          [
+            "Melbourne",
+            "Australia/Melbourne"
+          ],
+          [
+            "Sydney",
+            "Australia/Sydney"
+          ],
+          [
+            "Brisbane",
+            "Australia/Brisbane"
+          ],
+          [
+            "Hobart",
+            "Australia/Hobart"
+          ],
+          [
+            "Vladivostok",
+            "Asia/Vladivostok"
+          ],
+          [
+            "Guam",
+            "Pacific/Guam"
+          ],
+          [
+            "Port Moresby",
+            "Pacific/Port_Moresby"
+          ],
+          [
+            "Magadan",
+            "Asia/Magadan"
+          ],
+          [
+            "Srednekolymsk",
+            "Asia/Srednekolymsk"
+          ],
+          [
+            "Solomon Is.",
+            "Pacific/Guadalcanal"
+          ],
+          [
+            "New Caledonia",
+            "Pacific/Noumea"
+          ],
+          [
+            "Fiji",
+            "Pacific/Fiji"
+          ],
+          [
+            "Kamchatka",
+            "Asia/Kamchatka"
+          ],
+          [
+            "Marshall Is.",
+            "Pacific/Majuro"
+          ],
+          [
+            "Auckland",
+            "Pacific/Auckland"
+          ],
+          [
+            "Wellington",
+            "Pacific/Auckland"
+          ],
+          [
+            "Nuku'alofa",
+            "Pacific/Tongatapu"
+          ],
+          [
+            "Tokelau Is.",
+            "Pacific/Fakaofo"
+          ],
+          [
+            "Chatham Is.",
+            "Pacific/Chatham"
+          ],
+          [
+            "Samoa",
+            "Pacific/Apia"
+          ]
+        ],
+        "optional": true
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "salesforce",
+        "name": "search_sobjects_soql",
+        "as": "53f5229e",
+        "title": "Search Package Licenses using SOQL query WHERE clause",
+        "description": "Search <span class=\"provider\">Package Licenses</span> using SOQL query WHERE clause in <span class=\"provider\">Salesforce</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "sobject_name": "Package License",
+          "Status": "Active"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "sobject_name": "PackageLicense",
+          "limit": "500",
+          "query": "Status IN ( 'Free', 'Active')"
+        },
+        "extended_output_schema": [
+          {
+            "type": "array",
+            "name": "PackageLicense",
+            "label": "Package License",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "number",
+                "label": "Allowed Licenses",
+                "parse_output": "integer_conversion",
+                "custom": false,
+                "sfdc_createable": false,
+                "sfdc_updateable": false,
+                "type": "integer",
+                "name": "AllowedLicenses"
+              },
+              {
+                "control_type": "date_time",
+                "label": "Created Date",
+                "render_input": "render_iso8601_timestamp",
+                "parse_output": "parse_iso8601_timestamp",
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": false,
+                "sfdc_updateable": false,
+                "type": "date_time",
+                "name": "CreatedDate"
+              },
+              {
+                "control_type": "date_time",
+                "label": "Expiration Date",
+                "render_input": "render_iso8601_timestamp",
+                "parse_output": "parse_iso8601_timestamp",
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": false,
+                "sfdc_updateable": false,
+                "type": "date_time",
+                "name": "ExpirationDate"
+              },
+              {
+                "control_type": "checkbox",
+                "label": "Is Provisioned",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Is Provisioned",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "custom": false,
+                  "sfdc_createable": false,
+                  "sfdc_updateable": false,
+                  "type": "boolean",
+                  "name": "IsProvisioned"
+                },
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": false,
+                "sfdc_updateable": false,
+                "type": "boolean",
+                "name": "IsProvisioned"
+              },
+              {
+                "control_type": "date_time",
+                "label": "Last Modified Date",
+                "render_input": "render_iso8601_timestamp",
+                "parse_output": "parse_iso8601_timestamp",
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": false,
+                "sfdc_updateable": false,
+                "type": "date_time",
+                "name": "LastModifiedDate"
+              },
+              {
+                "control_type": "text",
+                "label": "Namespace Prefix",
+                "custom": false,
+                "sfdc_createable": false,
+                "sfdc_updateable": false,
+                "type": "string",
+                "name": "NamespacePrefix"
+              },
+              {
+                "control_type": "text",
+                "label": "Package License ID",
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": false,
+                "sfdc_updateable": false,
+                "type": "string",
+                "name": "Id"
+              },
+              {
+                "control_type": "select",
+                "label": "Status",
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"PackageLicense\""
+                },
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Status",
+                  "toggle_hint": "Enter custom value",
+                  "custom": false,
+                  "sfdc_createable": false,
+                  "sfdc_updateable": false,
+                  "type": "string",
+                  "name": "Status"
+                },
+                "custom": false,
+                "sfdc_createable": false,
+                "sfdc_updateable": false,
+                "type": "string",
+                "name": "Status"
+              },
+              {
+                "control_type": "date_time",
+                "label": "System Modstamp",
+                "render_input": "render_iso8601_timestamp",
+                "parse_output": "parse_iso8601_timestamp",
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": false,
+                "sfdc_updateable": false,
+                "type": "date_time",
+                "name": "SystemModstamp"
+              },
+              {
+                "control_type": "number",
+                "label": "Used Licenses",
+                "parse_output": "integer_conversion",
+                "custom": false,
+                "sfdc_createable": false,
+                "sfdc_updateable": false,
+                "type": "integer",
+                "name": "UsedLicenses"
+              }
+            ]
+          },
+          {
+            "type": "integer",
+            "name": "list_size",
+            "control_type": "number",
+            "label": "List size",
+            "parse_output": "integer_conversion"
+          }
+        ],
+        "visible_config_fields": [
+          "sobject_name",
+          "query",
+          "field_list",
+          "limit"
+        ],
+        "uuid": "d763732c-e922-4c4e-84cc-5a187c0329b1"
+      },
+      {
+        "number": 2,
+        "provider": "workato_variable",
+        "name": "declare_variable",
+        "as": "cfe722dd",
+        "title": "  Create variable alert",
+        "description": "Create variable <span class=\"provider\">alert</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "variables": {
+            "schema": "[{\"name\":\"alert\",\"type\":\"string\",\"optional\":true,\"label\":\"alert\",\"control_type\":\"text\"}]",
+            "data": {
+              "alert": "N/A"
+            }
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "string",
+            "name": "alert",
+            "control_type": "text",
+            "label": "alert",
+            "optional": true
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "variables",
+            "control_type": "form-schema-builder",
+            "label": "Variables",
+            "optional": true,
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Schema",
+                "extends_schema": true,
+                "broadcast_change_event": true,
+                "type": "string",
+                "name": "schema",
+                "parent": "variables"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "alert",
+                    "name": "alert",
+                    "type": "string",
+                    "optional": true,
+                    "hint": "Defaults to nil if not supplied.",
+                    "sticky": true,
+                    "parent": "variables.data"
+                  }
+                ],
+                "label": "Data",
+                "type": "object",
+                "name": "data",
+                "parent": "variables"
+              }
+            ],
+            "exclude_fields": [
+              "hint"
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "variables.data.alert"
+        ],
+        "uuid": "e0266dd1-a52f-4632-b970-e6b151c2360d"
+      },
+      {
+        "number": 3,
+        "as": "074c9371",
+        "keyword": "foreach",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "repeat_mode": "simple",
+        "clear_scope": "false",
+        "input": {
+        },
+        "block": [
+          {
+            "number": 4,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "present",
+                  "lhs": "#{_('data.foreach.074c9371.ExpirationDate')}",
+                  "rhs": "N/A"
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 5,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "or",
+                  "conditions": [
+                    {
+                      "operand": "equals_to",
+                      "lhs": "=(now + 30.days).to_date",
+                      "rhs": "=_('data.foreach.074c9371.ExpirationDate').to_date"
+                    },
+                    {
+                      "operand": "equals_to",
+                      "lhs": "=(now + 7.days).to_date",
+                      "rhs": "=_('data.foreach.074c9371.ExpirationDate').to_date"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 6,
+                    "provider": "workato_list",
+                    "name": "accumulate_list_items",
+                    "as": "66e3b3c2",
+                    "title": "Accumulate items to ExpirationPackagesList list",
+                    "description": "Accumulate <span class=\"provider\">items</span> to <span class=\"provider\">ExpirationPackagesList</span> list",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "name": "ExpirationPackagesList",
+                      "list_item": {
+                        "schema": "[{\"name\":\"namespace_prefix\",\"type\":\"string\",\"optional\":true,\"label\":\"NamespacePrefix\",\"control_type\":\"text\"},{\"name\":\"id\",\"type\":\"string\",\"optional\":true,\"label\":\"Id\",\"control_type\":\"text\"},{\"name\":\"expiration_date\",\"type\":\"string\",\"optional\":true,\"label\":\"ExpirationDate\",\"control_type\":\"text\"},{\"name\":\"status\",\"type\":\"string\",\"optional\":true,\"label\":\"Status\",\"control_type\":\"text\"}]",
+                        "data": {
+                          "namespace_prefix": "#{_('data.foreach.074c9371.NamespacePrefix')}",
+                          "id": "#{_('data.foreach.074c9371.Id')}",
+                          "expiration_date": "#{_('data.foreach.074c9371.ExpirationDate')}",
+                          "status": "#{_('data.foreach.074c9371.Status')}"
+                        }
+                      }
+                    },
+                    "extended_output_schema": [
+                      {
+                        "type": "array",
+                        "name": "list_items",
+                        "label": "Items",
+                        "of": "object",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "NamespacePrefix",
+                            "name": "namespace_prefix",
+                            "type": "string",
+                            "optional": true
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Id",
+                            "name": "id",
+                            "type": "string",
+                            "optional": true
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "ExpirationDate",
+                            "name": "expiration_date",
+                            "type": "string",
+                            "optional": true
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Status",
+                            "name": "status",
+                            "type": "string",
+                            "optional": true
+                          }
+                        ]
+                      }
+                    ],
+                    "extended_input_schema": [
+                      {
+                        "type": "object",
+                        "name": "list_item",
+                        "control_type": "form-schema-builder",
+                        "label": "List item fields",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Schema",
+                            "extends_schema": true,
+                            "type": "string",
+                            "name": "schema",
+                            "parent": "list_item"
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "NamespacePrefix",
+                                "name": "namespace_prefix",
+                                "type": "string",
+                                "optional": true,
+                                "parent": "list_item.data"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Id",
+                                "name": "id",
+                                "type": "string",
+                                "optional": true,
+                                "parent": "list_item.data"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "ExpirationDate",
+                                "name": "expiration_date",
+                                "type": "string",
+                                "optional": true,
+                                "parent": "list_item.data"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Status",
+                                "name": "status",
+                                "type": "string",
+                                "optional": true,
+                                "parent": "list_item.data"
+                              }
+                            ],
+                            "label": "Data",
+                            "type": "object",
+                            "name": "data",
+                            "parent": "list_item"
+                          }
+                        ],
+                        "override": true
+                      }
+                    ],
+                    "visible_config_fields": [
+                      "name",
+                      "list_item.data.namespace_prefix",
+                      "list_item",
+                      "list_item.schema",
+                      "list_item.data.id",
+                      "list_item.data.expiration_date",
+                      "list_item.data.status"
+                    ],
+                    "uuid": "67ea323f-a948-4689-b94d-ca5eb8dc1dff",
+                    "skip": false
+                  },
+                  {
+                    "number": 7,
+                    "provider": "slack_bot",
+                    "name": "post_bot_message",
+                    "as": "e5d1f64d",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                      "channel": true
+                    },
+                    "input": {
+                      "text": "*Installed Packages Expiration*",
+                      "channel": "#it-prodmanagement-and-eats",
+                      "attachment_fields": [
+                        {
+                          "title": "Name",
+                          "value": "=\"<https://r7.my.salesforce.com/0A3?setupid=ImportedPackage&appLayout=setup&noS1Redirect=true|*\" + _('data.foreach.074c9371.NamespacePrefix') + \"*>\""
+                        },
+                        {
+                          "title": "Expiration Date",
+                          "value": "#{_('data.foreach.074c9371.ExpirationDate')}"
+                        },
+                        {
+                          "title": "Status",
+                          "value": "#{_('data.foreach.074c9371.Status')}"
+                        },
+                        {
+                          "title": "Days to Expire",
+                          "value": "=((now + 30.days).to_date == _('data.foreach.074c9371.ExpirationDate').to_date) ? 30 : 7"
+                        }
+                      ]
+                    },
+                    "uuid": "c2c99c74-694f-4ead-a99f-a4da6cf244b5",
+                    "skip": false
+                  },
+                  {
+                    "number": 8,
+                    "provider": "workato_variable",
+                    "name": "update_variable",
+                    "as": "c55665d0",
+                    "title": null,
+                    "description": "Update variable <span class=\"provider\">alert</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "name": "alert (step 3)"
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "name": "e0266dd1-a52f-4632-b970-e6b151c2360d:cfe722dd:alert",
+                      "value": "Sent"
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "string",
+                        "name": "value",
+                        "control_type": "text",
+                        "label": "Value",
+                        "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                        "sticky": true,
+                        "optional": true,
+                        "strip_interpolation": true
+                      }
+                    ],
+                    "uuid": "12d025cb-1f9b-4123-9a3d-2aabb098566c"
+                  }
+                ],
+                "uuid": "59a47f53-6a8d-4e84-ad87-70ec4c1fe29b",
+                "skip": false
+              }
+            ],
+            "uuid": "bce2812d-a475-4a28-a60a-d301a49c15a4"
+          }
+        ],
+        "source": "#{_('data.salesforce.53f5229e.PackageLicense')}",
+        "uuid": "581534c7-4d0b-48f1-a9ea-d53506878b41",
+        "skip": false
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Expiring Pakcages"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_list.66e3b3c2.list_items.first.namespace_prefix')}"
+    },
+    "uuid": "5c547044-2e49-4a6d-bad8-bce223ae6d8f"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "clock",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_list",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "salesforce",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/salesforce.connection.json",
+        "name": "Salesforce",
+        "folder": "connections"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "slack_bot",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/workatointegrations.connection.json",
+        "name": "workatointegrations",
+        "folder": "connections"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "account_id": null,
+      "skip_validation": false
+    }
+  ]
+}

@@ -1,0 +1,1033 @@
+{
+  "name": "Scheduled Task - Post Termination Notices (after termination date reached)",
+  "description": "When there is a trigger event, do action",
+  "version": 15,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "clock",
+    "name": "daily_task",
+    "as": "7b8d8699",
+    "title": null,
+    "description": null,
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+      "sunday": true,
+      "monday": true,
+      "tuesday": true,
+      "wednesday": true,
+      "thursday": true,
+      "friday": true,
+      "saturday": true
+    },
+    "input": {
+      "sunday": "true",
+      "monday": "true",
+      "tuesday": "true",
+      "wednesday": "true",
+      "thursday": "true",
+      "friday": "true",
+      "saturday": "true",
+      "time_zone": "Eastern Time (US & Canada)",
+      "hour": "7",
+      "minute": "0"
+    },
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "workday",
+            "name": "get_report",
+            "as": "326a7230",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+              "remove_empty": true,
+              "use_automatic_schema": true
+            },
+            "input": {
+              "remove_empty": "false",
+              "report_url": "=lookup(\"WORKDAY_VARIABLES\", key: \"report.employee_data\")[\"value\"]",
+              "use_automatic_schema": "false",
+              "custom_input": [
+                {
+                  "param": "LDOW",
+                  "value": "=(_('data.clock.7b8d8699.scheduled_time') - 1.days).strftime(\"%Y-%m-%d\")"
+                }
+              ],
+              "custom_output": "[{\"control_type\":\"text\",\"label\":\"NetSuite ID\",\"type\":\"string\",\"name\":\"NetSuite_ID\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Employee Number\",\"type\":\"string\",\"name\":\"Employee_Number\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Last name\",\"type\":\"string\",\"name\":\"Last_Name\"},{\"control_type\":\"text\",\"label\":\"First name\",\"type\":\"string\",\"name\":\"First_Name\"},{\"control_type\":\"text\",\"label\":\"Middle name\",\"type\":\"string\",\"name\":\"Middle_Name\"},{\"control_type\":\"text\",\"label\":\"Legal last name\",\"type\":\"string\",\"name\":\"Legal_Last_Name\"},{\"control_type\":\"text\",\"label\":\"Legal first name\",\"type\":\"string\",\"name\":\"Legal_First_Name\"},{\"control_type\":\"text\",\"label\":\"Legal middle name\",\"type\":\"string\",\"name\":\"Legal_Middle_Name\"},{\"control_type\":\"text\",\"label\":\"Birth date\",\"type\":\"string\",\"name\":\"Birth_Date\"},{\"control_type\":\"text\",\"label\":\"Hire date\",\"type\":\"string\",\"name\":\"Hire_Date\"},{\"control_type\":\"text\",\"label\":\"Department\",\"type\":\"string\",\"name\":\"Department\"},{\"control_type\":\"text\",\"label\":\"Job title\",\"type\":\"string\",\"name\":\"Job_Title\"},{\"control_type\":\"text\",\"label\":\"Employee status\",\"type\":\"string\",\"name\":\"Employee_Status\"},{\"control_type\":\"text\",\"label\":\"Location\",\"type\":\"string\",\"name\":\"Location\"},{\"control_type\":\"text\",\"label\":\"Workday location\",\"type\":\"string\",\"name\":\"Workday_Location\"},{\"control_type\":\"text\",\"label\":\"Pay frequency\",\"type\":\"string\",\"name\":\"Pay_Frequency\"},{\"control_type\":\"text\",\"label\":\"Payroll currency\",\"type\":\"string\",\"name\":\"Payroll_Currency\"},{\"control_type\":\"text\",\"label\":\"Subsidiary\",\"type\":\"string\",\"name\":\"Subsidiary\"},{\"control_type\":\"text\",\"label\":\"Type\",\"type\":\"string\",\"name\":\"Type\"},{\"control_type\":\"text\",\"label\":\"Supervisor\",\"type\":\"string\",\"name\":\"Supervisor\"},{\"control_type\":\"text\",\"label\":\"Supervisor direct\",\"type\":\"string\",\"name\":\"Supervisor_Direct\"},{\"control_type\":\"text\",\"label\":\"Time approver\",\"type\":\"string\",\"name\":\"Time_Approver\"},{\"control_type\":\"text\",\"label\":\"Travel approver\",\"type\":\"string\",\"name\":\"Travel_Approver\"},{\"control_type\":\"text\",\"label\":\"Expense approver\",\"type\":\"string\",\"name\":\"Expense_Approver\"},{\"control_type\":\"text\",\"label\":\"Purchase approver\",\"type\":\"string\",\"name\":\"Purchase_Approver\"},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"Email\"},{\"control_type\":\"text\",\"label\":\"Shoretel extension\",\"type\":\"string\",\"name\":\"Shoretel_Extension\"},{\"control_type\":\"text\",\"label\":\"Eligible for commission\",\"type\":\"string\",\"name\":\"Eligible_For_Commission\"},{\"control_type\":\"text\",\"label\":\"Management\",\"type\":\"string\",\"name\":\"Management\"},{\"control_type\":\"text\",\"label\":\"Phone\",\"type\":\"string\",\"name\":\"Phone\"},{\"control_type\":\"text\",\"label\":\"Sales rep\",\"type\":\"string\",\"name\":\"Sales_Rep\"},{\"control_type\":\"text\",\"label\":\"Support rep\",\"type\":\"string\",\"name\":\"Support_Rep\"},{\"control_type\":\"text\",\"label\":\"Is practice manager\",\"type\":\"string\",\"name\":\"Is_Practice_Manager\"},{\"control_type\":\"text\",\"label\":\"Is account manager\",\"type\":\"string\",\"name\":\"Is_Account_Manager\"},{\"control_type\":\"text\",\"label\":\"Is channel OPS\",\"type\":\"string\",\"name\":\"Is_Channel_OPS\"},{\"control_type\":\"text\",\"label\":\"Is BDR\",\"type\":\"string\",\"name\":\"Is_BDR\"},{\"control_type\":\"text\",\"label\":\"Available for demo eval\",\"type\":\"string\",\"name\":\"Available_for_DemoEval\"},{\"control_type\":\"text\",\"label\":\"Available for advanced enterprise\",\"type\":\"string\",\"name\":\"Available_for_AdvancedEnterprise\"},{\"control_type\":\"text\",\"label\":\"Track phone calls\",\"type\":\"string\",\"name\":\"Track_Phone_Calls\"},{\"control_type\":\"text\",\"label\":\"AE role type\",\"type\":\"string\",\"name\":\"AE_Role_Type\"},{\"control_type\":\"text\",\"label\":\"Primary sales area\",\"type\":\"string\",\"name\":\"Primary_Sales_Area\"},{\"control_type\":\"text\",\"label\":\"Primary sales region\",\"type\":\"string\",\"name\":\"Primary_Sales_Region\"},{\"control_type\":\"text\",\"label\":\"Primary sales territory team\",\"type\":\"string\",\"name\":\"Primary_Sales_Territory_Team\"},{\"control_type\":\"text\",\"label\":\"Sales territory assignment\",\"type\":\"string\",\"name\":\"Sales_Territory_Assignment\"},{\"control_type\":\"text\",\"label\":\"Team territory group\",\"type\":\"string\",\"name\":\"Team_Territory_Group\"},{\"control_type\":\"text\",\"label\":\"Business development rep\",\"type\":\"string\",\"name\":\"Business_Development_Rep\"},{\"control_type\":\"text\",\"label\":\"Quote order approver\",\"type\":\"string\",\"name\":\"Quote_Order_Approver\"},{\"control_type\":\"text\",\"label\":\"Quote order approval limit\",\"type\":\"string\",\"name\":\"QuoteOrder_Approval_Limit\"},{\"control_type\":\"text\",\"label\":\"Quote order discount limit\",\"type\":\"string\",\"name\":\"QuoteOrder_Discount_Limit\"},{\"control_type\":\"text\",\"label\":\"Empty string address\",\"type\":\"string\",\"name\":\"Empty_String_Address\"},{\"control_type\":\"text\",\"label\":\"Address line 1\",\"type\":\"string\",\"name\":\"Address_Line_1\"},{\"control_type\":\"text\",\"label\":\"Address line 2\",\"type\":\"string\",\"name\":\"Address_Line_2\"},{\"control_type\":\"text\",\"label\":\"City\",\"type\":\"string\",\"name\":\"City\"},{\"control_type\":\"text\",\"label\":\"State\",\"type\":\"string\",\"name\":\"State\"},{\"control_type\":\"text\",\"label\":\"Zip\",\"type\":\"string\",\"name\":\"Zip\"},{\"control_type\":\"text\",\"label\":\"Country\",\"type\":\"string\",\"name\":\"Country\"},{\"control_type\":\"text\",\"label\":\"Empty string termination\",\"type\":\"string\",\"name\":\"Empty_String_Termination\"},{\"control_type\":\"text\",\"label\":\"Termination release date\",\"type\":\"string\",\"name\":\"Termination_Release_Date\"},{\"control_type\":\"text\",\"label\":\"Separation reason\",\"type\":\"string\",\"name\":\"Separation_Reason\"},{\"control_type\":\"text\",\"label\":\"Personal phone\",\"type\":\"string\",\"name\":\"Personal_Phone\"},{\"control_type\":\"text\",\"label\":\"Secondary work email\",\"type\":\"string\",\"name\":\"Secondary_Work_Email\"},{\"control_type\":\"text\",\"label\":\"Last day of work\",\"name\":\"Last_Day_of_Work\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Termination date\",\"name\":\"Termination_Date\",\"type\":\"string\",\"optional\":false}]",
+              "replace_with_additional": "false"
+            },
+            "extended_output_schema": [
+              {
+                "type": "array",
+                "name": "report",
+                "label": "Rows",
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "NetSuite ID",
+                    "type": "string",
+                    "name": "NetSuite_ID",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Employee Number",
+                    "type": "string",
+                    "name": "Employee_Number",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Last name",
+                    "type": "string",
+                    "name": "Last_Name"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "First name",
+                    "type": "string",
+                    "name": "First_Name"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Middle name",
+                    "type": "string",
+                    "name": "Middle_Name"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Legal last name",
+                    "type": "string",
+                    "name": "Legal_Last_Name"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Legal first name",
+                    "type": "string",
+                    "name": "Legal_First_Name"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Legal middle name",
+                    "type": "string",
+                    "name": "Legal_Middle_Name"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Birth date",
+                    "type": "string",
+                    "name": "Birth_Date"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Hire date",
+                    "type": "string",
+                    "name": "Hire_Date"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Department",
+                    "type": "string",
+                    "name": "Department"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Job title",
+                    "type": "string",
+                    "name": "Job_Title"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Employee status",
+                    "type": "string",
+                    "name": "Employee_Status"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Location",
+                    "type": "string",
+                    "name": "Location"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Workday location",
+                    "type": "string",
+                    "name": "Workday_Location"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Pay frequency",
+                    "type": "string",
+                    "name": "Pay_Frequency"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Payroll currency",
+                    "type": "string",
+                    "name": "Payroll_Currency"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Subsidiary",
+                    "type": "string",
+                    "name": "Subsidiary"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Type",
+                    "type": "string",
+                    "name": "Type"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Supervisor",
+                    "type": "string",
+                    "name": "Supervisor"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Supervisor direct",
+                    "type": "string",
+                    "name": "Supervisor_Direct"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Time approver",
+                    "type": "string",
+                    "name": "Time_Approver"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Travel approver",
+                    "type": "string",
+                    "name": "Travel_Approver"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Expense approver",
+                    "type": "string",
+                    "name": "Expense_Approver"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Purchase approver",
+                    "type": "string",
+                    "name": "Purchase_Approver"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Email",
+                    "type": "string",
+                    "name": "Email"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Shoretel extension",
+                    "type": "string",
+                    "name": "Shoretel_Extension"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Eligible for commission",
+                    "type": "string",
+                    "name": "Eligible_For_Commission"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Management",
+                    "type": "string",
+                    "name": "Management"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Phone",
+                    "type": "string",
+                    "name": "Phone"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Sales rep",
+                    "type": "string",
+                    "name": "Sales_Rep"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Support rep",
+                    "type": "string",
+                    "name": "Support_Rep"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Is practice manager",
+                    "type": "string",
+                    "name": "Is_Practice_Manager"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Is account manager",
+                    "type": "string",
+                    "name": "Is_Account_Manager"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Is channel OPS",
+                    "type": "string",
+                    "name": "Is_Channel_OPS"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Is BDR",
+                    "type": "string",
+                    "name": "Is_BDR"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Available for demo eval",
+                    "type": "string",
+                    "name": "Available_for_DemoEval"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Available for advanced enterprise",
+                    "type": "string",
+                    "name": "Available_for_AdvancedEnterprise"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Track phone calls",
+                    "type": "string",
+                    "name": "Track_Phone_Calls"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "AE role type",
+                    "type": "string",
+                    "name": "AE_Role_Type"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Primary sales area",
+                    "type": "string",
+                    "name": "Primary_Sales_Area"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Primary sales region",
+                    "type": "string",
+                    "name": "Primary_Sales_Region"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Primary sales territory team",
+                    "type": "string",
+                    "name": "Primary_Sales_Territory_Team"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Sales territory assignment",
+                    "type": "string",
+                    "name": "Sales_Territory_Assignment"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Team territory group",
+                    "type": "string",
+                    "name": "Team_Territory_Group"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Business development rep",
+                    "type": "string",
+                    "name": "Business_Development_Rep"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Quote order approver",
+                    "type": "string",
+                    "name": "Quote_Order_Approver"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Quote order approval limit",
+                    "type": "string",
+                    "name": "QuoteOrder_Approval_Limit"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Quote order discount limit",
+                    "type": "string",
+                    "name": "QuoteOrder_Discount_Limit"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Empty string address",
+                    "type": "string",
+                    "name": "Empty_String_Address"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Address line 1",
+                    "type": "string",
+                    "name": "Address_Line_1"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Address line 2",
+                    "type": "string",
+                    "name": "Address_Line_2"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "City",
+                    "type": "string",
+                    "name": "City"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "State",
+                    "type": "string",
+                    "name": "State"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Zip",
+                    "type": "string",
+                    "name": "Zip"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Country",
+                    "type": "string",
+                    "name": "Country"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Empty string termination",
+                    "type": "string",
+                    "name": "Empty_String_Termination"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Termination release date",
+                    "type": "string",
+                    "name": "Termination_Release_Date"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Separation reason",
+                    "type": "string",
+                    "name": "Separation_Reason"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Personal phone",
+                    "type": "string",
+                    "name": "Personal_Phone"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Secondary work email",
+                    "type": "string",
+                    "name": "Secondary_Work_Email"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Last day of work",
+                    "name": "Last_Day_of_Work",
+                    "type": "string",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Termination date",
+                    "name": "Termination_Date",
+                    "type": "string",
+                    "optional": false
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "report_url",
+              "custom_input",
+              "custom_output",
+              "remove_empty",
+              "use_automatic_schema"
+            ],
+            "comment": "Check to see if anyone had a termination date of yesterday, and if so, see if they also need to be processed",
+            "uuid": "21ce188b-67c1-4477-892d-d651a28dc508"
+          },
+          {
+            "number": 3,
+            "as": "237ddac6",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "3",
+              "retry_interval": "10"
+            },
+            "block": [
+              {
+                "number": 4,
+                "provider": "email",
+                "name": "send_mail",
+                "as": "084cc223",
+                "title": null,
+                "description": null,
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "email_type": "html",
+                  "to": "=lookup(\"WORKDAY_VARIABLES\", key: \"email.terminate_employee.fetch_term_failure\")[\"value\"]",
+                  "subject": "Workday Error - Could not retrieve terminated employees this morning",
+                  "body": "Job that failed: #{_('data.workato.job_context.job_url')}"
+                },
+                "comment": "If we could not get the terminated employees from yesterday, let someone know!",
+                "uuid": "07ac9e86-dfcd-4f21-aed9-77448adb7b17"
+              }
+            ],
+            "uuid": "e30f149f-f4b7-4021-a865-648f01148826"
+          }
+        ],
+        "uuid": "24a5b3cb-5448-4ac2-8afe-3da32a88d755"
+      },
+      {
+        "number": 5,
+        "as": "28cb43cf",
+        "keyword": "foreach",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "repeat_mode": "simple",
+        "clear_scope": "true",
+        "input": {
+        },
+        "block": [
+          {
+            "number": 6,
+            "provider": "workato_service",
+            "name": "call_service",
+            "as": "4600c9f9",
+            "title": null,
+            "description": "Call recipe <span class=\"provider\">Add Employee to MySQL Termination Log</span> ",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "flow_id": "Add Employee to MySQL Termination Log"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "flow_id": {
+                "zip_name": "workday/terminated-employee/callable/callable_add_employee_to_mysql_termination_log.recipe.json",
+                "name": "Callable - Add Employee to MySQL Termination Log",
+                "folder": "workday/terminated-employee/callable"
+              },
+              "request": {
+                "termination_date": "#{_('data.foreach.28cb43cf.Last_Day_of_Work')}",
+                "employee_number": "#{_('data.foreach.28cb43cf.Employee_Number')}",
+                "first_name": "#{_('data.foreach.28cb43cf.First_Name')}",
+                "last_name": "#{_('data.foreach.28cb43cf.Last_Name')}"
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "object",
+                "name": "reply",
+                "label": "Reply",
+                "properties": [
+                  {
+                    "control_type": "checkbox",
+                    "label": "Was Employee Added to Termination Log?",
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Was Employee Added to Termination Log?",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "name": "added_to_termination_log",
+                      "type": "boolean",
+                      "optional": false
+                    },
+                    "name": "added_to_termination_log",
+                    "type": "boolean",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "date",
+                    "label": "Termination Date",
+                    "render_input": "date_conversion",
+                    "parse_output": "date_conversion",
+                    "name": "termination_date",
+                    "type": "date_time",
+                    "optional": true,
+                    "hint": "The termination date after validating against all records in Workday"
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "request",
+                "label": "Recipe input",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Employee Number",
+                    "name": "employee_number",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "First name",
+                    "name": "first_name",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Last name",
+                    "name": "last_name",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request"
+                  },
+                  {
+                    "control_type": "date",
+                    "label": "Termination Date",
+                    "render_input": "date_conversion",
+                    "parse_output": "date_conversion",
+                    "name": "termination_date",
+                    "type": "date_time",
+                    "optional": true,
+                    "hint": "theoretical termination date, this date will be sourced/recalculated by searching Workday using ADP Employee ID, used just for debugging purposes",
+                    "parent": "request"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "flow_id",
+              "request.termination_date",
+              "request.employee_name"
+            ],
+            "uuid": "e04b7580-37f8-49a5-9f3e-4577f3649c0a"
+          },
+          {
+            "number": 7,
+            "provider": "workato_list",
+            "name": "accumulate_list_items",
+            "as": "4f03fdbc",
+            "title": "Accumulate items to Attempts to Add Employee to Termination Log list",
+            "description": "Accumulate <span class=\"provider\">items</span> to <span class=\"provider\">Attempts to Add Employee to Termination Log</span> list",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "name": "Attempts to Add Employee to Termination Log",
+              "list_item": {
+                "schema": "[{\"control_type\":\"text\",\"label\":\"Name\",\"name\":\"name\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"added to log?\",\"name\":\"added_to_log\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Termination Date\",\"name\":\"termination_date\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Employee Number\",\"name\":\"employee_number\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"NetSuite ID\",\"name\":\"netsuite_id\",\"type\":\"string\",\"optional\":true}]",
+                "data": {
+                  "termination_date": "#{_('data.workato_service.4600c9f9.reply.termination_date')}",
+                  "added_to_log": "#{_('data.workato_service.4600c9f9.reply.added_to_termination_log')}",
+                  "name": "#{_('data.foreach.28cb43cf.First_Name')} #{_('data.foreach.28cb43cf.Last_Name')}",
+                  "employee_number": "#{_('data.foreach.28cb43cf.Employee_Number')}",
+                  "netsuite_id": "#{_('data.foreach.28cb43cf.NetSuite_ID')}"
+                }
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "array",
+                "name": "list_items",
+                "label": "Items",
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "name": "name",
+                    "type": "string",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "added to log?",
+                    "name": "added_to_log",
+                    "type": "string",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Termination Date",
+                    "name": "termination_date",
+                    "type": "string",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Employee Number",
+                    "name": "employee_number",
+                    "type": "string",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "NetSuite ID",
+                    "name": "netsuite_id",
+                    "type": "string",
+                    "optional": true
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "list_item",
+                "control_type": "form-schema-builder",
+                "label": "List item fields",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Schema",
+                    "extends_schema": true,
+                    "type": "string",
+                    "name": "schema",
+                    "parent": "list_item"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Name",
+                        "name": "name",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "list_item.data"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "added to log?",
+                        "name": "added_to_log",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "list_item.data"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Termination Date",
+                        "name": "termination_date",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "list_item.data"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Employee Number",
+                        "name": "employee_number",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "list_item.data"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "NetSuite ID",
+                        "name": "netsuite_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "list_item.data"
+                      }
+                    ],
+                    "label": "Data",
+                    "type": "object",
+                    "name": "data",
+                    "parent": "list_item"
+                  }
+                ],
+                "override": true
+              }
+            ],
+            "visible_config_fields": [
+              "name",
+              "list_item.data.name",
+              "list_item",
+              "list_item.schema",
+              "list_item.data.added_to_log",
+              "list_item.data.termination_date",
+              "list_item.data.adp_employee_id",
+              "list_item.data",
+              "list_item.data.workday_id",
+              "list_item.data.employee_number",
+              "list_item.data.netsuite_id"
+            ],
+            "uuid": "284ba344-1f20-4a8b-bc6b-9d8c7ac23083"
+          }
+        ],
+        "source": "#{_('data.workday.326a7230.report')}",
+        "uuid": "01a82de4-90e1-46f2-aa79-83324a536968"
+      },
+      {
+        "number": 8,
+        "provider": "mysql",
+        "name": "search_rows",
+        "as": "1caeead7",
+        "title": "Select rows in workday_terminated_employees",
+        "description": "Select <span class=\"provider\">rows</span> in <span class=\"provider\">workday_terminated_employees</span> table in <span class=\"provider\">MySQL</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "table": "workday_terminated_employees",
+          "output_columns": [
+            {
+              "label": "workday_id",
+              "value": "workday_id"
+            }
+          ]
+        },
+        "toggleCfg": {
+          "table": true
+        },
+        "input": {
+          "limit": "1000",
+          "offset": "0",
+          "table": "workday_terminated_employees",
+          "where": "=\"termination_date<'\" + now.in_time_zone(\"America/Los_Angeles\").strftime(\"%Y-%m-%d\") + \"' AND (status='pending' OR status LIKE 'termination_date_entered%')\"",
+          "output_columns": "workday_id"
+        },
+        "extended_output_schema": [
+          {
+            "type": "array",
+            "name": "rows",
+            "label": "Rows",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "integer",
+                "label": "workday_id",
+                "parse_output": "parse_integer_output",
+                "details": {
+                  "data_type": "int(11)",
+                  "column_name": "workday_id"
+                },
+                "render_input": "parse_integer_output",
+                "hint": "int(11)",
+                "optional": true,
+                "type": "integer",
+                "name": "workday_id"
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "parameters",
+            "control_type": "form-schema-builder",
+            "label": "Parameters",
+            "hint": "First provide the full name assigned to your bind variable in the WHERE condition. e.g. <b>id</b>\n                    Second, provide the actual parameter value. Parameter values can be static or datapills.\n                    Select the <b>closest corresponding data type</b> that your database is expecting for the bind variable",
+            "sticky": true,
+            "optional": true,
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Schema",
+                "extends_schema": true,
+                "type": "string",
+                "name": "schema",
+                "parent": "parameters"
+              },
+              {
+                "properties": [
+
+                ],
+                "label": "Data",
+                "optional": true,
+                "type": "object",
+                "name": "data",
+                "parent": "parameters"
+              }
+            ],
+            "override": true
+          }
+        ],
+        "visible_config_fields": [
+          "table",
+          "where",
+          "limit",
+          "offset",
+          "output_columns"
+        ],
+        "comment": "Find all terminated employees whose termination date is before the current date and for which a notification has not already been sent out",
+        "uuid": "cfcd54bf-3eb0-4b0b-a21d-f9adb9753961"
+      },
+      {
+        "number": 9,
+        "as": "aa67eea2",
+        "keyword": "foreach",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "clear_scope": false,
+        "input": {
+        },
+        "block": [
+          {
+            "number": 10,
+            "provider": "workato_service",
+            "name": "call_service_async",
+            "as": "83a981c9",
+            "title": null,
+            "description": "Call recipe <span class=\"provider\">Callable - Post Employee Termination Notice</span> (do not wait for response)",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "flow_id": "Callable - Post Employee Termination Notice"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "flow_id": {
+                "zip_name": "workday/terminated-employee/callable/callable_post_employee_termination_notice.recipe.json",
+                "name": "Callable - Post Employee Termination Notice",
+                "folder": "workday/terminated-employee/callable"
+              },
+              "request": {
+                "type": "termination_date_reached",
+                "employee_number": "#{_('data.foreach.aa67eea2.workday_id')}"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "request",
+                "label": "Recipe input",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Type",
+                    "name": "type",
+                    "type": "string",
+                    "optional": false,
+                    "hint": "termination_date_entered, termination_date_reached",
+                    "parent": "request"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Employee number",
+                    "name": "employee_number",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request"
+                  }
+                ]
+              }
+            ],
+            "comment": "Post the \"termination_date_reached\" notices",
+            "uuid": "3a4ef0f7-aa77-4915-91fd-d1c474203edf"
+          }
+        ],
+        "source": "#{_('data.mysql.1caeead7.rows')}",
+        "uuid": "24c89ef5-af45-498c-9d38-361357115bc2"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_3",
+        "label": "Scheduled Date"
+      },
+      {
+        "name": "custom_column_1",
+        "label": "Action Taken"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "# Notifications"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_3": "=(_('data.clock.7b8d8699.scheduled_time') - 1.days).strftime(\"%Y-%m-%d\")",
+      "custom_column_1": "=_('data.mysql.1caeead7.rows.first.____Size', 'list_meta', '____Size', 'data.mysql.1caeead7.rows').to_s.match?(/^0$/) ? \"none\": \"notices posted\"",
+      "custom_column_2": "#{_('data.mysql.1caeead7.rows.first.____Size', 'list_meta', '____Size', 'data.mysql.1caeead7.rows')}"
+    },
+    "uuid": "c1ff63f0-d74f-40be-82b2-bf46fdfa21c6"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "clock",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "mysql",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "resources/mysql.connection.json",
+        "name": "MySQL",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workday",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "resources/workday.connection.json",
+        "name": "Workday",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_list",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "email",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

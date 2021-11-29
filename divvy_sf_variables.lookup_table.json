@@ -1,0 +1,76 @@
+{
+  "name": "DIVVY_SF_VARIABLES",
+  "schema": [
+    {
+      "control_type": "text",
+      "label": "Name",
+      "name": "col1",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "Value",
+      "name": "col2",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "Account_Name",
+      "name": "col3",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "Account_ID",
+      "name": "col4",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "Desciption",
+      "name": "col5",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 6",
+      "name": "col6",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 7",
+      "name": "col7",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 8",
+      "name": "col8",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 9",
+      "name": "col9",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 10",
+      "name": "col10",
+      "type": "string",
+      "sticky": false
+    }
+  ],
+  "data": "Test_Account,\"\",Test1,0015G00001nY75TQAS,A test account that is created in Divvy SF to test with\nTest_Account,\"\",Test2,0015G00001nY72fQAC,A test account that is created in Divvy SF to test with\nTest_Account,\"\",Test3,0015G00001nY7DNQA0,A test account that is created in Divvy SF to test with\nOnly Use Test Accounts,FALSE,,,Used as a flag in the recipe to determine if only the Test Accounts should be used to test with or all accounts should be used\n"
+}

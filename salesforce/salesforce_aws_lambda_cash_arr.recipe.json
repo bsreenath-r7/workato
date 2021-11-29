@@ -1,0 +1,1407 @@
+{
+  "name": "Salesforce - AWS Lambda - Cash ARR",
+  "description": "When there is a           New or updated search result for\n          record\n          in NetSuite\n, invoke function in AWS Lambda",
+  "version": 7,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "rest",
+    "name": "new_event",
+    "as": "f9bcd5e7",
+    "title": null,
+    "description": "<span class=\"provider\">Salesforce cash arr request</span> via <span class=\"provider\">HTTP webhook</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+      "empty_payload": true
+    },
+    "input": {
+      "webhook_type": "json",
+      "sample_payload": "{\n\"cashArrOutboundRequestId\" : \"\",\n  \"body\": {\n  \"id\": \"5035980\",\n  \"source\":\"Netsuite\",\n  \"object\":\"Sales_Order\",\n  \"partner\": \"Optiv Security\",\n  \"shippingCountryCode\": \"US\",\n  \"billingCountryCode\": \"US\",\n  \"transactionLineItems\": [\n    {\n      \"id\": \"2\",\n      \"cashValueCategory\": \"Subscription\",\n      \"productFamily\": \"Nexpose\", \n      \"startDate\": \"2018-4-27\",\n      \"endDate\": \"2020-12-31\",\n      \"netAmountNoTax\": 50901.00,\n      \"grossAmount\": 53580.00\n    },\n    {\n      \"id\": \"6\",\n      \"cashValueCategory\": \"Subscription\",\n      \"productFamily\": \"AppSpider\",\n      \"startDate\": \"2018-04-27\",\n      \"endDate\": \"2020-12-31\",\n      \"netAmountNoTax\": 39284.39,\n      \"grossAmount\": 41351.99\n    },\n    { \n      \"id\": \"10\", \n      \"cashValueCategory\": \"Subscription\", \n      \"productFamily\": \"Metasploit\", \n      \"startDate\": \"2018-06-24\", \n      \"endDate\": \"2020-12-31\", \n      \"netAmountNoTax\": 17246.61, \n      \"grossAmount\": 18154.33\n     },\n     { \n      \"id\": \"14\", \n      \"cashValueCategory\": \"Subscription\", \n      \"productFamily\": \"Nexpose\", \n      \"startDate\": \"2018-06-30\", \n      \"endDate\": \"2020-12-31\", \n      \"netAmountNoTax\": 35872.00, \n      \"grossAmount\": 37760.00\n     }\n  ]\n }\n}",
+      "webhook_suffix": "Salesforce Cash ARR Request",
+      "empty_payload": "false"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "payload",
+        "label": "Payload",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Cash arr outbound request ID",
+            "type": "string",
+            "name": "cashArrOutboundRequestId"
+          },
+          {
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "ID",
+                "type": "string",
+                "name": "id"
+              },
+              {
+                "control_type": "text",
+                "label": "Source",
+                "type": "string",
+                "name": "source"
+              },
+              {
+                "control_type": "text",
+                "label": "Object",
+                "type": "string",
+                "name": "object"
+              },
+              {
+                "control_type": "text",
+                "label": "Partner",
+                "type": "string",
+                "name": "partner"
+              },
+              {
+                "control_type": "text",
+                "label": "Shipping country code",
+                "type": "string",
+                "name": "shippingCountryCode"
+              },
+              {
+                "control_type": "text",
+                "label": "Billing country code",
+                "type": "string",
+                "name": "billingCountryCode"
+              },
+              {
+                "name": "transactionLineItems",
+                "type": "array",
+                "of": "object",
+                "label": "Transaction line items",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "ID",
+                    "type": "string",
+                    "name": "id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Cash value category",
+                    "type": "string",
+                    "name": "cashValueCategory"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Product family",
+                    "type": "string",
+                    "name": "productFamily"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Start date",
+                    "type": "string",
+                    "name": "startDate"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "End date",
+                    "type": "string",
+                    "name": "endDate"
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "Net amount no tax",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "netAmountNoTax"
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "Gross amount",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "grossAmount"
+                  }
+                ]
+              }
+            ],
+            "label": "Body",
+            "type": "object",
+            "name": "body"
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "aws_lambda",
+            "name": "invoke_function",
+            "as": "d66ef80e",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "FunctionName": "cash_arr-prod"
+            },
+            "toggleCfg": {
+              "FunctionName": true
+            },
+            "input": {
+              "FunctionName": "cash_arr-prod",
+              "InvocationType": "RequestResponse",
+              "list_item": {
+                "schema": "[{\"name\":\"body\",\"type\":\"string\",\"optional\":true,\"label\":\"body\",\"control_type\":\"text\"}]",
+                "data": {
+                  "body": "=_('data.rest.f9bcd5e7.payload.body')"
+                }
+              },
+              "output_schema": "[{\"properties\":[{\"properties\":[{\"control_type\":\"text\",\"label\":\"ID\",\"type\":\"string\",\"name\":\"id\"},{\"control_type\":\"text\",\"label\":\"Source\",\"type\":\"string\",\"name\":\"source\"},{\"control_type\":\"text\",\"label\":\"Object\",\"type\":\"string\",\"name\":\"object\"},{\"control_type\":\"text\",\"label\":\"Partner\",\"type\":\"string\",\"name\":\"partner\"},{\"control_type\":\"text\",\"label\":\"Shipping country\",\"type\":\"string\",\"name\":\"shippingCountryCode\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Billing country\",\"type\":\"string\",\"name\":\"billingCountryCode\",\"optional\":false},{\"name\":\"transactionLineItems\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Transaction line items\",\"properties\":[{\"control_type\":\"text\",\"label\":\"ID\",\"type\":\"string\",\"name\":\"id\"},{\"control_type\":\"text\",\"label\":\"Product code\",\"type\":\"string\",\"name\":\"productCode\"},{\"control_type\":\"text\",\"label\":\"Product family\",\"type\":\"string\",\"name\":\"productFamily\"},{\"control_type\":\"text\",\"label\":\"Cash value category\",\"type\":\"string\",\"name\":\"cashValueCategory\"},{\"control_type\":\"text\",\"label\":\"Start date\",\"type\":\"string\",\"name\":\"startDate\"},{\"control_type\":\"text\",\"label\":\"End date\",\"type\":\"string\",\"name\":\"endDate\"},{\"control_type\":\"number\",\"label\":\"Gross amount\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"grossAmount\"},{\"control_type\":\"number\",\"label\":\"Net amount no tax\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"netAmountNoTax\"},{\"control_type\":\"text\",\"label\":\"Rule\",\"type\":\"string\",\"name\":\"rule\"},{\"control_type\":\"number\",\"label\":\"Excess term\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"excessTerm\"},{\"control_type\":\"number\",\"label\":\"Annual recurring revenue\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"annualRecurringRevenue\"},{\"control_type\":\"number\",\"label\":\"One time revenue\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"oneTimeRevenue\"}]},{\"name\":\"cashValues\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Cash values\",\"properties\":[{\"control_type\":\"text\",\"label\":\"Rule\",\"type\":\"string\",\"name\":\"rule\"},{\"control_type\":\"number\",\"label\":\"Annual recurring revenue\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"annualRecurringRevenue\"},{\"control_type\":\"number\",\"label\":\"One time revenue\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"oneTimeRevenue\"},{\"control_type\":\"number\",\"label\":\"Excess term\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"excessTerm\"}]}],\"label\":\"Body\",\"type\":\"object\",\"name\":\"body\"}],\"label\":\"Response\",\"type\":\"object\",\"name\":\"response\"}]"
+            },
+            "extended_output_schema": [
+              {
+                "type": "object",
+                "name": "response",
+                "label": "Response",
+                "optional": true,
+                "properties": [
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "ID",
+                        "optional": true,
+                        "type": "string",
+                        "name": "id"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Source",
+                        "optional": true,
+                        "type": "string",
+                        "name": "source"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Object",
+                        "optional": true,
+                        "type": "string",
+                        "name": "object"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Partner",
+                        "optional": true,
+                        "type": "string",
+                        "name": "partner"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Shipping country",
+                        "optional": false,
+                        "type": "string",
+                        "name": "shippingCountryCode"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Billing country",
+                        "optional": false,
+                        "type": "string",
+                        "name": "billingCountryCode"
+                      },
+                      {
+                        "name": "transactionLineItems",
+                        "type": "array",
+                        "of": "object",
+                        "label": "Transaction line items",
+                        "optional": true,
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "ID",
+                            "optional": true,
+                            "type": "string",
+                            "name": "id"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Product code",
+                            "optional": true,
+                            "type": "string",
+                            "name": "productCode"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Product family",
+                            "optional": true,
+                            "type": "string",
+                            "name": "productFamily"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Cash value category",
+                            "optional": true,
+                            "type": "string",
+                            "name": "cashValueCategory"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Start date",
+                            "optional": true,
+                            "type": "string",
+                            "name": "startDate"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "End date",
+                            "optional": true,
+                            "type": "string",
+                            "name": "endDate"
+                          },
+                          {
+                            "control_type": "number",
+                            "label": "Gross amount",
+                            "parse_output": "float_conversion",
+                            "optional": true,
+                            "type": "number",
+                            "name": "grossAmount"
+                          },
+                          {
+                            "control_type": "number",
+                            "label": "Net amount no tax",
+                            "parse_output": "float_conversion",
+                            "optional": true,
+                            "type": "number",
+                            "name": "netAmountNoTax"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Rule",
+                            "optional": true,
+                            "type": "string",
+                            "name": "rule"
+                          },
+                          {
+                            "control_type": "number",
+                            "label": "Excess term",
+                            "parse_output": "float_conversion",
+                            "optional": true,
+                            "type": "number",
+                            "name": "excessTerm"
+                          },
+                          {
+                            "control_type": "number",
+                            "label": "Annual recurring revenue",
+                            "parse_output": "float_conversion",
+                            "optional": true,
+                            "type": "number",
+                            "name": "annualRecurringRevenue"
+                          },
+                          {
+                            "control_type": "number",
+                            "label": "One time revenue",
+                            "parse_output": "float_conversion",
+                            "optional": true,
+                            "type": "number",
+                            "name": "oneTimeRevenue"
+                          }
+                        ]
+                      },
+                      {
+                        "name": "cashValues",
+                        "type": "array",
+                        "of": "object",
+                        "label": "Cash values",
+                        "optional": true,
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Rule",
+                            "optional": true,
+                            "type": "string",
+                            "name": "rule"
+                          },
+                          {
+                            "control_type": "number",
+                            "label": "Annual recurring revenue",
+                            "parse_output": "float_conversion",
+                            "optional": true,
+                            "type": "number",
+                            "name": "annualRecurringRevenue"
+                          },
+                          {
+                            "control_type": "number",
+                            "label": "One time revenue",
+                            "parse_output": "float_conversion",
+                            "optional": true,
+                            "type": "number",
+                            "name": "oneTimeRevenue"
+                          },
+                          {
+                            "control_type": "number",
+                            "label": "Excess term",
+                            "parse_output": "float_conversion",
+                            "optional": true,
+                            "type": "number",
+                            "name": "excessTerm"
+                          }
+                        ]
+                      }
+                    ],
+                    "label": "Body",
+                    "optional": true,
+                    "type": "object",
+                    "name": "body"
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "list_item",
+                "control_type": "form-schema-builder",
+                "label": "Function input",
+                "sticky": true,
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Schema",
+                    "sticky": true,
+                    "extends_schema": true,
+                    "optional": true,
+                    "type": "string",
+                    "name": "schema",
+                    "parent": "list_item"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "body",
+                        "optional": true,
+                        "type": "string",
+                        "name": "body",
+                        "parent": "list_item.data"
+                      }
+                    ],
+                    "label": "Data",
+                    "sticky": true,
+                    "optional": true,
+                    "type": "object",
+                    "name": "data",
+                    "parent": "list_item"
+                  }
+                ],
+                "override": true
+              },
+              {
+                "type": "string",
+                "name": "InvocationType",
+                "control_type": "select",
+                "label": "Invocation type",
+                "hint": "If Asynchrounous event is selected, no response will be received.",
+                "sticky": true,
+                "pick_list": [
+                  [
+                    "RequestResponse",
+                    "RequestResponse"
+                  ],
+                  [
+                    "Asynchronous event",
+                    "Event"
+                  ]
+                ],
+                "optional": true
+              },
+              {
+                "type": "string",
+                "name": "Client_Context",
+                "control_type": "text-area",
+                "label": "Client context",
+                "hint": "Used to pass client-specific information to the lambda function. Enter in JSON format",
+                "optional": true
+              }
+            ],
+            "visible_config_fields": [
+              "FunctionName",
+              "list_item",
+              "list_item.schema",
+              "list_item.data",
+              "output_schema",
+              "InvocationType",
+              "list_item.data.body"
+            ],
+            "uuid": "0cea26c3-76f7-422c-8151-1e733015bfc5"
+          },
+          {
+            "number": 3,
+            "as": "79c79886",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "2",
+              "retry_interval": "5"
+            },
+            "filter": {
+              "conditions": [
+                {
+                  "operand": "contains",
+                  "lhs": "#{_('data.catch.79c79886.message')}",
+                  "rhs": "500 Internal Server Error"
+                }
+              ],
+              "operand": "or",
+              "type": "compound"
+            },
+            "block": [
+              {
+                "number": 4,
+                "provider": "workato_service",
+                "name": "call_service_async",
+                "as": "af304866",
+                "title": null,
+                "description": "Call recipe <span class=\"provider\">Log Error to MySQL Failed Jobs</span> (do not wait for response)",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "flow_id": "Log Error to MySQL Failed Jobs"
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "flow_id": {
+                    "zip_name": "util/callable_log_error_to_mysql_failed_jobs.recipe.json",
+                    "name": "Callable | Log Error to MySQL Failed Jobs",
+                    "folder": "util"
+                  },
+                  "request": {
+                    "recipe_id": "#{_('data.workato.job_context.recipe_id')}",
+                    "recipe_job_id": "#{_('data.workato.job_context.job_id')}",
+                    "recipe_job_created_at": "#{_('data.workato.job_context.job_created_at')}",
+                    "error_type": "#{_('data.catch.79c79886.type')}",
+                    "error_message": "#{_('data.catch.79c79886.message')}"
+                  }
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "request",
+                    "label": "Recipe input",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Recipe ID",
+                        "name": "recipe_id",
+                        "type": "string",
+                        "optional": false,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Recipe Job ID",
+                        "name": "recipe_job_id",
+                        "type": "string",
+                        "optional": false,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "date",
+                        "label": "Recipe Job Created At",
+                        "render_input": "date_conversion",
+                        "parse_output": "date_conversion",
+                        "name": "recipe_job_created_at",
+                        "type": "date_time",
+                        "optional": false,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Recipe Job URL",
+                        "name": "recipe_job_url",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Parent Job ID",
+                        "name": "parent_job_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Calling Recipe ID",
+                        "name": "calling_recipe_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Calling Job ID",
+                        "name": "calling_job_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Error Type",
+                        "name": "error_type",
+                        "type": "string",
+                        "optional": false,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Error Message",
+                        "name": "error_message",
+                        "type": "string",
+                        "optional": false,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "integer",
+                        "label": "Error Retry Count",
+                        "parse_output": "integer_conversion",
+                        "name": "error_retry_count",
+                        "type": "integer",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Element NS Contact Internal ID",
+                        "name": "element_ns_contact_internal_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Element NS Customer Internal ID",
+                        "name": "element_ns_customer_internal_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Element NS Employee ID",
+                        "name": "element_ns_employee_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Element SFDC Account ID",
+                        "name": "element_sfdc_account_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Element SFDC Team Role",
+                        "name": "element_sfdc_team_role",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Element SFDC Contact ID",
+                        "name": "element_sfdc_contact_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      }
+                    ]
+                  }
+                ],
+                "uuid": "3130c0bc-89c8-42b7-b9b9-17e9b43ccd19"
+              },
+              {
+                "number": 5,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "not_contains",
+                      "lhs": "=lookup(\"SALESFORCE_VARIABLES\", key: \"casharr.ignore_opps\")[\"value\"].split(\";\")",
+                      "rhs": "#{_('data.rest.f9bcd5e7.payload.body.id')}",
+                      "uuid": "condition-13927185-6662-41b6-8941-7600263d1065"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 6,
+                    "provider": "slack_bot",
+                    "name": "post_bot_message",
+                    "as": "70442250",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "channel": "cash-arr-alerts"
+                    },
+                    "toggleCfg": {
+                      "channel": false
+                    },
+                    "input": {
+                      "channel": "C02JC3KC8NA",
+                      "text": "Salesforce - AWS Lambda - Cash ARR Recipe Error",
+                      "attachment_fields": [
+                        {
+                          "title": "Job URL",
+                          "value": "#{_('data.workato.job_context.job_url')}"
+                        },
+                        {
+                          "title": "CashArrOutboundRequest",
+                          "value": "<#{_('data.workato.job_context.account_properties.salesforce_url', 'account_property', 'salesforce.url')}#{_('data.rest.f9bcd5e7.payload.cashArrOutboundRequestId')}|link to CashArrOutboundRequest>"
+                        },
+                        {
+                          "title": "Opportunity",
+                          "value": "<#{_('data.workato.job_context.account_properties.salesforce_url', 'account_property', 'salesforce.url')}#{_('data.rest.f9bcd5e7.payload.body.id')}|link to Opp>"
+                        },
+                        {
+                          "title": "Error",
+                          "value": "#{_('data.catch.79c79886.message')}"
+                        }
+                      ]
+                    },
+                    "visible_config_fields": [
+                      "channel",
+                      "blocks",
+                      "blocks.block_type",
+                      "blocks.section_text",
+                      "blocks.image_url",
+                      "blocks.alt_text",
+                      "blocks.button_title",
+                      "blocks.url",
+                      "blocks.bot_command",
+                      "blocks.params",
+                      "blocks.style",
+                      "blocks.attachment_fields",
+                      "blocks.attachment_fields.value",
+                      "blocks.placeholder_text",
+                      "blocks.menu_type",
+                      "blocks.dynamic_menu_recipe",
+                      "blocks.field_name",
+                      "blocks.options",
+                      "blocks.options.title",
+                      "blocks.options.bot_command",
+                      "blocks.options.params",
+                      "blocks.options.init_value",
+                      "blocks.init_option",
+                      "blocks.initial_date",
+                      "blocks.options.value",
+                      "blocks.init_options",
+                      "blocks.image_title",
+                      "blocks.external_id",
+                      "blocks.elements",
+                      "blocks.elements.type",
+                      "blocks.elements.text",
+                      "blocks.elements.image_url",
+                      "blocks.elements.alt_text",
+                      "blocks.actions",
+                      "blocks.actions.type",
+                      "blocks.actions.button_title",
+                      "blocks.actions.url",
+                      "blocks.actions.bot_command",
+                      "blocks.actions.params",
+                      "blocks.actions.style",
+                      "blocks.actions.placeholder_text",
+                      "blocks.actions.initial_date",
+                      "blocks.actions.field_name",
+                      "blocks.actions.options",
+                      "blocks.actions.options.params",
+                      "blocks.actions.menu_type",
+                      "blocks.actions.dynamic_menu_recipe",
+                      "blocks.objects",
+                      "blocks.objects.blocks",
+                      "blocks.objects.blocks.block_type",
+                      "blocks.objects.blocks.section_text",
+                      "blocks.objects.blocks.image_url",
+                      "blocks.objects.blocks.alt_text",
+                      "blocks.objects.blocks.button_title",
+                      "blocks.objects.blocks.url",
+                      "blocks.objects.blocks.bot_command",
+                      "blocks.objects.blocks.params",
+                      "blocks.objects.blocks.style",
+                      "blocks.objects.blocks.attachment_fields",
+                      "blocks.objects.blocks.attachment_fields.value",
+                      "blocks.objects.blocks.placeholder_text",
+                      "blocks.objects.blocks.menu_type",
+                      "blocks.objects.blocks.dynamic_menu_recipe",
+                      "blocks.objects.blocks.field_name",
+                      "blocks.objects.blocks.options",
+                      "blocks.objects.blocks.options.title",
+                      "blocks.objects.blocks.options.bot_command",
+                      "blocks.objects.blocks.options.params",
+                      "blocks.objects.blocks.options.init_value",
+                      "blocks.objects.blocks.init_option",
+                      "blocks.objects.blocks.initial_date",
+                      "blocks.objects.blocks.image_title",
+                      "blocks.objects.blocks.elements",
+                      "blocks.objects.blocks.elements.type",
+                      "blocks.objects.blocks.elements.text",
+                      "blocks.objects.blocks.elements.image_url",
+                      "blocks.objects.blocks.elements.alt_text",
+                      "blocks.objects.blocks.actions",
+                      "blocks.objects.blocks.actions.type",
+                      "blocks.objects.blocks.actions.button_title",
+                      "blocks.objects.blocks.actions.url",
+                      "blocks.objects.blocks.actions.bot_command",
+                      "blocks.objects.blocks.actions.params",
+                      "blocks.objects.blocks.actions.style",
+                      "blocks.objects.blocks.actions.placeholder_text",
+                      "blocks.objects.blocks.actions.initial_date",
+                      "blocks.objects.blocks.actions.field_name",
+                      "blocks.objects.blocks.actions.options",
+                      "blocks.objects.blocks.actions.options.params",
+                      "blocks.objects.blocks.actions.menu_type",
+                      "blocks.objects.blocks.actions.dynamic_menu_recipe",
+                      "text",
+                      "message.title",
+                      "message.title_link",
+                      "message.attachment_text",
+                      "message.color",
+                      "attachment_fields",
+                      "attachment_buttons",
+                      "attachment_items.message.title",
+                      "attachment_items.message.title_link",
+                      "attachment_items.message.attachment_text",
+                      "attachment_items.message.color",
+                      "attachment_items.attachment_fields",
+                      "attachment_items.attachment_buttons",
+                      "advanced.ts",
+                      "attachment_fields.value",
+                      "attachment_fields.title"
+                    ],
+                    "uuid": "b686e076-a006-4158-a69c-fb6b20e49e35",
+                    "extended_output_schema": null,
+                    "extended_input_schema": null
+                  }
+                ],
+                "uuid": "2ef545ba-baa6-4f87-9877-b4483c69c96a"
+              },
+              {
+                "number": 7,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "true",
+                  "stop_reason": "#{_('data.catch.79c79886.message')}"
+                },
+                "uuid": "7778c023-0d63-42ac-b393-3a3b55b9ac84"
+              }
+            ],
+            "uuid": "577c3cb0-5331-46ce-bd70-bc98848e16f7"
+          }
+        ],
+        "uuid": "8ff0c062-33b2-424d-8e10-4d68e7d628dd"
+      },
+      {
+        "number": 8,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 9,
+            "provider": "salesforce",
+            "name": "update_sobject",
+            "as": "dcbd811e",
+            "title": "Update Cash arr outbound request",
+            "description": "Update <span class=\"provider\">Cash arr outbound request</span> in <span class=\"provider\">Salesforce</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "sobject_name": "Cash arr outbound request"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "sobject_name": "CashArrOutboundRequest__c",
+              "ResponseBody__c": "=_('data.aws_lambda.d66ef80e.response.body.cashValues.first.____Size', 'list_meta', '____Size', 'data.aws_lambda.d66ef80e.response.body.cashValues')>0?_('data.aws_lambda.d66ef80e.response.body').to_json : _('data.aws_lambda.d66ef80e.response').first.to_json",
+              "id": "=_('data.rest.f9bcd5e7.payload.cashArrOutboundRequestId')"
+            },
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "id",
+                "control_type": "text",
+                "label": "CashArrOutboundRequest ID",
+                "hint": "Salesforce internal ID of CashArrOutboundRequest to update",
+                "key_scope": "casharroutboundrequest__c"
+              },
+              {
+                "type": "string",
+                "name": "CurrencyIsoCode",
+                "control_type": "select",
+                "label": "Currency ISO Code",
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"CashArrOutboundRequest__c\""
+                },
+                "optional": true,
+                "custom": false,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Currency ISO Code",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": false,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "CurrencyIsoCode"
+                },
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "OwnerId",
+                "control_type": "text",
+                "label": "Owner ID",
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "ConsumeResponseJobId__c",
+                "control_type": "text",
+                "label": "Consume Response Job Id",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "RequestBody__c",
+                "control_type": "text-area",
+                "label": "Request Body",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "ResponseBody__c",
+                "control_type": "text-area",
+                "label": "Response Body",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "SendRequestJobId__c",
+                "control_type": "text",
+                "label": "Send Request Job Id",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "Status__c",
+                "control_type": "text",
+                "label": "Status",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "StatusDetails__c",
+                "control_type": "text-area",
+                "label": "Status Details",
+                "optional": true,
+                "custom": true,
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              }
+            ],
+            "visible_config_fields": [
+              "sobject_name",
+              "ResponseBody__c",
+              "id"
+            ],
+            "uuid": "29dabec3-8a66-4027-95a3-21b2f5f107f6"
+          },
+          {
+            "number": 10,
+            "as": "ea5d1c7f",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "3",
+              "retry_interval": "10"
+            },
+            "filter": {
+              "conditions": [
+                {
+                  "operand": "not_contains",
+                  "lhs": "=lookup(\"SALESFORCE_VARIABLES\", key: \"casharr.ignore_opps\")[\"value\"].split(\";\")",
+                  "rhs": "#{_('data.rest.f9bcd5e7.payload.body.id')}",
+                  "uuid": "condition-65370640-fc19-4882-8546-5bf5aad7d321"
+                }
+              ],
+              "operand": "and",
+              "type": "compound"
+            },
+            "block": [
+              {
+                "number": 11,
+                "provider": "workato_service",
+                "name": "call_service_async",
+                "as": "843c64a9",
+                "title": null,
+                "description": "Call recipe <span class=\"provider\">Log Error to MySQL Failed Jobs</span> (do not wait for response)",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "flow_id": "Log Error to MySQL Failed Jobs"
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "flow_id": {
+                    "zip_name": "util/callable_log_error_to_mysql_failed_jobs.recipe.json",
+                    "name": "Callable | Log Error to MySQL Failed Jobs",
+                    "folder": "util"
+                  },
+                  "request": {
+                    "recipe_id": "#{_('data.workato.job_context.recipe_id')}",
+                    "recipe_job_id": "#{_('data.workato.job_context.job_id')}",
+                    "recipe_job_created_at": "#{_('data.workato.job_context.job_created_at')}",
+                    "error_type": "#{_('data.catch.79c79886.type')}",
+                    "error_message": "#{_('data.catch.79c79886.message')}"
+                  }
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "request",
+                    "label": "Recipe input",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Recipe ID",
+                        "name": "recipe_id",
+                        "type": "string",
+                        "optional": false,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Recipe Job ID",
+                        "name": "recipe_job_id",
+                        "type": "string",
+                        "optional": false,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "date",
+                        "label": "Recipe Job Created At",
+                        "render_input": "date_conversion",
+                        "parse_output": "date_conversion",
+                        "name": "recipe_job_created_at",
+                        "type": "date_time",
+                        "optional": false,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Recipe Job URL",
+                        "name": "recipe_job_url",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Parent Job ID",
+                        "name": "parent_job_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Calling Recipe ID",
+                        "name": "calling_recipe_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Calling Job ID",
+                        "name": "calling_job_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Error Type",
+                        "name": "error_type",
+                        "type": "string",
+                        "optional": false,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Error Message",
+                        "name": "error_message",
+                        "type": "string",
+                        "optional": false,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "integer",
+                        "label": "Error Retry Count",
+                        "parse_output": "integer_conversion",
+                        "name": "error_retry_count",
+                        "type": "integer",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Element NS Contact Internal ID",
+                        "name": "element_ns_contact_internal_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Element NS Customer Internal ID",
+                        "name": "element_ns_customer_internal_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Element NS Employee ID",
+                        "name": "element_ns_employee_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Element SFDC Account ID",
+                        "name": "element_sfdc_account_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Element SFDC Team Role",
+                        "name": "element_sfdc_team_role",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Element SFDC Contact ID",
+                        "name": "element_sfdc_contact_id",
+                        "type": "string",
+                        "optional": true,
+                        "parent": "request"
+                      }
+                    ]
+                  }
+                ],
+                "uuid": "70146d90-6964-4be7-9644-e53929497245"
+              },
+              {
+                "number": 12,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "not_contains",
+                      "lhs": "=lookup(\"SALESFORCE_VARIABLES\", key: \"casharr.ignore_opps\")[\"value\"].split(\";\")",
+                      "rhs": "#{_('data.rest.f9bcd5e7.payload.body.id')}",
+                      "uuid": "condition-13927185-6662-41b6-8941-7600263d1065"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 13,
+                    "provider": "slack_bot",
+                    "name": "post_bot_message",
+                    "as": "0f6367b2",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "channel": "cash-arr-alerts"
+                    },
+                    "toggleCfg": {
+                      "channel": false
+                    },
+                    "input": {
+                      "channel": "C02JC3KC8NA",
+                      "text": "Salesforce - AWS Lambda - Cash ARR Recipe Error",
+                      "attachment_fields": [
+                        {
+                          "title": "Job URL",
+                          "value": "#{_('data.workato.job_context.job_url')}"
+                        },
+                        {
+                          "title": "CashArrOutboundRequest",
+                          "value": "<#{_('data.workato.job_context.account_properties.salesforce_url', 'account_property', 'salesforce.url')}#{_('data.rest.f9bcd5e7.payload.cashArrOutboundRequestId')}|link to CashArrOutboundRequest>"
+                        },
+                        {
+                          "title": "Opportunity",
+                          "value": "<#{_('data.workato.job_context.account_properties.salesforce_url', 'account_property', 'salesforce.url')}#{_('data.rest.f9bcd5e7.payload.body.id')}|link to Opp>"
+                        },
+                        {
+                          "title": "Error",
+                          "value": "#{_('data.catch.ea5d1c7f.message')}"
+                        }
+                      ]
+                    },
+                    "visible_config_fields": [
+                      "channel",
+                      "blocks",
+                      "blocks.block_type",
+                      "blocks.section_text",
+                      "blocks.image_url",
+                      "blocks.alt_text",
+                      "blocks.button_title",
+                      "blocks.url",
+                      "blocks.bot_command",
+                      "blocks.params",
+                      "blocks.style",
+                      "blocks.attachment_fields",
+                      "blocks.attachment_fields.value",
+                      "blocks.placeholder_text",
+                      "blocks.menu_type",
+                      "blocks.dynamic_menu_recipe",
+                      "blocks.field_name",
+                      "blocks.options",
+                      "blocks.options.title",
+                      "blocks.options.bot_command",
+                      "blocks.options.params",
+                      "blocks.options.init_value",
+                      "blocks.init_option",
+                      "blocks.initial_date",
+                      "blocks.options.value",
+                      "blocks.init_options",
+                      "blocks.image_title",
+                      "blocks.external_id",
+                      "blocks.elements",
+                      "blocks.elements.type",
+                      "blocks.elements.text",
+                      "blocks.elements.image_url",
+                      "blocks.elements.alt_text",
+                      "blocks.actions",
+                      "blocks.actions.type",
+                      "blocks.actions.button_title",
+                      "blocks.actions.url",
+                      "blocks.actions.bot_command",
+                      "blocks.actions.params",
+                      "blocks.actions.style",
+                      "blocks.actions.placeholder_text",
+                      "blocks.actions.initial_date",
+                      "blocks.actions.field_name",
+                      "blocks.actions.options",
+                      "blocks.actions.options.params",
+                      "blocks.actions.menu_type",
+                      "blocks.actions.dynamic_menu_recipe",
+                      "blocks.objects",
+                      "blocks.objects.blocks",
+                      "blocks.objects.blocks.block_type",
+                      "blocks.objects.blocks.section_text",
+                      "blocks.objects.blocks.image_url",
+                      "blocks.objects.blocks.alt_text",
+                      "blocks.objects.blocks.button_title",
+                      "blocks.objects.blocks.url",
+                      "blocks.objects.blocks.bot_command",
+                      "blocks.objects.blocks.params",
+                      "blocks.objects.blocks.style",
+                      "blocks.objects.blocks.attachment_fields",
+                      "blocks.objects.blocks.attachment_fields.value",
+                      "blocks.objects.blocks.placeholder_text",
+                      "blocks.objects.blocks.menu_type",
+                      "blocks.objects.blocks.dynamic_menu_recipe",
+                      "blocks.objects.blocks.field_name",
+                      "blocks.objects.blocks.options",
+                      "blocks.objects.blocks.options.title",
+                      "blocks.objects.blocks.options.bot_command",
+                      "blocks.objects.blocks.options.params",
+                      "blocks.objects.blocks.options.init_value",
+                      "blocks.objects.blocks.init_option",
+                      "blocks.objects.blocks.initial_date",
+                      "blocks.objects.blocks.image_title",
+                      "blocks.objects.blocks.elements",
+                      "blocks.objects.blocks.elements.type",
+                      "blocks.objects.blocks.elements.text",
+                      "blocks.objects.blocks.elements.image_url",
+                      "blocks.objects.blocks.elements.alt_text",
+                      "blocks.objects.blocks.actions",
+                      "blocks.objects.blocks.actions.type",
+                      "blocks.objects.blocks.actions.button_title",
+                      "blocks.objects.blocks.actions.url",
+                      "blocks.objects.blocks.actions.bot_command",
+                      "blocks.objects.blocks.actions.params",
+                      "blocks.objects.blocks.actions.style",
+                      "blocks.objects.blocks.actions.placeholder_text",
+                      "blocks.objects.blocks.actions.initial_date",
+                      "blocks.objects.blocks.actions.field_name",
+                      "blocks.objects.blocks.actions.options",
+                      "blocks.objects.blocks.actions.options.params",
+                      "blocks.objects.blocks.actions.menu_type",
+                      "blocks.objects.blocks.actions.dynamic_menu_recipe",
+                      "text",
+                      "message.title",
+                      "message.title_link",
+                      "message.attachment_text",
+                      "message.color",
+                      "attachment_fields",
+                      "attachment_buttons",
+                      "attachment_items.message.title",
+                      "attachment_items.message.title_link",
+                      "attachment_items.message.attachment_text",
+                      "attachment_items.message.color",
+                      "attachment_items.attachment_fields",
+                      "attachment_items.attachment_buttons",
+                      "advanced.ts",
+                      "attachment_fields.value",
+                      "attachment_fields.title"
+                    ],
+                    "uuid": "e6ba2705-9e7f-4f9d-894a-7e1545ba92e1",
+                    "extended_output_schema": null,
+                    "extended_input_schema": null
+                  }
+                ],
+                "uuid": "3d426e94-9f49-4298-b1a9-f26d452d660a"
+              },
+              {
+                "number": 14,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "true",
+                  "stop_reason": "#{_('data.catch.ea5d1c7f.message')}"
+                },
+                "uuid": "a7a8bdb1-481e-4070-bd48-e012e6c4c678"
+              }
+            ],
+            "comment": "Added retry logic to retry the monitor block 3 times with a 10 second interval in between retries to mitigate timeout errors",
+            "uuid": "29c429e0-b34c-4a30-8a87-bd78d7017397"
+          }
+        ],
+        "uuid": "662b049d-5b5f-45ef-898d-fb969a4f3021"
+      }
+    ],
+    "uuid": "10633d4d-2b36-499b-a77a-6abebacb22e1"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "aws_lambda",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/aws_lambda_apps.connection.json",
+        "name": "AWS Lambda (Apps)",
+        "folder": "connections"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "rest",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/http_connection.connection.json",
+        "name": "HTTP connection",
+        "folder": "connections"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "salesforce",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/salesforce.connection.json",
+        "name": "Salesforce",
+        "folder": "connections"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "slack_bot",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/workatointegrations.connection.json",
+        "name": "workatointegrations",
+        "folder": "connections"
+      }
+    }
+  ]
+}

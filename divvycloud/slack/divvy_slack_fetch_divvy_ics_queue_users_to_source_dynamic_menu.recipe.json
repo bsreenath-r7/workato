@@ -1,0 +1,341 @@
+{
+  "name": "Divvy Slack - Fetch Divvy ICS queue users to source dynamic menu",
+  "description": "When there is a new command to Slack Workbot, do action and other actions",
+  "version": 1,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "slack_bot",
+    "name": "dynamic_menu",
+    "as": "6a360209",
+    "title": null,
+    "description": null,
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "dynamic_menu_name": "Divvy ICS queue users"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "parameters",
+        "label": "Parameters",
+        "properties": [
+
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "salesforce",
+        "name": "search_sobjects_soql_v2",
+        "as": "85cef1cc",
+        "title": null,
+        "description": "Search for <span class=\"provider\">records using SOQL query</span> in <span class=\"provider\">Salesforce</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "limit": "150",
+          "query": "Select Id from Group where type='Queue' and Name='InsightCloudSec'",
+          "output_schema": "[{\"properties\":[{\"control_type\":\"text\",\"label\":\"Type\",\"type\":\"string\",\"name\":\"type\"},{\"control_type\":\"text\",\"label\":\"URL\",\"type\":\"string\",\"name\":\"url\"}],\"label\":\"Attributes\",\"type\":\"object\",\"name\":\"attributes\"},{\"control_type\":\"text\",\"label\":\"ID\",\"type\":\"string\",\"name\":\"Id\"}]"
+        },
+        "extended_output_schema": [
+          {
+            "type": "boolean",
+            "name": "done",
+            "control_type": "checkbox",
+            "label": "Done",
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Done",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "type": "boolean",
+              "name": "done"
+            },
+            "render_input": {
+            },
+            "parse_output": {
+            }
+          },
+          {
+            "type": "integer",
+            "name": "totalSize",
+            "control_type": "integer",
+            "label": "Total size",
+            "parse_output": "integer_conversion"
+          },
+          {
+            "type": "array",
+            "name": "records",
+            "label": "Records",
+            "of": "object",
+            "properties": [
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Type",
+                    "type": "string",
+                    "name": "type"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "URL",
+                    "type": "string",
+                    "name": "url"
+                  }
+                ],
+                "label": "Attributes",
+                "type": "object",
+                "name": "attributes"
+              },
+              {
+                "control_type": "text",
+                "label": "ID",
+                "type": "string",
+                "name": "Id"
+              }
+            ]
+          }
+        ],
+        "uuid": "7aa49b57-530b-4fc8-a177-b1cb262abc58"
+      },
+      {
+        "number": 2,
+        "provider": "salesforce",
+        "name": "search_sobjects_soql_v2",
+        "as": "225e61b3",
+        "title": null,
+        "description": "Search for <span class=\"provider\">records using SOQL query</span> in <span class=\"provider\">Salesforce</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "limit": "150",
+          "query": "select id, name, email, isactive, profile.name, userrole.name, usertype\nfrom user where id in (select UserOrGroupId from GroupMember where GroupId  = '#{_('data.salesforce.85cef1cc.records.first.Id')}')",
+          "output_schema": "[{\"properties\":[{\"control_type\":\"text\",\"label\":\"Type\",\"type\":\"string\",\"name\":\"type\"},{\"control_type\":\"text\",\"label\":\"URL\",\"type\":\"string\",\"name\":\"url\"}],\"label\":\"Attributes\",\"type\":\"object\",\"name\":\"attributes\"},{\"control_type\":\"text\",\"label\":\"ID\",\"type\":\"string\",\"name\":\"Id\"},{\"control_type\":\"text\",\"label\":\"Name\",\"type\":\"string\",\"name\":\"Name\"},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"Email\"},{\"control_type\":\"text\",\"label\":\"Is active\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is active\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"IsActive\"},\"type\":\"boolean\",\"name\":\"IsActive\"},{\"properties\":[{\"properties\":[{\"control_type\":\"text\",\"label\":\"Type\",\"type\":\"string\",\"name\":\"type\"},{\"control_type\":\"text\",\"label\":\"URL\",\"type\":\"string\",\"name\":\"url\"}],\"label\":\"Attributes\",\"type\":\"object\",\"name\":\"attributes\"},{\"control_type\":\"text\",\"label\":\"Name\",\"type\":\"string\",\"name\":\"Name\"}],\"label\":\"Profile\",\"type\":\"object\",\"name\":\"Profile\"},{\"properties\":[{\"properties\":[{\"control_type\":\"text\",\"label\":\"Type\",\"type\":\"string\",\"name\":\"type\"},{\"control_type\":\"text\",\"label\":\"URL\",\"type\":\"string\",\"name\":\"url\"}],\"label\":\"Attributes\",\"type\":\"object\",\"name\":\"attributes\"},{\"control_type\":\"text\",\"label\":\"Name\",\"type\":\"string\",\"name\":\"Name\"}],\"label\":\"User role\",\"type\":\"object\",\"name\":\"UserRole\"},{\"control_type\":\"text\",\"label\":\"User type\",\"type\":\"string\",\"name\":\"UserType\"}]"
+        },
+        "extended_output_schema": [
+          {
+            "type": "boolean",
+            "name": "done",
+            "control_type": "checkbox",
+            "label": "Done",
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Done",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "type": "boolean",
+              "name": "done"
+            },
+            "render_input": {
+            },
+            "parse_output": {
+            }
+          },
+          {
+            "type": "integer",
+            "name": "totalSize",
+            "control_type": "integer",
+            "label": "Total size",
+            "parse_output": "integer_conversion"
+          },
+          {
+            "type": "array",
+            "name": "records",
+            "label": "Records",
+            "of": "object",
+            "properties": [
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Type",
+                    "type": "string",
+                    "name": "type"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "URL",
+                    "type": "string",
+                    "name": "url"
+                  }
+                ],
+                "label": "Attributes",
+                "type": "object",
+                "name": "attributes"
+              },
+              {
+                "control_type": "text",
+                "label": "ID",
+                "type": "string",
+                "name": "Id"
+              },
+              {
+                "control_type": "text",
+                "label": "Name",
+                "type": "string",
+                "name": "Name"
+              },
+              {
+                "control_type": "text",
+                "label": "Email",
+                "type": "string",
+                "name": "Email"
+              },
+              {
+                "control_type": "text",
+                "label": "Is active",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Is active",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "type": "boolean",
+                  "name": "IsActive"
+                },
+                "type": "boolean",
+                "name": "IsActive"
+              },
+              {
+                "properties": [
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Type",
+                        "type": "string",
+                        "name": "type"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "URL",
+                        "type": "string",
+                        "name": "url"
+                      }
+                    ],
+                    "label": "Attributes",
+                    "type": "object",
+                    "name": "attributes"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "type": "string",
+                    "name": "Name"
+                  }
+                ],
+                "label": "Profile",
+                "type": "object",
+                "name": "Profile"
+              },
+              {
+                "properties": [
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Type",
+                        "type": "string",
+                        "name": "type"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "URL",
+                        "type": "string",
+                        "name": "url"
+                      }
+                    ],
+                    "label": "Attributes",
+                    "type": "object",
+                    "name": "attributes"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "type": "string",
+                    "name": "Name"
+                  }
+                ],
+                "label": "User role",
+                "type": "object",
+                "name": "UserRole"
+              },
+              {
+                "control_type": "text",
+                "label": "User type",
+                "type": "string",
+                "name": "UserType"
+              }
+            ]
+          }
+        ],
+        "uuid": "02096924-0aa8-4635-a87b-ef5e851579a4"
+      },
+      {
+        "number": 3,
+        "provider": "slack_bot",
+        "name": "generate_menu_options",
+        "as": "36819c42",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "use_option_groups": "false",
+          "options": {
+            "____source": "#{_('data.salesforce.225e61b3.records')}",
+            "label": "#{_('data.salesforce.225e61b3.records.first.Name')}",
+            "value": "#{_('data.salesforce.225e61b3.records.first.Email')}"
+          }
+        },
+        "comment": "Decide how Workbot should respond to the user after the above actions have been performed",
+        "uuid": "a47d3540-8842-4ee6-a9d2-fc8e61f9b60b",
+        "extended_output_schema": null,
+        "extended_input_schema": null
+      }
+    ],
+    "comment": "Define how users should command Workbot from Slack",
+    "uuid": "aca52304-5014-4da8-b66d-3389e342e9a6",
+    "extended_input_schema": null
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "slack_bot",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "resources/workbot_divvycloud.connection.json",
+        "name": "Workbot(DivvyCloud)",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "salesforce",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/salesforce.connection.json",
+        "name": "Salesforce",
+        "folder": "connections"
+      }
+    }
+  ]
+}

@@ -1,0 +1,2870 @@
+{
+  "name": "NetSuite File Cabinet (SVB Positive Pay File) - SVB SFTP Upload",
+  "description": "When there is a new file or folder in Google Drive, do action",
+  "version": 1,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "netsuite",
+    "name": "new_object",
+    "as": "bcbc25be",
+    "title": "New File",
+    "description": "          New <span class=\"provider\">File</span>\n          in <span class=\"provider\">NetSuite</span>\n",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+      "netsuite_object": "File"
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "netsuite_object": "File"
+    },
+    "filter": {
+      "conditions": [
+        {
+          "operand": "equals_to",
+          "lhs": "#{_('data.netsuite.bcbc25be.folder.internal_id')}",
+          "rhs": "=lookup(\"NETSUITE_DEFAULT_VALUES\", name: \"positive_pay_folder_id\")[\"value\"]"
+        }
+      ],
+      "operand": "and",
+      "type": "compound"
+    },
+    "extended_output_schema": [
+      {
+        "type": "string",
+        "name": "internal_id",
+        "control_type": "text",
+        "label": "Internal ID",
+        "optional": true,
+        "ns_content_type": "attribute",
+        "ns_tag": ""
+      },
+      {
+        "type": "string",
+        "name": "external_id",
+        "control_type": "text",
+        "label": "External ID",
+        "optional": true,
+        "ns_content_type": "attribute",
+        "ns_tag": ""
+      },
+      {
+        "type": "string",
+        "name": "name",
+        "control_type": "text",
+        "label": "Name",
+        "optional": true,
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "string",
+        "name": "attachFrom",
+        "control_type": "select",
+        "label": "Attach from",
+        "pick_list": [
+          [
+            "Computer",
+            "_computer"
+          ],
+          [
+            "Web",
+            "_web"
+          ]
+        ],
+        "optional": true,
+        "toggle_hint": "Select from list",
+        "toggle_field": {
+          "control_type": "text",
+          "label": "Attach from",
+          "toggle_hint": "Enter custom value",
+          "optional": true,
+          "toggle_to_primary_hint": "Select from list",
+          "toggle_to_secondary_hint": "Enter custom value",
+          "ns_content_type": "element",
+          "ns_tag": "documentsFileCabinet",
+          "type": "string",
+          "name": "attachFrom"
+        },
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "string",
+        "name": "mediaTypeName",
+        "control_type": "text",
+        "label": "Media type name",
+        "optional": true,
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "string",
+        "name": "fileType",
+        "control_type": "select",
+        "label": "File type",
+        "pick_list": [
+          [
+            "Appcache",
+            "_APPCACHE"
+          ],
+          [
+            "Autocad",
+            "_AUTOCAD"
+          ],
+          [
+            "Bmpimage",
+            "_BMPIMAGE"
+          ],
+          [
+            "Certificate",
+            "_CERTIFICATE"
+          ],
+          [
+            "Cff",
+            "_CFF"
+          ],
+          [
+            "Config",
+            "_CONFIG"
+          ],
+          [
+            "Csv",
+            "_CSV"
+          ],
+          [
+            "Eot",
+            "_EOT"
+          ],
+          [
+            "Excel",
+            "_EXCEL"
+          ],
+          [
+            "Flash",
+            "_FLASH"
+          ],
+          [
+            "Freemarker",
+            "_FREEMARKER"
+          ],
+          [
+            "Gifimage",
+            "_GIFIMAGE"
+          ],
+          [
+            "Gzip",
+            "_GZIP"
+          ],
+          [
+            "Htmldoc",
+            "_HTMLDOC"
+          ],
+          [
+            "Icon",
+            "_ICON"
+          ],
+          [
+            "Image",
+            "_IMAGE"
+          ],
+          [
+            "Javascript",
+            "_JAVASCRIPT"
+          ],
+          [
+            "Jpgimage",
+            "_JPGIMAGE"
+          ],
+          [
+            "Json",
+            "_JSON"
+          ],
+          [
+            "Lzh",
+            "_LZH"
+          ],
+          [
+            "Messagerfc",
+            "_MESSAGERFC"
+          ],
+          [
+            "Miscbinary",
+            "_MISCBINARY"
+          ],
+          [
+            "Misctext",
+            "_MISCTEXT"
+          ],
+          [
+            "Mp3",
+            "_MP3"
+          ],
+          [
+            "Mpegmovie",
+            "_MPEGMOVIE"
+          ],
+          [
+            "Msproject",
+            "_MSPROJECT"
+          ],
+          [
+            "Otf",
+            "_OTF"
+          ],
+          [
+            "Pdf",
+            "_PDF"
+          ],
+          [
+            "Pjpgimage",
+            "_PJPGIMAGE"
+          ],
+          [
+            "Plaintext",
+            "_PLAINTEXT"
+          ],
+          [
+            "Pngimage",
+            "_PNGIMAGE"
+          ],
+          [
+            "Postscript",
+            "_POSTSCRIPT"
+          ],
+          [
+            "Powerpoint",
+            "_POWERPOINT"
+          ],
+          [
+            "Quicktime",
+            "_QUICKTIME"
+          ],
+          [
+            "Rtf",
+            "_RTF"
+          ],
+          [
+            "Sms",
+            "_SMS"
+          ],
+          [
+            "Stylesheet",
+            "_STYLESHEET"
+          ],
+          [
+            "Svg",
+            "_SVG"
+          ],
+          [
+            "Tar",
+            "_TAR"
+          ],
+          [
+            "Tarcomp",
+            "_TARCOMP"
+          ],
+          [
+            "Tiffimage",
+            "_TIFFIMAGE"
+          ],
+          [
+            "Ttf",
+            "_TTF"
+          ],
+          [
+            "Visio",
+            "_VISIO"
+          ],
+          [
+            "Webapppage",
+            "_WEBAPPPAGE"
+          ],
+          [
+            "Webappscript",
+            "_WEBAPPSCRIPT"
+          ],
+          [
+            "Woff",
+            "_WOFF"
+          ],
+          [
+            "Woff2",
+            "_WOFF2"
+          ],
+          [
+            "Word",
+            "_WORD"
+          ],
+          [
+            "Xmldoc",
+            "_XMLDOC"
+          ],
+          [
+            "Xsd",
+            "_XSD"
+          ],
+          [
+            "Zip",
+            "_ZIP"
+          ]
+        ],
+        "optional": true,
+        "toggle_hint": "Select from list",
+        "toggle_field": {
+          "control_type": "text",
+          "label": "File type",
+          "toggle_hint": "Enter custom value",
+          "optional": true,
+          "toggle_to_primary_hint": "Select from list",
+          "toggle_to_secondary_hint": "Enter custom value",
+          "ns_content_type": "element",
+          "ns_tag": "documentsFileCabinet",
+          "type": "string",
+          "name": "fileType"
+        },
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "string",
+        "name": "content",
+        "control_type": "text",
+        "label": "Base64 encoded content",
+        "hint": "Base64 encode file content",
+        "optional": true,
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "object",
+        "name": "folder",
+        "label": "Folder",
+        "optional": true,
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Internal ID",
+            "optional": true,
+            "ns_content_type": "attribute",
+            "ns_tag": "",
+            "type": "string",
+            "name": "internal_id"
+          },
+          {
+            "control_type": "text",
+            "label": "Name",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCore",
+            "type": "string",
+            "name": "name"
+          }
+        ],
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "number",
+        "name": "fileSize",
+        "control_type": "text",
+        "label": "File size",
+        "optional": true,
+        "parse_output": "float_conversion",
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "string",
+        "name": "url",
+        "control_type": "text",
+        "label": "URL",
+        "optional": true,
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "string",
+        "name": "urlComponent",
+        "control_type": "text",
+        "label": "URL component",
+        "optional": true,
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "object",
+        "name": "mediaFile",
+        "label": "Media file",
+        "optional": true,
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Internal ID",
+            "optional": true,
+            "ns_content_type": "attribute",
+            "ns_tag": "",
+            "type": "string",
+            "name": "internal_id"
+          },
+          {
+            "control_type": "text",
+            "label": "Name",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCore",
+            "type": "string",
+            "name": "name"
+          }
+        ],
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "string",
+        "name": "textFileEncoding",
+        "control_type": "select",
+        "label": "Text file encoding",
+        "pick_list": [
+          [
+            "Big5",
+            "_big5"
+          ],
+          [
+            "Gb2312",
+            "_gb2312"
+          ],
+          [
+            "Gb18030",
+            "_gb18030"
+          ],
+          [
+            "Iso88591",
+            "_iso88591"
+          ],
+          [
+            "Mac Roman",
+            "_macRoman"
+          ],
+          [
+            "Shift Jis",
+            "_shiftJis"
+          ],
+          [
+            "Utf8",
+            "_utf8"
+          ],
+          [
+            "Windows1252",
+            "_windows1252"
+          ]
+        ],
+        "optional": true,
+        "toggle_hint": "Select from list",
+        "toggle_field": {
+          "control_type": "text",
+          "label": "Text file encoding",
+          "toggle_hint": "Enter custom value",
+          "optional": true,
+          "toggle_to_primary_hint": "Select from list",
+          "toggle_to_secondary_hint": "Enter custom value",
+          "ns_content_type": "element",
+          "ns_tag": "documentsFileCabinet",
+          "type": "string",
+          "name": "textFileEncoding"
+        },
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "string",
+        "name": "description",
+        "control_type": "text",
+        "label": "Description",
+        "optional": true,
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "string",
+        "name": "encoding",
+        "control_type": "select",
+        "label": "Encoding",
+        "pick_list": [
+          [
+            "Auto Detect",
+            "_autoDetect"
+          ],
+          [
+            "Shift Jis",
+            "_shiftJis"
+          ],
+          [
+            "Utf8",
+            "_utf8"
+          ],
+          [
+            "Windows1252",
+            "_windows1252"
+          ]
+        ],
+        "optional": true,
+        "toggle_hint": "Select from list",
+        "toggle_field": {
+          "control_type": "text",
+          "label": "Encoding",
+          "toggle_hint": "Enter custom value",
+          "optional": true,
+          "toggle_to_primary_hint": "Select from list",
+          "toggle_to_secondary_hint": "Enter custom value",
+          "ns_content_type": "element",
+          "ns_tag": "documentsFileCabinet",
+          "type": "string",
+          "name": "encoding"
+        },
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "string",
+        "name": "altTagCaption",
+        "control_type": "text",
+        "label": "Alt tag caption",
+        "optional": true,
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "boolean",
+        "name": "isOnline",
+        "control_type": "checkbox",
+        "label": "Is online",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Is online",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "documentsFileCabinet",
+          "type": "boolean",
+          "name": "isOnline"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "boolean",
+        "name": "isInactive",
+        "control_type": "checkbox",
+        "label": "Is inactive",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Is inactive",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "documentsFileCabinet",
+          "type": "boolean",
+          "name": "isInactive"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "string",
+        "name": "class",
+        "control_type": "text",
+        "label": "Class",
+        "optional": true,
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "boolean",
+        "name": "bundleable",
+        "control_type": "checkbox",
+        "label": "Bundleable",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Bundleable",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "documentsFileCabinet",
+          "type": "boolean",
+          "name": "bundleable"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "string",
+        "name": "department",
+        "control_type": "text",
+        "label": "Department",
+        "optional": true,
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "boolean",
+        "name": "hideInBundle",
+        "control_type": "checkbox",
+        "label": "Hide in bundle",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Hide in bundle",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "documentsFileCabinet",
+          "type": "boolean",
+          "name": "hideInBundle"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "boolean",
+        "name": "isPrivate",
+        "control_type": "checkbox",
+        "label": "Is private",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Is private",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "documentsFileCabinet",
+          "type": "boolean",
+          "name": "isPrivate"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "object",
+        "name": "owner",
+        "label": "Owner",
+        "optional": true,
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Internal ID",
+            "optional": true,
+            "ns_content_type": "attribute",
+            "ns_tag": "",
+            "type": "string",
+            "name": "internal_id"
+          },
+          {
+            "control_type": "text",
+            "label": "Name",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCore",
+            "type": "string",
+            "name": "name"
+          }
+        ],
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "string",
+        "name": "caption",
+        "control_type": "text",
+        "label": "Caption",
+        "optional": true,
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "object",
+        "name": "storeDisplayThumbnail",
+        "label": "Store display thumbnail",
+        "optional": true,
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Internal ID",
+            "optional": true,
+            "ns_content_type": "attribute",
+            "ns_tag": "",
+            "type": "string",
+            "name": "internal_id"
+          },
+          {
+            "control_type": "text",
+            "label": "Name",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCore",
+            "type": "string",
+            "name": "name"
+          }
+        ],
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "string",
+        "name": "siteDescription",
+        "control_type": "text",
+        "label": "Site description",
+        "optional": true,
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "string",
+        "name": "featuredDescription",
+        "control_type": "text",
+        "label": "Featured description",
+        "optional": true,
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "date_time",
+        "name": "lastModifiedDate",
+        "control_type": "date_time",
+        "label": "Last modified date",
+        "optional": true,
+        "render_input": "render_iso8601_timestamp",
+        "parse_output": "parse_iso8601_timestamp",
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "date_time",
+        "name": "createdDate",
+        "control_type": "date_time",
+        "label": "Created date",
+        "optional": true,
+        "render_input": "render_iso8601_timestamp",
+        "parse_output": "parse_iso8601_timestamp",
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "object",
+        "name": "siteCategoryList",
+        "label": "Site category list",
+        "optional": true,
+        "properties": [
+          {
+            "name": "siteCategory",
+            "type": "array",
+            "of": "object",
+            "label": "Site category",
+            "optional": true,
+            "ns_ref_type": "FileSiteCategory",
+            "ns_content_type": "element",
+            "ns_tag": "documentsFileCabinet",
+            "properties": [
+              {
+                "control_type": "checkbox",
+                "label": "Is default",
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Is default",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "documentsFileCabinet",
+                  "type": "boolean",
+                  "name": "isDefault"
+                },
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet",
+                "type": "boolean",
+                "name": "isDefault"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Internal ID",
+                    "optional": true,
+                    "ns_content_type": "attribute",
+                    "ns_tag": "",
+                    "type": "string",
+                    "name": "internal_id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "optional": true,
+                    "ns_content_type": "element",
+                    "ns_tag": "platformCore",
+                    "type": "string",
+                    "name": "name"
+                  }
+                ],
+                "label": "Category",
+                "optional": true,
+                "ns_ref_type": "RecordRef",
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet",
+                "type": "object",
+                "name": "category"
+              },
+              {
+                "control_type": "text",
+                "label": "Category description",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet",
+                "type": "string",
+                "name": "categoryDescription"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Internal ID",
+                    "optional": true,
+                    "ns_content_type": "attribute",
+                    "ns_tag": "",
+                    "type": "string",
+                    "name": "internal_id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "optional": true,
+                    "ns_content_type": "element",
+                    "ns_tag": "platformCore",
+                    "type": "string",
+                    "name": "name"
+                  }
+                ],
+                "label": "Website",
+                "optional": true,
+                "ns_ref_type": "RecordRef",
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet",
+                "type": "object",
+                "name": "website"
+              }
+            ],
+            "parse_output": "netsuite_item_array_wrap"
+          },
+          {
+            "control_type": "checkbox",
+            "label": "Replace all",
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Replace all",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "attribute",
+              "ns_tag": "",
+              "type": "boolean",
+              "name": "replace_all"
+            },
+            "optional": true,
+            "ns_content_type": "attribute",
+            "ns_tag": "",
+            "type": "boolean",
+            "name": "replace_all"
+          }
+        ],
+        "ns_content_type": "element",
+        "ns_tag": "documentsFileCabinet"
+      },
+      {
+        "type": "object",
+        "name": "custom_fields",
+        "label": "Custom fields",
+        "optional": true,
+        "properties": [
+
+        ]
+      }
+    ],
+    "visible_config_fields": [
+      "since",
+      "netsuite_object"
+    ],
+    "hidden_config_fields": [
+      "custom_list",
+      "custom_column_list"
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "netsuite",
+            "name": "get_file_by_id",
+            "as": "718602b6",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "id": "#{_('data.netsuite.bcbc25be.internal_id')}"
+            },
+            "extended_output_schema": [
+              {
+                "type": "string",
+                "name": "internal_id",
+                "control_type": "text",
+                "label": "Internal ID",
+                "optional": true,
+                "ns_content_type": "attribute",
+                "ns_tag": ""
+              },
+              {
+                "type": "string",
+                "name": "external_id",
+                "control_type": "text",
+                "label": "External ID",
+                "optional": true,
+                "ns_content_type": "attribute",
+                "ns_tag": ""
+              },
+              {
+                "type": "string",
+                "name": "name",
+                "control_type": "text",
+                "label": "Name",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "attachFrom",
+                "control_type": "select",
+                "label": "Attach from",
+                "pick_list": [
+                  [
+                    "Computer",
+                    "_computer"
+                  ],
+                  [
+                    "Web",
+                    "_web"
+                  ]
+                ],
+                "optional": true,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Attach from",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "toggle_to_primary_hint": "Select from list",
+                  "toggle_to_secondary_hint": "Enter custom value",
+                  "ns_content_type": "element",
+                  "ns_tag": "documentsFileCabinet",
+                  "type": "string",
+                  "name": "attachFrom"
+                },
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "mediaTypeName",
+                "control_type": "text",
+                "label": "Media type name",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "fileType",
+                "control_type": "select",
+                "label": "File type",
+                "pick_list": [
+                  [
+                    "Appcache",
+                    "_APPCACHE"
+                  ],
+                  [
+                    "Autocad",
+                    "_AUTOCAD"
+                  ],
+                  [
+                    "Bmpimage",
+                    "_BMPIMAGE"
+                  ],
+                  [
+                    "Certificate",
+                    "_CERTIFICATE"
+                  ],
+                  [
+                    "Cff",
+                    "_CFF"
+                  ],
+                  [
+                    "Config",
+                    "_CONFIG"
+                  ],
+                  [
+                    "Csv",
+                    "_CSV"
+                  ],
+                  [
+                    "Eot",
+                    "_EOT"
+                  ],
+                  [
+                    "Excel",
+                    "_EXCEL"
+                  ],
+                  [
+                    "Flash",
+                    "_FLASH"
+                  ],
+                  [
+                    "Freemarker",
+                    "_FREEMARKER"
+                  ],
+                  [
+                    "Gifimage",
+                    "_GIFIMAGE"
+                  ],
+                  [
+                    "Gzip",
+                    "_GZIP"
+                  ],
+                  [
+                    "Htmldoc",
+                    "_HTMLDOC"
+                  ],
+                  [
+                    "Icon",
+                    "_ICON"
+                  ],
+                  [
+                    "Image",
+                    "_IMAGE"
+                  ],
+                  [
+                    "Javascript",
+                    "_JAVASCRIPT"
+                  ],
+                  [
+                    "Jpgimage",
+                    "_JPGIMAGE"
+                  ],
+                  [
+                    "Json",
+                    "_JSON"
+                  ],
+                  [
+                    "Lzh",
+                    "_LZH"
+                  ],
+                  [
+                    "Messagerfc",
+                    "_MESSAGERFC"
+                  ],
+                  [
+                    "Miscbinary",
+                    "_MISCBINARY"
+                  ],
+                  [
+                    "Misctext",
+                    "_MISCTEXT"
+                  ],
+                  [
+                    "Mp3",
+                    "_MP3"
+                  ],
+                  [
+                    "Mpegmovie",
+                    "_MPEGMOVIE"
+                  ],
+                  [
+                    "Msproject",
+                    "_MSPROJECT"
+                  ],
+                  [
+                    "Otf",
+                    "_OTF"
+                  ],
+                  [
+                    "Pdf",
+                    "_PDF"
+                  ],
+                  [
+                    "Pjpgimage",
+                    "_PJPGIMAGE"
+                  ],
+                  [
+                    "Plaintext",
+                    "_PLAINTEXT"
+                  ],
+                  [
+                    "Pngimage",
+                    "_PNGIMAGE"
+                  ],
+                  [
+                    "Postscript",
+                    "_POSTSCRIPT"
+                  ],
+                  [
+                    "Powerpoint",
+                    "_POWERPOINT"
+                  ],
+                  [
+                    "Quicktime",
+                    "_QUICKTIME"
+                  ],
+                  [
+                    "Rtf",
+                    "_RTF"
+                  ],
+                  [
+                    "Sms",
+                    "_SMS"
+                  ],
+                  [
+                    "Stylesheet",
+                    "_STYLESHEET"
+                  ],
+                  [
+                    "Svg",
+                    "_SVG"
+                  ],
+                  [
+                    "Tar",
+                    "_TAR"
+                  ],
+                  [
+                    "Tarcomp",
+                    "_TARCOMP"
+                  ],
+                  [
+                    "Tiffimage",
+                    "_TIFFIMAGE"
+                  ],
+                  [
+                    "Ttf",
+                    "_TTF"
+                  ],
+                  [
+                    "Visio",
+                    "_VISIO"
+                  ],
+                  [
+                    "Webapppage",
+                    "_WEBAPPPAGE"
+                  ],
+                  [
+                    "Webappscript",
+                    "_WEBAPPSCRIPT"
+                  ],
+                  [
+                    "Woff",
+                    "_WOFF"
+                  ],
+                  [
+                    "Woff2",
+                    "_WOFF2"
+                  ],
+                  [
+                    "Word",
+                    "_WORD"
+                  ],
+                  [
+                    "Xmldoc",
+                    "_XMLDOC"
+                  ],
+                  [
+                    "Xsd",
+                    "_XSD"
+                  ],
+                  [
+                    "Zip",
+                    "_ZIP"
+                  ]
+                ],
+                "optional": true,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "File type",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "toggle_to_primary_hint": "Select from list",
+                  "toggle_to_secondary_hint": "Enter custom value",
+                  "ns_content_type": "element",
+                  "ns_tag": "documentsFileCabinet",
+                  "type": "string",
+                  "name": "fileType"
+                },
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "content",
+                "control_type": "text",
+                "label": "Base64 encoded content",
+                "hint": "Base64 encode file content",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "object",
+                "name": "folder",
+                "label": "Folder",
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Internal ID",
+                    "optional": true,
+                    "ns_content_type": "attribute",
+                    "ns_tag": "",
+                    "type": "string",
+                    "name": "internal_id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "optional": true,
+                    "ns_content_type": "element",
+                    "ns_tag": "platformCore",
+                    "type": "string",
+                    "name": "name"
+                  }
+                ],
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "number",
+                "name": "fileSize",
+                "control_type": "text",
+                "label": "File size",
+                "optional": true,
+                "parse_output": "float_conversion",
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "url",
+                "control_type": "text",
+                "label": "URL",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "urlComponent",
+                "control_type": "text",
+                "label": "URL component",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "object",
+                "name": "mediaFile",
+                "label": "Media file",
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Internal ID",
+                    "optional": true,
+                    "ns_content_type": "attribute",
+                    "ns_tag": "",
+                    "type": "string",
+                    "name": "internal_id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "optional": true,
+                    "ns_content_type": "element",
+                    "ns_tag": "platformCore",
+                    "type": "string",
+                    "name": "name"
+                  }
+                ],
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "textFileEncoding",
+                "control_type": "select",
+                "label": "Text file encoding",
+                "pick_list": [
+                  [
+                    "Big5",
+                    "_big5"
+                  ],
+                  [
+                    "Gb2312",
+                    "_gb2312"
+                  ],
+                  [
+                    "Gb18030",
+                    "_gb18030"
+                  ],
+                  [
+                    "Iso88591",
+                    "_iso88591"
+                  ],
+                  [
+                    "Mac Roman",
+                    "_macRoman"
+                  ],
+                  [
+                    "Shift Jis",
+                    "_shiftJis"
+                  ],
+                  [
+                    "Utf8",
+                    "_utf8"
+                  ],
+                  [
+                    "Windows1252",
+                    "_windows1252"
+                  ]
+                ],
+                "optional": true,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Text file encoding",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "toggle_to_primary_hint": "Select from list",
+                  "toggle_to_secondary_hint": "Enter custom value",
+                  "ns_content_type": "element",
+                  "ns_tag": "documentsFileCabinet",
+                  "type": "string",
+                  "name": "textFileEncoding"
+                },
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "description",
+                "control_type": "text",
+                "label": "Description",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "encoding",
+                "control_type": "select",
+                "label": "Encoding",
+                "pick_list": [
+                  [
+                    "Auto Detect",
+                    "_autoDetect"
+                  ],
+                  [
+                    "Shift Jis",
+                    "_shiftJis"
+                  ],
+                  [
+                    "Utf8",
+                    "_utf8"
+                  ],
+                  [
+                    "Windows1252",
+                    "_windows1252"
+                  ]
+                ],
+                "optional": true,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Encoding",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "toggle_to_primary_hint": "Select from list",
+                  "toggle_to_secondary_hint": "Enter custom value",
+                  "ns_content_type": "element",
+                  "ns_tag": "documentsFileCabinet",
+                  "type": "string",
+                  "name": "encoding"
+                },
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "altTagCaption",
+                "control_type": "text",
+                "label": "Alt tag caption",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "boolean",
+                "name": "isOnline",
+                "control_type": "checkbox",
+                "label": "Is online",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Is online",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "documentsFileCabinet",
+                  "type": "boolean",
+                  "name": "isOnline"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "boolean",
+                "name": "isInactive",
+                "control_type": "checkbox",
+                "label": "Is inactive",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Is inactive",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "documentsFileCabinet",
+                  "type": "boolean",
+                  "name": "isInactive"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "class",
+                "control_type": "text",
+                "label": "Class",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "boolean",
+                "name": "bundleable",
+                "control_type": "checkbox",
+                "label": "Bundleable",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Bundleable",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "documentsFileCabinet",
+                  "type": "boolean",
+                  "name": "bundleable"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "department",
+                "control_type": "text",
+                "label": "Department",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "boolean",
+                "name": "hideInBundle",
+                "control_type": "checkbox",
+                "label": "Hide in bundle",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Hide in bundle",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "documentsFileCabinet",
+                  "type": "boolean",
+                  "name": "hideInBundle"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "boolean",
+                "name": "isPrivate",
+                "control_type": "checkbox",
+                "label": "Is private",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Is private",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "documentsFileCabinet",
+                  "type": "boolean",
+                  "name": "isPrivate"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "object",
+                "name": "owner",
+                "label": "Owner",
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Internal ID",
+                    "optional": true,
+                    "ns_content_type": "attribute",
+                    "ns_tag": "",
+                    "type": "string",
+                    "name": "internal_id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "optional": true,
+                    "ns_content_type": "element",
+                    "ns_tag": "platformCore",
+                    "type": "string",
+                    "name": "name"
+                  }
+                ],
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "caption",
+                "control_type": "text",
+                "label": "Caption",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "object",
+                "name": "storeDisplayThumbnail",
+                "label": "Store display thumbnail",
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Internal ID",
+                    "optional": true,
+                    "ns_content_type": "attribute",
+                    "ns_tag": "",
+                    "type": "string",
+                    "name": "internal_id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "optional": true,
+                    "ns_content_type": "element",
+                    "ns_tag": "platformCore",
+                    "type": "string",
+                    "name": "name"
+                  }
+                ],
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "siteDescription",
+                "control_type": "text",
+                "label": "Site description",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "featuredDescription",
+                "control_type": "text",
+                "label": "Featured description",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "date_time",
+                "name": "lastModifiedDate",
+                "control_type": "date_time",
+                "label": "Last modified date",
+                "optional": true,
+                "render_input": "render_iso8601_timestamp",
+                "parse_output": "parse_iso8601_timestamp",
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "date_time",
+                "name": "createdDate",
+                "control_type": "date_time",
+                "label": "Created date",
+                "optional": true,
+                "render_input": "render_iso8601_timestamp",
+                "parse_output": "parse_iso8601_timestamp",
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "object",
+                "name": "siteCategoryList",
+                "label": "Site category list",
+                "optional": true,
+                "properties": [
+                  {
+                    "name": "siteCategory",
+                    "type": "array",
+                    "of": "object",
+                    "label": "Site category",
+                    "optional": true,
+                    "ns_ref_type": "FileSiteCategory",
+                    "ns_content_type": "element",
+                    "ns_tag": "documentsFileCabinet",
+                    "properties": [
+                      {
+                        "control_type": "checkbox",
+                        "label": "Is default",
+                        "render_input": "render_boolean",
+                        "parse_output": "parse_boolean",
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is default",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "optional": true,
+                          "ns_content_type": "element",
+                          "ns_tag": "documentsFileCabinet",
+                          "type": "boolean",
+                          "name": "isDefault"
+                        },
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "documentsFileCabinet",
+                        "type": "boolean",
+                        "name": "isDefault"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Internal ID",
+                            "optional": true,
+                            "ns_content_type": "attribute",
+                            "ns_tag": "",
+                            "type": "string",
+                            "name": "internal_id"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Name",
+                            "optional": true,
+                            "ns_content_type": "element",
+                            "ns_tag": "platformCore",
+                            "type": "string",
+                            "name": "name"
+                          }
+                        ],
+                        "label": "Category",
+                        "optional": true,
+                        "ns_ref_type": "RecordRef",
+                        "ns_content_type": "element",
+                        "ns_tag": "documentsFileCabinet",
+                        "type": "object",
+                        "name": "category"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Category description",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "documentsFileCabinet",
+                        "type": "string",
+                        "name": "categoryDescription"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Internal ID",
+                            "optional": true,
+                            "ns_content_type": "attribute",
+                            "ns_tag": "",
+                            "type": "string",
+                            "name": "internal_id"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Name",
+                            "optional": true,
+                            "ns_content_type": "element",
+                            "ns_tag": "platformCore",
+                            "type": "string",
+                            "name": "name"
+                          }
+                        ],
+                        "label": "Website",
+                        "optional": true,
+                        "ns_ref_type": "RecordRef",
+                        "ns_content_type": "element",
+                        "ns_tag": "documentsFileCabinet",
+                        "type": "object",
+                        "name": "website"
+                      }
+                    ],
+                    "parse_output": "netsuite_item_array_wrap"
+                  },
+                  {
+                    "control_type": "checkbox",
+                    "label": "Replace all",
+                    "render_input": "render_boolean",
+                    "parse_output": "parse_boolean",
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Replace all",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "optional": true,
+                      "ns_content_type": "attribute",
+                      "ns_tag": "",
+                      "type": "boolean",
+                      "name": "replace_all"
+                    },
+                    "optional": true,
+                    "ns_content_type": "attribute",
+                    "ns_tag": "",
+                    "type": "boolean",
+                    "name": "replace_all"
+                  }
+                ],
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              }
+            ],
+            "comment": "Get the file contents from the file cabinet",
+            "uuid": "c8685810-8a46-4894-9f24-17b07a39a750"
+          },
+          {
+            "number": 3,
+            "provider": "sftp",
+            "name": "upload",
+            "as": "bfec42fb",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+              "append": true
+            },
+            "input": {
+              "filename": "#{_('data.netsuite.718602b6.name')}",
+              "append": "false",
+              "content": "#{_('data.netsuite.718602b6.content')}"
+            },
+            "comment": "upload to SVB",
+            "uuid": "9df16602-593d-49e2-9659-fc41496c1d24"
+          },
+          {
+            "number": 4,
+            "provider": "workato_variable",
+            "name": "declare_variable",
+            "as": "da90b02a",
+            "title": "Create variable archived_folder_internal_id",
+            "description": "Create variable <span class=\"provider\">archived_folder_internal_id</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "string",
+              "name": "archived_folder_internal_id",
+              "value": "=lookup(\"NETSUITE_DEFAULT_VALUES\", name: \"positive_pay_archived_folder_id\")[\"value\"]"
+            },
+            "extended_output_schema": [
+              {
+                "type": "string",
+                "name": "value",
+                "control_type": "text",
+                "label": "archived_folder_internal_id"
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "value",
+                "control_type": "text",
+                "label": "Default value",
+                "hint": "Default value for the variable",
+                "sticky": true,
+                "optional": true,
+                "strip_interpolation": true
+              }
+            ],
+            "uuid": "c2103896-4b4d-4550-862d-770f9b23a864"
+          },
+          {
+            "number": 5,
+            "provider": "netsuite",
+            "name": "update_object",
+            "as": "a9efb99e",
+            "title": "Update File",
+            "description": "Update <span class=\"provider\">File</span> in <span class=\"provider\">NetSuite</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "netsuite_object": "File"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "netsuite_object": "File",
+              "folder": "#{_('data.workato_variable.da90b02a.value')}",
+              "internal_id": "#{_('data.netsuite.bcbc25be.internal_id')}"
+            },
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "internal_id",
+                "control_type": "text",
+                "label": "Internal ID",
+                "optional": true,
+                "ns_content_type": "attribute",
+                "ns_tag": ""
+              },
+              {
+                "type": "string",
+                "name": "external_id",
+                "control_type": "text",
+                "label": "External ID",
+                "optional": true,
+                "ns_content_type": "attribute",
+                "ns_tag": ""
+              },
+              {
+                "type": "object",
+                "name": "custom_fields",
+                "label": "Custom fields",
+                "optional": true,
+                "properties": [
+
+                ]
+              },
+              {
+                "type": "string",
+                "name": "name",
+                "control_type": "text",
+                "label": "Name",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "attachFrom",
+                "control_type": "select",
+                "label": "Attach from",
+                "pick_list": [
+                  [
+                    "Computer",
+                    "_computer"
+                  ],
+                  [
+                    "Web",
+                    "_web"
+                  ]
+                ],
+                "optional": true,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Attach from",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "toggle_to_primary_hint": "Select from list",
+                  "toggle_to_secondary_hint": "Enter custom value",
+                  "ns_content_type": "element",
+                  "ns_tag": "documentsFileCabinet",
+                  "type": "string",
+                  "name": "attachFrom"
+                },
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "mediaTypeName",
+                "control_type": "text",
+                "label": "Media type name",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "fileType",
+                "control_type": "select",
+                "label": "File type",
+                "pick_list": [
+                  [
+                    "Appcache",
+                    "_APPCACHE"
+                  ],
+                  [
+                    "Autocad",
+                    "_AUTOCAD"
+                  ],
+                  [
+                    "Bmpimage",
+                    "_BMPIMAGE"
+                  ],
+                  [
+                    "Certificate",
+                    "_CERTIFICATE"
+                  ],
+                  [
+                    "Cff",
+                    "_CFF"
+                  ],
+                  [
+                    "Config",
+                    "_CONFIG"
+                  ],
+                  [
+                    "Csv",
+                    "_CSV"
+                  ],
+                  [
+                    "Eot",
+                    "_EOT"
+                  ],
+                  [
+                    "Excel",
+                    "_EXCEL"
+                  ],
+                  [
+                    "Flash",
+                    "_FLASH"
+                  ],
+                  [
+                    "Freemarker",
+                    "_FREEMARKER"
+                  ],
+                  [
+                    "Gifimage",
+                    "_GIFIMAGE"
+                  ],
+                  [
+                    "Gzip",
+                    "_GZIP"
+                  ],
+                  [
+                    "Htmldoc",
+                    "_HTMLDOC"
+                  ],
+                  [
+                    "Icon",
+                    "_ICON"
+                  ],
+                  [
+                    "Image",
+                    "_IMAGE"
+                  ],
+                  [
+                    "Javascript",
+                    "_JAVASCRIPT"
+                  ],
+                  [
+                    "Jpgimage",
+                    "_JPGIMAGE"
+                  ],
+                  [
+                    "Json",
+                    "_JSON"
+                  ],
+                  [
+                    "Lzh",
+                    "_LZH"
+                  ],
+                  [
+                    "Messagerfc",
+                    "_MESSAGERFC"
+                  ],
+                  [
+                    "Miscbinary",
+                    "_MISCBINARY"
+                  ],
+                  [
+                    "Misctext",
+                    "_MISCTEXT"
+                  ],
+                  [
+                    "Mp3",
+                    "_MP3"
+                  ],
+                  [
+                    "Mpegmovie",
+                    "_MPEGMOVIE"
+                  ],
+                  [
+                    "Msproject",
+                    "_MSPROJECT"
+                  ],
+                  [
+                    "Otf",
+                    "_OTF"
+                  ],
+                  [
+                    "Pdf",
+                    "_PDF"
+                  ],
+                  [
+                    "Pjpgimage",
+                    "_PJPGIMAGE"
+                  ],
+                  [
+                    "Plaintext",
+                    "_PLAINTEXT"
+                  ],
+                  [
+                    "Pngimage",
+                    "_PNGIMAGE"
+                  ],
+                  [
+                    "Postscript",
+                    "_POSTSCRIPT"
+                  ],
+                  [
+                    "Powerpoint",
+                    "_POWERPOINT"
+                  ],
+                  [
+                    "Quicktime",
+                    "_QUICKTIME"
+                  ],
+                  [
+                    "Rtf",
+                    "_RTF"
+                  ],
+                  [
+                    "Sms",
+                    "_SMS"
+                  ],
+                  [
+                    "Stylesheet",
+                    "_STYLESHEET"
+                  ],
+                  [
+                    "Svg",
+                    "_SVG"
+                  ],
+                  [
+                    "Tar",
+                    "_TAR"
+                  ],
+                  [
+                    "Tarcomp",
+                    "_TARCOMP"
+                  ],
+                  [
+                    "Tiffimage",
+                    "_TIFFIMAGE"
+                  ],
+                  [
+                    "Ttf",
+                    "_TTF"
+                  ],
+                  [
+                    "Visio",
+                    "_VISIO"
+                  ],
+                  [
+                    "Webapppage",
+                    "_WEBAPPPAGE"
+                  ],
+                  [
+                    "Webappscript",
+                    "_WEBAPPSCRIPT"
+                  ],
+                  [
+                    "Woff",
+                    "_WOFF"
+                  ],
+                  [
+                    "Woff2",
+                    "_WOFF2"
+                  ],
+                  [
+                    "Word",
+                    "_WORD"
+                  ],
+                  [
+                    "Xmldoc",
+                    "_XMLDOC"
+                  ],
+                  [
+                    "Xsd",
+                    "_XSD"
+                  ],
+                  [
+                    "Zip",
+                    "_ZIP"
+                  ]
+                ],
+                "optional": true,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "File type",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "toggle_to_primary_hint": "Select from list",
+                  "toggle_to_secondary_hint": "Enter custom value",
+                  "ns_content_type": "element",
+                  "ns_tag": "documentsFileCabinet",
+                  "type": "string",
+                  "name": "fileType"
+                },
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "content",
+                "control_type": "text",
+                "label": "Base64 encoded content",
+                "hint": "Base64 encode file content",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "folder",
+                "control_type": "text",
+                "label": "Folder ID",
+                "optional": true,
+                "toggle_hint": "Enter internal ID",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Folder External ID",
+                  "toggle_hint": "Enter external ID",
+                  "optional": true,
+                  "toggle_to_primary_hint": "Enter internal ID",
+                  "toggle_to_secondary_hint": "Enter external ID",
+                  "ns_ref": "RecordRef_input_ext_id",
+                  "ns_content_type": "element",
+                  "ns_tag": "documentsFileCabinet",
+                  "type": "string",
+                  "name": "folder_ext_id"
+                },
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet",
+                "ns_ref": "RecordRef_input"
+              },
+              {
+                "type": "number",
+                "name": "fileSize",
+                "control_type": "text",
+                "label": "File size",
+                "optional": true,
+                "parse_output": "float_conversion",
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "url",
+                "control_type": "text",
+                "label": "URL",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "urlComponent",
+                "control_type": "text",
+                "label": "URL component",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "mediaFile",
+                "control_type": "text",
+                "label": "Media File ID",
+                "optional": true,
+                "toggle_hint": "Enter internal ID",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Media File External ID",
+                  "toggle_hint": "Enter external ID",
+                  "optional": true,
+                  "toggle_to_primary_hint": "Enter internal ID",
+                  "toggle_to_secondary_hint": "Enter external ID",
+                  "ns_ref": "RecordRef_input_ext_id",
+                  "ns_content_type": "element",
+                  "ns_tag": "documentsFileCabinet",
+                  "type": "string",
+                  "name": "mediaFile_ext_id"
+                },
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet",
+                "ns_ref": "RecordRef_input"
+              },
+              {
+                "type": "string",
+                "name": "textFileEncoding",
+                "control_type": "select",
+                "label": "Text file encoding",
+                "pick_list": [
+                  [
+                    "Big5",
+                    "_big5"
+                  ],
+                  [
+                    "Gb2312",
+                    "_gb2312"
+                  ],
+                  [
+                    "Gb18030",
+                    "_gb18030"
+                  ],
+                  [
+                    "Iso88591",
+                    "_iso88591"
+                  ],
+                  [
+                    "Mac Roman",
+                    "_macRoman"
+                  ],
+                  [
+                    "Shift Jis",
+                    "_shiftJis"
+                  ],
+                  [
+                    "Utf8",
+                    "_utf8"
+                  ],
+                  [
+                    "Windows1252",
+                    "_windows1252"
+                  ]
+                ],
+                "optional": true,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Text file encoding",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "toggle_to_primary_hint": "Select from list",
+                  "toggle_to_secondary_hint": "Enter custom value",
+                  "ns_content_type": "element",
+                  "ns_tag": "documentsFileCabinet",
+                  "type": "string",
+                  "name": "textFileEncoding"
+                },
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "description",
+                "control_type": "text",
+                "label": "Description",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "encoding",
+                "control_type": "select",
+                "label": "Encoding",
+                "pick_list": [
+                  [
+                    "Auto Detect",
+                    "_autoDetect"
+                  ],
+                  [
+                    "Shift Jis",
+                    "_shiftJis"
+                  ],
+                  [
+                    "Utf8",
+                    "_utf8"
+                  ],
+                  [
+                    "Windows1252",
+                    "_windows1252"
+                  ]
+                ],
+                "optional": true,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Encoding",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "toggle_to_primary_hint": "Select from list",
+                  "toggle_to_secondary_hint": "Enter custom value",
+                  "ns_content_type": "element",
+                  "ns_tag": "documentsFileCabinet",
+                  "type": "string",
+                  "name": "encoding"
+                },
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "altTagCaption",
+                "control_type": "text",
+                "label": "Alt tag caption",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "boolean",
+                "name": "isOnline",
+                "control_type": "checkbox",
+                "label": "Is online",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Is online",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "documentsFileCabinet",
+                  "type": "boolean",
+                  "name": "isOnline"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "boolean",
+                "name": "isInactive",
+                "control_type": "checkbox",
+                "label": "Is inactive",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Is inactive",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "documentsFileCabinet",
+                  "type": "boolean",
+                  "name": "isInactive"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "class",
+                "control_type": "text",
+                "label": "Class",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "boolean",
+                "name": "bundleable",
+                "control_type": "checkbox",
+                "label": "Bundleable",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Bundleable",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "documentsFileCabinet",
+                  "type": "boolean",
+                  "name": "bundleable"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "department",
+                "control_type": "text",
+                "label": "Department",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "boolean",
+                "name": "hideInBundle",
+                "control_type": "checkbox",
+                "label": "Hide in bundle",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Hide in bundle",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "documentsFileCabinet",
+                  "type": "boolean",
+                  "name": "hideInBundle"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "boolean",
+                "name": "isPrivate",
+                "control_type": "checkbox",
+                "label": "Is private",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Is private",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "documentsFileCabinet",
+                  "type": "boolean",
+                  "name": "isPrivate"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "owner",
+                "control_type": "text",
+                "label": "Owner ID",
+                "optional": true,
+                "toggle_hint": "Enter internal ID",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Owner External ID",
+                  "toggle_hint": "Enter external ID",
+                  "optional": true,
+                  "toggle_to_primary_hint": "Enter internal ID",
+                  "toggle_to_secondary_hint": "Enter external ID",
+                  "ns_ref": "RecordRef_input_ext_id",
+                  "ns_content_type": "element",
+                  "ns_tag": "documentsFileCabinet",
+                  "type": "string",
+                  "name": "owner_ext_id"
+                },
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet",
+                "ns_ref": "RecordRef_input"
+              },
+              {
+                "type": "string",
+                "name": "caption",
+                "control_type": "text",
+                "label": "Caption",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "storeDisplayThumbnail",
+                "control_type": "text",
+                "label": "Store Display Thumbnail ID",
+                "optional": true,
+                "toggle_hint": "Enter internal ID",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Store Display Thumbnail External ID",
+                  "toggle_hint": "Enter external ID",
+                  "optional": true,
+                  "toggle_to_primary_hint": "Enter internal ID",
+                  "toggle_to_secondary_hint": "Enter external ID",
+                  "ns_ref": "RecordRef_input_ext_id",
+                  "ns_content_type": "element",
+                  "ns_tag": "documentsFileCabinet",
+                  "type": "string",
+                  "name": "storeDisplayThumbnail_ext_id"
+                },
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet",
+                "ns_ref": "RecordRef_input"
+              },
+              {
+                "type": "string",
+                "name": "siteDescription",
+                "control_type": "text",
+                "label": "Site description",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "string",
+                "name": "featuredDescription",
+                "control_type": "text",
+                "label": "Featured description",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              },
+              {
+                "type": "object",
+                "name": "siteCategoryList",
+                "label": "Site category list",
+                "optional": true,
+                "properties": [
+                  {
+                    "name": "siteCategory",
+                    "type": "array",
+                    "of": "object",
+                    "label": "Site category",
+                    "optional": true,
+                    "ns_ref_type": "FileSiteCategory",
+                    "ns_content_type": "element",
+                    "ns_tag": "documentsFileCabinet",
+                    "properties": [
+                      {
+                        "control_type": "checkbox",
+                        "label": "Is default",
+                        "render_input": "render_boolean",
+                        "parse_output": "parse_boolean",
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is default",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "optional": true,
+                          "ns_content_type": "element",
+                          "ns_tag": "documentsFileCabinet",
+                          "type": "boolean",
+                          "name": "isDefault",
+                          "parent": "siteCategoryList.siteCategory"
+                        },
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "documentsFileCabinet",
+                        "type": "boolean",
+                        "name": "isDefault",
+                        "parent": "siteCategoryList.siteCategory"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Category ID",
+                        "optional": true,
+                        "ns_ref": "RecordRef_input",
+                        "ns_content_type": "element",
+                        "ns_tag": "documentsFileCabinet",
+                        "toggle_hint": "Enter internal ID",
+                        "toggle_field": {
+                          "control_type": "text",
+                          "label": "Category External ID",
+                          "toggle_hint": "Enter external ID",
+                          "optional": true,
+                          "toggle_to_primary_hint": "Enter internal ID",
+                          "toggle_to_secondary_hint": "Enter external ID",
+                          "ns_ref": "RecordRef_input_ext_id",
+                          "ns_content_type": "element",
+                          "ns_tag": "documentsFileCabinet",
+                          "type": "string",
+                          "name": "category_ext_id",
+                          "parent": "siteCategoryList.siteCategory"
+                        },
+                        "type": "string",
+                        "name": "category",
+                        "parent": "siteCategoryList.siteCategory"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Category description",
+                        "optional": true,
+                        "ns_content_type": "element",
+                        "ns_tag": "documentsFileCabinet",
+                        "type": "string",
+                        "name": "categoryDescription",
+                        "parent": "siteCategoryList.siteCategory"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Website ID",
+                        "optional": true,
+                        "ns_ref": "RecordRef_input",
+                        "ns_content_type": "element",
+                        "ns_tag": "documentsFileCabinet",
+                        "toggle_hint": "Enter internal ID",
+                        "toggle_field": {
+                          "control_type": "text",
+                          "label": "Website External ID",
+                          "toggle_hint": "Enter external ID",
+                          "optional": true,
+                          "toggle_to_primary_hint": "Enter internal ID",
+                          "toggle_to_secondary_hint": "Enter external ID",
+                          "ns_ref": "RecordRef_input_ext_id",
+                          "ns_content_type": "element",
+                          "ns_tag": "documentsFileCabinet",
+                          "type": "string",
+                          "name": "website_ext_id",
+                          "parent": "siteCategoryList.siteCategory"
+                        },
+                        "type": "string",
+                        "name": "website",
+                        "parent": "siteCategoryList.siteCategory"
+                      }
+                    ],
+                    "parse_output": "netsuite_item_array_wrap",
+                    "parent": "siteCategoryList"
+                  },
+                  {
+                    "control_type": "checkbox",
+                    "label": "Replace all",
+                    "render_input": "render_boolean",
+                    "parse_output": "parse_boolean",
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Replace all",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "optional": true,
+                      "ns_content_type": "attribute",
+                      "ns_tag": "",
+                      "type": "boolean",
+                      "name": "replace_all",
+                      "parent": "siteCategoryList"
+                    },
+                    "optional": true,
+                    "ns_content_type": "attribute",
+                    "ns_tag": "",
+                    "type": "boolean",
+                    "name": "replace_all",
+                    "parent": "siteCategoryList"
+                  }
+                ],
+                "ns_content_type": "element",
+                "ns_tag": "documentsFileCabinet"
+              }
+            ],
+            "visible_config_fields": [
+              "netsuite_object",
+              "folder",
+              "internal_id"
+            ],
+            "hidden_config_fields": [
+              "custom_list",
+              "custom_column_list"
+            ],
+            "comment": "move to the \"archived\" folder",
+            "uuid": "308a603c-5a9c-4e60-85ea-ecf6fd8c16c0"
+          },
+          {
+            "number": 6,
+            "provider": "email",
+            "name": "send_mail",
+            "as": "261f0ef2",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "email_type": "text",
+              "to": "sean_annese@rapid7.com, jonathan_coiteux@rapid7.com, mike_flynn@rapid7.com",
+              "subject": "SVB Positive Pay File #{_('data.netsuite.718602b6.name')} Uploaded to SVB [eom]",
+              "body": "File Name: #{_('data.netsuite.718602b6.name')}\nOriginal File Folder ID:  #{_('data.netsuite.718602b6.folder.internal_id')}\nOriginal File Folder Name: #{_('data.netsuite.718602b6.folder.name')}\n\nFile was moved to Folder ID: #{_('data.workato_variable.da90b02a.value')}"
+            },
+            "comment": "alert everyone that the file was processed succesfully",
+            "uuid": "68ead898-9b46-4f9d-8ac4-50bce5cdbb1b"
+          },
+          {
+            "number": 7,
+            "as": "45688e44",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "0",
+              "retry_interval": "2"
+            },
+            "block": [
+              {
+                "number": 8,
+                "provider": "email",
+                "name": "send_mail",
+                "as": "28f30554",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "email_type": "text",
+                  "to": "sean_annese@rapid7.com, jonathan_coiteux@rapid7.com, mike_flynn@rapid7.com",
+                  "subject": "ERROR - SVB Positive Pay File #{_('data.netsuite.718602b6.name')} unable to be sent to SVB",
+                  "body": "File Name: #{_('data.netsuite.718602b6.name')}\nOriginal File Folder ID:  #{_('data.netsuite.718602b6.folder.internal_id')}\nOriginal File Folder Name: #{_('data.netsuite.718602b6.folder.name')}\n\nError: #{_('data.catch.45688e44.message')}"
+                },
+                "uuid": "06a9eecc-4594-4921-858a-0044fcf1f840"
+              },
+              {
+                "number": 9,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "true",
+                  "stop_reason": "#{_('data.catch.45688e44.message')}"
+                },
+                "uuid": "0a88a6dd-01ca-4d92-a593-90e7de383cc1"
+              }
+            ],
+            "uuid": "5a6ee517-9f8b-4b86-8835-2644302540d2"
+          }
+        ],
+        "uuid": "48d9a70c-d9d9-4884-8c77-c73f4587d2b8"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "File Name"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Upload Successful?"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.netsuite.bcbc25be.name')}",
+      "custom_column_2": "=_('data.catch.45688e44.message').present? ? \"No\" : \"Yes\""
+    },
+    "uuid": "1e8ca52b-6d17-4773-85ba-216f3a511872"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "netsuite",
+      "account_id": {
+        "zip_name": "resources/netsuite.connection.json",
+        "name": "NetSuite",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "email",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "sftp",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "account_id": null
+    }
+  ]
+}

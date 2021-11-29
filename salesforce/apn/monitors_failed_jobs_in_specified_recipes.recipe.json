@@ -1,0 +1,350 @@
+{
+  "name": "Monitors failed jobs in specified recipes",
+  "description": "This trigger monitors failed jobs in specified recipes.\nIt triggers when a monitored recipe encounters a job failure and sent the slack alerts.",
+  "version": 3,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "workato_app",
+    "name": "job_error",
+    "as": "1065a705",
+    "title": null,
+    "description": null,
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "mode": "selected",
+      "recipe_id": [
+        {
+          "zip_name": "salesforce/apn/amazon_s3_opportunity_outbound_folder_salesforce_apn_request.recipe.json",
+          "name": "Amazon S3 Opportunity-Outbound Folder - Salesforce APN Request",
+          "folder": "salesforce/apn"
+        },
+        {
+          "zip_name": "salesforce/apn/callable/callable_apn_record_update_send_to_aws_s3.recipe.json",
+          "name": "Callable - APN Record Update send to AWS S3",
+          "folder": "salesforce/apn/callable"
+        },
+        {
+          "zip_name": "salesforce/apn/submit_the_r7_rep_answers_in_apn_record.recipe.json",
+          "name": "Submit the R7 Rep Answers in APN Record",
+          "folder": "salesforce/apn"
+        },
+        {
+          "zip_name": "salesforce/apn/callable/callable_check_blank_fields_in_apn_record.recipe.json",
+          "name": "Callable - Check blank fields in APN Record",
+          "folder": "salesforce/apn/callable"
+        },
+        {
+          "zip_name": "salesforce/apn/scheduler_send_30_days_old_apn_data_to_aws.recipe.json",
+          "name": "Scheduler - Send 30 days old APN data to AWS",
+          "folder": "salesforce/apn"
+        },
+        {
+          "zip_name": "salesforce/apn/callable/callable_perform_actions_when_stage_is_set_to_closed_won.recipe.json",
+          "name": "Callable - Perform Actions when Stage is set to Closed Won",
+          "folder": "salesforce/apn/callable"
+        },
+        {
+          "zip_name": "salesforce/apn/salesforce_apn_record_update_aws_s3_opportunity_inbound.recipe.json",
+          "name": "Salesforce APN Record Update - AWS S3 Opportunity-Inbound",
+          "folder": "salesforce/apn"
+        },
+        {
+          "zip_name": "salesforce/apn/callable/callable_slack_notification_when_opportunity_approved.recipe.json",
+          "name": "Callable - Slack Notification when Opportunity Approved",
+          "folder": "salesforce/apn/callable"
+        },
+        {
+          "zip_name": "salesforce/apn/salesforce_opportunity_closed_won_slack_alert.recipe.json",
+          "name": "Salesforce Opportunity Closed Won - Slack Alert",
+          "folder": "salesforce/apn"
+        },
+        {
+          "zip_name": "salesforce/apn/salesforce_apn_aws_s3_opportunity_inbound_folder.recipe.json",
+          "name": "Salesforce APN -  AWS S3 Opportunity-Inbound Folder",
+          "folder": "salesforce/apn"
+        },
+        {
+          "zip_name": "salesforce/apn/amazon_s3_opportunity_inbound_processed_results_folder_slack.recipe.json",
+          "name": "Amazon S3 Opportunity-Inbound-Processed-Results Folder - Slack",
+          "folder": "salesforce/apn"
+        }
+      ]
+    },
+    "extended_input_schema": [
+      {
+        "type": "string",
+        "name": "recipe_id",
+        "control_type": "text",
+        "label": "Recipe IDs",
+        "hint": "One or more recipe IDs separated by commas. The recipe ID is the number found after www.workato.com/recipes/ in the recipe URL, e.g. if the recipe URL is <b>workato.com/recipes/362905-timekeeper</b>, then recipe ID is <b>362905</b>.",
+        "sticky": true,
+        "optional": true
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "slack_bot",
+        "name": "post_bot_message",
+        "as": "8a0e42a2",
+        "title": null,
+        "description": null,
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+          "channel": true,
+          "message.color": true
+        },
+        "input": {
+          "channel": "#aws-opps",
+          "text": "`Error Received` :loudspeaker:",
+          "message": {
+            "attachment_text": "*Recipe ID:* #{_('data.workato_app.1065a705.flow_id')}\n*Status:* #{_('data.workato_app.1065a705.status')}\n*Error Message:* #{_('data.workato_app.1065a705.error.message')}",
+            "color": "danger"
+          }
+        },
+        "comment": "Send a slack alert to the channel if any job gets failed",
+        "uuid": "47d3ea3e-1e23-4eee-bd31-675c16ccc11d"
+      },
+      {
+        "number": 2,
+        "provider": "json_parser",
+        "name": "parse_json",
+        "as": "21460d7b",
+        "title": null,
+        "description": null,
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "sample_document": "{\n   \"bot_id\":\"B7FGUR61L\",\n   \"type\":\"message\",\n   \"text\":\"`Error Received` :loudspeaker:\",\n   \"user\":\"U7FGUR63Y\",\n   \"ts\":\"1622813343.001000\",\n   \"team\":\"T02LH5PBR\",\n   \"bot_profile\":{\n      \"id\":\"B7FGUR61L\",\n      \"deleted\":false,\n      \"name\":\"Workbot\",\n      \"updated\":1576093528,\n      \"app_id\":\"A0HVDHQ8Z\",\n      \"icons\":{\n         \"image_36\":\"https://slack-files2.s3-us-west-2.amazonaws.com/avatars/2017-03-28/161796336231_634252bac1318be5a9a3_36.png\",\n         \"image_48\":\"https://slack-files2.s3-us-west-2.amazonaws.com/avatars/2017-03-28/161796336231_634252bac1318be5a9a3_48.png\",\n         \"image_72\":\"https://slack-files2.s3-us-west-2.amazonaws.com/avatars/2017-03-28/161796336231_634252bac1318be5a9a3_72.png\"\n      },\n      \"team_id\":\"T02LH5PBR\"\n   },\n   \"attachments\":[\n      {\n         \"text\":\"*Recipe ID:* 1522573\\n*Status:* failed\\n*Error Message:* [{\\\"message\\\":\\\"\\\\n='StageName' order by CreatedDate DESC; LIMIT 150 OFFSET 0\\\\n ^\\\\nERROR at Row:1:Column:177\\\\nunexpected token: ;\\\",\\\"errorCode\\\":\\\"MALFORMED_QUERY\\\"}]\",\n         \"id\":1,\n         \"color\":\"a30200\",\n         \"mrkdwn_in\":[\n            \"text\"\n         ],\n         \"fallback\":\"*Recipe ID:* 1522573\\n*Status:* failed\\n*Error Message:* [{\\\"message\\\":\\\"\\\\n='StageName' order by CreatedDate DESC; LIMIT 150 OFFSET 0\\\\n ^\\\\nERROR at Row:1:Column:177\\\\nunexpected token: ;\\\",\\\"errorCode\\\":\\\"MALFORMED_QUERY\\\"}]\"\n      }\n   ]\n}",
+          "document": "#{_('data.slack_bot.8a0e42a2.message_json')}"
+        },
+        "extended_output_schema": [
+          {
+            "type": "object",
+            "name": "document",
+            "label": "Document",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Bot ID",
+                "type": "string",
+                "name": "bot_id"
+              },
+              {
+                "control_type": "text",
+                "label": "Type",
+                "type": "string",
+                "name": "type"
+              },
+              {
+                "control_type": "text",
+                "label": "Text",
+                "type": "string",
+                "name": "text"
+              },
+              {
+                "control_type": "text",
+                "label": "User",
+                "type": "string",
+                "name": "user"
+              },
+              {
+                "control_type": "text",
+                "label": "Ts",
+                "type": "string",
+                "name": "ts"
+              },
+              {
+                "control_type": "text",
+                "label": "Team",
+                "type": "string",
+                "name": "team"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "ID",
+                    "type": "string",
+                    "name": "id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Deleted",
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Deleted",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "deleted"
+                    },
+                    "type": "boolean",
+                    "name": "deleted"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "type": "string",
+                    "name": "name"
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "Updated",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "updated"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "App ID",
+                    "type": "string",
+                    "name": "app_id"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Image 36",
+                        "type": "string",
+                        "name": "image_36"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Image 48",
+                        "type": "string",
+                        "name": "image_48"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Image 72",
+                        "type": "string",
+                        "name": "image_72"
+                      }
+                    ],
+                    "label": "Icons",
+                    "type": "object",
+                    "name": "icons"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Team ID",
+                    "type": "string",
+                    "name": "team_id"
+                  }
+                ],
+                "label": "Bot profile",
+                "type": "object",
+                "name": "bot_profile"
+              },
+              {
+                "name": "attachments",
+                "type": "array",
+                "of": "object",
+                "label": "Attachments",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Text",
+                    "type": "string",
+                    "name": "text"
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "ID",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Color",
+                    "type": "string",
+                    "name": "color"
+                  },
+                  {
+                    "name": "mrkdwn_in",
+                    "type": "array",
+                    "of": "string",
+                    "control_type": "text",
+                    "label": "Mrkdwn in"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Fallback",
+                    "type": "string",
+                    "name": "fallback"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "uuid": "3aeb992d-aceb-4f21-8c8d-0a6d88b6cea5"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Recipe ID"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Error Message"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "Channel"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_app.1065a705.flow_id')}",
+      "custom_column_2": "#{_('data.workato_app.1065a705.error.message')}",
+      "custom_column_3": "#{_('data.json_parser.21460d7b.document.team')}"
+    },
+    "uuid": "7b7665b3-72e5-4ff3-a5bc-f29729348f0f"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_app",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "resources/recipeops.connection.json",
+        "name": "RecipeOps",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "slack_bot",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/workatointegrations.connection.json",
+        "name": "workatointegrations",
+        "folder": "connections"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "json_parser",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

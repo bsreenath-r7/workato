@@ -1,0 +1,3516 @@
+{
+  "name": "Scheduler - Marketo Lead Bulk Upload",
+  "description": "When there is a trigger event, do action",
+  "version": 5,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "clock",
+    "name": "scheduled_event",
+    "as": "e40d7dcc",
+    "title": null,
+    "description": "<span class=\"provider\">Trigger</span> on a <span class=\"provider\">custom schedule</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+      "time_unit": "Custom schedule"
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "time_unit": "custom_schedule",
+      "cron_expression": "0  0,8,16 * * *"
+    },
+    "extended_input_schema": [
+      {
+        "type": "string",
+        "name": "cron_expression",
+        "control_type": "cron",
+        "label": "Cron expression",
+        "hint": "                        Cron expressions are written as: <b>[minute]  [hour]  [day of month]  [month]  [day of week]</b>.\n                        <a href=\"https://crontab.guru/\" target=\"_blank\">Learn more</a>\n",
+        "optional": false
+      },
+      {
+        "type": "string",
+        "name": "timezone",
+        "control_type": "select",
+        "label": "Timezone",
+        "hint": "Select the timezone to use. Leave it blank to use <b>(GMT-08:00) Pacific Time (US & Canada)</b>",
+        "pick_list": [
+          [
+            "International Date Line West",
+            "Etc/GMT+12"
+          ],
+          [
+            "Midway Island",
+            "Pacific/Midway"
+          ],
+          [
+            "American Samoa",
+            "Pacific/Pago_Pago"
+          ],
+          [
+            "Hawaii",
+            "Pacific/Honolulu"
+          ],
+          [
+            "Alaska",
+            "America/Juneau"
+          ],
+          [
+            "Pacific Time (US & Canada)",
+            "America/Los_Angeles"
+          ],
+          [
+            "Tijuana",
+            "America/Tijuana"
+          ],
+          [
+            "Mountain Time (US & Canada)",
+            "America/Denver"
+          ],
+          [
+            "Arizona",
+            "America/Phoenix"
+          ],
+          [
+            "Chihuahua",
+            "America/Chihuahua"
+          ],
+          [
+            "Mazatlan",
+            "America/Mazatlan"
+          ],
+          [
+            "Central Time (US & Canada)",
+            "America/Chicago"
+          ],
+          [
+            "Saskatchewan",
+            "America/Regina"
+          ],
+          [
+            "Guadalajara",
+            "America/Mexico_City"
+          ],
+          [
+            "Mexico City",
+            "America/Mexico_City"
+          ],
+          [
+            "Monterrey",
+            "America/Monterrey"
+          ],
+          [
+            "Central America",
+            "America/Guatemala"
+          ],
+          [
+            "Eastern Time (US & Canada)",
+            "America/New_York"
+          ],
+          [
+            "Indiana (East)",
+            "America/Indiana/Indianapolis"
+          ],
+          [
+            "Bogota",
+            "America/Bogota"
+          ],
+          [
+            "Lima",
+            "America/Lima"
+          ],
+          [
+            "Quito",
+            "America/Lima"
+          ],
+          [
+            "Atlantic Time (Canada)",
+            "America/Halifax"
+          ],
+          [
+            "Caracas",
+            "America/Caracas"
+          ],
+          [
+            "La Paz",
+            "America/La_Paz"
+          ],
+          [
+            "Santiago",
+            "America/Santiago"
+          ],
+          [
+            "Newfoundland",
+            "America/St_Johns"
+          ],
+          [
+            "Brasilia",
+            "America/Sao_Paulo"
+          ],
+          [
+            "Buenos Aires",
+            "America/Argentina/Buenos_Aires"
+          ],
+          [
+            "Montevideo",
+            "America/Montevideo"
+          ],
+          [
+            "Georgetown",
+            "America/Guyana"
+          ],
+          [
+            "Puerto Rico",
+            "America/Puerto_Rico"
+          ],
+          [
+            "Greenland",
+            "America/Godthab"
+          ],
+          [
+            "Mid-Atlantic",
+            "Atlantic/South_Georgia"
+          ],
+          [
+            "Azores",
+            "Atlantic/Azores"
+          ],
+          [
+            "Cape Verde Is.",
+            "Atlantic/Cape_Verde"
+          ],
+          [
+            "Dublin",
+            "Europe/Dublin"
+          ],
+          [
+            "Edinburgh",
+            "Europe/London"
+          ],
+          [
+            "Lisbon",
+            "Europe/Lisbon"
+          ],
+          [
+            "London",
+            "Europe/London"
+          ],
+          [
+            "Casablanca",
+            "Africa/Casablanca"
+          ],
+          [
+            "Monrovia",
+            "Africa/Monrovia"
+          ],
+          [
+            "UTC",
+            "Etc/UTC"
+          ],
+          [
+            "Belgrade",
+            "Europe/Belgrade"
+          ],
+          [
+            "Bratislava",
+            "Europe/Bratislava"
+          ],
+          [
+            "Budapest",
+            "Europe/Budapest"
+          ],
+          [
+            "Ljubljana",
+            "Europe/Ljubljana"
+          ],
+          [
+            "Prague",
+            "Europe/Prague"
+          ],
+          [
+            "Sarajevo",
+            "Europe/Sarajevo"
+          ],
+          [
+            "Skopje",
+            "Europe/Skopje"
+          ],
+          [
+            "Warsaw",
+            "Europe/Warsaw"
+          ],
+          [
+            "Zagreb",
+            "Europe/Zagreb"
+          ],
+          [
+            "Brussels",
+            "Europe/Brussels"
+          ],
+          [
+            "Copenhagen",
+            "Europe/Copenhagen"
+          ],
+          [
+            "Madrid",
+            "Europe/Madrid"
+          ],
+          [
+            "Paris",
+            "Europe/Paris"
+          ],
+          [
+            "Amsterdam",
+            "Europe/Amsterdam"
+          ],
+          [
+            "Berlin",
+            "Europe/Berlin"
+          ],
+          [
+            "Bern",
+            "Europe/Zurich"
+          ],
+          [
+            "Zurich",
+            "Europe/Zurich"
+          ],
+          [
+            "Rome",
+            "Europe/Rome"
+          ],
+          [
+            "Stockholm",
+            "Europe/Stockholm"
+          ],
+          [
+            "Vienna",
+            "Europe/Vienna"
+          ],
+          [
+            "West Central Africa",
+            "Africa/Algiers"
+          ],
+          [
+            "Bucharest",
+            "Europe/Bucharest"
+          ],
+          [
+            "Cairo",
+            "Africa/Cairo"
+          ],
+          [
+            "Helsinki",
+            "Europe/Helsinki"
+          ],
+          [
+            "Kyiv",
+            "Europe/Kiev"
+          ],
+          [
+            "Riga",
+            "Europe/Riga"
+          ],
+          [
+            "Sofia",
+            "Europe/Sofia"
+          ],
+          [
+            "Tallinn",
+            "Europe/Tallinn"
+          ],
+          [
+            "Vilnius",
+            "Europe/Vilnius"
+          ],
+          [
+            "Athens",
+            "Europe/Athens"
+          ],
+          [
+            "Istanbul",
+            "Europe/Istanbul"
+          ],
+          [
+            "Minsk",
+            "Europe/Minsk"
+          ],
+          [
+            "Jerusalem",
+            "Asia/Jerusalem"
+          ],
+          [
+            "Harare",
+            "Africa/Harare"
+          ],
+          [
+            "Pretoria",
+            "Africa/Johannesburg"
+          ],
+          [
+            "Kaliningrad",
+            "Europe/Kaliningrad"
+          ],
+          [
+            "Moscow",
+            "Europe/Moscow"
+          ],
+          [
+            "St. Petersburg",
+            "Europe/Moscow"
+          ],
+          [
+            "Volgograd",
+            "Europe/Volgograd"
+          ],
+          [
+            "Samara",
+            "Europe/Samara"
+          ],
+          [
+            "Kuwait",
+            "Asia/Kuwait"
+          ],
+          [
+            "Riyadh",
+            "Asia/Riyadh"
+          ],
+          [
+            "Nairobi",
+            "Africa/Nairobi"
+          ],
+          [
+            "Baghdad",
+            "Asia/Baghdad"
+          ],
+          [
+            "Tehran",
+            "Asia/Tehran"
+          ],
+          [
+            "Abu Dhabi",
+            "Asia/Muscat"
+          ],
+          [
+            "Muscat",
+            "Asia/Muscat"
+          ],
+          [
+            "Baku",
+            "Asia/Baku"
+          ],
+          [
+            "Tbilisi",
+            "Asia/Tbilisi"
+          ],
+          [
+            "Yerevan",
+            "Asia/Yerevan"
+          ],
+          [
+            "Kabul",
+            "Asia/Kabul"
+          ],
+          [
+            "Ekaterinburg",
+            "Asia/Yekaterinburg"
+          ],
+          [
+            "Islamabad",
+            "Asia/Karachi"
+          ],
+          [
+            "Karachi",
+            "Asia/Karachi"
+          ],
+          [
+            "Tashkent",
+            "Asia/Tashkent"
+          ],
+          [
+            "Chennai",
+            "Asia/Kolkata"
+          ],
+          [
+            "Kolkata",
+            "Asia/Kolkata"
+          ],
+          [
+            "Mumbai",
+            "Asia/Kolkata"
+          ],
+          [
+            "New Delhi",
+            "Asia/Kolkata"
+          ],
+          [
+            "Kathmandu",
+            "Asia/Kathmandu"
+          ],
+          [
+            "Astana",
+            "Asia/Dhaka"
+          ],
+          [
+            "Dhaka",
+            "Asia/Dhaka"
+          ],
+          [
+            "Sri Jayawardenepura",
+            "Asia/Colombo"
+          ],
+          [
+            "Almaty",
+            "Asia/Almaty"
+          ],
+          [
+            "Novosibirsk",
+            "Asia/Novosibirsk"
+          ],
+          [
+            "Rangoon",
+            "Asia/Rangoon"
+          ],
+          [
+            "Bangkok",
+            "Asia/Bangkok"
+          ],
+          [
+            "Hanoi",
+            "Asia/Bangkok"
+          ],
+          [
+            "Jakarta",
+            "Asia/Jakarta"
+          ],
+          [
+            "Krasnoyarsk",
+            "Asia/Krasnoyarsk"
+          ],
+          [
+            "Beijing",
+            "Asia/Shanghai"
+          ],
+          [
+            "Chongqing",
+            "Asia/Chongqing"
+          ],
+          [
+            "Hong Kong",
+            "Asia/Hong_Kong"
+          ],
+          [
+            "Urumqi",
+            "Asia/Urumqi"
+          ],
+          [
+            "Kuala Lumpur",
+            "Asia/Kuala_Lumpur"
+          ],
+          [
+            "Singapore",
+            "Asia/Singapore"
+          ],
+          [
+            "Taipei",
+            "Asia/Taipei"
+          ],
+          [
+            "Perth",
+            "Australia/Perth"
+          ],
+          [
+            "Irkutsk",
+            "Asia/Irkutsk"
+          ],
+          [
+            "Ulaanbaatar",
+            "Asia/Ulaanbaatar"
+          ],
+          [
+            "Seoul",
+            "Asia/Seoul"
+          ],
+          [
+            "Osaka",
+            "Asia/Tokyo"
+          ],
+          [
+            "Sapporo",
+            "Asia/Tokyo"
+          ],
+          [
+            "Tokyo",
+            "Asia/Tokyo"
+          ],
+          [
+            "Yakutsk",
+            "Asia/Yakutsk"
+          ],
+          [
+            "Darwin",
+            "Australia/Darwin"
+          ],
+          [
+            "Adelaide",
+            "Australia/Adelaide"
+          ],
+          [
+            "Canberra",
+            "Australia/Melbourne"
+          ],
+          [
+            "Melbourne",
+            "Australia/Melbourne"
+          ],
+          [
+            "Sydney",
+            "Australia/Sydney"
+          ],
+          [
+            "Brisbane",
+            "Australia/Brisbane"
+          ],
+          [
+            "Hobart",
+            "Australia/Hobart"
+          ],
+          [
+            "Vladivostok",
+            "Asia/Vladivostok"
+          ],
+          [
+            "Guam",
+            "Pacific/Guam"
+          ],
+          [
+            "Port Moresby",
+            "Pacific/Port_Moresby"
+          ],
+          [
+            "Magadan",
+            "Asia/Magadan"
+          ],
+          [
+            "Srednekolymsk",
+            "Asia/Srednekolymsk"
+          ],
+          [
+            "Solomon Is.",
+            "Pacific/Guadalcanal"
+          ],
+          [
+            "New Caledonia",
+            "Pacific/Noumea"
+          ],
+          [
+            "Fiji",
+            "Pacific/Fiji"
+          ],
+          [
+            "Kamchatka",
+            "Asia/Kamchatka"
+          ],
+          [
+            "Marshall Is.",
+            "Pacific/Majuro"
+          ],
+          [
+            "Auckland",
+            "Pacific/Auckland"
+          ],
+          [
+            "Wellington",
+            "Pacific/Auckland"
+          ],
+          [
+            "Nuku'alofa",
+            "Pacific/Tongatapu"
+          ],
+          [
+            "Tokelau Is.",
+            "Pacific/Fakaofo"
+          ],
+          [
+            "Chatham Is.",
+            "Pacific/Chatham"
+          ],
+          [
+            "Samoa",
+            "Pacific/Apia"
+          ]
+        ],
+        "optional": true
+      },
+      {
+        "type": "date_time",
+        "name": "start_after",
+        "control_type": "date_time",
+        "label": "Start after",
+        "hint": "Set date and time to start or leave blank to start immediately. <b>Once recipe has been run or tested, value cannot be changed.</b>",
+        "optional": true,
+        "extends_schema": true,
+        "since_field": true,
+        "render_input": "date_time_conversion",
+        "parse_output": "date_time_conversion"
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "workato_variable",
+            "name": "declare_variable",
+            "as": "b3aaa17c",
+            "title": "  Create variable batchSize",
+            "description": "Create variable <span class=\"provider\">batchSize</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "variables": {
+                "schema": "[{\"name\":\"batch_size\",\"type\":\"integer\",\"optional\":true,\"label\":\"batchSize\",\"control_type\":\"integer\"}]",
+                "data": {
+                  "batch_size": "7000"
+                }
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "integer",
+                "name": "batch_size",
+                "control_type": "integer",
+                "label": "batchSize",
+                "optional": true,
+                "parse_output": "integer_conversion"
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "variables",
+                "control_type": "form-schema-builder",
+                "label": "Variables",
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Schema",
+                    "extends_schema": true,
+                    "broadcast_change_event": true,
+                    "type": "string",
+                    "name": "schema",
+                    "parent": "variables"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "integer",
+                        "label": "batchSize",
+                        "parse_output": "integer_conversion",
+                        "name": "batch_size",
+                        "type": "integer",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true,
+                        "parent": "variables.data"
+                      }
+                    ],
+                    "label": "Data",
+                    "type": "object",
+                    "name": "data",
+                    "parent": "variables"
+                  }
+                ],
+                "exclude_fields": [
+                  "hint"
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "variables.data.batch_size",
+              "variables",
+              "variables.schema",
+              "variables.data",
+              "variables.data.batch_ran_at"
+            ],
+            "comment": "batchSize=7000",
+            "uuid": "abaab1bb-bb59-415e-9572-91ff58ca6c30"
+          },
+          {
+            "number": 3,
+            "provider": "workato_list",
+            "name": "create_list",
+            "as": "9e8cb50e",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "size": "1000"
+            },
+            "comment": "Set to a maximum of 1000",
+            "uuid": "5b073845-e6de-4540-9a2d-6988deb375d3"
+          },
+          {
+            "number": 4,
+            "as": "ab3b7333",
+            "keyword": "foreach",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "repeat_mode": "simple",
+            "clear_scope": "false",
+            "input": {
+            },
+            "block": [
+              {
+                "number": 5,
+                "provider": "mysql",
+                "name": "search_rows",
+                "as": "4e9f66f5",
+                "title": "Select rows in sfdc_marketo_accountteam",
+                "description": "Select <span class=\"provider\">rows</span> in <span class=\"provider\">sfdc_marketo_accountteam</span> table in <span class=\"provider\">MySQL</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "table": "sfdc_marketo_accountteam"
+                },
+                "toggleCfg": {
+                  "table": true
+                },
+                "input": {
+                  "limit": "#{_('data.workato_variable.b3aaa17c.batch_size')}",
+                  "offset": "=_('data.foreach.ab3b7333.index', 'foreach_meta')*_('data.workato_variable.b3aaa17c.batch_size')",
+                  "table": "sfdc_marketo_accountteam",
+                  "where": "state = 'queued'"
+                },
+                "extended_output_schema": [
+                  {
+                    "type": "array",
+                    "name": "rows",
+                    "label": "Rows",
+                    "of": "object",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "accountExecutive_emailAddress",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "accountExecutive_emailAddress"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "accountexecutive_emailaddress_83e91e9a"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "accountExecutive_firstName",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "accountExecutive_firstName"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "accountexecutive_firstname_17b3c0d3"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "accountExecutive_lastName",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "accountExecutive_lastName"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "accountexecutive_lastname_36592852"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "accountExecutive_phoneNumber",
+                        "details": {
+                          "data_type": "varchar(25)",
+                          "column_name": "accountExecutive_phoneNumber"
+                        },
+                        "optional": true,
+                        "hint": "varchar(25)",
+                        "type": "string",
+                        "name": "accountexecutive_phonenumber_bf69f010"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "accountExecutive_title",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "accountExecutive_title"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "accountexecutive_title_ce8ef25b"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "automationRep_emailAddress",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "automationRep_emailAddress"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "automationrep_emailaddress_88b148e0"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "automationRep_firstName",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "automationRep_firstName"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "automationrep_firstname_b9596e0b"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "automationRep_lastName",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "automationRep_lastName"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "automationrep_lastname_2e0a8380"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "automationRep_phoneNumber",
+                        "details": {
+                          "data_type": "varchar(25)",
+                          "column_name": "automationRep_phoneNumber"
+                        },
+                        "optional": true,
+                        "hint": "varchar(25)",
+                        "type": "string",
+                        "name": "automationrep_phonenumber_96aad31c"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "automationRep_title",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "automationRep_title"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "automationrep_title_a53ffebf"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "bdr_emailAddress",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "bdr_emailAddress"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "bdr_emailaddress_92b2db85"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "bdr_firstName",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "bdr_firstName"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "bdr_firstname_ae02875d"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "bdr_lastName",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "bdr_lastName"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "bdr_lastname_07116ea3"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "bdr_phoneNumber",
+                        "details": {
+                          "data_type": "varchar(25)",
+                          "column_name": "bdr_phoneNumber"
+                        },
+                        "optional": true,
+                        "hint": "varchar(25)",
+                        "type": "string",
+                        "name": "bdr_phonenumber_3bf56469"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "bdr_title",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "bdr_title"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "bdr_title"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "csm_emailAddress",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "csm_emailAddress"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "csm_emailaddress_c4bf07fe"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "csm_firstName",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "csm_firstName"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "csm_firstname_b3e0e12e"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "csm_lastName",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "csm_lastName"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "csm_lastname_f639bb77"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "csm_phoneNumber",
+                        "details": {
+                          "data_type": "varchar(25)",
+                          "column_name": "csm_phoneNumber"
+                        },
+                        "optional": true,
+                        "hint": "varchar(25)",
+                        "type": "string",
+                        "name": "csm_phonenumber_cd2fd856"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "csm_title",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "csm_title"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "csm_title"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "divvyCloudRep_emailAddress",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "divvyCloudRep_emailAddress"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "divvycloudrep_emailaddress_c892a196"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "divvyCloudRep_firstName",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "divvyCloudRep_firstName"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "divvycloudrep_firstname_8015f85b"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "divvyCloudRep_lastName",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "divvyCloudRep_lastName"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "divvycloudrep_lastname_276e5524"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "divvyCloudRep_phone",
+                        "details": {
+                          "data_type": "varchar(25)",
+                          "column_name": "divvyCloudRep_phone"
+                        },
+                        "optional": true,
+                        "hint": "varchar(25)",
+                        "type": "string",
+                        "name": "divvycloudrep_phone_0a89e246"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "divvyCloudRep_title",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "divvyCloudRep_title"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "divvycloudrep_title_8103819b"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "idrRep_emailAddress",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "idrRep_emailAddress"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "idrrep_emailaddress_74855656"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "idrRep_firstName",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "idrRep_firstName"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "idrrep_firstname_88523a00"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "idrRep_lastName",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "idrRep_lastName"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "idrrep_lastname_61389d73"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "idrRep_phoneNumber",
+                        "details": {
+                          "data_type": "varchar(25)",
+                          "column_name": "idrRep_phoneNumber"
+                        },
+                        "optional": true,
+                        "hint": "varchar(25)",
+                        "type": "string",
+                        "name": "idrrep_phonenumber_36d4c19c"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "idrRep_title",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "idrRep_title"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "idrrep_title_1a873933"
+                      },
+                      {
+                        "control_type": "date_time",
+                        "label": "last_modified",
+                        "render_input": "convert_date_time",
+                        "parse_output": "parse_time_value",
+                        "details": {
+                          "data_type": "timestamp",
+                          "column_name": "last_modified"
+                        },
+                        "optional": true,
+                        "hint": "timestamp",
+                        "type": "date_time",
+                        "name": "last_modified"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "sdr_emailAddress",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "sdr_emailAddress"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "sdr_emailaddress_b9c66b99"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "sdr_firstName",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "sdr_firstName"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "sdr_firstname_ca3329f4"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "sdr_lastName",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "sdr_lastName"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "sdr_lastname_28bb5f13"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "sdr_phoneNumber",
+                        "details": {
+                          "data_type": "varchar(25)",
+                          "column_name": "sdr_phoneNumber"
+                        },
+                        "optional": true,
+                        "hint": "varchar(25)",
+                        "type": "string",
+                        "name": "sdr_phonenumber_bc002a3e"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "sdr_title",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "sdr_title"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "sdr_title"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "servicesSpecialistRep_emailAddress",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "servicesSpecialistRep_emailAddress"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "servicesspecialistrep_emailaddress_377ae7aa"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "servicesSpecialistRep_firstName",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "servicesSpecialistRep_firstName"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "servicesspecialistrep_firstname_81fe1b44"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "servicesSpecialistRep_lastName",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "servicesSpecialistRep_lastName"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "servicesspecialistrep_lastname_52bfe1ee"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "servicesSpecialistRep_phoneNumber",
+                        "details": {
+                          "data_type": "varchar(25)",
+                          "column_name": "servicesSpecialistRep_phoneNumber"
+                        },
+                        "optional": true,
+                        "hint": "varchar(25)",
+                        "type": "string",
+                        "name": "servicesspecialistrep_phonenumber_64f27a08"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "servicesSpecialistRep_title",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "servicesSpecialistRep_title"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "servicesspecialistrep_title_9fe18044"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "sfdc_account_id",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "sfdc_account_id"
+                        },
+                        "hint": "varchar(100)",
+                        "optional": true,
+                        "type": "string",
+                        "name": "sfdc_account_id"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "sfdc_contact_emailAddress",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "sfdc_contact_emailAddress"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "sfdc_contact_emailaddress_08308829"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "sfdc_contact_firstName",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "sfdc_contact_firstName"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "sfdc_contact_firstname_ae7784c8"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "sfdc_contact_id",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "sfdc_contact_id"
+                        },
+                        "event_title": true,
+                        "optional": true,
+                        "hint": "varchar(100), primary key",
+                        "type": "string",
+                        "name": "sfdc_contact_id"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "sfdc_contact_lastName",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "sfdc_contact_lastName"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "sfdc_contact_lastname_6310f4f7"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "sfdc_contact_type",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "sfdc_contact_type"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "sfdc_contact_type"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "sfdc_marketo_accountteamcol",
+                        "details": {
+                          "data_type": "varchar(45)",
+                          "column_name": "sfdc_marketo_accountteamcol"
+                        },
+                        "optional": true,
+                        "hint": "varchar(45)",
+                        "type": "string",
+                        "name": "sfdc_marketo_accountteamcol"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "state",
+                        "details": {
+                          "data_type": "varchar(45)",
+                          "column_name": "state"
+                        },
+                        "optional": true,
+                        "hint": "varchar(45)",
+                        "type": "string",
+                        "name": "state"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "temRep_emailAddress",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "temRep_emailAddress"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "temrep_emailaddress_a2d0fe6d"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "temRep_firstName",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "temRep_firstName"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "temrep_firstname_7207415a"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "temRep_lastName",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "temRep_lastName"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "temrep_lastname_cbc90526"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "temRep_phoneNumber",
+                        "details": {
+                          "data_type": "varchar(25)",
+                          "column_name": "temRep_phoneNumber"
+                        },
+                        "optional": true,
+                        "hint": "varchar(25)",
+                        "type": "string",
+                        "name": "temrep_phonenumber_1f151918"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "temRep_title",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "temRep_title"
+                        },
+                        "optional": true,
+                        "hint": "varchar(100)",
+                        "type": "string",
+                        "name": "temrep_title_f00bc0b9"
+                      }
+                    ]
+                  }
+                ],
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "parameters",
+                    "control_type": "form-schema-builder",
+                    "label": "Parameters",
+                    "hint": "First provide the full name assigned to your bind variable in the WHERE condition. e.g. <b>id</b>\n                    Second, provide the actual parameter value. Parameter values can be static or datapills.\n                    Select the <b>closest corresponding data type</b> that your database is expecting for the bind variable\n                    ",
+                    "sticky": true,
+                    "optional": true,
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Schema",
+                        "extends_schema": true,
+                        "type": "string",
+                        "name": "schema",
+                        "parent": "parameters"
+                      },
+                      {
+                        "properties": [
+
+                        ],
+                        "label": "Data",
+                        "optional": true,
+                        "type": "object",
+                        "name": "data",
+                        "parent": "parameters"
+                      }
+                    ],
+                    "override": true
+                  }
+                ],
+                "comment": "WHERE state=queued'",
+                "uuid": "5b555da8-1088-44cf-b668-09bc5160580b"
+              },
+              {
+                "number": 6,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "greater_than",
+                      "lhs": "#{_('data.mysql.4e9f66f5.rows.first.____Size', 'list_meta', '____Size', 'data.mysql.4e9f66f5.rows')}",
+                      "rhs": "0"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 7,
+                    "provider": "csv_parser",
+                    "name": "create_csv_lines",
+                    "as": "5b83b8a6",
+                    "title": null,
+                    "description": null,
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                      "create_header_line": true,
+                      "force_quotes": true
+                    },
+                    "input": {
+                      "create_header_line": "true",
+                      "column_separator": ",",
+                      "force_quotes": "false",
+                      "column_labels": "accountExecutiveEmailAddress\naccountExecutiveFirstName\naccountExecutiveLastName\naccountExecutivePhoneNumber\naccountExecutiveTitle\nautomationRepEmailAddress\nautomationRepFirstName\nautomationRepLastName\nautomationRepPhoneNumber\nautomationRepTitle\ncSMEmailAddress\ncSMPhoneNumber\ncSMLastName\ncSMFirstName\ncSMTitle\niDRRepEmailAddress\niDRRepFirstName\niDRRepLastName\niDRRepPhoneNumber\niDRRepTitle\ntEMRepEmailAddress\ntEMRepFirstName\ntEMRepLastName\ntEMRepPhoneNumber\ntEMRepTitle\nservicesSpecialistRepFirstName\nservicesSpecialistRepLastName\nservicesSpecialistRepEmailAddress\nservicesSpecialistRepPhoneNumber\nservicesSpecialistRepTitle\nsDRFirstName\nsDRLastName\nsDREmailAddress\nsDRPhoneNumber\nsDRTitle\nbDRFirstName\nbDRLastName\nbDREmail\nbDRPhone\nbDRTitle\ndivvyCloudRepFirstName\ndivvyCloudRepLastName\ndivvyCloudRepEmailAddress\ndivvyCloudRepPhone\ndivvyCloudRepTitle\nsfdcAccountId\nsfdcContactId\nfirstName\nlastName\nsfdcType\nemail",
+                      "lines": {
+                        "____source": "#{_('data.mysql.4e9f66f5.rows')}",
+                        "column_1": "=_('data.mysql.4e9f66f5.rows.first.accountexecutive_firstname_17b3c0d3').present? ? _('data.mysql.4e9f66f5.rows.first.accountexecutive_firstname_17b3c0d3') : \"NULL\"",
+                        "column_2": "=_('data.mysql.4e9f66f5.rows.first.accountexecutive_lastname_36592852').present? ? _('data.mysql.4e9f66f5.rows.first.accountexecutive_lastname_36592852') : \"NULL\"",
+                        "column_3": "=_('data.mysql.4e9f66f5.rows.first.accountexecutive_phonenumber_bf69f010').present? ? _('data.mysql.4e9f66f5.rows.first.accountexecutive_phonenumber_bf69f010') : \"NULL\"",
+                        "column_4": "=_('data.mysql.4e9f66f5.rows.first.accountexecutive_title_ce8ef25b').present? ? _('data.mysql.4e9f66f5.rows.first.accountexecutive_title_ce8ef25b') : \"NULL\"",
+                        "column_5": "=_('data.mysql.4e9f66f5.rows.first.automationrep_emailaddress_88b148e0').present? ? _('data.mysql.4e9f66f5.rows.first.automationrep_emailaddress_88b148e0') : \"NULL\"",
+                        "column_6": "=_('data.mysql.4e9f66f5.rows.first.automationrep_firstname_b9596e0b').present? ? _('data.mysql.4e9f66f5.rows.first.automationrep_firstname_b9596e0b') : \"NULL\"",
+                        "column_7": "=_('data.mysql.4e9f66f5.rows.first.automationrep_lastname_2e0a8380').present? ? _('data.mysql.4e9f66f5.rows.first.automationrep_lastname_2e0a8380') : \"NULL\"",
+                        "column_8": "=_('data.mysql.4e9f66f5.rows.first.automationrep_phonenumber_96aad31c').present? ? _('data.mysql.4e9f66f5.rows.first.automationrep_phonenumber_96aad31c') : \"NULL\"",
+                        "column_9": "=_('data.mysql.4e9f66f5.rows.first.automationrep_title_a53ffebf').present? ? _('data.mysql.4e9f66f5.rows.first.automationrep_title_a53ffebf') : \"NULL\"",
+                        "column_10": "=_('data.mysql.4e9f66f5.rows.first.csm_emailaddress_c4bf07fe').present? ? _('data.mysql.4e9f66f5.rows.first.csm_emailaddress_c4bf07fe') : \"NULL\"",
+                        "column_11": "=_('data.mysql.4e9f66f5.rows.first.csm_phonenumber_cd2fd856').present? ? _('data.mysql.4e9f66f5.rows.first.csm_phonenumber_cd2fd856') : \"NULL\"",
+                        "column_12": "=_('data.mysql.4e9f66f5.rows.first.csm_lastname_f639bb77').present? ? _('data.mysql.4e9f66f5.rows.first.csm_lastname_f639bb77') : \"NULL\"",
+                        "column_13": "=_('data.mysql.4e9f66f5.rows.first.csm_firstname_b3e0e12e').present? ? _('data.mysql.4e9f66f5.rows.first.csm_firstname_b3e0e12e') : \"NULL\"",
+                        "column_14": "=_('data.mysql.4e9f66f5.rows.first.csm_title').present? ? _('data.mysql.4e9f66f5.rows.first.csm_title') : \"NULL\"",
+                        "column_15": "=_('data.mysql.4e9f66f5.rows.first.idrrep_emailaddress_74855656').present? ? _('data.mysql.4e9f66f5.rows.first.idrrep_emailaddress_74855656') : \"NULL\"",
+                        "column_16": "=_('data.mysql.4e9f66f5.rows.first.idrrep_firstname_88523a00').present? ? _('data.mysql.4e9f66f5.rows.first.idrrep_firstname_88523a00') : \"NULL\"",
+                        "column_17": "=_('data.mysql.4e9f66f5.rows.first.idrrep_lastname_61389d73').present? ? _('data.mysql.4e9f66f5.rows.first.idrrep_lastname_61389d73') : \"NULL\"",
+                        "column_18": "=_('data.mysql.4e9f66f5.rows.first.idrrep_phonenumber_36d4c19c').present? ? _('data.mysql.4e9f66f5.rows.first.idrrep_phonenumber_36d4c19c') : \"NULL\"",
+                        "column_19": "=_('data.mysql.4e9f66f5.rows.first.idrrep_title_1a873933').present? ? _('data.mysql.4e9f66f5.rows.first.idrrep_title_1a873933') : \"NULL\"",
+                        "column_20": "=_('data.mysql.4e9f66f5.rows.first.temrep_emailaddress_a2d0fe6d').present? ? _('data.mysql.4e9f66f5.rows.first.temrep_emailaddress_a2d0fe6d') : \"NULL\"",
+                        "column_21": "=_('data.mysql.4e9f66f5.rows.first.temrep_firstname_7207415a').present? ? _('data.mysql.4e9f66f5.rows.first.temrep_firstname_7207415a') : \"NULL\"",
+                        "column_22": "=_('data.mysql.4e9f66f5.rows.first.temrep_lastname_cbc90526').present? ? _('data.mysql.4e9f66f5.rows.first.temrep_lastname_cbc90526') : \"NULL\"",
+                        "column_23": "=_('data.mysql.4e9f66f5.rows.first.temrep_phonenumber_1f151918').present? ? _('data.mysql.4e9f66f5.rows.first.temrep_phonenumber_1f151918') : \"NULL\"",
+                        "column_24": "=_('data.mysql.4e9f66f5.rows.first.temrep_title_f00bc0b9').present? ? _('data.mysql.4e9f66f5.rows.first.temrep_title_f00bc0b9') : \"NULL\"",
+                        "column_25": "=_('data.mysql.4e9f66f5.rows.first.servicesspecialistrep_firstname_81fe1b44').present? ? _('data.mysql.4e9f66f5.rows.first.servicesspecialistrep_firstname_81fe1b44') : \"NULL\"",
+                        "column_26": "=_('data.mysql.4e9f66f5.rows.first.servicesspecialistrep_lastname_52bfe1ee').present? ? _('data.mysql.4e9f66f5.rows.first.servicesspecialistrep_lastname_52bfe1ee') : \"NULL\"",
+                        "column_27": "=_('data.mysql.4e9f66f5.rows.first.servicesspecialistrep_emailaddress_377ae7aa').present? ? _('data.mysql.4e9f66f5.rows.first.servicesspecialistrep_emailaddress_377ae7aa') : \"NULL\"",
+                        "column_28": "=_('data.mysql.4e9f66f5.rows.first.servicesspecialistrep_phonenumber_64f27a08').present? ? _('data.mysql.4e9f66f5.rows.first.servicesspecialistrep_phonenumber_64f27a08') : \"NULL\"",
+                        "column_29": "=_('data.mysql.4e9f66f5.rows.first.servicesspecialistrep_title_9fe18044').present? ? _('data.mysql.4e9f66f5.rows.first.servicesspecialistrep_title_9fe18044') : \"NULL\"",
+                        "column_30": "=_('data.mysql.4e9f66f5.rows.first.sdr_firstname_ca3329f4').present? ? _('data.mysql.4e9f66f5.rows.first.sdr_firstname_ca3329f4') : \"NULL\"",
+                        "column_31": "=_('data.mysql.4e9f66f5.rows.first.sdr_lastname_28bb5f13').present? ? _('data.mysql.4e9f66f5.rows.first.sdr_lastname_28bb5f13') : \"NULL\"",
+                        "column_32": "=_('data.mysql.4e9f66f5.rows.first.sdr_emailaddress_b9c66b99').present? ? _('data.mysql.4e9f66f5.rows.first.sdr_emailaddress_b9c66b99') : \"NULL\"",
+                        "column_33": "=_('data.mysql.4e9f66f5.rows.first.sdr_phonenumber_bc002a3e').present? ? _('data.mysql.4e9f66f5.rows.first.sdr_phonenumber_bc002a3e') : \"NULL\"",
+                        "column_34": "=_('data.mysql.4e9f66f5.rows.first.sdr_title').present? ? _('data.mysql.4e9f66f5.rows.first.sdr_title') : \"NULL\"",
+                        "column_0": "=_('data.mysql.4e9f66f5.rows.first.accountexecutive_emailaddress_83e91e9a').present? ? _('data.mysql.4e9f66f5.rows.first.accountexecutive_emailaddress_83e91e9a') : \"NULL\" ",
+                        "column_35": "=_('data.mysql.4e9f66f5.rows.first.bdr_firstname_ae02875d').present? ? _('data.mysql.4e9f66f5.rows.first.bdr_firstname_ae02875d') : \"NULL\"",
+                        "column_36": "=_('data.mysql.4e9f66f5.rows.first.bdr_lastname_07116ea3').present? ? _('data.mysql.4e9f66f5.rows.first.bdr_lastname_07116ea3') : \"NULL\"",
+                        "column_37": "=_('data.mysql.4e9f66f5.rows.first.bdr_emailaddress_92b2db85').present? ? _('data.mysql.4e9f66f5.rows.first.bdr_emailaddress_92b2db85') : \"NULL\"",
+                        "column_38": "=_('data.mysql.4e9f66f5.rows.first.bdr_phonenumber_3bf56469').present? ? _('data.mysql.4e9f66f5.rows.first.bdr_phonenumber_3bf56469') : \"NULL\"",
+                        "column_39": "=_('data.mysql.4e9f66f5.rows.first.bdr_title').present? ? _('data.mysql.4e9f66f5.rows.first.bdr_title') : \"NULL\"",
+                        "column_40": "=_('data.mysql.4e9f66f5.rows.first.divvycloudrep_firstname_8015f85b').present? ? _('data.mysql.4e9f66f5.rows.first.divvycloudrep_firstname_8015f85b') : \"NULL\"",
+                        "column_41": "=_('data.mysql.4e9f66f5.rows.first.divvycloudrep_lastname_276e5524').present? ? _('data.mysql.4e9f66f5.rows.first.divvycloudrep_lastname_276e5524') : \"NULL\"",
+                        "column_42": "=_('data.mysql.4e9f66f5.rows.first.divvycloudrep_emailaddress_c892a196').present? ? _('data.mysql.4e9f66f5.rows.first.divvycloudrep_emailaddress_c892a196') : \"NULL\"",
+                        "column_43": "=_('data.mysql.4e9f66f5.rows.first.divvycloudrep_phone_0a89e246').present? ? _('data.mysql.4e9f66f5.rows.first.divvycloudrep_phone_0a89e246') : \"NULL\"",
+                        "column_44": "=_('data.mysql.4e9f66f5.rows.first.divvycloudrep_title_8103819b').present? ? _('data.mysql.4e9f66f5.rows.first.divvycloudrep_title_8103819b') : \"NULL\"",
+                        "column_45": "#{_('data.mysql.4e9f66f5.rows.first.sfdc_account_id')}",
+                        "column_46": "#{_('data.mysql.4e9f66f5.rows.first.sfdc_contact_id')}",
+                        "column_47": "=_('data.mysql.4e9f66f5.rows.first.sfdc_contact_firstname_ae7784c8').present? ? _('data.mysql.4e9f66f5.rows.first.sfdc_contact_firstname_ae7784c8') : \"NULL\"",
+                        "column_48": "=_('data.mysql.4e9f66f5.rows.first.sfdc_contact_lastname_6310f4f7').present? ? _('data.mysql.4e9f66f5.rows.first.sfdc_contact_lastname_6310f4f7') : \"NULL\"",
+                        "column_49": "#{_('data.mysql.4e9f66f5.rows.first.sfdc_contact_type')}",
+                        "column_50": "#{_('data.mysql.4e9f66f5.rows.first.sfdc_contact_emailaddress_08308829')}"
+                      }
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "array",
+                        "name": "lines",
+                        "label": "CSV data lines",
+                        "hint": "Provide field mappings for the CSV data below.",
+                        "of": "object",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "accountExecutiveEmailAddress",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_0",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "accountExecutiveFirstName",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_1",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "accountExecutiveLastName",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_2",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "accountExecutivePhoneNumber",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_3",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "accountExecutiveTitle",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_4",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "automationRepEmailAddress",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_5",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "automationRepFirstName",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_6",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "automationRepLastName",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_7",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "automationRepPhoneNumber",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_8",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "automationRepTitle",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_9",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "cSMEmailAddress",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_10",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "cSMPhoneNumber",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_11",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "cSMLastName",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_12",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "cSMFirstName",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_13",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "cSMTitle",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_14",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "iDRRepEmailAddress",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_15",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "iDRRepFirstName",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_16",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "iDRRepLastName",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_17",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "iDRRepPhoneNumber",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_18",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "iDRRepTitle",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_19",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "tEMRepEmailAddress",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_20",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "tEMRepFirstName",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_21",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "tEMRepLastName",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_22",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "tEMRepPhoneNumber",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_23",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "tEMRepTitle",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_24",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "servicesSpecialistRepFirstName",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_25",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "servicesSpecialistRepLastName",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_26",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "servicesSpecialistRepEmailAddress",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_27",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "servicesSpecialistRepPhoneNumber",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_28",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "servicesSpecialistRepTitle",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_29",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "sDRFirstName",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_30",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "sDRLastName",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_31",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "sDREmailAddress",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_32",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "sDRPhoneNumber",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_33",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "sDRTitle",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_34",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "bDRFirstName",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_35",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "bDRLastName",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_36",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "bDREmail",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_37",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "bDRPhone",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_38",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "bDRTitle",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_39",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "divvyCloudRepFirstName",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_40",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "divvyCloudRepLastName",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_41",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "divvyCloudRepEmailAddress",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_42",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "divvyCloudRepPhone",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_43",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "divvyCloudRepTitle",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_44",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "sfdcAccountId",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_45",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "sfdcContactId",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_46",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "firstName",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_47",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "lastName",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_48",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "sfdcType",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_49",
+                            "parent": "lines"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "email",
+                            "optional": true,
+                            "sticky": true,
+                            "type": "string",
+                            "name": "column_50",
+                            "parent": "lines"
+                          }
+                        ]
+                      }
+                    ],
+                    "uuid": "a18ae647-05c4-4957-8ce3-a0daac71efe0",
+                    "skip": false
+                  },
+                  {
+                    "number": 8,
+                    "keyword": "try",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                    },
+                    "block": [
+                      {
+                        "number": 9,
+                        "provider": "marketo",
+                        "name": "__adhoc_http_action",
+                        "as": "afd47fcb",
+                        "title": "Bulk import leads to Marketo from file",
+                        "description": "Bulk <span class=\"provider\">import leads to Marketo from file</span> in <span class=\"provider\">Marketo</span> (Custom)",
+                        "keyword": "action",
+                        "dynamicPickListSelection": {
+                          "partition": "Default"
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                          "mnemonic": "Bulk import leads to Marketo from file",
+                          "verb": "post",
+                          "request_type": "multipart",
+                          "response_type": "json",
+                          "path": "/bulk/v1/leads.json?format=csv",
+                          "output": "[{\"control_type\":\"text\",\"label\":\"Request ID\",\"type\":\"string\",\"name\":\"requestId\"},{\"control_type\":\"text\",\"label\":\"Success\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Success\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"success\"},\"type\":\"boolean\",\"name\":\"success\"},{\"name\":\"result\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Result\",\"properties\":[{\"control_type\":\"number\",\"label\":\"Batch ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"batchId\"},{\"control_type\":\"text\",\"label\":\"Import ID\",\"type\":\"string\",\"name\":\"importId\"},{\"control_type\":\"text\",\"label\":\"Status\",\"type\":\"string\",\"name\":\"status\"}]},{\"name\":\"errors\",\"type\":\"array\",\"optional\":true,\"properties\":[{\"name\":\"code\",\"type\":\"string\",\"optional\":true,\"control_type\":\"text\"},{\"name\":\"message\",\"type\":\"string\",\"optional\":true,\"control_type\":\"text\"}]}]",
+                          "input": {
+                            "schema": "[{\"control_type\":\"text\",\"label\":\"Lookup field\",\"name\":\"lookupField\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"file\",\"label\":\"File\",\"name\":\"file\",\"type\":\"string\",\"optional\":false,\"binary_content\":\"true\"}]",
+                            "data": {
+                              "lookupField": "sfdcContactId",
+                              "file": {
+                                "content_type": "text/plain",
+                                "original_filename": "leads.csv",
+                                "value": "#{_('data.csv_parser.5b83b8a6.csv_lines')}"
+                              }
+                            }
+                          }
+                        },
+                        "extended_output_schema": [
+                          {
+                            "type": "string",
+                            "name": "requestId",
+                            "control_type": "text",
+                            "label": "Request ID",
+                            "optional": true
+                          },
+                          {
+                            "type": "number",
+                            "name": "success",
+                            "control_type": "text",
+                            "label": "Success",
+                            "optional": true,
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Success",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "type": "boolean",
+                              "name": "success"
+                            },
+                            "render_input": {
+                            },
+                            "parse_output": {
+                            }
+                          },
+                          {
+                            "type": "array",
+                            "name": "result",
+                            "label": "Result",
+                            "optional": true,
+                            "of": "object",
+                            "properties": [
+                              {
+                                "control_type": "number",
+                                "label": "Batch ID",
+                                "parse_output": "float_conversion",
+                                "optional": true,
+                                "type": "number",
+                                "name": "batchId"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Import ID",
+                                "optional": true,
+                                "type": "string",
+                                "name": "importId"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Status",
+                                "optional": true,
+                                "type": "string",
+                                "name": "status"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "array",
+                            "name": "errors",
+                            "label": "Errors",
+                            "optional": true,
+                            "of": "object",
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Code",
+                                "optional": true,
+                                "type": "string",
+                                "name": "code"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Message",
+                                "optional": true,
+                                "type": "string",
+                                "name": "message"
+                              }
+                            ]
+                          }
+                        ],
+                        "extended_input_schema": [
+                          {
+                            "type": "string",
+                            "name": "path",
+                            "control_type": "text",
+                            "label": "Path",
+                            "hint": "Base URI is <b>https://997-FKA-652.mktorest.com/rest/</b> - path will be appended to this URI. Use absolute URI to override this base URI.",
+                            "optional": false
+                          },
+                          {
+                            "type": "string",
+                            "name": "request_type",
+                            "control_type": "select",
+                            "label": "Request type",
+                            "default": "json",
+                            "sticky": false,
+                            "pick_list": [
+                              [
+                                "JSON request body",
+                                "json"
+                              ],
+                              [
+                                "URL encoded form",
+                                "urlencoded"
+                              ],
+                              [
+                                "Multipart form",
+                                "multipart"
+                              ],
+                              [
+                                "Raw request body",
+                                "raw"
+                              ]
+                            ],
+                            "optional": true,
+                            "extends_schema": true
+                          },
+                          {
+                            "type": "string",
+                            "name": "response_type",
+                            "control_type": "select",
+                            "label": "Response type",
+                            "default": "json",
+                            "sticky": false,
+                            "pick_list": [
+                              [
+                                "JSON response",
+                                "json"
+                              ],
+                              [
+                                "Raw response",
+                                "raw"
+                              ]
+                            ],
+                            "optional": true,
+                            "extends_schema": true
+                          },
+                          {
+                            "type": "object",
+                            "name": "input",
+                            "label": "Input",
+                            "optional": true,
+                            "properties": [
+                              {
+                                "control_type": "schema-designer",
+                                "label": "Request body parameters",
+                                "extends_schema": true,
+                                "schema_neutral": true,
+                                "sample_data_type": "json_input",
+                                "sticky": true,
+                                "add_field_label": "Add request body parameter",
+                                "custom_properties": [
+                                  {
+                                    "name": "binary_content",
+                                    "type": "boolean",
+                                    "optional": true,
+                                    "default": false,
+                                    "sticky": true,
+                                    "label": "File attachment",
+                                    "control_type": "checkbox",
+                                    "disable_formula": true
+                                  }
+                                ],
+                                "optional": true,
+                                "type": "string",
+                                "name": "schema",
+                                "parent": "input"
+                              },
+                              {
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "Lookup field",
+                                    "optional": false,
+                                    "sticky": true,
+                                    "type": "string",
+                                    "name": "lookupField",
+                                    "parent": "input.data"
+                                  },
+                                  {
+                                    "properties": [
+                                      {
+                                        "control_type": "text",
+                                        "label": "File content",
+                                        "optional": true,
+                                        "sticky": true,
+                                        "type": "string",
+                                        "name": "value",
+                                        "parent": "input.data.file"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Content type",
+                                        "optional": true,
+                                        "default": "text/plain",
+                                        "sticky": true,
+                                        "type": "string",
+                                        "name": "content_type",
+                                        "parent": "input.data.file"
+                                      },
+                                      {
+                                        "control_type": "text",
+                                        "label": "Original filename",
+                                        "optional": true,
+                                        "sticky": true,
+                                        "type": "string",
+                                        "name": "original_filename",
+                                        "parent": "input.data.file"
+                                      }
+                                    ],
+                                    "label": "File",
+                                    "optional": true,
+                                    "type": "object",
+                                    "name": "file",
+                                    "parent": "input.data"
+                                  }
+                                ],
+                                "label": "Data",
+                                "optional": true,
+                                "type": "object",
+                                "name": "data",
+                                "parent": "input"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "array",
+                            "name": "request_headers",
+                            "control_type": "key_value",
+                            "label": "Request headers",
+                            "optional": true,
+                            "of": "object",
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Name",
+                                "optional": true,
+                                "type": "string",
+                                "name": "name",
+                                "parent": "request_headers"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Value",
+                                "optional": true,
+                                "type": "string",
+                                "name": "value",
+                                "parent": "request_headers"
+                              }
+                            ]
+                          },
+                          {
+                            "type": "string",
+                            "name": "output",
+                            "control_type": "schema-designer",
+                            "label": "Response body",
+                            "sticky": true,
+                            "optional": true,
+                            "extends_schema": true,
+                            "schema_neutral": true
+                          },
+                          {
+                            "type": "string",
+                            "name": "response_headers",
+                            "control_type": "schema-designer",
+                            "label": "Response headers",
+                            "sticky": false,
+                            "optional": true,
+                            "extends_schema": true,
+                            "schema_neutral": true
+                          }
+                        ],
+                        "visible_config_fields": [
+                          "mnemonic",
+                          "verb",
+                          "request_type",
+                          "response_type",
+                          "input.schema",
+                          "output",
+                          "request_headers"
+                        ],
+                        "comment": "WHERE Lookupfield =\n\nsfdcContactId",
+                        "uuid": "31915ec2-c360-426c-9e83-7c6f8a23f4cd",
+                        "skip": false
+                      },
+                      {
+                        "number": 10,
+                        "keyword": "if",
+                        "dynamicPickListSelection": {
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                          "type": "compound",
+                          "operand": "and",
+                          "conditions": [
+                            {
+                              "operand": "is_true",
+                              "lhs": "#{_('data.marketo.afd47fcb.success')}",
+                              "rhs": null
+                            }
+                          ]
+                        },
+                        "block": [
+                          {
+                            "number": 11,
+                            "provider": "lookup_table",
+                            "name": "add_entry",
+                            "as": "eabbe701",
+                            "title": null,
+                            "description": "\n      Add\n      <span class=\"provider\">entry</span>\n      to\n      <span class=\"provider\">MARKETO_BATCH_STATUS</span>\n      lookup table\n    ",
+                            "keyword": "action",
+                            "dynamicPickListSelection": {
+                              "lookup_table_id": "MARKETO_BATCH_STATUS"
+                            },
+                            "toggleCfg": {
+                            },
+                            "input": {
+                              "lookup_table_id": {
+                                "zip_name": "marketo_batch_status.lookup_table.json",
+                                "name": "MARKETO_BATCH_STATUS",
+                                "folder": ""
+                              },
+                              "parameters": {
+                                "col1": "#{_('data.marketo.afd47fcb.result.first.batchId')}",
+                                "col2": "=_('data.clock.e40d7dcc.scheduled_time').strftime(\"%d-%m-%Y\")",
+                                "col3": "#{_('data.marketo.afd47fcb.result.first.status')}"
+                              }
+                            },
+                            "extended_output_schema": [
+                              {
+                                "type": "integer",
+                                "name": "id",
+                                "control_type": "number",
+                                "label": "Entry ID",
+                                "parse_output": "integer_conversion"
+                              },
+                              {
+                                "type": "object",
+                                "name": "entry",
+                                "label": "Entry",
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "batch_id",
+                                    "name": "col1",
+                                    "type": "string",
+                                    "sticky": true
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "batch_processed_date",
+                                    "name": "col2",
+                                    "type": "string",
+                                    "sticky": true
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "batch_status",
+                                    "name": "col3",
+                                    "type": "string",
+                                    "sticky": true
+                                  }
+                                ]
+                              }
+                            ],
+                            "extended_input_schema": [
+                              {
+                                "type": "object",
+                                "name": "parameters",
+                                "label": "Entry fields",
+                                "hint": "Fill the fields for the new entry",
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "batch_id",
+                                    "name": "col1",
+                                    "type": "string",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "parent": "parameters"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "batch_processed_date",
+                                    "name": "col2",
+                                    "type": "string",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "parent": "parameters"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "batch_status",
+                                    "name": "col3",
+                                    "type": "string",
+                                    "sticky": true,
+                                    "optional": true,
+                                    "parent": "parameters"
+                                  }
+                                ]
+                              }
+                            ],
+                            "comment": "Here add the batch Id to the lookup table, along with date for which records are being processed",
+                            "uuid": "8d8b591b-425d-46fa-bd20-a24b5dd474e4"
+                          },
+                          {
+                            "number": 12,
+                            "provider": "mysql",
+                            "name": "upsert_row_batch",
+                            "as": "040dcfc5",
+                            "title": "Upsert rows in sfdc_marketo_accountteam",
+                            "description": "Upsert <span class=\"provider\"> batch of rows</span> in <span class=\"provider\">sfdc_marketo_accountteam</span> table in <span class=\"provider\">MySQL</span>",
+                            "keyword": "action",
+                            "dynamicPickListSelection": {
+                              "table": "sfdc_marketo_accountteam"
+                            },
+                            "toggleCfg": {
+                              "table": true
+                            },
+                            "input": {
+                              "table": "sfdc_marketo_accountteam",
+                              "rows": {
+                                "____source": "#{_('data.mysql.4e9f66f5.rows')}",
+                                "state": "import",
+                                "sfdc_contact_id": "#{_('data.mysql.4e9f66f5.rows.first.sfdc_contact_id')}",
+                                "sfdc_account_id": "#{_('data.mysql.4e9f66f5.rows.first.sfdc_account_id')}"
+                              }
+                            },
+                            "extended_input_schema": [
+                              {
+                                "type": "array",
+                                "name": "rows",
+                                "label": "Rows",
+                                "of": "object",
+                                "properties": [
+                                  {
+                                    "control_type": "text",
+                                    "label": "accountExecutive_emailAddress",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "accountExecutive_emailAddress"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "accountexecutive_emailaddress_83e91e9a",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "accountExecutive_firstName",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "accountExecutive_firstName"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "accountexecutive_firstname_17b3c0d3",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "accountExecutive_lastName",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "accountExecutive_lastName"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "accountexecutive_lastname_36592852",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "accountExecutive_phoneNumber",
+                                    "details": {
+                                      "data_type": "varchar(25)",
+                                      "column_name": "accountExecutive_phoneNumber"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(25)",
+                                    "type": "string",
+                                    "name": "accountexecutive_phonenumber_bf69f010",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "accountExecutive_title",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "accountExecutive_title"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "accountexecutive_title_ce8ef25b",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "automationRep_emailAddress",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "automationRep_emailAddress"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "automationrep_emailaddress_88b148e0",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "automationRep_firstName",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "automationRep_firstName"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "automationrep_firstname_b9596e0b",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "automationRep_lastName",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "automationRep_lastName"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "automationrep_lastname_2e0a8380",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "automationRep_phoneNumber",
+                                    "details": {
+                                      "data_type": "varchar(25)",
+                                      "column_name": "automationRep_phoneNumber"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(25)",
+                                    "type": "string",
+                                    "name": "automationrep_phonenumber_96aad31c",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "automationRep_title",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "automationRep_title"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "automationrep_title_a53ffebf",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "bdr_emailAddress",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "bdr_emailAddress"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "bdr_emailaddress_92b2db85",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "bdr_firstName",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "bdr_firstName"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "bdr_firstname_ae02875d",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "bdr_lastName",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "bdr_lastName"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "bdr_lastname_07116ea3",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "bdr_phoneNumber",
+                                    "details": {
+                                      "data_type": "varchar(25)",
+                                      "column_name": "bdr_phoneNumber"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(25)",
+                                    "type": "string",
+                                    "name": "bdr_phonenumber_3bf56469",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "bdr_title",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "bdr_title"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "bdr_title",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "csm_emailAddress",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "csm_emailAddress"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "csm_emailaddress_c4bf07fe",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "csm_firstName",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "csm_firstName"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "csm_firstname_b3e0e12e",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "csm_lastName",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "csm_lastName"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "csm_lastname_f639bb77",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "csm_phoneNumber",
+                                    "details": {
+                                      "data_type": "varchar(25)",
+                                      "column_name": "csm_phoneNumber"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(25)",
+                                    "type": "string",
+                                    "name": "csm_phonenumber_cd2fd856",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "csm_title",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "csm_title"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "csm_title",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "divvyCloudRep_emailAddress",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "divvyCloudRep_emailAddress"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "divvycloudrep_emailaddress_c892a196",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "divvyCloudRep_firstName",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "divvyCloudRep_firstName"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "divvycloudrep_firstname_8015f85b",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "divvyCloudRep_lastName",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "divvyCloudRep_lastName"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "divvycloudrep_lastname_276e5524",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "divvyCloudRep_phone",
+                                    "details": {
+                                      "data_type": "varchar(25)",
+                                      "column_name": "divvyCloudRep_phone"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(25)",
+                                    "type": "string",
+                                    "name": "divvycloudrep_phone_0a89e246",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "divvyCloudRep_title",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "divvyCloudRep_title"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "divvycloudrep_title_8103819b",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "idrRep_emailAddress",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "idrRep_emailAddress"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "idrrep_emailaddress_74855656",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "idrRep_firstName",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "idrRep_firstName"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "idrrep_firstname_88523a00",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "idrRep_lastName",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "idrRep_lastName"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "idrrep_lastname_61389d73",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "idrRep_phoneNumber",
+                                    "details": {
+                                      "data_type": "varchar(25)",
+                                      "column_name": "idrRep_phoneNumber"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(25)",
+                                    "type": "string",
+                                    "name": "idrrep_phonenumber_36d4c19c",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "idrRep_title",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "idrRep_title"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "idrrep_title_1a873933",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "date_time",
+                                    "label": "last_modified",
+                                    "render_input": "convert_date_time",
+                                    "parse_output": "parse_time_value",
+                                    "details": {
+                                      "data_type": "timestamp",
+                                      "column_name": "last_modified"
+                                    },
+                                    "optional": true,
+                                    "hint": "timestamp",
+                                    "type": "date_time",
+                                    "name": "last_modified",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "sdr_emailAddress",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "sdr_emailAddress"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "sdr_emailaddress_b9c66b99",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "sdr_firstName",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "sdr_firstName"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "sdr_firstname_ca3329f4",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "sdr_lastName",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "sdr_lastName"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "sdr_lastname_28bb5f13",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "sdr_phoneNumber",
+                                    "details": {
+                                      "data_type": "varchar(25)",
+                                      "column_name": "sdr_phoneNumber"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(25)",
+                                    "type": "string",
+                                    "name": "sdr_phonenumber_bc002a3e",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "sdr_title",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "sdr_title"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "sdr_title",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "servicesSpecialistRep_emailAddress",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "servicesSpecialistRep_emailAddress"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "servicesspecialistrep_emailaddress_377ae7aa",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "servicesSpecialistRep_firstName",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "servicesSpecialistRep_firstName"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "servicesspecialistrep_firstname_81fe1b44",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "servicesSpecialistRep_lastName",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "servicesSpecialistRep_lastName"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "servicesspecialistrep_lastname_52bfe1ee",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "servicesSpecialistRep_phoneNumber",
+                                    "details": {
+                                      "data_type": "varchar(25)",
+                                      "column_name": "servicesSpecialistRep_phoneNumber"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(25)",
+                                    "type": "string",
+                                    "name": "servicesspecialistrep_phonenumber_64f27a08",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "servicesSpecialistRep_title",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "servicesSpecialistRep_title"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "servicesspecialistrep_title_9fe18044",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "sfdc_account_id",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "sfdc_account_id"
+                                    },
+                                    "hint": "varchar(100)",
+                                    "optional": true,
+                                    "type": "string",
+                                    "name": "sfdc_account_id",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "sfdc_contact_emailAddress",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "sfdc_contact_emailAddress"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "sfdc_contact_emailaddress_08308829",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "sfdc_contact_firstName",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "sfdc_contact_firstName"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "sfdc_contact_firstname_ae7784c8",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "sfdc_contact_id",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "sfdc_contact_id"
+                                    },
+                                    "event_title": true,
+                                    "optional": true,
+                                    "hint": "varchar(100), primary key",
+                                    "type": "string",
+                                    "name": "sfdc_contact_id",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "sfdc_contact_lastName",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "sfdc_contact_lastName"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "sfdc_contact_lastname_6310f4f7",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "sfdc_contact_type",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "sfdc_contact_type"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "sfdc_contact_type",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "sfdc_marketo_accountteamcol",
+                                    "details": {
+                                      "data_type": "varchar(45)",
+                                      "column_name": "sfdc_marketo_accountteamcol"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(45)",
+                                    "type": "string",
+                                    "name": "sfdc_marketo_accountteamcol",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "state",
+                                    "details": {
+                                      "data_type": "varchar(45)",
+                                      "column_name": "state"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(45)",
+                                    "type": "string",
+                                    "name": "state",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "temRep_emailAddress",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "temRep_emailAddress"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "temrep_emailaddress_a2d0fe6d",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "temRep_firstName",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "temRep_firstName"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "temrep_firstname_7207415a",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "temRep_lastName",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "temRep_lastName"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "temrep_lastname_cbc90526",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "temRep_phoneNumber",
+                                    "details": {
+                                      "data_type": "varchar(25)",
+                                      "column_name": "temRep_phoneNumber"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(25)",
+                                    "type": "string",
+                                    "name": "temrep_phonenumber_1f151918",
+                                    "parent": "rows"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "temRep_title",
+                                    "details": {
+                                      "data_type": "varchar(100)",
+                                      "column_name": "temRep_title"
+                                    },
+                                    "optional": true,
+                                    "hint": "varchar(100)",
+                                    "type": "string",
+                                    "name": "temrep_title_f00bc0b9",
+                                    "parent": "rows"
+                                  }
+                                ]
+                              }
+                            ],
+                            "visible_config_fields": [
+                              "table",
+                              "rows",
+                              "rows.state",
+                              "rows.sfdc_contact_id",
+                              "rows.sfdc_account_id"
+                            ],
+                            "comment": "Set 'state'=import",
+                            "uuid": "0c622b8e-c17f-4c14-bc04-0969ebc5cf6e"
+                          },
+                          {
+                            "number": 13,
+                            "keyword": "else",
+                            "dynamicPickListSelection": {
+                            },
+                            "toggleCfg": {
+                            },
+                            "input": {
+                            },
+                            "block": [
+                              {
+                                "number": 14,
+                                "keyword": "if",
+                                "dynamicPickListSelection": {
+                                },
+                                "toggleCfg": {
+                                },
+                                "input": {
+                                  "type": "compound",
+                                  "operand": "and",
+                                  "conditions": [
+                                    {
+                                      "operand": "not_equals_to",
+                                      "lhs": "#{_('data.marketo.afd47fcb.errors.first.message')}",
+                                      "rhs": "Too many imports"
+                                    }
+                                  ]
+                                },
+                                "block": [
+                                  {
+                                    "number": 15,
+                                    "provider": "email",
+                                    "name": "send_mail",
+                                    "as": "335169c9",
+                                    "title": null,
+                                    "description": null,
+                                    "keyword": "action",
+                                    "dynamicPickListSelection": {
+                                    },
+                                    "toggleCfg": {
+                                    },
+                                    "input": {
+                                      "email_type": "html",
+                                      "to": "=lookup('SALESFORCE_VARIABLES', key: \"marketo.email\")[\"value\"]",
+                                      "subject": "Marketo Bulk upload - Failed Batch",
+                                      "body": "Error: #{_('data.marketo.afd47fcb.errors.first.message')}\nJob: #{_('data.workato.job_context.job_url')}\n\nAttached the CSV file for which the batch was failed.",
+                                      "attachments": {
+                                        "file_binary_content": "#{_('data.csv_parser.5b83b8a6.csv_lines')}",
+                                        "file_name": "Leads.csv"
+                                      }
+                                    },
+                                    "visible_config_fields": [
+                                      "email_type",
+                                      "attachments.file_binary_content",
+                                      "attachments.file_name"
+                                    ],
+                                    "comment": "Notify the admin about the failed batch details",
+                                    "uuid": "2950a859-27f2-4055-8b86-d70ad11ebc6f",
+                                    "skip": false
+                                  }
+                                ],
+                                "uuid": "1819199f-e697-4ff9-a562-4afe7c536cfb"
+                              }
+                            ],
+                            "uuid": "01070cf5-e752-453a-a0ff-cf15e4bf2a9d"
+                          }
+                        ],
+                        "uuid": "87c2fc4f-b3c9-4ff9-9bc9-6230059535d9"
+                      },
+                      {
+                        "number": 16,
+                        "as": "eae359d1",
+                        "keyword": "catch",
+                        "dynamicPickListSelection": {
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                          "max_retry_count": "3",
+                          "retry_interval": "5"
+                        },
+                        "block": [
+                          {
+                            "number": 17,
+                            "provider": "logger",
+                            "name": "log_message",
+                            "as": "670670a9",
+                            "title": null,
+                            "description": null,
+                            "keyword": "action",
+                            "dynamicPickListSelection": {
+                            },
+                            "toggleCfg": {
+                            },
+                            "input": {
+                              "message": "#{_('data.catch.eae359d1.message')}"
+                            },
+                            "uuid": "f92fd9c4-5243-43d1-838c-905e28d38d64"
+                          }
+                        ],
+                        "uuid": "1acc01b7-40b7-47f5-9b93-5784839c19b0"
+                      }
+                    ],
+                    "uuid": "6a6b9770-1d34-42a3-a762-08d5f11a5cac"
+                  },
+                  {
+                    "number": 18,
+                    "keyword": "else",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                    },
+                    "block": [
+                      {
+                        "number": 19,
+                        "keyword": "stop",
+                        "dynamicPickListSelection": {
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                          "stop_with_error": "true",
+                          "stop_reason": "EOF"
+                        },
+                        "uuid": "f60669e4-53ec-4bcd-9300-e6b1b94d8c1e"
+                      }
+                    ],
+                    "uuid": "832d69d2-7c06-45ad-9a00-4cff29a0659c"
+                  }
+                ],
+                "uuid": "2e06686e-7616-44f1-9d9f-2a43595f44e3"
+              }
+            ],
+            "source": "#{_('data.workato_list.9e8cb50e.list')}",
+            "uuid": "1e44a25b-a784-435b-a1e2-136ee89bc635"
+          },
+          {
+            "number": 20,
+            "as": "efb2d3fe",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "0",
+              "retry_interval": "3"
+            },
+            "block": [
+              {
+                "number": 21,
+                "provider": "logger",
+                "name": "log_message",
+                "as": "9db629d8",
+                "title": null,
+                "description": null,
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "message": "#{_('data.catch.efb2d3fe.message')}"
+                },
+                "uuid": "db419c91-a243-473d-b3e2-dde94dcad821"
+              }
+            ],
+            "uuid": "09f28d59-9d54-4e13-b32b-2ddf0f456e06",
+            "skip": false
+          }
+        ],
+        "uuid": "4b000fcb-803d-4d2e-b555-5ac0be36bed4",
+        "skip": false
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Total Batches Ran"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.foreach.ab3b7333.index', 'foreach_meta')}"
+    },
+    "uuid": "6981b09e-50ff-45c3-89dd-c1208851c285"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "clock",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "marketo",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "resources/marketo.connection.json",
+        "name": "Marketo",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "csv_parser",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "mysql",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "resources/mysql.connection.json",
+        "name": "MySQL",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_list",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "logger",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "lookup_table",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "email",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

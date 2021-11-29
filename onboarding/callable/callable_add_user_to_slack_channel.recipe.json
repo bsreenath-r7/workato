@@ -1,0 +1,887 @@
+{
+  "name": "Callable: Add user to Slack Channel",
+  "description": "When there is a new call for callable recipe, do action",
+  "version": 2,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "89926047",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">Callable: Add user to Slack Channel</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "service_name": "Callable: Add user to Slack Channel",
+      "request_schema_json": "[{\"control_type\":\"text\",\"label\":\"Employee first name\",\"name\":\"Employee_First_Name\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Employee last name\",\"name\":\"Employee_Last_Name\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Employee email\",\"name\":\"Employee_Email\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Slack username\",\"name\":\"slackUsername\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"select\",\"label\":\"Slack Channel\",\"name\":\"slackChannel\",\"optional\":false,\"type\":\"string\",\"pick_list\":[[\"newmoose\",\"newmoose\"],[\"remoteonboarding\",\"remoteonboarding\"]],\"toggle_hint\":\"Select Channel\",\"toggle_field\":{\"name\":\"slackChannel\",\"label\":\"Slack Channel\",\"type\":\"string\",\"control_type\":\"text\",\"toggle_hint\":\"Custom Option\"}}]",
+      "reply_schema_json": "[{\"name\":\"Employee_Added_To_Channel\",\"type\":\"boolean\",\"optional\":false},{\"name\":\"Employee_Already_Existed_On_Channel\",\"type\":\"boolean\",\"optional\":false}]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Employee first name",
+            "name": "Employee_First_Name",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Employee last name",
+            "name": "Employee_Last_Name",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Employee email",
+            "name": "Employee_Email",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Slack username",
+            "name": "slackUsername",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "select",
+            "label": "Slack Channel",
+            "name": "slackChannel",
+            "optional": false,
+            "type": "string",
+            "pick_list": [
+              [
+                "newmoose",
+                "newmoose"
+              ],
+              [
+                "remoteonboarding",
+                "remoteonboarding"
+              ]
+            ],
+            "toggle_hint": "Select Channel",
+            "toggle_field": {
+              "name": "slackChannel",
+              "label": "Slack Channel",
+              "type": "string",
+              "control_type": "text",
+              "toggle_hint": "Custom Option"
+            }
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "workato_variable",
+            "name": "declare_variable",
+            "as": "d2d84a2e",
+            "title": "  Create variables Employee_Exists_On_Channel, Employee_Added_To_Channel, Slack_Username, Slack_Channel_ID",
+            "description": "Create variables <span class=\"provider\">Employee_Exists_On_Channel</span>, <span class=\"provider\">Employee_Added_To_Channel</span>, <span class=\"provider\">Slack_Username</span>, <span class=\"provider\">Slack_Channel_ID</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+              "variables.data.employee_exists_on_channel": true,
+              "variables.data.employee_added_to_channel": true
+            },
+            "input": {
+              "variables": {
+                "schema": "[{\"name\":\"employee_exists_on_channel\",\"type\":\"boolean\",\"optional\":true,\"label\":\"Employee_Exists_On_Channel\",\"control_type\":\"checkbox\"},{\"name\":\"employee_added_to_channel\",\"type\":\"boolean\",\"optional\":true,\"label\":\"Employee_Added_To_Channel\",\"control_type\":\"checkbox\"},{\"name\":\"slack_username\",\"type\":\"string\",\"optional\":true,\"label\":\"Slack_Username\",\"control_type\":\"text\"},{\"name\":\"slack_channel_id\",\"type\":\"string\",\"optional\":true,\"label\":\"Slack_Channel_ID\",\"control_type\":\"text\"}]",
+                "data": {
+                  "employee_exists_on_channel": "false",
+                  "employee_added_to_channel": "false",
+                  "slack_username": "#{_('data.workato_service.89926047.request.slackUsername')}",
+                  "slack_channel_id": "=lookup(\"ONBOARDING_NEW_HIRES_VARIABLES\", \"Value1\": _('data.workato_service.89926047.request.slackChannel'))[\"Value2\"]"
+                }
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "boolean",
+                "name": "employee_exists_on_channel",
+                "control_type": "checkbox",
+                "label": "Employee_Exists_On_Channel",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Employee_Exists_On_Channel",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "employee_exists_on_channel",
+                  "type": "boolean",
+                  "optional": true
+                },
+                "render_input": {
+                },
+                "parse_output": {
+                }
+              },
+              {
+                "type": "boolean",
+                "name": "employee_added_to_channel",
+                "control_type": "checkbox",
+                "label": "Employee_Added_To_Channel",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Employee_Added_To_Channel",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "name": "employee_added_to_channel",
+                  "type": "boolean",
+                  "optional": true
+                },
+                "render_input": {
+                },
+                "parse_output": {
+                }
+              },
+              {
+                "type": "string",
+                "name": "slack_username",
+                "control_type": "text",
+                "label": "Slack_Username",
+                "optional": true
+              },
+              {
+                "type": "string",
+                "name": "slack_channel_id",
+                "control_type": "text",
+                "label": "Slack_Channel_ID",
+                "optional": true
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "variables",
+                "control_type": "form-schema-builder",
+                "label": "Variables",
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Schema",
+                    "extends_schema": true,
+                    "broadcast_change_event": true,
+                    "type": "string",
+                    "name": "schema"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "checkbox",
+                        "label": "Employee_Exists_On_Channel",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Employee_Exists_On_Channel",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "name": "employee_exists_on_channel",
+                          "type": "boolean",
+                          "optional": true
+                        },
+                        "name": "employee_exists_on_channel",
+                        "type": "boolean",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "checkbox",
+                        "label": "Employee_Added_To_Channel",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Employee_Added_To_Channel",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "name": "employee_added_to_channel",
+                          "type": "boolean",
+                          "optional": true
+                        },
+                        "name": "employee_added_to_channel",
+                        "type": "boolean",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Slack_Username",
+                        "name": "slack_username",
+                        "type": "string",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Slack_Channel_ID",
+                        "name": "slack_channel_id",
+                        "type": "string",
+                        "optional": true,
+                        "hint": "Defaults to nil if not supplied.",
+                        "sticky": true
+                      }
+                    ],
+                    "label": "Data",
+                    "type": "object",
+                    "name": "data"
+                  }
+                ],
+                "exclude_fields": [
+                  "hint"
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "variables.data.employee_exists_on_channel",
+              "variables",
+              "variables.schema",
+              "variables.data",
+              "variables.data.slack_channel_id",
+              "variables.data.employee_added_to_channel",
+              "variables.data.error_desc",
+              "variables.data.slack_user_id",
+              "variables.data.slack_username"
+            ],
+            "uuid": "c42215b5-488b-43a8-9f93-b44e5ef55db4"
+          },
+          {
+            "number": 3,
+            "keyword": "try",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+            },
+            "block": [
+              {
+                "number": 4,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "blank",
+                      "lhs": "#{_('data.workato_service.89926047.request.slackUsername')}",
+                      "rhs": "",
+                      "uuid": "condition-681c7a90-efbb-448c-98fd-c2a5caf448f7"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 5,
+                    "keyword": "if",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "type": "compound",
+                      "operand": "and",
+                      "conditions": [
+                        {
+                          "operand": "blank",
+                          "lhs": "#{_('data.workato_service.89926047.request.Employee_Email')}",
+                          "rhs": "",
+                          "uuid": "condition-cc3d32e6-e151-45b6-a15b-3408def9209e"
+                        }
+                      ]
+                    },
+                    "block": [
+                      {
+                        "number": 6,
+                        "keyword": "stop",
+                        "dynamicPickListSelection": {
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                          "stop_with_error": "true",
+                          "stop_reason": "Unable to determine the Slack Username, the employee email is not present"
+                        },
+                        "comment": "Stop Job With Error :: Unable to determine the Slack Username, the employee email is not present",
+                        "uuid": "6dbc713f-3f28-40b7-afb0-e422ccd5be67"
+                      }
+                    ],
+                    "comment": "If the email is not present.. then we need to fail the job",
+                    "uuid": "88a0e52d-7cc5-4e9f-ac99-9f0a33e5a209"
+                  },
+                  {
+                    "number": 7,
+                    "provider": "workato_service",
+                    "name": "call_service",
+                    "as": "7f5183e3",
+                    "title": null,
+                    "description": "Call recipe <span class=\"provider\">Callable - Get employee details from Workday</span> ",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "flow_id": "Callable - Get employee details from Workday"
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "flow_id": {
+                        "zip_name": "util/callable_get_employee_details_from_workday.recipe.json",
+                        "name": "Callable - Get employee details from Workday",
+                        "folder": "util"
+                      },
+                      "request": {
+                        "longEmail": "#{_('data.workato_service.89926047.request.Employee_Email')}"
+                      }
+                    },
+                    "extended_output_schema": [
+                      {
+                        "type": "object",
+                        "name": "reply",
+                        "label": "Reply",
+                        "properties": [
+                          {
+                            "name": "report",
+                            "type": "array",
+                            "of": "object",
+                            "label": "Report",
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Employee ID",
+                                "type": "string",
+                                "name": "Employee_ID"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Short email",
+                                "type": "string",
+                                "name": "shortEmail"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Long email",
+                                "type": "string",
+                                "name": "longEmail"
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "Username",
+                                "type": "string",
+                                "name": "username"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ],
+                    "extended_input_schema": [
+                      {
+                        "type": "object",
+                        "name": "request",
+                        "label": "Recipe input",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Short email",
+                            "name": "shortEmail",
+                            "type": "string",
+                            "optional": true
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Long email",
+                            "name": "longEmail",
+                            "type": "string",
+                            "optional": true
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Employee ID",
+                            "name": "employeeId",
+                            "type": "string",
+                            "optional": true
+                          }
+                        ]
+                      }
+                    ],
+                    "visible_config_fields": [
+                      "flow_id",
+                      "request.longEmail"
+                    ],
+                    "comment": "Use this step to get the Slack Username from the incoming Email",
+                    "uuid": "f952513d-fd5c-4535-86be-f2a79fcf115c",
+                    "skip": false
+                  },
+                  {
+                    "number": 8,
+                    "provider": "workato_variable",
+                    "name": "update_variable",
+                    "as": "0d07f43d",
+                    "title": null,
+                    "description": "Update variable <span class=\"provider\">Slack_Username</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "name": "Slack_Username (step 3)"
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "name": "c42215b5-488b-43a8-9f93-b44e5ef55db4:d2d84a2e:slack_username",
+                      "value": "#{_('data.workato_service.7f5183e3.reply.report.first.username')}"
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "string",
+                        "name": "value",
+                        "control_type": "text",
+                        "label": "Value",
+                        "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                        "sticky": true,
+                        "optional": true,
+                        "strip_interpolation": true
+                      }
+                    ],
+                    "uuid": "a4d46713-b538-40dd-9b9f-865f17d2d1dd",
+                    "skip": false
+                  }
+                ],
+                "comment": "If the Slack Username is not present on the incoming data.. then we need to figure it out from the employee email field",
+                "uuid": "51aa8d27-55da-4a05-92bf-f5c92de1eff3",
+                "skip": false
+              },
+              {
+                "number": 9,
+                "provider": "slack",
+                "name": "invite_user_to_conversation",
+                "as": "b90bfdda",
+                "title": null,
+                "description": null,
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "channel": "newmoose"
+                },
+                "toggleCfg": {
+                  "user": false,
+                  "channel": false
+                },
+                "input": {
+                  "user": "@#{_('data.workato_variable.d2d84a2e.slack_username')}",
+                  "channel": "#{_('data.workato_variable.d2d84a2e.slack_channel_id')}"
+                },
+                "comment": "Invite a specific user to a specific slack channel .. based on the passed in Slack Username .. and the Slack ID from the above callable recipe",
+                "uuid": "0abf1f32-0761-455a-bde1-3649dd9d213d",
+                "skip": false
+              },
+              {
+                "number": 10,
+                "provider": "workato_variable",
+                "name": "update_variable",
+                "as": "23d843ee",
+                "title": null,
+                "description": "Update variable <span class=\"provider\">Employee_Added_To_Channel</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "name": "Employee_Added_To_Channel (step 3)"
+                },
+                "toggleCfg": {
+                  "value": true
+                },
+                "input": {
+                  "name": "c42215b5-488b-43a8-9f93-b44e5ef55db4:d2d84a2e:employee_added_to_channel",
+                  "value": "true"
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "boolean",
+                    "name": "value",
+                    "control_type": "checkbox",
+                    "label": "Value",
+                    "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                    "sticky": true,
+                    "optional": true,
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Value",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                      "strip_interpolation": true,
+                      "sticky": true,
+                      "optional": true,
+                      "type": "boolean",
+                      "name": "value"
+                    },
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    },
+                    "strip_interpolation": true
+                  }
+                ],
+                "uuid": "24c34814-bb07-405b-9daa-927ca2f5f47a"
+              },
+              {
+                "number": 11,
+                "as": "57a8054a",
+                "keyword": "catch",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "max_retry_count": "0",
+                  "retry_interval": "1"
+                },
+                "block": [
+                  {
+                    "number": 12,
+                    "keyword": "if",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "type": "compound",
+                      "operand": "and",
+                      "conditions": [
+                        {
+                          "operand": "contains",
+                          "lhs": "#{_('data.catch.57a8054a.message')}",
+                          "rhs": "already_in_channel",
+                          "uuid": "condition-60c5b85b-3c1f-48df-afe2-b0a6d899102c"
+                        }
+                      ]
+                    },
+                    "block": [
+                      {
+                        "number": 13,
+                        "provider": "workato_variable",
+                        "name": "update_variable",
+                        "as": "7489dae9",
+                        "title": null,
+                        "description": "Update variable <span class=\"provider\">Employee_Exists_On_Channel</span>",
+                        "keyword": "action",
+                        "dynamicPickListSelection": {
+                          "name": "Employee_Exists_On_Channel (step 3)"
+                        },
+                        "toggleCfg": {
+                          "value": true
+                        },
+                        "input": {
+                          "name": "c42215b5-488b-43a8-9f93-b44e5ef55db4:d2d84a2e:employee_exists_on_channel",
+                          "value": "true"
+                        },
+                        "extended_input_schema": [
+                          {
+                            "type": "boolean",
+                            "name": "value",
+                            "control_type": "checkbox",
+                            "label": "Value",
+                            "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                            "sticky": true,
+                            "optional": true,
+                            "toggle_hint": "Select from option list",
+                            "toggle_field": {
+                              "label": "Value",
+                              "control_type": "text",
+                              "toggle_hint": "Use custom value",
+                              "hint": "Provide a value for the variable. When the value is not supplied, the variable is not updated.<br>To clear the value, set the value to <b>nil</b> in formula mode.",
+                              "strip_interpolation": true,
+                              "sticky": true,
+                              "optional": true,
+                              "type": "boolean",
+                              "name": "value"
+                            },
+                            "render_input": {
+                            },
+                            "parse_output": {
+                            },
+                            "strip_interpolation": true
+                          }
+                        ],
+                        "uuid": "59570c24-81cf-4f44-9ce3-aee2c8466010"
+                      },
+                      {
+                        "number": 14,
+                        "keyword": "else",
+                        "dynamicPickListSelection": {
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                        },
+                        "block": [
+                          {
+                            "number": 15,
+                            "keyword": "stop",
+                            "dynamicPickListSelection": {
+                            },
+                            "toggleCfg": {
+                            },
+                            "input": {
+                              "stop_with_error": "true",
+                              "stop_reason": "#{_('data.catch.57a8054a.message')}"
+                            },
+                            "comment": "Fail the job with the related error",
+                            "uuid": "4707be17-56db-46d6-9d85-78ad882660f8"
+                          }
+                        ],
+                        "comment": "Otherwise .. if there is any other related error other than the user already being on the chnannel, then we need to fail the recipe",
+                        "uuid": "9f91bcba-8926-4bc2-a5aa-7c160c13f4ef"
+                      }
+                    ],
+                    "comment": "If the error message that gets thrown .. is based around the user already being in the channel .. then we know the employee already existed on the channel, and we don't want to fail the recipe",
+                    "uuid": "de678189-c85f-4b61-b33a-f05acc99851d"
+                  }
+                ],
+                "comment": "",
+                "uuid": "1d1133db-3738-48f5-a732-26acf0cfd478"
+              }
+            ],
+            "uuid": "e97fe00f-20fe-443b-b897-f081224c1ba9"
+          },
+          {
+            "number": 16,
+            "provider": "workato_service",
+            "name": "send_reply",
+            "as": "15c88f70",
+            "title": null,
+            "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Callable: New Hire Onboarding - Add employee to Slack Channel</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+              "reply.Employee_Added_To_Channel": false,
+              "reply.Employee_Already_Existed_On_Channel": false
+            },
+            "input": {
+              "reply_type": "success",
+              "reply": {
+                "Employee_Added_To_Channel": "#{_('data.workato_variable.d2d84a2e.employee_added_to_channel')}",
+                "Employee_Already_Existed_On_Channel": "#{_('data.workato_variable.d2d84a2e.employee_exists_on_channel')}"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "reply",
+                "label": "Reply",
+                "properties": [
+                  {
+                    "control_type": "checkbox",
+                    "label": "Employee added to channel",
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Employee added to channel",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "name": "Employee_Added_To_Channel",
+                      "type": "boolean",
+                      "optional": false
+                    },
+                    "name": "Employee_Added_To_Channel",
+                    "type": "boolean",
+                    "optional": false
+                  },
+                  {
+                    "control_type": "checkbox",
+                    "label": "Employee already existed on channel",
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Employee already existed on channel",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "name": "Employee_Already_Existed_On_Channel",
+                      "type": "boolean",
+                      "optional": false
+                    },
+                    "name": "Employee_Already_Existed_On_Channel",
+                    "type": "boolean",
+                    "optional": false
+                  }
+                ]
+              }
+            ],
+            "comment": "Return out to the top level recipe the result of the recipe",
+            "uuid": "7eeea8a5-d50e-466c-b048-e1ad03c695fa"
+          },
+          {
+            "number": 17,
+            "as": "79424952",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "0",
+              "retry_interval": "2"
+            },
+            "block": [
+              {
+                "number": 18,
+                "provider": "workato_service",
+                "name": "send_reply",
+                "as": "1cd65735",
+                "title": null,
+                "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Callable: New Hire Onboarding - Add employee to Slack Channel</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "reply_type": "error",
+                  "message": "#{_('data.catch.79424952.message')}"
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "string",
+                    "name": "message",
+                    "control_type": "text",
+                    "label": "Message",
+                    "hint": "Error message"
+                  },
+                  {
+                    "type": "string",
+                    "name": "code",
+                    "control_type": "text",
+                    "label": "Error code",
+                    "hint": "Use this field to set custom HTTP error code for service replies. E.g: 404/422 etc. This field is applicable to REST service recipes.",
+                    "optional": true
+                  },
+                  {
+                    "type": "boolean",
+                    "name": "custom_error_response",
+                    "control_type": "checkbox",
+                    "label": "Custom error response?",
+                    "hint": "By default, Workato sends 'reply_type' and 'message' fields in response. When set to 'Yes', the content of the 'Message' field is sent as response body. This field is applicable to REST service recipes.",
+                    "optional": true,
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Custom error response?",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "optional": true,
+                      "hint": "By default, Workato sends 'reply_type' and 'message' fields in response. When set to 'Yes', the content of the 'Message' field is sent as response body. This field is applicable to REST service recipes.",
+                      "type": "boolean",
+                      "name": "custom_error_response"
+                    },
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    }
+                  }
+                ],
+                "visible_config_fields": [
+                  "reply_type",
+                  "message"
+                ],
+                "uuid": "1bf2ed6a-fcc5-4099-9a84-0ef5636b5c20"
+              },
+              {
+                "number": 19,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "true",
+                  "stop_reason": "#{_('data.catch.79424952.message')}"
+                },
+                "uuid": "7dfdd6af-f620-4bb7-8ca4-ac47549e6e83"
+              }
+            ],
+            "uuid": "d61b609b-bdf8-40ba-b62c-103c2483da77"
+          }
+        ],
+        "uuid": "80f19e1a-f6f4-4d0f-b508-1a8624af152d"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Slack Channel Name"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Slack Username"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_service.89926047.request.slackChannel')}",
+      "custom_column_2": "=_('data.workato_service.89926047.request.slackUsername') || _('data.workato_service.7f5183e3.reply.report.first.username')"
+    },
+    "uuid": "bbeae3be-39e9-4f6b-b37d-f79e351ed221"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "slack",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/slack_v2.connection.json",
+        "name": "Slack - v2",
+        "folder": "connections"
+      }
+    }
+  ]
+}

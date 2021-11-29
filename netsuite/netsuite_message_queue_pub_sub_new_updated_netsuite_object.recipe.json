@@ -1,0 +1,2951 @@
+{
+  "name": "NetSuite Message Queue - Pub/Sub New/Updated NetSuite Object",
+  "description": "When there is a trigger on a specified interval, do action",
+  "version": 4,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "netsuite",
+    "name": "updated_custom_object",
+    "as": "d43bdaf4",
+    "title": "New/updated Message Queue",
+    "description": "          New or updated <span class=\"provider\">Message Queue</span>\n          in <span class=\"provider\">NetSuite</span>\n",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+      "netsuite_object": "Message Queue"
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "since": "2019-11-01T15:00:00-04:00",
+      "netsuite_object": "1357"
+    },
+    "filter": {
+      "conditions": [
+        {
+          "operand": "equals_to",
+          "lhs": "#{_('data.netsuite.d43bdaf4.custom_fields.f_10888_custrecordr7mq_status')}",
+          "rhs": "PENDING"
+        },
+        {
+          "operand": "contains",
+          "lhs": "[\"workatoSubsidiaryCoupa\",\"workatoDepartmentCoupa\",\"workatoLocationCoupa\"]",
+          "rhs": "#{_('data.netsuite.d43bdaf4.custom_fields.f_10886_custrecordr7mq_name')}"
+        }
+      ],
+      "operand": "and",
+      "type": "compound"
+    },
+    "extended_output_schema": [
+      {
+        "type": "string",
+        "name": "internal_id",
+        "control_type": "text",
+        "label": "Internal ID",
+        "optional": true,
+        "ns_content_type": "attribute",
+        "ns_tag": ""
+      },
+      {
+        "type": "string",
+        "name": "external_id",
+        "control_type": "text",
+        "label": "External ID",
+        "optional": true,
+        "ns_content_type": "attribute",
+        "ns_tag": ""
+      },
+      {
+        "type": "string",
+        "name": "customRecordId",
+        "control_type": "text",
+        "label": "Custom record ID",
+        "optional": true,
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "object",
+        "name": "customForm",
+        "label": "Custom form",
+        "optional": true,
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Internal ID",
+            "optional": true,
+            "ns_content_type": "attribute",
+            "ns_tag": "",
+            "type": "string",
+            "name": "internal_id"
+          },
+          {
+            "control_type": "text",
+            "label": "Name",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCore",
+            "type": "string",
+            "name": "name"
+          }
+        ],
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "boolean",
+        "name": "isInactive",
+        "control_type": "checkbox",
+        "label": "Is inactive",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Is inactive",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "setupCustomization",
+          "type": "boolean",
+          "name": "isInactive"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "object",
+        "name": "parent",
+        "label": "Parent",
+        "optional": true,
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Internal ID",
+            "optional": true,
+            "ns_content_type": "attribute",
+            "ns_tag": "",
+            "type": "string",
+            "name": "internal_id"
+          },
+          {
+            "control_type": "text",
+            "label": "Name",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCore",
+            "type": "string",
+            "name": "name"
+          }
+        ],
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "string",
+        "name": "disclaimer",
+        "control_type": "text",
+        "label": "Disclaimer",
+        "optional": true,
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "date_time",
+        "name": "created",
+        "control_type": "date_time",
+        "label": "Created",
+        "optional": true,
+        "render_input": "render_iso8601_timestamp",
+        "parse_output": "parse_iso8601_timestamp",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "date_time",
+        "name": "lastModified",
+        "control_type": "date_time",
+        "label": "Last modified",
+        "optional": true,
+        "render_input": "render_iso8601_timestamp",
+        "parse_output": "parse_iso8601_timestamp",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "string",
+        "name": "name",
+        "control_type": "text",
+        "label": "Name",
+        "optional": true,
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "boolean",
+        "name": "autoName",
+        "control_type": "checkbox",
+        "label": "Auto name",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Auto name",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "setupCustomization",
+          "type": "boolean",
+          "name": "autoName"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "string",
+        "name": "altName",
+        "control_type": "text",
+        "label": "Alt name",
+        "optional": true,
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "object",
+        "name": "owner",
+        "label": "Owner",
+        "optional": true,
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Internal ID",
+            "optional": true,
+            "ns_content_type": "attribute",
+            "ns_tag": "",
+            "type": "string",
+            "name": "internal_id"
+          },
+          {
+            "control_type": "text",
+            "label": "Name",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCore",
+            "type": "string",
+            "name": "name"
+          }
+        ],
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "object",
+        "name": "recType",
+        "label": "Rec type",
+        "optional": true,
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Internal ID",
+            "optional": true,
+            "ns_content_type": "attribute",
+            "ns_tag": "",
+            "type": "string",
+            "name": "internal_id"
+          },
+          {
+            "control_type": "text",
+            "label": "Name",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCore",
+            "type": "string",
+            "name": "name"
+          }
+        ],
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "boolean",
+        "name": "enableNumbering",
+        "control_type": "checkbox",
+        "label": "Enable numbering",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Enable numbering",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "setupCustomization",
+          "type": "boolean",
+          "name": "enableNumbering"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "string",
+        "name": "numberingPrefix",
+        "control_type": "text",
+        "label": "Numbering prefix",
+        "optional": true,
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "string",
+        "name": "numberingSuffix",
+        "control_type": "text",
+        "label": "Numbering suffix",
+        "optional": true,
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "number",
+        "name": "numberingMinDigits",
+        "control_type": "text",
+        "label": "Numbering min digits",
+        "optional": true,
+        "parse_output": "float_conversion",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "string",
+        "name": "description",
+        "control_type": "text",
+        "label": "Description",
+        "optional": true,
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "number",
+        "name": "numberingInit",
+        "control_type": "text",
+        "label": "Numbering init",
+        "optional": true,
+        "parse_output": "float_conversion",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "number",
+        "name": "numberingCurrentNumber",
+        "control_type": "text",
+        "label": "Numbering current number",
+        "optional": true,
+        "parse_output": "float_conversion",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "boolean",
+        "name": "allowNumberingOverride",
+        "control_type": "checkbox",
+        "label": "Allow numbering override",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Allow numbering override",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "setupCustomization",
+          "type": "boolean",
+          "name": "allowNumberingOverride"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "boolean",
+        "name": "isNumberingUpdateable",
+        "control_type": "checkbox",
+        "label": "Is numbering updateable",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Is numbering updateable",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "setupCustomization",
+          "type": "boolean",
+          "name": "isNumberingUpdateable"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "object",
+        "name": "translationsList",
+        "label": "Translations list",
+        "optional": true,
+        "properties": [
+          {
+            "name": "customRecordTranslations",
+            "type": "array",
+            "of": "object",
+            "label": "Custom record translations",
+            "optional": true,
+            "ns_ref_type": "CustomRecordTranslations",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization",
+            "properties": [
+              {
+                "control_type": "select",
+                "label": "Locale",
+                "pick_list": [
+                  [
+                    "Afrikaans",
+                    "_afrikaans"
+                  ],
+                  [
+                    "Albanian",
+                    "_albanian"
+                  ],
+                  [
+                    "Arabic",
+                    "_arabic"
+                  ],
+                  [
+                    "Armenian",
+                    "_armenian"
+                  ],
+                  [
+                    "Bengali",
+                    "_bengali"
+                  ],
+                  [
+                    "Bosnian",
+                    "_bosnian"
+                  ],
+                  [
+                    "Bulgarian",
+                    "_bulgarian"
+                  ],
+                  [
+                    "Catalan",
+                    "_catalan"
+                  ],
+                  [
+                    "Chinese Simplified",
+                    "_chineseSimplified"
+                  ],
+                  [
+                    "Chinese Traditional",
+                    "_chineseTraditional"
+                  ],
+                  [
+                    "Croatian",
+                    "_croatian"
+                  ],
+                  [
+                    "Czech",
+                    "_czech"
+                  ],
+                  [
+                    "Danish",
+                    "_danish"
+                  ],
+                  [
+                    "Dutch",
+                    "_dutch"
+                  ],
+                  [
+                    "English Au",
+                    "_englishAu"
+                  ],
+                  [
+                    "English Ca",
+                    "_englishCa"
+                  ],
+                  [
+                    "English International",
+                    "_englishInternational"
+                  ],
+                  [
+                    "English Uk",
+                    "_englishUK"
+                  ],
+                  [
+                    "English Us",
+                    "_englishUS"
+                  ],
+                  [
+                    "Estonian",
+                    "_estonian"
+                  ],
+                  [
+                    "Filipino",
+                    "_filipino"
+                  ],
+                  [
+                    "Finnish",
+                    "_finnish"
+                  ],
+                  [
+                    "French Canada",
+                    "_frenchCanada"
+                  ],
+                  [
+                    "French France",
+                    "_frenchFrance"
+                  ],
+                  [
+                    "German",
+                    "_german"
+                  ],
+                  [
+                    "Greek",
+                    "_greek"
+                  ],
+                  [
+                    "Gujarati",
+                    "_gujarati"
+                  ],
+                  [
+                    "Haitian",
+                    "_haitian"
+                  ],
+                  [
+                    "Hebrew",
+                    "_hebrew"
+                  ],
+                  [
+                    "Hindi",
+                    "_hindi"
+                  ],
+                  [
+                    "Hungarian",
+                    "_hungarian"
+                  ],
+                  [
+                    "Icelandic",
+                    "_icelandic"
+                  ],
+                  [
+                    "Indonesian",
+                    "_indonesian"
+                  ],
+                  [
+                    "Italian",
+                    "_italian"
+                  ],
+                  [
+                    "Japanese",
+                    "_japanese"
+                  ],
+                  [
+                    "Kannada",
+                    "_kannada"
+                  ],
+                  [
+                    "Korean",
+                    "_korean"
+                  ],
+                  [
+                    "Latin American Spanish",
+                    "_latinAmericanSpanish"
+                  ],
+                  [
+                    "Latvian",
+                    "_latvian"
+                  ],
+                  [
+                    "Lithuanian",
+                    "_lithuanian"
+                  ],
+                  [
+                    "Luxembourgish",
+                    "_luxembourgish"
+                  ],
+                  [
+                    "Malay",
+                    "_malay"
+                  ],
+                  [
+                    "Marathi",
+                    "_marathi"
+                  ],
+                  [
+                    "Norwegian",
+                    "_norwegian"
+                  ],
+                  [
+                    "Persian Iran",
+                    "_persianIran"
+                  ],
+                  [
+                    "Polish",
+                    "_polish"
+                  ],
+                  [
+                    "Portuguese Brazil",
+                    "_portugueseBrazil"
+                  ],
+                  [
+                    "Portuguese Portugal",
+                    "_portuguesePortugal"
+                  ],
+                  [
+                    "Punjabi",
+                    "_punjabi"
+                  ],
+                  [
+                    "Romanian",
+                    "_romanian"
+                  ],
+                  [
+                    "Russian",
+                    "_russian"
+                  ],
+                  [
+                    "Serbian Cyrillic",
+                    "_serbianCyrillic"
+                  ],
+                  [
+                    "Serbian Latin",
+                    "_serbianLatin"
+                  ],
+                  [
+                    "Slovak",
+                    "_slovak"
+                  ],
+                  [
+                    "Slovenian",
+                    "_slovenian"
+                  ],
+                  [
+                    "Spanish",
+                    "_spanish"
+                  ],
+                  [
+                    "Swedish",
+                    "_swedish"
+                  ],
+                  [
+                    "Tamil",
+                    "_tamil"
+                  ],
+                  [
+                    "Telugu",
+                    "_telugu"
+                  ],
+                  [
+                    "Thai",
+                    "_thai"
+                  ],
+                  [
+                    "Turkish",
+                    "_turkish"
+                  ],
+                  [
+                    "Ukrainian",
+                    "_ukrainian"
+                  ],
+                  [
+                    "Vietnamese",
+                    "_vietnamese"
+                  ]
+                ],
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "setupCustomization",
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Locale",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "toggle_to_primary_hint": "Select from list",
+                  "toggle_to_secondary_hint": "Enter custom value",
+                  "ns_content_type": "element",
+                  "ns_tag": "setupCustomization",
+                  "type": "string",
+                  "name": "locale"
+                },
+                "type": "string",
+                "name": "locale"
+              },
+              {
+                "control_type": "text",
+                "label": "Language",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "setupCustomization",
+                "type": "string",
+                "name": "language"
+              },
+              {
+                "control_type": "text",
+                "label": "Label",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "setupCustomization",
+                "type": "string",
+                "name": "label"
+              }
+            ],
+            "parse_output": "netsuite_item_array_wrap"
+          },
+          {
+            "control_type": "checkbox",
+            "label": "Replace all",
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Replace all",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "attribute",
+              "ns_tag": "",
+              "type": "boolean",
+              "name": "replace_all"
+            },
+            "optional": true,
+            "ns_content_type": "attribute",
+            "ns_tag": "",
+            "type": "boolean",
+            "name": "replace_all"
+          }
+        ],
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "boolean",
+        "name": "includeName",
+        "control_type": "checkbox",
+        "label": "Include name",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Include name",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "setupCustomization",
+          "type": "boolean",
+          "name": "includeName"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "boolean",
+        "name": "showId",
+        "control_type": "checkbox",
+        "label": "Show ID",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Show ID",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "setupCustomization",
+          "type": "boolean",
+          "name": "showId"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "boolean",
+        "name": "showCreationDate",
+        "control_type": "checkbox",
+        "label": "Show creation date",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Show creation date",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "setupCustomization",
+          "type": "boolean",
+          "name": "showCreationDate"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "boolean",
+        "name": "showCreationDateOnList",
+        "control_type": "checkbox",
+        "label": "Show creation date on list",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Show creation date on list",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "setupCustomization",
+          "type": "boolean",
+          "name": "showCreationDateOnList"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "boolean",
+        "name": "showLastModified",
+        "control_type": "checkbox",
+        "label": "Show last modified",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Show last modified",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "setupCustomization",
+          "type": "boolean",
+          "name": "showLastModified"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "boolean",
+        "name": "showLastModifiedOnList",
+        "control_type": "checkbox",
+        "label": "Show last modified on list",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Show last modified on list",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "setupCustomization",
+          "type": "boolean",
+          "name": "showLastModifiedOnList"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "boolean",
+        "name": "showOwner",
+        "control_type": "checkbox",
+        "label": "Show owner",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Show owner",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "setupCustomization",
+          "type": "boolean",
+          "name": "showOwner"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "boolean",
+        "name": "showOwnerOnList",
+        "control_type": "checkbox",
+        "label": "Show owner on list",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Show owner on list",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "setupCustomization",
+          "type": "boolean",
+          "name": "showOwnerOnList"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "boolean",
+        "name": "showOwnerAllowChange",
+        "control_type": "checkbox",
+        "label": "Show owner allow change",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Show owner allow change",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "setupCustomization",
+          "type": "boolean",
+          "name": "showOwnerAllowChange"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "boolean",
+        "name": "usePermissions",
+        "control_type": "checkbox",
+        "label": "Use permissions",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Use permissions",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "setupCustomization",
+          "type": "boolean",
+          "name": "usePermissions"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "boolean",
+        "name": "allowAttachments",
+        "control_type": "checkbox",
+        "label": "Allow attachments",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Allow attachments",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "setupCustomization",
+          "type": "boolean",
+          "name": "allowAttachments"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "boolean",
+        "name": "showNotes",
+        "control_type": "checkbox",
+        "label": "Show notes",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Show notes",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "setupCustomization",
+          "type": "boolean",
+          "name": "showNotes"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "boolean",
+        "name": "enablEmailMerge",
+        "control_type": "checkbox",
+        "label": "Enabl email merge",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Enabl email merge",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "setupCustomization",
+          "type": "boolean",
+          "name": "enablEmailMerge"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "boolean",
+        "name": "isOrdered",
+        "control_type": "checkbox",
+        "label": "Is ordered",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Is ordered",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "setupCustomization",
+          "type": "boolean",
+          "name": "isOrdered"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "boolean",
+        "name": "allowInlineEditing",
+        "control_type": "checkbox",
+        "label": "Allow inline editing",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Allow inline editing",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "setupCustomization",
+          "type": "boolean",
+          "name": "allowInlineEditing"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "boolean",
+        "name": "isAvailableOffline",
+        "control_type": "checkbox",
+        "label": "Is available offline",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Is available offline",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "setupCustomization",
+          "type": "boolean",
+          "name": "isAvailableOffline"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "boolean",
+        "name": "allowQuickSearch",
+        "control_type": "checkbox",
+        "label": "Allow quick search",
+        "optional": true,
+        "toggle_hint": "Select from option list",
+        "toggle_field": {
+          "label": "Allow quick search",
+          "control_type": "text",
+          "toggle_hint": "Use custom value",
+          "optional": true,
+          "ns_content_type": "element",
+          "ns_tag": "setupCustomization",
+          "type": "boolean",
+          "name": "allowQuickSearch"
+        },
+        "render_input": "render_boolean",
+        "parse_output": "parse_boolean",
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "string",
+        "name": "recordName",
+        "control_type": "text",
+        "label": "Record name",
+        "optional": true,
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "string",
+        "name": "scriptId",
+        "control_type": "text",
+        "label": "Script ID",
+        "optional": true,
+        "ns_content_type": "element",
+        "ns_tag": "setupCustomization"
+      },
+      {
+        "type": "object",
+        "name": "custom_fields",
+        "label": "Custom fields",
+        "optional": true,
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Queue Name",
+            "ns_custom_type": "StringCustomFieldRef",
+            "ns_search_type": "SearchStringCustomField",
+            "optional": true,
+            "custom": true,
+            "sticky": false,
+            "type": "string",
+            "name": "f_10886_custrecordr7mq_name"
+          },
+          {
+            "control_type": "text",
+            "label": "Message Content",
+            "ns_custom_type": "StringCustomFieldRef",
+            "ns_search_type": "SearchStringCustomField",
+            "optional": true,
+            "custom": true,
+            "sticky": false,
+            "type": "string",
+            "name": "f_10887_custrecordr7mq_messagecontent"
+          },
+          {
+            "control_type": "text",
+            "label": "Status",
+            "ns_custom_type": "SelectCustomFieldRef",
+            "ns_search_type": "SearchSelectCustomField",
+            "optional": true,
+            "custom": true,
+            "sticky": false,
+            "toggle_hint": "Enter custom value",
+            "toggle_field": {
+              "control_type": "select",
+              "label": "Status",
+              "toggle_hint": "Select from list",
+              "optional": true,
+              "custom": true,
+              "sticky": false,
+              "type": "string",
+              "name": "f_10888_custrecordr7mq_status",
+              "pick_list": [
+                [
+                  "PENDING",
+                  "1"
+                ],
+                [
+                  "COMPLETE",
+                  "2"
+                ],
+                [
+                  "EXCEPTION",
+                  "3"
+                ]
+              ]
+            },
+            "type": "string",
+            "name": "f_10888_custrecordr7mq_status"
+          },
+          {
+            "control_type": "text",
+            "label": "Status ID",
+            "ns_custom_type": "SelectCustomFieldRef",
+            "ns_search_type": "SearchSelectCustomField",
+            "custom": true,
+            "type": "string",
+            "name": "f_10888_custrecordr7mq_status_id"
+          },
+          {
+            "control_type": "text",
+            "label": "Notes",
+            "ns_custom_type": "StringCustomFieldRef",
+            "ns_search_type": "SearchStringCustomField",
+            "optional": true,
+            "custom": true,
+            "sticky": false,
+            "type": "string",
+            "name": "f_10889_custrecordr7mq_notes"
+          }
+        ]
+      }
+    ],
+    "visible_config_fields": [
+      "since",
+      "netsuite_object"
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "workato_variable",
+        "name": "declare_variable",
+        "as": "88ed7f87",
+        "title": "Create variable object_type",
+        "description": "Create variable <span class=\"provider\">object_type</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "string",
+          "name": "object_type"
+        },
+        "extended_output_schema": [
+          {
+            "type": "string",
+            "name": "value",
+            "control_type": "text",
+            "label": "object_type"
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "string",
+            "name": "value",
+            "control_type": "text",
+            "label": "Default value",
+            "hint": "Default value for the variable",
+            "sticky": true,
+            "optional": true,
+            "strip_interpolation": true
+          }
+        ],
+        "comment": "setup a variable to hold the object type (un-initialized)",
+        "uuid": "c2c62503-ea93-4a88-bbe0-122cb1ad8780"
+      },
+      {
+        "number": 2,
+        "provider": "workato_variable",
+        "name": "declare_variable",
+        "as": "83613a3f",
+        "title": "Create variable internal_id",
+        "description": "Create variable <span class=\"provider\">internal_id</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "string",
+          "name": "internal_id"
+        },
+        "extended_output_schema": [
+          {
+            "type": "string",
+            "name": "value",
+            "control_type": "text",
+            "label": "internal_id"
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "string",
+            "name": "value",
+            "control_type": "text",
+            "label": "Default value",
+            "hint": "Default value for the variable",
+            "sticky": true,
+            "optional": true,
+            "strip_interpolation": true
+          }
+        ],
+        "comment": "setup a variable to hold the internal id (un-initialized)",
+        "uuid": "e80de938-11fe-401e-942f-b4ab55be8833"
+      },
+      {
+        "number": 3,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "equals_to",
+              "lhs": "#{_('data.netsuite.d43bdaf4.custom_fields.f_10886_custrecordr7mq_name')}",
+              "rhs": "workatoSubsidiaryCoupa"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 4,
+            "provider": "json_parser",
+            "name": "parse_json",
+            "as": "be0c2a3d",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "sample_document": "{\"subsidiaryInternalId\":1}",
+              "document": "#{_('data.netsuite.d43bdaf4.custom_fields.f_10887_custrecordr7mq_messagecontent')}"
+            },
+            "extended_output_schema": [
+              {
+                "type": "object",
+                "name": "document",
+                "label": "Document",
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "Subsidiary internal ID",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "subsidiaryInternalId"
+                  }
+                ]
+              }
+            ],
+            "uuid": "d4844fac-f975-4ef6-9a83-85b74c67ce6f"
+          },
+          {
+            "number": 5,
+            "provider": "workato_variable",
+            "name": "update_variable",
+            "as": "6cd76c44",
+            "title": "Update variable object_type",
+            "description": "Update variable <span class=\"provider\">object_type</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "name": "object_type (step 1)"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "name": "c2c62503-ea93-4a88-bbe0-122cb1ad8780:88ed7f87",
+              "value": "Subsidiary"
+            },
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "value",
+                "control_type": "text",
+                "label": "Value",
+                "hint": "Provide value for the variable",
+                "strip_interpolation": true
+              }
+            ],
+            "uuid": "b7a19d4c-524c-4955-8afc-fd1e7401da12"
+          },
+          {
+            "number": 6,
+            "provider": "workato_variable",
+            "name": "update_variable",
+            "as": "e23abd6b",
+            "title": "Update variable internal_id",
+            "description": "Update variable <span class=\"provider\">internal_id</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "name": "internal_id (step 2)"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "name": "e80de938-11fe-401e-942f-b4ab55be8833:83613a3f",
+              "value": "#{_('data.json_parser.be0c2a3d.document.subsidiaryInternalId')}"
+            },
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "value",
+                "control_type": "text",
+                "label": "Value",
+                "hint": "Provide value for the variable",
+                "strip_interpolation": true
+              }
+            ],
+            "uuid": "9d39d40e-70ba-4729-b393-b03c122f899f"
+          }
+        ],
+        "uuid": "787ce6c0-3af7-48a1-9279-47a7bfb56011"
+      },
+      {
+        "number": 7,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "equals_to",
+              "lhs": "#{_('data.netsuite.d43bdaf4.custom_fields.f_10886_custrecordr7mq_name')}",
+              "rhs": "workatoDepartmentCoupa"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 8,
+            "provider": "json_parser",
+            "name": "parse_json",
+            "as": "52127869",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "sample_document": "{\"departmentInternalId\":1}",
+              "document": "#{_('data.netsuite.d43bdaf4.custom_fields.f_10887_custrecordr7mq_messagecontent')}"
+            },
+            "extended_output_schema": [
+              {
+                "type": "object",
+                "name": "document",
+                "label": "Document",
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "Department internal ID",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "departmentInternalId"
+                  }
+                ]
+              }
+            ],
+            "uuid": "0bd2b28d-cef7-41c9-83cc-0b7d2b43c4bb"
+          },
+          {
+            "number": 9,
+            "provider": "workato_variable",
+            "name": "update_variable",
+            "as": "e3091a71",
+            "title": "Update variable object_type",
+            "description": "Update variable <span class=\"provider\">object_type</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "name": "object_type (step 1)"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "name": "c2c62503-ea93-4a88-bbe0-122cb1ad8780:88ed7f87",
+              "value": "Department"
+            },
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "value",
+                "control_type": "text",
+                "label": "Value",
+                "hint": "Provide value for the variable",
+                "strip_interpolation": true
+              }
+            ],
+            "uuid": "5fe05f38-d806-4512-b577-46f6fc9e94c5"
+          },
+          {
+            "number": 10,
+            "provider": "workato_variable",
+            "name": "update_variable",
+            "as": "b594f0b8",
+            "title": "Update variable internal_id",
+            "description": "Update variable <span class=\"provider\">internal_id</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "name": "internal_id (step 2)"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "name": "e80de938-11fe-401e-942f-b4ab55be8833:83613a3f",
+              "value": "#{_('data.json_parser.52127869.document.departmentInternalId')}"
+            },
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "value",
+                "control_type": "text",
+                "label": "Value",
+                "hint": "Provide value for the variable",
+                "strip_interpolation": true
+              }
+            ],
+            "uuid": "330882d5-9c98-426f-9203-e0d9bc648889"
+          }
+        ],
+        "uuid": "282272a6-2d7a-43bc-9360-f0d823caa6a1"
+      },
+      {
+        "number": 11,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "equals_to",
+              "lhs": "#{_('data.netsuite.d43bdaf4.custom_fields.f_10886_custrecordr7mq_name')}",
+              "rhs": "workatoLocationCoupa"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 12,
+            "provider": "json_parser",
+            "name": "parse_json",
+            "as": "93a19ef5",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "sample_document": "{\"locationInternalId\":1}",
+              "document": "#{_('data.netsuite.d43bdaf4.custom_fields.f_10887_custrecordr7mq_messagecontent')}"
+            },
+            "extended_output_schema": [
+              {
+                "type": "object",
+                "name": "document",
+                "label": "Document",
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "Location internal ID",
+                    "parse_output": "float_conversion",
+                    "type": "number",
+                    "name": "locationInternalId"
+                  }
+                ]
+              }
+            ],
+            "uuid": "e58f9aec-6869-4a01-b37e-35abc01c5fd2"
+          },
+          {
+            "number": 13,
+            "provider": "workato_variable",
+            "name": "update_variable",
+            "as": "42800c46",
+            "title": "Update variable object_type",
+            "description": "Update variable <span class=\"provider\">object_type</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "name": "object_type (step 1)"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "name": "c2c62503-ea93-4a88-bbe0-122cb1ad8780:88ed7f87",
+              "value": "Location"
+            },
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "value",
+                "control_type": "text",
+                "label": "Value",
+                "hint": "Provide value for the variable",
+                "strip_interpolation": true
+              }
+            ],
+            "uuid": "044d2fec-01f7-4ef4-b7ee-acca30ed3919"
+          },
+          {
+            "number": 14,
+            "provider": "workato_variable",
+            "name": "update_variable",
+            "as": "4cc8a814",
+            "title": "Update variable internal_id",
+            "description": "Update variable <span class=\"provider\">internal_id</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "name": "internal_id (step 2)"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "name": "e80de938-11fe-401e-942f-b4ab55be8833:83613a3f",
+              "value": "#{_('data.json_parser.93a19ef5.document.locationInternalId')}"
+            },
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "value",
+                "control_type": "text",
+                "label": "Value",
+                "hint": "Provide value for the variable",
+                "strip_interpolation": true
+              }
+            ],
+            "uuid": "e59b62da-8c16-4230-9c03-efd51c1f2b33"
+          }
+        ],
+        "uuid": "a117f36d-e32f-4f60-ab38-49e5bd5ebd56"
+      },
+      {
+        "number": 15,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "present",
+              "lhs": "#{_('data.workato_variable.88ed7f87.value')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 16,
+            "provider": "workato_pub_sub",
+            "name": "publish_to_topic",
+            "as": "e9c5607b",
+            "title": null,
+            "description": "Publish <span class=\"provider\">message</span> to <span class=\"provider\">New/Updated NetSuite Object</span> PubSub topic",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "topic_id": "New/Updated NetSuite Object"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "topic_id": {
+                "zip_name": "new_updated_netsuite_object.topic.json",
+                "name": "New/Updated NetSuite Object",
+                "folder": ""
+              },
+              "message": {
+                "object_type": "#{_('data.workato_variable.88ed7f87.value')}",
+                "internal_id": "#{_('data.workato_variable.83613a3f.value')}"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "message",
+                "label": "Message",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Object type",
+                    "name": "object_type",
+                    "type": "string",
+                    "optional": false,
+                    "hint": "Subsidiary, Location, Department",
+                    "parent": "message"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Internal ID",
+                    "name": "internal_id",
+                    "type": "string",
+                    "optional": false,
+                    "hint": "Internal ID of the object that was created/updated",
+                    "parent": "message"
+                  }
+                ]
+              }
+            ],
+            "uuid": "07be9cec-08f0-44d6-80e8-2cc1a7e08acf"
+          }
+        ],
+        "uuid": "7fc70747-62b9-4366-8ad1-88866da5cfa3"
+      },
+      {
+        "number": 17,
+        "provider": "netsuite",
+        "name": "update_custom_object",
+        "as": "537c352b",
+        "title": "Update Message Queue",
+        "description": "Update <span class=\"provider\">Message Queue</span> in <span class=\"provider\">NetSuite</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "netsuite_object": "Message Queue"
+        },
+        "toggleCfg": {
+          "custom_fields.f_10888_custrecordr7mq_status": false
+        },
+        "input": {
+          "netsuite_object": "1357",
+          "custom_fields": {
+            "f_10886_custrecordr7mq_name": "#{_('data.netsuite.d43bdaf4.custom_fields.f_10886_custrecordr7mq_name')}",
+            "f_10887_custrecordr7mq_messagecontent": "#{_('data.netsuite.d43bdaf4.custom_fields.f_10887_custrecordr7mq_messagecontent')}",
+            "f_10888_custrecordr7mq_status": "2"
+          },
+          "internal_id": "#{_('data.netsuite.d43bdaf4.internal_id')}"
+        },
+        "extended_input_schema": [
+          {
+            "type": "string",
+            "name": "internal_id",
+            "control_type": "text",
+            "label": "Internal ID",
+            "sticky": true,
+            "optional": true,
+            "ns_content_type": "attribute",
+            "ns_tag": ""
+          },
+          {
+            "type": "string",
+            "name": "external_id",
+            "control_type": "text",
+            "label": "External ID",
+            "sticky": true,
+            "optional": true,
+            "ns_content_type": "attribute",
+            "ns_tag": ""
+          },
+          {
+            "type": "string",
+            "name": "customRecordId",
+            "control_type": "text",
+            "label": "Custom record ID",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "string",
+            "name": "customForm",
+            "control_type": "text",
+            "label": "Custom Form ID",
+            "optional": true,
+            "toggle_hint": "Enter internal ID",
+            "toggle_field": {
+              "control_type": "text",
+              "label": "Custom Form External ID",
+              "toggle_hint": "Enter external ID",
+              "optional": true,
+              "toggle_to_primary_hint": "Enter internal ID",
+              "toggle_to_secondary_hint": "Enter external ID",
+              "ns_ref": "RecordRef_input_ext_id",
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "string",
+              "name": "customForm_ext_id"
+            },
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization",
+            "ns_ref": "RecordRef_input"
+          },
+          {
+            "type": "boolean",
+            "name": "isInactive",
+            "control_type": "checkbox",
+            "label": "Is inactive",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Is inactive",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "boolean",
+              "name": "isInactive"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "string",
+            "name": "parent",
+            "control_type": "text",
+            "label": "Parent ID",
+            "optional": true,
+            "toggle_hint": "Enter internal ID",
+            "toggle_field": {
+              "control_type": "text",
+              "label": "Parent External ID",
+              "toggle_hint": "Enter external ID",
+              "optional": true,
+              "toggle_to_primary_hint": "Enter internal ID",
+              "toggle_to_secondary_hint": "Enter external ID",
+              "ns_ref": "RecordRef_input_ext_id",
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "string",
+              "name": "parent_ext_id"
+            },
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization",
+            "ns_ref": "RecordRef_input"
+          },
+          {
+            "type": "string",
+            "name": "disclaimer",
+            "control_type": "text",
+            "label": "Disclaimer",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "date_time",
+            "name": "lastModified",
+            "control_type": "date_time",
+            "label": "Last modified",
+            "optional": true,
+            "render_input": "render_iso8601_timestamp",
+            "parse_output": "parse_iso8601_timestamp",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "string",
+            "name": "name",
+            "control_type": "text",
+            "label": "Name",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "boolean",
+            "name": "autoName",
+            "control_type": "checkbox",
+            "label": "Auto name",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Auto name",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "boolean",
+              "name": "autoName"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "string",
+            "name": "altName",
+            "control_type": "text",
+            "label": "Alt name",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "string",
+            "name": "owner",
+            "control_type": "text",
+            "label": "Owner ID",
+            "optional": true,
+            "toggle_hint": "Enter internal ID",
+            "toggle_field": {
+              "control_type": "text",
+              "label": "Owner External ID",
+              "toggle_hint": "Enter external ID",
+              "optional": true,
+              "toggle_to_primary_hint": "Enter internal ID",
+              "toggle_to_secondary_hint": "Enter external ID",
+              "ns_ref": "RecordRef_input_ext_id",
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "string",
+              "name": "owner_ext_id"
+            },
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization",
+            "ns_ref": "RecordRef_input"
+          },
+          {
+            "type": "string",
+            "name": "recType",
+            "control_type": "text",
+            "label": "Rec Type ID",
+            "optional": true,
+            "toggle_hint": "Enter internal ID",
+            "toggle_field": {
+              "control_type": "text",
+              "label": "Rec Type External ID",
+              "toggle_hint": "Enter external ID",
+              "optional": true,
+              "toggle_to_primary_hint": "Enter internal ID",
+              "toggle_to_secondary_hint": "Enter external ID",
+              "ns_ref": "RecordRef_input_ext_id",
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "string",
+              "name": "recType_ext_id"
+            },
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization",
+            "ns_ref": "RecordRef_input"
+          },
+          {
+            "type": "boolean",
+            "name": "enableNumbering",
+            "control_type": "checkbox",
+            "label": "Enable numbering",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Enable numbering",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "boolean",
+              "name": "enableNumbering"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "string",
+            "name": "numberingPrefix",
+            "control_type": "text",
+            "label": "Numbering prefix",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "string",
+            "name": "numberingSuffix",
+            "control_type": "text",
+            "label": "Numbering suffix",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "number",
+            "name": "numberingMinDigits",
+            "control_type": "text",
+            "label": "Numbering min digits",
+            "optional": true,
+            "parse_output": "float_conversion",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "string",
+            "name": "description",
+            "control_type": "text",
+            "label": "Description",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "number",
+            "name": "numberingInit",
+            "control_type": "text",
+            "label": "Numbering init",
+            "optional": true,
+            "parse_output": "float_conversion",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "number",
+            "name": "numberingCurrentNumber",
+            "control_type": "text",
+            "label": "Numbering current number",
+            "optional": true,
+            "parse_output": "float_conversion",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "boolean",
+            "name": "allowNumberingOverride",
+            "control_type": "checkbox",
+            "label": "Allow numbering override",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Allow numbering override",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "boolean",
+              "name": "allowNumberingOverride"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "boolean",
+            "name": "isNumberingUpdateable",
+            "control_type": "checkbox",
+            "label": "Is numbering updateable",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Is numbering updateable",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "boolean",
+              "name": "isNumberingUpdateable"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "object",
+            "name": "translationsList",
+            "label": "Translations list",
+            "optional": true,
+            "properties": [
+              {
+                "name": "customRecordTranslations",
+                "type": "array",
+                "of": "object",
+                "label": "Custom record translations",
+                "optional": true,
+                "ns_ref_type": "CustomRecordTranslations",
+                "ns_content_type": "element",
+                "ns_tag": "setupCustomization",
+                "properties": [
+                  {
+                    "control_type": "select",
+                    "label": "Locale",
+                    "pick_list": [
+                      [
+                        "Afrikaans",
+                        "_afrikaans"
+                      ],
+                      [
+                        "Albanian",
+                        "_albanian"
+                      ],
+                      [
+                        "Arabic",
+                        "_arabic"
+                      ],
+                      [
+                        "Armenian",
+                        "_armenian"
+                      ],
+                      [
+                        "Bengali",
+                        "_bengali"
+                      ],
+                      [
+                        "Bosnian",
+                        "_bosnian"
+                      ],
+                      [
+                        "Bulgarian",
+                        "_bulgarian"
+                      ],
+                      [
+                        "Catalan",
+                        "_catalan"
+                      ],
+                      [
+                        "Chinese Simplified",
+                        "_chineseSimplified"
+                      ],
+                      [
+                        "Chinese Traditional",
+                        "_chineseTraditional"
+                      ],
+                      [
+                        "Croatian",
+                        "_croatian"
+                      ],
+                      [
+                        "Czech",
+                        "_czech"
+                      ],
+                      [
+                        "Danish",
+                        "_danish"
+                      ],
+                      [
+                        "Dutch",
+                        "_dutch"
+                      ],
+                      [
+                        "English Au",
+                        "_englishAu"
+                      ],
+                      [
+                        "English Ca",
+                        "_englishCa"
+                      ],
+                      [
+                        "English International",
+                        "_englishInternational"
+                      ],
+                      [
+                        "English Uk",
+                        "_englishUK"
+                      ],
+                      [
+                        "English Us",
+                        "_englishUS"
+                      ],
+                      [
+                        "Estonian",
+                        "_estonian"
+                      ],
+                      [
+                        "Filipino",
+                        "_filipino"
+                      ],
+                      [
+                        "Finnish",
+                        "_finnish"
+                      ],
+                      [
+                        "French Canada",
+                        "_frenchCanada"
+                      ],
+                      [
+                        "French France",
+                        "_frenchFrance"
+                      ],
+                      [
+                        "German",
+                        "_german"
+                      ],
+                      [
+                        "Greek",
+                        "_greek"
+                      ],
+                      [
+                        "Gujarati",
+                        "_gujarati"
+                      ],
+                      [
+                        "Haitian",
+                        "_haitian"
+                      ],
+                      [
+                        "Hebrew",
+                        "_hebrew"
+                      ],
+                      [
+                        "Hindi",
+                        "_hindi"
+                      ],
+                      [
+                        "Hungarian",
+                        "_hungarian"
+                      ],
+                      [
+                        "Icelandic",
+                        "_icelandic"
+                      ],
+                      [
+                        "Indonesian",
+                        "_indonesian"
+                      ],
+                      [
+                        "Italian",
+                        "_italian"
+                      ],
+                      [
+                        "Japanese",
+                        "_japanese"
+                      ],
+                      [
+                        "Kannada",
+                        "_kannada"
+                      ],
+                      [
+                        "Korean",
+                        "_korean"
+                      ],
+                      [
+                        "Latin American Spanish",
+                        "_latinAmericanSpanish"
+                      ],
+                      [
+                        "Latvian",
+                        "_latvian"
+                      ],
+                      [
+                        "Lithuanian",
+                        "_lithuanian"
+                      ],
+                      [
+                        "Luxembourgish",
+                        "_luxembourgish"
+                      ],
+                      [
+                        "Malay",
+                        "_malay"
+                      ],
+                      [
+                        "Marathi",
+                        "_marathi"
+                      ],
+                      [
+                        "Norwegian",
+                        "_norwegian"
+                      ],
+                      [
+                        "Persian Iran",
+                        "_persianIran"
+                      ],
+                      [
+                        "Polish",
+                        "_polish"
+                      ],
+                      [
+                        "Portuguese Brazil",
+                        "_portugueseBrazil"
+                      ],
+                      [
+                        "Portuguese Portugal",
+                        "_portuguesePortugal"
+                      ],
+                      [
+                        "Punjabi",
+                        "_punjabi"
+                      ],
+                      [
+                        "Romanian",
+                        "_romanian"
+                      ],
+                      [
+                        "Russian",
+                        "_russian"
+                      ],
+                      [
+                        "Serbian Cyrillic",
+                        "_serbianCyrillic"
+                      ],
+                      [
+                        "Serbian Latin",
+                        "_serbianLatin"
+                      ],
+                      [
+                        "Slovak",
+                        "_slovak"
+                      ],
+                      [
+                        "Slovenian",
+                        "_slovenian"
+                      ],
+                      [
+                        "Spanish",
+                        "_spanish"
+                      ],
+                      [
+                        "Swedish",
+                        "_swedish"
+                      ],
+                      [
+                        "Tamil",
+                        "_tamil"
+                      ],
+                      [
+                        "Telugu",
+                        "_telugu"
+                      ],
+                      [
+                        "Thai",
+                        "_thai"
+                      ],
+                      [
+                        "Turkish",
+                        "_turkish"
+                      ],
+                      [
+                        "Ukrainian",
+                        "_ukrainian"
+                      ],
+                      [
+                        "Vietnamese",
+                        "_vietnamese"
+                      ]
+                    ],
+                    "optional": true,
+                    "ns_content_type": "element",
+                    "ns_tag": "setupCustomization",
+                    "toggle_hint": "Select from list",
+                    "toggle_field": {
+                      "control_type": "text",
+                      "label": "Locale",
+                      "toggle_hint": "Enter custom value",
+                      "optional": true,
+                      "toggle_to_primary_hint": "Select from list",
+                      "toggle_to_secondary_hint": "Enter custom value",
+                      "ns_content_type": "element",
+                      "ns_tag": "setupCustomization",
+                      "type": "string",
+                      "name": "locale",
+                      "parent": "translationsList.customRecordTranslations"
+                    },
+                    "type": "string",
+                    "name": "locale",
+                    "parent": "translationsList.customRecordTranslations"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Language",
+                    "optional": true,
+                    "ns_content_type": "element",
+                    "ns_tag": "setupCustomization",
+                    "type": "string",
+                    "name": "language",
+                    "parent": "translationsList.customRecordTranslations"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Label",
+                    "optional": true,
+                    "ns_content_type": "element",
+                    "ns_tag": "setupCustomization",
+                    "type": "string",
+                    "name": "label",
+                    "parent": "translationsList.customRecordTranslations"
+                  }
+                ],
+                "parse_output": "netsuite_item_array_wrap",
+                "parent": "translationsList"
+              },
+              {
+                "control_type": "checkbox",
+                "label": "Replace all",
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Replace all",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "attribute",
+                  "ns_tag": "",
+                  "type": "boolean",
+                  "name": "replace_all",
+                  "parent": "translationsList"
+                },
+                "optional": true,
+                "ns_content_type": "attribute",
+                "ns_tag": "",
+                "type": "boolean",
+                "name": "replace_all",
+                "parent": "translationsList"
+              }
+            ],
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "boolean",
+            "name": "includeName",
+            "control_type": "checkbox",
+            "label": "Include name",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Include name",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "boolean",
+              "name": "includeName"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "boolean",
+            "name": "showId",
+            "control_type": "checkbox",
+            "label": "Show ID",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Show ID",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "boolean",
+              "name": "showId"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "boolean",
+            "name": "showCreationDate",
+            "control_type": "checkbox",
+            "label": "Show creation date",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Show creation date",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "boolean",
+              "name": "showCreationDate"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "boolean",
+            "name": "showCreationDateOnList",
+            "control_type": "checkbox",
+            "label": "Show creation date on list",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Show creation date on list",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "boolean",
+              "name": "showCreationDateOnList"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "boolean",
+            "name": "showLastModified",
+            "control_type": "checkbox",
+            "label": "Show last modified",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Show last modified",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "boolean",
+              "name": "showLastModified"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "boolean",
+            "name": "showLastModifiedOnList",
+            "control_type": "checkbox",
+            "label": "Show last modified on list",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Show last modified on list",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "boolean",
+              "name": "showLastModifiedOnList"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "boolean",
+            "name": "showOwner",
+            "control_type": "checkbox",
+            "label": "Show owner",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Show owner",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "boolean",
+              "name": "showOwner"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "boolean",
+            "name": "showOwnerOnList",
+            "control_type": "checkbox",
+            "label": "Show owner on list",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Show owner on list",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "boolean",
+              "name": "showOwnerOnList"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "boolean",
+            "name": "showOwnerAllowChange",
+            "control_type": "checkbox",
+            "label": "Show owner allow change",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Show owner allow change",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "boolean",
+              "name": "showOwnerAllowChange"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "boolean",
+            "name": "usePermissions",
+            "control_type": "checkbox",
+            "label": "Use permissions",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Use permissions",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "boolean",
+              "name": "usePermissions"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "boolean",
+            "name": "allowAttachments",
+            "control_type": "checkbox",
+            "label": "Allow attachments",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Allow attachments",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "boolean",
+              "name": "allowAttachments"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "boolean",
+            "name": "showNotes",
+            "control_type": "checkbox",
+            "label": "Show notes",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Show notes",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "boolean",
+              "name": "showNotes"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "boolean",
+            "name": "enablEmailMerge",
+            "control_type": "checkbox",
+            "label": "Enabl email merge",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Enabl email merge",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "boolean",
+              "name": "enablEmailMerge"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "boolean",
+            "name": "isOrdered",
+            "control_type": "checkbox",
+            "label": "Is ordered",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Is ordered",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "boolean",
+              "name": "isOrdered"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "boolean",
+            "name": "allowInlineEditing",
+            "control_type": "checkbox",
+            "label": "Allow inline editing",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Allow inline editing",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "boolean",
+              "name": "allowInlineEditing"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "boolean",
+            "name": "isAvailableOffline",
+            "control_type": "checkbox",
+            "label": "Is available offline",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Is available offline",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "boolean",
+              "name": "isAvailableOffline"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "boolean",
+            "name": "allowQuickSearch",
+            "control_type": "checkbox",
+            "label": "Allow quick search",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Allow quick search",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "setupCustomization",
+              "type": "boolean",
+              "name": "allowQuickSearch"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "string",
+            "name": "recordName",
+            "control_type": "text",
+            "label": "Record name",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "string",
+            "name": "scriptId",
+            "control_type": "text",
+            "label": "Script ID",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "setupCustomization"
+          },
+          {
+            "type": "object",
+            "name": "custom_fields",
+            "label": "Custom fields",
+            "optional": true,
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Queue Name",
+                "ns_custom_type": "StringCustomFieldRef",
+                "ns_search_type": "SearchStringCustomField",
+                "optional": true,
+                "custom": true,
+                "sticky": false,
+                "type": "string",
+                "name": "f_10886_custrecordr7mq_name",
+                "parent": "custom_fields"
+              },
+              {
+                "control_type": "text",
+                "label": "Message Content",
+                "ns_custom_type": "StringCustomFieldRef",
+                "ns_search_type": "SearchStringCustomField",
+                "optional": true,
+                "custom": true,
+                "sticky": false,
+                "type": "string",
+                "name": "f_10887_custrecordr7mq_messagecontent",
+                "parent": "custom_fields"
+              },
+              {
+                "control_type": "text",
+                "label": "Status ID",
+                "ns_custom_type": "SelectCustomFieldRef",
+                "ns_search_type": "SearchSelectCustomField",
+                "optional": true,
+                "custom": true,
+                "sticky": false,
+                "toggle_hint": "Enter custom value",
+                "toggle_field": {
+                  "control_type": "select",
+                  "label": "Status ID",
+                  "toggle_hint": "Select from list",
+                  "optional": true,
+                  "custom": true,
+                  "sticky": false,
+                  "type": "string",
+                  "name": "f_10888_custrecordr7mq_status",
+                  "pick_list": [
+                    [
+                      "PENDING",
+                      "1"
+                    ],
+                    [
+                      "COMPLETE",
+                      "2"
+                    ],
+                    [
+                      "EXCEPTION",
+                      "3"
+                    ]
+                  ],
+                  "parent": "custom_fields"
+                },
+                "type": "string",
+                "name": "f_10888_custrecordr7mq_status",
+                "parent": "custom_fields"
+              },
+              {
+                "control_type": "text",
+                "label": "Notes",
+                "ns_custom_type": "StringCustomFieldRef",
+                "ns_search_type": "SearchStringCustomField",
+                "optional": true,
+                "custom": true,
+                "sticky": false,
+                "type": "string",
+                "name": "f_10889_custrecordr7mq_notes",
+                "parent": "custom_fields"
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "netsuite_object",
+          "internal_id",
+          "custom_fields",
+          "custom_fields.f_10886_custrecordr7mq_name",
+          "custom_fields.f_10887_custrecordr7mq_messagecontent",
+          "custom_fields.f_10888_custrecordr7mq_status"
+        ],
+        "hidden_config_fields": [
+          "external_id"
+        ],
+        "comment": "Update Message Queue status to COMPLETED",
+        "uuid": "60fba433-f9f7-4e54-b997-34c560883b47"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Message Queue ID/Name"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Object Type"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "Internal ID"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.netsuite.d43bdaf4.internal_id')}/#{_('data.netsuite.d43bdaf4.custom_fields.f_10886_custrecordr7mq_name')}",
+      "custom_column_2": "#{_('data.workato_variable.88ed7f87.value')}",
+      "custom_column_3": "#{_('data.workato_variable.83613a3f.value')}"
+    },
+    "uuid": "0bc774dc-7e1d-4a89-a019-d009254911cf"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "netsuite",
+      "account_id": {
+        "zip_name": "resources/netsuite.connection.json",
+        "name": "NetSuite",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "json_parser",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_pub_sub",
+      "account_id": null
+    }
+  ]
+}

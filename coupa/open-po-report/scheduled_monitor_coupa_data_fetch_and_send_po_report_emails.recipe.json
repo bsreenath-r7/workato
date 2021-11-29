@@ -1,0 +1,1323 @@
+{
+  "name": "Scheduled - Monitor Coupa Data Fetch and Send PO Report Emails",
+  "description": "When there is a trigger event, do action",
+  "version": 3,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "clock",
+    "name": "timer",
+    "as": "add49a0d",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "interval": "5"
+    },
+    "block": [
+      {
+        "number": 1,
+        "provider": "workato_variable",
+        "name": "declare_variable",
+        "as": "2c5d908e",
+        "title": "Create variable status",
+        "description": "Create variable <span class=\"provider\">status</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "string",
+          "name": "status",
+          "value": "Recipe started"
+        },
+        "extended_output_schema": [
+          {
+            "type": "string",
+            "name": "value",
+            "control_type": "text",
+            "label": "status"
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "string",
+            "name": "value",
+            "control_type": "text",
+            "label": "Default value",
+            "hint": "Default value for the variable",
+            "sticky": true,
+            "optional": true,
+            "strip_interpolation": true
+          }
+        ],
+        "uuid": "f7a4065e-5875-447b-be93-2f25dff380a9"
+      },
+      {
+        "number": 2,
+        "provider": "lookup_table",
+        "name": "search_entries",
+        "as": "d1a5f805",
+        "title": null,
+        "description": "\n      Search\n      <span class=\"provider\">entries</span>\n      in\n      <span class=\"provider\">COUPA_VARIABLES</span>\n      lookup table\n    ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "lookup_table_id": "COUPA_VARIABLES"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "lookup_table_id": {
+            "zip_name": "coupa_variables.lookup_table.json",
+            "name": "COUPA_VARIABLES",
+            "folder": ""
+          },
+          "parameters": {
+            "col1": "open_po_report.status"
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "array",
+            "name": "entries",
+            "label": "Entries",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "number",
+                "label": "Entry ID",
+                "parse_output": "integer_conversion",
+                "type": "integer",
+                "name": "id"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "key",
+                    "name": "col1",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "value",
+                    "name": "col2",
+                    "type": "string",
+                    "sticky": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "type",
+                    "name": "col3",
+                    "type": "string",
+                    "sticky": true
+                  }
+                ],
+                "label": "Entry",
+                "type": "object",
+                "name": "entry"
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "parameters",
+            "label": "Search by",
+            "hint": "Provide one or more entry fields to search the entry",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "key",
+                "name": "col1",
+                "type": "string",
+                "sticky": true,
+                "optional": true,
+                "parent": "parameters"
+              },
+              {
+                "control_type": "text",
+                "label": "value",
+                "name": "col2",
+                "type": "string",
+                "sticky": true,
+                "optional": true,
+                "parent": "parameters"
+              },
+              {
+                "control_type": "text",
+                "label": "type",
+                "name": "col3",
+                "type": "string",
+                "sticky": true,
+                "optional": true,
+                "parent": "parameters"
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "lookup_table_id",
+          "parameters.col1"
+        ],
+        "hidden_config_fields": [
+          "parameters.col2",
+          "parameters.col3"
+        ],
+        "comment": "Step 1 - Make sure the \"open_po_report.status\" is \"pending\"",
+        "uuid": "ffd6d8ff-6518-4b10-b460-f849dcf60e8c"
+      },
+      {
+        "number": 3,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "not_equals_to",
+              "lhs": "#{_('data.lookup_table.d1a5f805.entries.first.entry.col2')}",
+              "rhs": "pending"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 4,
+            "provider": "workato_variable",
+            "name": "update_variable",
+            "as": "68d12cca",
+            "title": "Update variable status",
+            "description": "Update variable <span class=\"provider\">status</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "name": "status (step 1)"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "name": "f7a4065e-5875-447b-be93-2f25dff380a9:2c5d908e",
+              "value": "open_po_report.status is not \"pending\", stopping the recipe since emails have likely already been sent."
+            },
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "value",
+                "control_type": "text",
+                "label": "Value",
+                "hint": "Provide value for the variable",
+                "strip_interpolation": true
+              }
+            ],
+            "uuid": "17a1d7ba-513d-49c8-a65d-6cde55e637c7"
+          },
+          {
+            "number": 5,
+            "provider": "workato_app",
+            "name": "stop_recipe",
+            "as": "0b73640b",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "recipe_id": "Scheduled - Monitor Coupa Data Fetch and Send PO Report Emails"
+            },
+            "toggleCfg": {
+              "recipe_id": false,
+              "force_stop": true
+            },
+            "input": {
+              "force_stop": "true",
+              "recipe_id": "=lookup(\"COUPA_VARIABLES\", key: \"recipe.send_open_po_report\")[\"value\"]"
+            },
+            "comment": "If the status is not \"pending\", stop this recipe because the emails have already been sent",
+            "uuid": "ac2755b3-5a10-437b-9eed-917efa2c7447"
+          },
+          {
+            "number": 6,
+            "keyword": "stop",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "stop_with_error": "false"
+            },
+            "uuid": "2dab4d18-b5f4-416c-b5da-a2cee4779c55"
+          }
+        ],
+        "uuid": "85d74153-68a0-4540-bf99-f8b5c272e711"
+      },
+      {
+        "number": 7,
+        "provider": "workato_list",
+        "name": "create_list",
+        "as": "518638c1",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "size": "5"
+        },
+        "comment": "Step 2 - Check each of the 5 \"Open PO Fetch\" threads to see if they are still pending",
+        "uuid": "93b485b4-7634-4994-b5af-c224d63486de"
+      },
+      {
+        "number": 8,
+        "as": "db8dd0c4",
+        "keyword": "foreach",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "clear_scope": "true",
+        "input": {
+        },
+        "block": [
+          {
+            "number": 9,
+            "provider": "lookup_table",
+            "name": "search_entries",
+            "as": "85511346",
+            "title": null,
+            "description": "\n      Search\n      <span class=\"provider\">entries</span>\n      in\n      <span class=\"provider\">COUPA_VARIABLES</span>\n      lookup table\n    ",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "lookup_table_id": "COUPA_VARIABLES"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "lookup_table_id": {
+                "zip_name": "coupa_variables.lookup_table.json",
+                "name": "COUPA_VARIABLES",
+                "folder": ""
+              },
+              "parameters": {
+                "col1": "open_po_report.fetch_po_thread_#{_('data.foreach.db8dd0c4.seq_no')}.status"
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "array",
+                "name": "entries",
+                "label": "Entries",
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "Entry ID",
+                    "parse_output": "integer_conversion",
+                    "type": "integer",
+                    "name": "id"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "key",
+                        "name": "col1",
+                        "type": "string",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "value",
+                        "name": "col2",
+                        "type": "string",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "type",
+                        "name": "col3",
+                        "type": "string",
+                        "sticky": true
+                      }
+                    ],
+                    "label": "Entry",
+                    "type": "object",
+                    "name": "entry"
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "parameters",
+                "label": "Search by",
+                "hint": "Provide one or more entry fields to search the entry",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "key",
+                    "name": "col1",
+                    "type": "string",
+                    "sticky": true,
+                    "optional": true,
+                    "parent": "parameters"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "value",
+                    "name": "col2",
+                    "type": "string",
+                    "sticky": true,
+                    "optional": true,
+                    "parent": "parameters"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "type",
+                    "name": "col3",
+                    "type": "string",
+                    "sticky": true,
+                    "optional": true,
+                    "parent": "parameters"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "lookup_table_id",
+              "parameters.col1"
+            ],
+            "hidden_config_fields": [
+              "parameters.col2",
+              "parameters.col3"
+            ],
+            "comment": "Make sure the \"Open PO Fetch thread\" is not \"pending\"",
+            "uuid": "1c5881b3-cf4b-4251-a645-a5a86b1805af"
+          },
+          {
+            "number": 10,
+            "keyword": "if",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "type": "compound",
+              "operand": "and",
+              "conditions": [
+                {
+                  "operand": "equals_to",
+                  "lhs": "#{_('data.lookup_table.85511346.entries.first.entry.col2')}",
+                  "rhs": "pending"
+                }
+              ]
+            },
+            "block": [
+              {
+                "number": 11,
+                "provider": "workato_variable",
+                "name": "update_variable",
+                "as": "ad9482f5",
+                "title": "Update variable status",
+                "description": "Update variable <span class=\"provider\">status</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "name": "status (step 1)"
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "name": "f7a4065e-5875-447b-be93-2f25dff380a9:2c5d908e",
+                  "value": "open_po_report.fetch_po_thread_#{_('data.foreach.db8dd0c4.seq_no')}.status is still \"pending\".  Not ready to send emails yet."
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "string",
+                    "name": "value",
+                    "control_type": "text",
+                    "label": "Value",
+                    "hint": "Provide value for the variable",
+                    "strip_interpolation": true
+                  }
+                ],
+                "uuid": "33cfa61c-43c1-45b6-bd74-415bef57d1c5"
+              },
+              {
+                "number": 12,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "false"
+                },
+                "comment": "Stop this job until all \"Open PO Fetch\" threads are finished",
+                "uuid": "8e5f405b-a651-4ecf-9b26-b40c3cba899f"
+              }
+            ],
+            "uuid": "7237c780-7def-459c-97d6-04c84b0cebc6"
+          }
+        ],
+        "source": "#{_('data.workato_list.518638c1.list')}",
+        "uuid": "34685ea7-a8cc-45d3-a8c0-97de2e59bd9c"
+      },
+      {
+        "number": 13,
+        "provider": "mysql",
+        "name": "search_rows",
+        "as": "2b216911",
+        "title": "Select rows in coupa_open_po_report_po",
+        "description": "Select <span class=\"provider\">rows</span> in <span class=\"provider\">coupa_open_po_report_po</span> table in <span class=\"provider\">MySQL</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "table": "coupa_open_po_report_po"
+        },
+        "toggleCfg": {
+          "table": true
+        },
+        "input": {
+          "limit": "1",
+          "offset": "0",
+          "where": "req_email IS NULL OR total_remaining IS NULL",
+          "table": "coupa_open_po_report_po"
+        },
+        "extended_output_schema": [
+          {
+            "type": "array",
+            "name": "rows",
+            "label": "Rows",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "date_time",
+                "label": "date_created",
+                "render_input": "convert_date_time",
+                "parse_output": "parse_date_time",
+                "details": {
+                  "data_type": "datetime",
+                  "column_name": "date_created"
+                },
+                "optional": true,
+                "hint": "datetime",
+                "type": "date_time",
+                "name": "date_created"
+              },
+              {
+                "control_type": "integer",
+                "label": "po_id",
+                "parse_output": "parse_integer_output",
+                "details": {
+                  "data_type": "int(11)",
+                  "column_name": "po_id"
+                },
+                "render_input": "parse_integer_output",
+                "event_title": true,
+                "optional": true,
+                "hint": "int(11), primary key",
+                "type": "integer",
+                "name": "po_id"
+              },
+              {
+                "control_type": "integer",
+                "label": "po_number",
+                "parse_output": "parse_integer_output",
+                "details": {
+                  "data_type": "int(11)",
+                  "column_name": "po_number"
+                },
+                "render_input": "parse_integer_output",
+                "optional": true,
+                "hint": "int(11)",
+                "type": "integer",
+                "name": "po_number"
+              },
+              {
+                "control_type": "text",
+                "label": "req_email",
+                "details": {
+                  "data_type": "varchar(100)",
+                  "column_name": "req_email"
+                },
+                "optional": true,
+                "hint": "varchar(100)",
+                "type": "string",
+                "name": "req_email"
+              },
+              {
+                "control_type": "integer",
+                "label": "req_id",
+                "parse_output": "parse_integer_output",
+                "details": {
+                  "data_type": "int(11)",
+                  "column_name": "req_id"
+                },
+                "render_input": "parse_integer_output",
+                "optional": true,
+                "hint": "int(11)",
+                "type": "integer",
+                "name": "req_id"
+              },
+              {
+                "control_type": "integer",
+                "label": "sent",
+                "parse_output": "parse_integer_output",
+                "details": {
+                  "data_type": "tinyint(1)",
+                  "column_name": "sent"
+                },
+                "render_input": "parse_integer_output",
+                "optional": true,
+                "hint": "tinyint(1)",
+                "type": "integer",
+                "name": "sent"
+              },
+              {
+                "control_type": "number",
+                "label": "total_invoiced",
+                "parse_output": "parse_numeric_output",
+                "details": {
+                  "data_type": "double",
+                  "column_name": "total_invoiced"
+                },
+                "render_input": "parse_numeric_output",
+                "optional": true,
+                "hint": "double",
+                "type": "number",
+                "name": "total_invoiced"
+              },
+              {
+                "control_type": "number",
+                "label": "total_po",
+                "parse_output": "parse_numeric_output",
+                "details": {
+                  "data_type": "double",
+                  "column_name": "total_po"
+                },
+                "render_input": "parse_numeric_output",
+                "optional": true,
+                "hint": "double",
+                "type": "number",
+                "name": "total_po"
+              },
+              {
+                "control_type": "number",
+                "label": "total_remaining",
+                "parse_output": "parse_numeric_output",
+                "details": {
+                  "data_type": "double",
+                  "column_name": "total_remaining"
+                },
+                "render_input": "parse_numeric_output",
+                "optional": true,
+                "hint": "double",
+                "type": "number",
+                "name": "total_remaining"
+              },
+              {
+                "control_type": "number",
+                "label": "total_req",
+                "parse_output": "parse_numeric_output",
+                "details": {
+                  "data_type": "double",
+                  "column_name": "total_req"
+                },
+                "render_input": "parse_numeric_output",
+                "optional": true,
+                "hint": "double",
+                "type": "number",
+                "name": "total_req"
+              },
+              {
+                "control_type": "text",
+                "label": "vendor_name",
+                "details": {
+                  "data_type": "varchar(100)",
+                  "column_name": "vendor_name"
+                },
+                "optional": true,
+                "hint": "varchar(100)",
+                "type": "string",
+                "name": "vendor_name"
+              }
+            ]
+          }
+        ],
+        "comment": "Step 3 - Make sure all the data fields in the MySQL report table are filled in",
+        "uuid": "81ae188c-aa74-4640-9886-a646538f464b"
+      },
+      {
+        "number": 14,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "greater_than",
+              "lhs": "#{_('data.mysql.2b216911.rows.first.____Size', 'list_meta', '____Size', 'data.mysql.2b216911.rows')}",
+              "rhs": "0"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 15,
+            "provider": "workato_variable",
+            "name": "update_variable",
+            "as": "d6b6fd1f",
+            "title": "Update variable status",
+            "description": "Update variable <span class=\"provider\">status</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "name": "status (step 1)"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "name": "f7a4065e-5875-447b-be93-2f25dff380a9:2c5d908e",
+              "value": "There are still entries in the PO table with missing req_email or total_po equal to 0.  Waiting to make sure all PO data has been retrieved before sending the emails."
+            },
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "value",
+                "control_type": "text",
+                "label": "Value",
+                "hint": "Provide value for the variable",
+                "strip_interpolation": true
+              }
+            ],
+            "uuid": "67747bb3-15d0-47a3-a21e-5f94dbbd6fb9"
+          },
+          {
+            "number": 16,
+            "keyword": "stop",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "stop_with_error": "false"
+            },
+            "comment": "Stop this job until all POs have a req email and totals",
+            "uuid": "895b5454-444a-4a97-94d0-d18e0fc8b532"
+          }
+        ],
+        "comment": "If there are still some rows that are missing data, stop this job and try again in 5 minutes",
+        "uuid": "7d7ae908-904d-4205-aeb5-4aca79bcd5c7"
+      },
+      {
+        "number": 17,
+        "provider": "workato_list",
+        "name": "create_list",
+        "as": "e2128f31",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "size": "500"
+        },
+        "comment": "Create a repeat helper to ensure we get ALL the emails from the req_email table",
+        "uuid": "7afc7f64-245a-4c3f-b36e-37332d5c382f"
+      },
+      {
+        "number": 18,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 19,
+            "as": "31e30349",
+            "keyword": "foreach",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "clear_scope": "true",
+            "input": {
+            },
+            "block": [
+              {
+                "number": 20,
+                "provider": "mysql",
+                "name": "search_rows",
+                "as": "5086bc7c",
+                "title": "Select rows in coupa_open_po_report_req_email",
+                "description": "Select <span class=\"provider\">rows</span> in <span class=\"provider\">coupa_open_po_report_req_email</span> table in <span class=\"provider\">MySQL</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "table": "coupa_open_po_report_req_email"
+                },
+                "toggleCfg": {
+                  "table": true
+                },
+                "input": {
+                  "limit": "1000",
+                  "offset": "=_('data.foreach.31e30349.index', 'foreach_meta')*1000",
+                  "table": "coupa_open_po_report_req_email",
+                  "orderby": "email ASC"
+                },
+                "extended_output_schema": [
+                  {
+                    "type": "array",
+                    "name": "rows",
+                    "label": "Rows",
+                    "of": "object",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "email",
+                        "details": {
+                          "data_type": "varchar(100)",
+                          "column_name": "email"
+                        },
+                        "event_title": true,
+                        "optional": true,
+                        "hint": "varchar(100), primary key",
+                        "type": "string",
+                        "name": "email"
+                      },
+                      {
+                        "control_type": "integer",
+                        "label": "po_count",
+                        "parse_output": "parse_integer_output",
+                        "details": {
+                          "data_type": "int(11)",
+                          "column_name": "po_count"
+                        },
+                        "render_input": "parse_integer_output",
+                        "optional": true,
+                        "hint": "int(11)",
+                        "type": "integer",
+                        "name": "po_count"
+                      }
+                    ]
+                  }
+                ],
+                "visible_config_fields": [
+                  "table",
+                  "limit",
+                  "offset",
+                  "orderby"
+                ],
+                "hidden_config_fields": [
+                  "where"
+                ],
+                "uuid": "e488f144-c465-4fe9-b171-8ca084b8ba49"
+              },
+              {
+                "number": 21,
+                "as": "244bc364",
+                "keyword": "foreach",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "clear_scope": "true",
+                "input": {
+                },
+                "block": [
+                  {
+                    "number": 22,
+                    "provider": "workato_list",
+                    "name": "accumulate_list_items",
+                    "as": "a2d26a0d",
+                    "title": "Accumulate items to all_emails list",
+                    "description": "Accumulate <span class=\"provider\">items</span> to <span class=\"provider\">all_emails</span> list",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "name": "all_emails",
+                      "list_item": {
+                        "schema": "[{\"name\":\"email\",\"type\":\"string\",\"optional\":true,\"label\":\"Email\",\"control_type\":\"text\"}]",
+                        "data": {
+                          "email": "#{_('data.foreach.244bc364.email')}"
+                        }
+                      }
+                    },
+                    "extended_output_schema": [
+                      {
+                        "type": "array",
+                        "name": "list_items",
+                        "label": "Items",
+                        "of": "object",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Email",
+                            "name": "email",
+                            "type": "string",
+                            "optional": true
+                          }
+                        ]
+                      }
+                    ],
+                    "extended_input_schema": [
+                      {
+                        "type": "object",
+                        "name": "list_item",
+                        "control_type": "form-schema-builder",
+                        "label": "List item fields",
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Schema",
+                            "extends_schema": true,
+                            "type": "string",
+                            "name": "schema",
+                            "parent": "list_item"
+                          },
+                          {
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Email",
+                                "name": "email",
+                                "type": "string",
+                                "optional": true,
+                                "parent": "list_item.data"
+                              }
+                            ],
+                            "label": "Data",
+                            "type": "object",
+                            "name": "data",
+                            "parent": "list_item"
+                          }
+                        ],
+                        "override": true
+                      }
+                    ],
+                    "visible_config_fields": [
+                      "name",
+                      "list_item.data.email"
+                    ],
+                    "uuid": "e7ba79cf-27ef-45be-b736-51bc2a131256"
+                  }
+                ],
+                "source": "#{_('data.mysql.5086bc7c.rows')}",
+                "uuid": "8eb67ae6-0a45-41fc-8e41-0c56e46873b1"
+              },
+              {
+                "number": 23,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "less_than",
+                      "lhs": "#{_('data.mysql.5086bc7c.rows.first.____Size', 'list_meta', '____Size', 'data.mysql.5086bc7c.rows')}",
+                      "rhs": "1000"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 24,
+                    "keyword": "stop",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "stop_with_error": "true",
+                      "stop_reason": "No more emails to fetch"
+                    },
+                    "comment": "Stop querying MySQL - we have logged all the emails",
+                    "uuid": "ddbfa7d7-c13b-4910-aae5-7537e185ab9b"
+                  }
+                ],
+                "uuid": "b4192586-90a0-41e2-a2a4-ddc607d116df"
+              }
+            ],
+            "source": "#{_('data.workato_list.e2128f31.list')}",
+            "uuid": "fb4a4dfb-fd05-4a5c-81ac-5421c65bd4f2"
+          },
+          {
+            "number": 25,
+            "as": "d2eaa65b",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "0",
+              "retry_interval": "2"
+            },
+            "block": [
+              {
+                "number": 26,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "and",
+                  "conditions": [
+                    {
+                      "operand": "not_equals_to",
+                      "lhs": "#{_('data.catch.d2eaa65b.message')}",
+                      "rhs": "No more emails to fetch"
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 27,
+                    "provider": "workato_variable",
+                    "name": "update_variable",
+                    "as": "fa11549d",
+                    "title": "Update variable status",
+                    "description": "Update variable <span class=\"provider\">status</span>",
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                      "name": "status (step 1)"
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "name": "f7a4065e-5875-447b-be93-2f25dff380a9:2c5d908e",
+                      "value": "ERROR!!!! - #{_('data.catch.d2eaa65b.message')}"
+                    },
+                    "extended_input_schema": [
+                      {
+                        "type": "string",
+                        "name": "value",
+                        "control_type": "text",
+                        "label": "Value",
+                        "hint": "Provide value for the variable",
+                        "strip_interpolation": true
+                      }
+                    ],
+                    "uuid": "4717b148-180b-437d-95fa-272842ee7855"
+                  },
+                  {
+                    "number": 28,
+                    "keyword": "stop",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "stop_with_error": "true",
+                      "stop_reason": "#{_('data.catch.d2eaa65b.message')}"
+                    },
+                    "comment": "Something other than \"No more emails to fetch\" was received, this is a real error!  Report the error.",
+                    "uuid": "add62f10-48f7-4950-90d4-b7638f513ea8"
+                  }
+                ],
+                "comment": "As long as the error is \"No more emails to fetch\" we are OK.  Only stop the job if something else was returned.",
+                "uuid": "78eed541-2498-478c-bb71-be47fd0449ae"
+              }
+            ],
+            "uuid": "086d7579-1f17-44cf-8e79-2dc5762d5586"
+          }
+        ],
+        "comment": "Set up an error block so that we can catch when there are no more emails to be fetched",
+        "uuid": "fe439f84-a710-4ba7-b0d8-974ab7f76db8"
+      },
+      {
+        "number": 29,
+        "as": "7a971183",
+        "keyword": "foreach",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "clear_scope": "true",
+        "input": {
+        },
+        "block": [
+          {
+            "number": 30,
+            "provider": "workato_service",
+            "name": "call_service_async",
+            "as": "f768d9ed",
+            "title": null,
+            "description": "Call recipe <span class=\"provider\">Callable - Send Open PO Report</span> (do not wait for response)",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "flow_id": "Callable - Send Open PO Report"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "flow_id": {
+                "zip_name": "coupa/open-po-report/callable/callable_send_open_po_report.recipe.json",
+                "name": "Callable - Send Open PO Report",
+                "folder": "coupa/open-po-report/callable"
+              },
+              "request": {
+                "requisitioner_email": "#{_('data.foreach.7a971183.email')}"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "request",
+                "label": "Recipe input",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Requisitioner email",
+                    "name": "requisitioner_email",
+                    "type": "string",
+                    "optional": false,
+                    "parent": "request"
+                  }
+                ]
+              }
+            ],
+            "uuid": "edac06b6-98f2-4583-bde7-fbae7cbc6f71"
+          }
+        ],
+        "source": "#{_('data.workato_list.a2d26a0d.list_items')}",
+        "uuid": "03827594-afb1-4108-8582-30cb166e0a5c"
+      },
+      {
+        "number": 31,
+        "provider": "lookup_table",
+        "name": "update_entry",
+        "as": "3f7b8d8e",
+        "title": null,
+        "description": "\n      Update\n      <span class=\"provider\">entry</span>\n      in\n      <span class=\"provider\">COUPA_VARIABLES</span>\n      lookup table\n    ",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "lookup_table_id": "COUPA_VARIABLES"
+        },
+        "toggleCfg": {
+          "ignore_not_found": true
+        },
+        "input": {
+          "ignore_not_found": "false",
+          "lookup_table_id": {
+            "zip_name": "coupa_variables.lookup_table.json",
+            "name": "COUPA_VARIABLES",
+            "folder": ""
+          },
+          "id": "#{_('data.lookup_table.d1a5f805.entries.first.id')}",
+          "parameters": {
+            "col2": "finished"
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "integer",
+            "name": "id",
+            "control_type": "number",
+            "label": "Entry ID",
+            "parse_output": "integer_conversion"
+          },
+          {
+            "type": "object",
+            "name": "entry",
+            "label": "Entry",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "key",
+                "name": "col1",
+                "type": "string",
+                "sticky": true
+              },
+              {
+                "control_type": "text",
+                "label": "value",
+                "name": "col2",
+                "type": "string",
+                "sticky": true
+              },
+              {
+                "control_type": "text",
+                "label": "type",
+                "name": "col3",
+                "type": "string",
+                "sticky": true
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "parameters",
+            "label": "Entry fields",
+            "hint": "Fill the fields you want to update",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "key",
+                "name": "col1",
+                "type": "string",
+                "sticky": true,
+                "optional": true,
+                "parent": "parameters"
+              },
+              {
+                "control_type": "text",
+                "label": "value",
+                "name": "col2",
+                "type": "string",
+                "sticky": true,
+                "optional": true,
+                "parent": "parameters"
+              },
+              {
+                "control_type": "text",
+                "label": "type",
+                "name": "col3",
+                "type": "string",
+                "sticky": true,
+                "optional": true,
+                "parent": "parameters"
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "lookup_table_id",
+          "ignore_not_found",
+          "parameters.col2"
+        ],
+        "hidden_config_fields": [
+          "parameters.col1",
+          "parameters.col3"
+        ],
+        "comment": "Since the emails have been triggered, set the overall PO Report Status to finished",
+        "uuid": "ae16fd6d-afa4-4a16-9d70-e4d7e225cab8"
+      },
+      {
+        "number": 32,
+        "provider": "workato_variable",
+        "name": "update_variable",
+        "as": "03e0d69d",
+        "title": "Update variable status",
+        "description": "Update variable <span class=\"provider\">status</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "name": "status (step 1)"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "name": "f7a4065e-5875-447b-be93-2f25dff380a9:2c5d908e",
+          "value": "Emails have been requested to be sent!  Stopping the recipe :)"
+        },
+        "extended_input_schema": [
+          {
+            "type": "string",
+            "name": "value",
+            "control_type": "text",
+            "label": "Value",
+            "hint": "Provide value for the variable",
+            "strip_interpolation": true
+          }
+        ],
+        "uuid": "2c11e8c9-162b-452d-91b4-520e2701434b"
+      },
+      {
+        "number": 33,
+        "provider": "workato_app",
+        "name": "stop_recipe",
+        "as": "16b1f5f7",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "recipe_id": "Scheduled - Monitor Coupa Data Fetch and Send PO Report Emails"
+        },
+        "toggleCfg": {
+          "recipe_id": false,
+          "force_stop": true
+        },
+        "input": {
+          "force_stop": "true",
+          "recipe_id": "=lookup(\"COUPA_VARIABLES\", key: \"recipe.send_open_po_report\")[\"value\"]"
+        },
+        "comment": "We can stop this recipe now that the reports have been requested to be sent",
+        "uuid": "0ff462df-10aa-4918-9b87-418aafb4c7e2"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Status"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_variable.2c5d908e.value')}"
+    },
+    "uuid": "73be30b1-b61d-4cc8-9a97-a30a7c4be0bd"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "clock",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "lookup_table",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_app",
+      "account_id": {
+        "zip_name": "resources/recipeops.connection.json",
+        "name": "RecipeOps",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_list",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "mysql",
+      "account_id": {
+        "zip_name": "resources/mysql.connection.json",
+        "name": "MySQL",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "account_id": null
+    }
+  ]
+}

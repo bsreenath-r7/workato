@@ -1,0 +1,76 @@
+{
+  "name": "SALESFORCE_VARIABLES",
+  "schema": [
+    {
+      "control_type": "text",
+      "label": "key",
+      "name": "col1",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "value",
+      "name": "col2",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "type",
+      "name": "col3",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 4",
+      "name": "col4",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 5",
+      "name": "col5",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 6",
+      "name": "col6",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 7",
+      "name": "col7",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 8",
+      "name": "col8",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 9",
+      "name": "col9",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 10",
+      "name": "col10",
+      "type": "string",
+      "sticky": false
+    }
+  ],
+  "data": "case.businesshours.default,01m41000000Xz5l,Rapid 7 business hours Id\ncase.recordtype.InternalCase,01241000001EhD2AAK,Record Type Id of 'Internal Case' on Case Object\ncase.recordtype.ManagedServices,0123f0000000602AAA,Record Type Id  of 'Managed Services' on Case Object\ncase.severity.medium,3 - Medium,\"\"\ncase.status.new,New,\ncase.recordtype.StandardCase,01241000001EhD3AAK,Record Type Id of 'Standard Case' on Case Object\nproductCode.IAS-SUB,Number Of Applications,QuantityUnitOfMeasure\nproductCode.ICN-SUB,Number Of Workflows,QuantityUnitOfMeasure\ncase.tams.megapod2,\"[\"\"Eugen Panganiban\"\",\"\"Beshoy Youssef\"\",\"\"Daniel Esquivel\"\"]\",Technical Account Managers for #megapod2\nsalesforce.url,https://r7.lightning.force.com/,Salesforce URL\nsiteSurvey.products_roles_1,\"[\"\"InsightVM\"\",\"\"InsightAppSec\"\",\"\"TEM\"\",\"\"tCell\"\"];[\"\"Account Executive (AE)\"\"]\",\"\"\nsiteSurvey.products_roles_2,\"[\"\"IDR\"\",\"\"InsightIDR\"\"];[\"\"Account Executive (AE)\"\"]\",\nsiteSurvey.products_roles_3,\"[\"\"ICON\"\",\"\"InsightConnect\"\"];[\"\"Account Executive (AE)\"\",\"\"Automation Rep(AE)\"\"]\",\nsiteSurvey.link,https://r7.lightning.force.com/lightning/r/SiteSurvey__c/,Site Survey Link\napn.apnlink,https://r7.lightning.force.com/lightning/r/AmazonPartnerNetworkRequest__c/,Amazon partner network request URL\napn.owner.email,asawitsky@rapid7.com,APN Owner Email\napn.aceOppOwner,@asawitsky,default ace opp owner slack id if email is apn@rapid7.com\nask-aws-partnership.channelLink,https://app.slack.com/client/T3V1ZDQHM/CR6MYT1HB,\nmarketo.email,bsreenath@rapid7.com,Any marekto integration related notifications will go to this (admin) email address\ncase.tams.megapod1,\"[\"\"Gwen North\"\",\"\"Tony Josato\"\",\"\"Ricardo Alvarez\"\"]\",Technical Account Managers for #megapod1\ncaseteam.teamrole.customer,0B73f0000004C9cCAE,Case team member team role id for Customer role\napn.campaign.default,7013f000000HSfxAAG,Default campaign id to use for Opportunity\nsalesforce.orgid,00D41000000VVEY,Salesforce Org Id\nsalesforce.leandatauser,0052M000008hiNCQAY,LeanData Integration user\ncase.sev1.products,\"[\"\"InsightVM\"\",\"\"Managed Vulnerability Management (MVM)\"\",\"\"Nexpose\"\"];[\"\"InsightIDR\"\",\"\"InsightOps\"\",\"\"Log Entries\"\"]\",Case Sev1 Products\nopportunityTeamMember.role,\"Automation Rep(AE),Cloud Sales Specialist\",New Opportunity Team Member Notification\ncase.tams.megapod3,\"[\"\"Donna Young\"\"]\",Technical Account Managers for #megapod3\ncasharr.ignore_opps,0063f000004JKJZAA4;,\"If we need to ignore new opps, add them Ids by separating semicolon(;)\"\ncase.recordtype.InsightCloudSec,0123f000000kDVnAAM,Record Type Id of 'InsightCloudSec' on Case Object\n"
+}

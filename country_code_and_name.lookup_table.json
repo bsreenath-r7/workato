@@ -1,0 +1,76 @@
+{
+  "name": "COUNTRY_CODE_AND_NAME",
+  "schema": [
+    {
+      "control_type": "text",
+      "label": "COUNTRY_NAME",
+      "name": "col1",
+      "sticky": true,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "COUNTRY_CODE",
+      "name": "col2",
+      "sticky": true,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "NETSUITE_CODE",
+      "name": "col3",
+      "sticky": true,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "number_of_states",
+      "name": "col4",
+      "sticky": true,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "internal_id",
+      "name": "col5",
+      "sticky": true,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 6",
+      "sticky": false,
+      "type": "string",
+      "name": "col6"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 7",
+      "sticky": false,
+      "type": "string",
+      "name": "col7"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 8",
+      "sticky": false,
+      "type": "string",
+      "name": "col8"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 9",
+      "sticky": false,
+      "type": "string",
+      "name": "col9"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 10",
+      "sticky": false,
+      "type": "string",
+      "name": "col10"
+    }
+  ],
+  "data": "Andorra,AD,_andorra,0,5\nUnited Arab Emirates,AE,_unitedArabEmirates,0,234\nAfghanistan,AF,_afghanistan,0,301\nAntigua and Barbuda,AG,_antiguaAndBarbuda,0,9\nAnguilla,AI,_anguilla,0,7\nAlbania,AL,_albania,0,2\nArmenia,AM,_armenia,0,11\nNetherlands Antilles,AN,,0,304\nAngola,AO,_angola,0,6\nAntarctica,AQ,_antarctica,0,8\nArgentina,AR,_argentina,0,10\nAmerican Samoa,AS,_americanSamoa,0,4\nAustria,AT,_austria,0,14\nAustralia,AU,_australia,10,13\nAruba,AW,_aruba,0,12\nAland Islands,AX,_alandIslands,0,1\nAzerbaijan,AZ,_azerbaijan,0,15\nBosnia and Herzegovina,BA,_bosniaAndHerzegovina,0,27\nBarbados,BB,_barbados,0,19\nBangladesh,BD,_bangladesh,0,18\nBelgium,BE,_belgium,0,21\nBurkina Faso,BF,_burkinaFaso,0,34\nBulgaria,BG,_bulgaria,0,33\nBahrain,BH,_bahrain,0,17\nBurundi,BI,_burundi,0,35\nBenin,BJ,_benin,0,23\nSaint Barthélemy,BL,_saintBarthelemy,0,187\nBermuda,BM,_bermuda,0,24\nBrunei Darussalam,BN,_bruneiDarussalam,0,32\n\"Bolivia, Plurinational State of\",BO,_bolivia,0,26\n\"Bonaire, Sint Eustatius and Saba\",BQ,_bonaireSaintEustatiusAndSaba,0,\nBrazil,BR,_brazil,27,30\nBahamas,BS,_bahamas,0,16\nBhutan,BT,_bhutan,0,25\nBouvet Island,BV,_bouvetIsland,0,29\nBotswana,BW,_botswana,0,28\nBelarus,BY,_belarus,0,20\nBelize,BZ,_belize,0,22\nCanada,CA,_canada,13,38\nCocos (Keeling) Islands,CC,_cocosKeelingIslands,0,48\n\"Congo, the Democratic Republic of the\",CD,_congoDemocraticPeoplesRepublic,0,51\nCentral African Republic,CF,_centralAfricanRepublic,0,42\nCongo,CG,_congoRepublicOf,0,52\nSwitzerland,CH,_switzerland,0,217\nCote d'Ivoire,CI,_coteDIvoire,0,55\nCook Islands,CK,_cookIslands,0,53\nChile,CL,_chile,0,45\nCameroon,CM,_cameroon,0,37\nChina,CN,_china,34,46\nColombia,CO,_colombia,0,49\nCosta Rica,CR,_costaRica,0,54\nCuba,CU,_cuba,0,57\nCape Verde,CV,_capeVerde,0,40\nCuraçao,CW,_curacao,0,310\nChristmas Island,CX,_christmasIsland,0,47\nCyprus,CY,_cyprus,0,58\nCzech Republic,CZ,_czechRepublic,0,59\nGermany,DE,_germany,0,83\nDjibouti,DJ,_djibouti,0,61\nDenmark,DK,_denmark,0,60\nDominica,DM,_dominica,0,62\nDominican Republic,DO,_dominicanRepublic,0,63\nAlgeria,DZ,_algeria,0,3\nEcuador,EC,_ecuador,0,65\nEstonia,EE,_estonia,0,70\nEgypt,EG,_egypt,0,66\nWestern Sahara,EH,_westernSahara,0,246\nEritrea,ER,_eritrea,0,69\nSpain,ES,_spain,0,209\nEthiopia,ET,_ethiopia,0,71\nFinland,FI,_finland,0,75\nFiji,FJ,_fiji,0,74\nFalkland Islands (Malvinas),FK,_falklandIslands,0,302\n\"Micronesia, Federated States of\",FM,_micronesiaFederalStateOf,0,146\nFaroe Islands,FO,_faroeIslands,0,73\nFrance,FR,_france,0,76\nGabon,GA,_gabon,0,80\nUnited Kingdom,GB,_unitedKingdom,0,235\nGrenada,GD,_grenada,0,88\nGeorgia,GE,_georgia,0,82\nFrench Guiana,GF,_frenchGuiana,0,77\nGuernsey,GG,_guernsey,0,92\nGhana,GH,_ghana,0,84\nGibraltar,GI,_gibraltar,0,85\nGreenland,GL,_greenland,0,87\nGambia,GM,_gambia,0,81\nGuinea,GN,_guinea,0,93\nGuadeloupe,GP,_guadeloupe,0,89\nEquatorial Guinea,GQ,_equatorialGuinea,0,68\nGreece,GR,_greece,0,86\nSouth Georgia and the South Sandwich Islands,GS,_southGeorgia,0,207\nGuatemala,GT,_guatemala,0,91\nGuam,GU,_guam,0,90\nGuinea-Bissau,GW,_guineaBissau,0,94\nGuyana,GY,_guyana,0,95\nHong Kong,HK,_hongKong,0,100\nHeard Island and McDonald Islands,HM,_heardAndMcDonaldIslands,0,97\nHonduras,HN,_honduras,0,99\nCroatia,HR,_croatiaHrvatska,0,56\nHaiti,HT,_haiti,0,96\nHungary,HU,_hungary,0,101\nIndonesia,ID,_indonesia,0,104\nIreland,IE,_ireland,26,107\nIsrael,IL,_israel,0,109\nIsle of Man,IM,_isleOfMan,0,108\nIndia,IN,_india,35,103\nBritish Indian Ocean Territory,IO,_britishIndianOceanTerritory,0,31\nIraq,IQ,_iraq,0,106\n\"Iran, Islamic Republic of\",IR,_iranIslamicRepublicOf,0,105\nIceland,IS,_iceland,0,102\nItaly,IT,_italy,110,110\nJersey,JE,_jersey,0,113\nJamaica,JM,_jamaica,0,111\nJordan,JO,_jordan,0,114\nJapan,JP,_japan,0,112\nKenya,KE,_kenya,0,116\nKyrgyzstan,KG,_kyrgyzstan,0,122\nCambodia,KH,_cambodia,0,36\nKiribati,KI,_kiribati,0,117\nComoros,KM,_comoros,0,50\nSaint Kitts and Nevis,KN,_saintKittsAndNevis,0,189\n\"Korea, Democratic People's Republic of\",KP,_koreaDemocraticPeoplesRepublic,0,118\n\"Korea, Republic of\",KR,_koreaRepublicOf,0,119\nKuwait,KW,_kuwait,0,121\nCayman Islands,KY,_caymanIslands,0,41\nKazakhstan,KZ,_kazakhstan,0,115\nLao People's Democratic Republic,LA,_laoPeoplesDemocraticRepublic,0,123\nLebanon,LB,_lebanon,0,125\nSaint Lucia,LC,_saintLucia,0,190\nLiechtenstein,LI,_liechtenstein,0,129\nSri Lanka,LK,_sriLanka,0,210\nLiberia,LR,_liberia,0,127\nLesotho,LS,_lesotho,0,126\nLithuania,LT,_lithuania,0,130\nLuxembourg,LU,_luxembourg,0,131\nLatvia,LV,_latvia,0,124\nLibyan Arab Jamahiriya,LY,_libya,0,128\nMorocco,MA,_morocco,0,152\nMonaco,MC,_monaco,0,148\n\"Moldova, Republic of\",MD,_moldovaRepublicOf,0,147\nMontenegro,ME,_montenegro,0,150\nSaint Martin (French part),MF,_saintMartin,0,191\nMadagascar,MG,_madagascar,0,134\nMarshall Islands,MH,_marshallIslands,0,140\n\"Macedonia, the former Yugoslav Republic of\",MK,_macedonia,0,133\nMali,ML,_mali,0,138\nMyanmar,MM,_myanmar,0,154\nMongolia,MN,_mongolia,0,149\nMacao,MO,_macau,0,132\nNorthern Mariana Islands,MP,_northernMarianaIslands,0,167\nMartinique,MQ,_martinique,0,141\nMauritania,MR,_mauritania,0,142\nMontserrat,MS,_montserrat,0,151\nMalta,MT,_malta,0,139\nMauritius,MU,_mauritius,0,143\nMaldives,MV,_maldives,0,137\nMalawi,MW,_malawi,0,135\nMexico,MX,_mexico,32,145\nMalaysia,MY,_malaysia,0,136\nMozambique,MZ,_mozambique,0,153\nNamibia,NA,_namibia,0,155\nNew Caledonia,NC,_newCaledonia,0,160\nNiger,NE,_niger,0,163\nNorfolk Island,NF,_norfolkIsland,0,166\nNigeria,NG,_nigeria,0,164\nNicaragua,NI,_nicaragua,0,162\nNetherlands,NL,_netherlands,0,158\nNorway,NO,_norway,0,168\nNepal,NP,_nepal,0,157\nNauru,NR,_nauru,0,156\nNiue,NU,_niue,0,165\nNew Zealand,NZ,_newZealand,0,161\nOman,OM,_oman,0,169\nPanama,PA,_panama,0,173\nPeru,PE,_peru,0,176\nFrench Polynesia,PF,_frenchPolynesia,0,78\nPapua New Guinea,PG,_papuaNewGuinea,0,174\nPhilippines,PH,_philippines,0,177\nPakistan,PK,_pakistan,0,170\nPoland,PL,_poland,0,179\nSaint Pierre and Miquelon,PM,_stPierreAndMiquelon,0,211\nPitcairn,PN,_pitcairnIsland,0,178\nPuerto Rico,PR,_puertoRico,0,181\n\"Palestinian Territory, Occupied\",PS,_stateOfPalestine,0,172\nPortugal,PT,_portugal,0,180\nPalau,PW,_palau,0,171\nParaguay,PY,_paraguay,0,175\nQatar,QA,_qatar,0,182\nReunion,RE,_reunionIsland,0,183\nRomania,RO,_romania,0,184\nSerbia,RS,_serbia,0,198\nRussian Federation,RU,_russianFederation,0,185\nRwanda,RW,_rwanda,0,186\nSaudi Arabia,SA,_saudiArabia,0,196\nSolomon Islands,SB,_solomonIslands,0,204\nSeychelles,SC,_seychelles,0,199\nSudan,SD,_sudan,0,212\nSweden,SE,_sweden,0,216\nSingapore,SG,_singapore,0,201\n\"Saint Helena, Ascension and Tristan da Cunha\",SH,_saintHelena,0,305\nSlovenia,SI,_slovenia,0,203\nSvalbard and Jan Mayen,SJ,_svalbardAndJanMayenIslands,0,214\nSlovakia,SK,_slovakRepublic,0,202\nSierra Leone,SL,_sierraLeone,0,200\nSan Marino,SM,_sanMarino,0,194\nSenegal,SN,_senegal,0,197\nSomalia,SO,_somalia,0,205\nSuriname,SR,_suriname,0,213\nSouth Sudan,SS,_sudan,0,208\nSao Tome and Principe,ST,_saoTomeAndPrincipe,0,195\nEl Salvador,SV,_elSalvador,0,67\nSint Maarten (Dutch part),SX,_sintMaarten,0,312\nSyrian Arab Republic,SY,_syrianArabRepublic,0,218\nSwaziland,SZ,_swaziland,0,215\nTurks and Caicos Islands,TC,_turksAndCaicosIslands,0,230\nChad,TD,_chad,0,44\nFrench Southern Territories,TF,_frenchSouthernTerritories,0,79\nTogo,TG,_togo,0,223\nThailand,TH,_thailand,0,222\nTajikistan,TJ,_tajikistan,0,220\nTokelau,TK,_tokelau,0,224\nTimor-Leste,TL,_eastTimor,0,\nTurkmenistan,TM,_turkmenistan,0,229\nTunisia,TN,_tunisia,0,227\nTonga,TO,_tonga,0,225\nTurkey,TR,_turkey,0,228\nTrinidad and Tobago,TT,_trinidadAndTobago,0,226\nTuvalu,TV,_tuvalu,0,231\nChinese Taipei,TW,_taiwan,0,219\n\"Tanzania, United Republic of\",TZ,_tanzania,0,221\nUkraine,UA,_ukraine,0,233\nUganda,UG,_uganda,0,232\nUS Minor Outlying Islands,UM,_uSMinorOutlyingIslands,0,238\nUnited States,US,_unitedStates,63,236\nUruguay,UY,_uruguay,0,237\nUzbekistan,UZ,_uzbekistan,0,239\nHoly See (Vatican City State),VA,_holySeeCityVaticanState,0,98\nSaint Vincent and the Grenadines,VC,_saintVincentAndTheGrenadines,0,192\n\"Venezuela, Bolivarian Republic of\",VE,_venezuela,0,241\n\"Virgin Islands, British\",VG,_virginIslandsBritish,0,243\nU.S. Virgin Islands,VI,_virginIslandsUSA,0,244\nVietNam,VN,_vietnam,0,242\nVanuatu,VU,_vanuatu,0,240\nWallis and Futuna,WF,_wallisAndFutunaIslands,0,245\nSamoa,WS,_samoa,0,308\nKosovo,XK,_kosovo,0,120\nYemen,YE,_yemen,0,247\nMayotte,YT,_mayotte,0,144\nSouth Africa,ZA,_southAfrica,0,206\nZambia,ZM,_zambia,0,248\nZimbabwe,ZW,_zimbabwe,0,249\n"
+}

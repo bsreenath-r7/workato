@@ -1,0 +1,1621 @@
+{
+  "name": "Callable | Log Error to MySQL Failed Jobs",
+  "description": "When there is a trigger event, do action",
+  "version": 13,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "receive_request",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">Log Error to MySQL Failed Jobs</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+      "rest_enabled": true
+    },
+    "input": {
+      "rest_enabled": "false",
+      "service_name": "Log Error to MySQL Failed Jobs",
+      "request_schema_json": "[{\"control_type\":\"text\",\"label\":\"Recipe ID\",\"name\":\"recipe_id\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Recipe Name\",\"name\":\"recipe_name\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Recipe Job ID\",\"name\":\"recipe_job_id\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"date\",\"label\":\"Recipe Job Created At\",\"render_input\":\"date_conversion\",\"parse_output\":\"date_conversion\",\"name\":\"recipe_job_created_at\",\"type\":\"date_time\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Recipe Job URL\",\"name\":\"recipe_job_url\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Parent Job ID\",\"name\":\"parent_job_id\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Calling Recipe ID\",\"name\":\"calling_recipe_id\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Calling Job ID\",\"name\":\"calling_job_id\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Error Type\",\"name\":\"error_type\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"text\",\"label\":\"Error Message\",\"name\":\"error_message\",\"type\":\"string\",\"optional\":false},{\"control_type\":\"integer\",\"label\":\"Error Retry Count\",\"parse_output\":\"integer_conversion\",\"name\":\"error_retry_count\",\"type\":\"integer\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Element DUNS\",\"name\":\"element_duns\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Element NS Contact Internal ID\",\"name\":\"element_ns_contact_internal_id\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Element NS Customer Internal ID\",\"name\":\"element_ns_customer_internal_id\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Element NS Employee ID\",\"name\":\"element_ns_employee_id\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Element SFDC Account ID\",\"name\":\"element_sfdc_account_id\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Element SFDC Case ID\",\"name\":\"element_sfdc_case_id\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Element SFDC Case Attachment ID\",\"name\":\"element_sfdc_case_attachment_id\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Element SFDC Case Comment ID\",\"name\":\"element_sfdc_case_comment_id\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Element SFDC Contact ID\",\"name\":\"element_sfdc_contact_id\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Element SFDC Team Role\",\"name\":\"element_sfdc_team_role\",\"type\":\"string\",\"optional\":true},{\"control_type\":\"text\",\"label\":\"Element SFDC User ID\",\"name\":\"element_sfdc_user_id\",\"type\":\"string\",\"optional\":true}]",
+      "reply_schema_json": "[{\"control_type\":\"text\",\"label\":\"MySQL Failed Job ID\",\"name\":\"mysql_failed_job_id\",\"type\":\"string\",\"optional\":false}]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Recipe ID",
+            "name": "recipe_id",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Recipe Name",
+            "name": "recipe_name",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Recipe Job ID",
+            "name": "recipe_job_id",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "date",
+            "label": "Recipe Job Created At",
+            "render_input": "date_conversion",
+            "parse_output": "date_conversion",
+            "name": "recipe_job_created_at",
+            "type": "date_time",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Recipe Job URL",
+            "name": "recipe_job_url",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Parent Job ID",
+            "name": "parent_job_id",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Calling Recipe ID",
+            "name": "calling_recipe_id",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Calling Job ID",
+            "name": "calling_job_id",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Error Type",
+            "name": "error_type",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Error Message",
+            "name": "error_message",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "integer",
+            "label": "Error Retry Count",
+            "parse_output": "integer_conversion",
+            "name": "error_retry_count",
+            "type": "integer",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Element DUNS",
+            "name": "element_duns",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Element NS Contact Internal ID",
+            "name": "element_ns_contact_internal_id",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Element NS Customer Internal ID",
+            "name": "element_ns_customer_internal_id",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Element NS Employee ID",
+            "name": "element_ns_employee_id",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Element SFDC Account ID",
+            "name": "element_sfdc_account_id",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Element SFDC Case ID",
+            "name": "element_sfdc_case_id",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Element SFDC Case Attachment ID",
+            "name": "element_sfdc_case_attachment_id",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Element SFDC Case Comment ID",
+            "name": "element_sfdc_case_comment_id",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Element SFDC Contact ID",
+            "name": "element_sfdc_contact_id",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Element SFDC Team Role",
+            "name": "element_sfdc_team_role",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Element SFDC User ID",
+            "name": "element_sfdc_user_id",
+            "type": "string",
+            "optional": true
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "mysql",
+        "name": "insert_row",
+        "as": "insert_row",
+        "title": "Insert row in wkto_failed_jobs",
+        "description": "Insert <span class=\"provider\">row</span> in <span class=\"provider\">wkto_failed_jobs</span> table in <span class=\"provider\">MySQL</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "table": "wkto_failed_jobs"
+        },
+        "toggleCfg": {
+          "table": true
+        },
+        "input": {
+          "table": "wkto_failed_jobs",
+          "columns": {
+            "recipe_id_0de771b0": "=_('data.workato_service.receive_request.request.recipe_id').present? ? _('data.workato_service.receive_request.request.recipe_id').slice(0,45) : skip",
+            "job_id_eef8f676": "=_('data.workato_service.receive_request.request.recipe_job_id').present? ? _('data.workato_service.receive_request.request.recipe_job_id').slice(0,45) : skip",
+            "job_created_at_4f3e6d99": "#{_('data.workato_service.receive_request.request.recipe_job_created_at')}",
+            "job_url_09c373e8": "=_('data.workato_service.receive_request.request.recipe_job_url').present? ? _('data.workato_service.receive_request.request.recipe_job_url').slice(0,200) : skip",
+            "parent_job_id_f8826489": "=_('data.workato_service.receive_request.request.parent_job_id').present? ? _('data.workato_service.receive_request.request.parent_job_id').slice(0,45) : skip",
+            "calling_recipe_id_85ba51e7": "=_('data.workato_service.receive_request.request.calling_recipe_id').present? ? _('data.workato_service.receive_request.request.calling_recipe_id').slice(0,45) : skip",
+            "calling_job_id_e5c150e3": "=_('data.workato_service.receive_request.request.calling_job_id').present? ? _('data.workato_service.receive_request.request.calling_job_id').slice(0,45) : skip",
+            "error_type_528e9691": "=_('data.workato_service.receive_request.request.error_type').present? ? _('data.workato_service.receive_request.request.error_type').slice(0,200) : skip",
+            "error_message_10aaf15d": "#{_('data.workato_service.receive_request.request.error_message')}",
+            "retry_count_76a11d66": "#{_('data.workato_service.receive_request.request.error_retry_count')}",
+            "recipe_name_53d34810": "=_('data.workato_service.receive_request.request.recipe_name').present? ? _('data.workato_service.receive_request.request.recipe_name').slice(0,45) : skip"
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "columns",
+            "label": "Columns",
+            "properties": [
+              {
+                "control_type": "number",
+                "label": "ID",
+                "parse_output": "parse_integer_output",
+                "details": {
+                  "data_type": "int(11)",
+                  "column_name": "ID"
+                },
+                "render_input": "parse_integer_output",
+                "event_title": true,
+                "optional": true,
+                "hint": "int(11), primary key",
+                "type": "integer",
+                "name": "id_66806897",
+                "parent": "columns"
+              },
+              {
+                "control_type": "text",
+                "label": "RECIPE_ID",
+                "details": {
+                  "data_type": "varchar(45)",
+                  "column_name": "RECIPE_ID"
+                },
+                "optional": true,
+                "hint": "varchar(45)",
+                "type": "string",
+                "name": "recipe_id_0de771b0",
+                "parent": "columns"
+              },
+              {
+                "control_type": "text",
+                "label": "JOB_ID",
+                "details": {
+                  "data_type": "varchar(45)",
+                  "column_name": "JOB_ID"
+                },
+                "optional": true,
+                "hint": "varchar(45)",
+                "type": "string",
+                "name": "job_id_eef8f676",
+                "parent": "columns"
+              },
+              {
+                "control_type": "text",
+                "label": "JOB_CREATED_AT",
+                "details": {
+                  "data_type": "varchar(45)",
+                  "column_name": "JOB_CREATED_AT"
+                },
+                "optional": true,
+                "hint": "varchar(45)",
+                "type": "string",
+                "name": "job_created_at_4f3e6d99",
+                "parent": "columns"
+              },
+              {
+                "control_type": "text",
+                "label": "JOB_URL",
+                "details": {
+                  "data_type": "varchar(200)",
+                  "column_name": "JOB_URL"
+                },
+                "optional": true,
+                "hint": "varchar(200)",
+                "type": "string",
+                "name": "job_url_09c373e8",
+                "parent": "columns"
+              },
+              {
+                "control_type": "text",
+                "label": "PARENT_JOB_ID",
+                "details": {
+                  "data_type": "varchar(45)",
+                  "column_name": "PARENT_JOB_ID"
+                },
+                "optional": true,
+                "hint": "varchar(45)",
+                "type": "string",
+                "name": "parent_job_id_f8826489",
+                "parent": "columns"
+              },
+              {
+                "control_type": "text",
+                "label": "CALLING_RECIPE_ID",
+                "details": {
+                  "data_type": "varchar(45)",
+                  "column_name": "CALLING_RECIPE_ID"
+                },
+                "optional": true,
+                "hint": "varchar(45)",
+                "type": "string",
+                "name": "calling_recipe_id_85ba51e7",
+                "parent": "columns"
+              },
+              {
+                "control_type": "text",
+                "label": "CALLING_JOB_ID",
+                "details": {
+                  "data_type": "varchar(45)",
+                  "column_name": "CALLING_JOB_ID"
+                },
+                "optional": true,
+                "hint": "varchar(45)",
+                "type": "string",
+                "name": "calling_job_id_e5c150e3",
+                "parent": "columns"
+              },
+              {
+                "control_type": "text",
+                "label": "ERROR_TYPE",
+                "details": {
+                  "data_type": "varchar(200)",
+                  "column_name": "ERROR_TYPE"
+                },
+                "optional": true,
+                "hint": "varchar(200)",
+                "type": "string",
+                "name": "error_type_528e9691",
+                "parent": "columns"
+              },
+              {
+                "control_type": "text",
+                "label": "ERROR_MESSAGE",
+                "details": {
+                  "data_type": "longtext",
+                  "column_name": "ERROR_MESSAGE"
+                },
+                "optional": true,
+                "hint": "longtext",
+                "type": "string",
+                "name": "error_message_10aaf15d",
+                "parent": "columns"
+              },
+              {
+                "control_type": "number",
+                "label": "RETRY_COUNT",
+                "parse_output": "parse_integer_output",
+                "details": {
+                  "data_type": "int(11)",
+                  "column_name": "RETRY_COUNT"
+                },
+                "render_input": "parse_integer_output",
+                "optional": true,
+                "hint": "int(11)",
+                "type": "integer",
+                "name": "retry_count_76a11d66",
+                "parent": "columns"
+              },
+              {
+                "control_type": "text",
+                "label": "RECIPE_NAME",
+                "details": {
+                  "data_type": "varchar(45)",
+                  "column_name": "RECIPE_NAME"
+                },
+                "hint": "varchar(45)",
+                "optional": true,
+                "type": "string",
+                "name": "recipe_name_53d34810",
+                "parent": "columns"
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "table",
+          "columns",
+          "columns.recipe_id_0de771b0",
+          "columns.job_id_eef8f676",
+          "columns.job_created_at_4f3e6d99",
+          "columns.job_url_09c373e8",
+          "columns.parent_job_id_f8826489",
+          "columns.calling_recipe_id_85ba51e7",
+          "columns.calling_job_id_e5c150e3",
+          "columns.error_type_528e9691",
+          "columns.error_message_10aaf15d",
+          "columns.retry_count_76a11d66",
+          "columns.recipe_name_53d34810"
+        ],
+        "comment": "Create the Failed Job Record",
+        "uuid": "4bf0dd58-19c1-46c8-abde-a27111c348ba"
+      },
+      {
+        "number": 2,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "present",
+              "lhs": "#{_('data.workato_service.receive_request.request.element_duns')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 3,
+            "provider": "mysql",
+            "name": "insert_row",
+            "as": "insert_row__9",
+            "title": "Insert row in wkto_failed_jobs_element",
+            "description": "Insert <span class=\"provider\">row</span> in <span class=\"provider\">wkto_failed_jobs_element</span> table in <span class=\"provider\">MySQL</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "table": "wkto_failed_jobs_element"
+            },
+            "toggleCfg": {
+              "table": true
+            },
+            "input": {
+              "table": "wkto_failed_jobs_element",
+              "columns": {
+                "failed_job_id": "#{_('data.mysql.insert_row.inserted_id')}",
+                "element_value": "=_('data.workato_service.receive_request.request.element_duns').slice(0,200)",
+                "element_name": "DUNS"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "columns",
+                "label": "Columns",
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "failed_job_id",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "failed_job_id"
+                    },
+                    "render_input": "parse_integer_output",
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "int(11), primary key",
+                    "type": "integer",
+                    "name": "failed_job_id",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "element_name",
+                    "details": {
+                      "data_type": "varchar(45)",
+                      "column_name": "element_name"
+                    },
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "varchar(45), primary key",
+                    "type": "string",
+                    "name": "element_name",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "element_value",
+                    "details": {
+                      "data_type": "varchar(200)",
+                      "column_name": "element_value"
+                    },
+                    "optional": true,
+                    "hint": "varchar(200)",
+                    "type": "string",
+                    "name": "element_value",
+                    "parent": "columns"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "table",
+              "columns",
+              "columns.failed_job_id",
+              "columns.element_name",
+              "columns.element_value"
+            ],
+            "comment": "SFDC Contact ID",
+            "uuid": "9e35488e-fd2a-4c78-85d3-3d81e45df68a"
+          }
+        ],
+        "uuid": "38376a63-4bf9-4d4b-b8a7-888c7823f4fd"
+      },
+      {
+        "number": 4,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "present",
+              "lhs": "#{_('data.workato_service.receive_request.request.element_ns_contact_internal_id')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 5,
+            "provider": "mysql",
+            "name": "insert_row",
+            "as": "insert_row__1",
+            "title": "Insert row in wkto_failed_jobs_element",
+            "description": "Insert <span class=\"provider\">row</span> in <span class=\"provider\">wkto_failed_jobs_element</span> table in <span class=\"provider\">MySQL</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "table": "wkto_failed_jobs_element"
+            },
+            "toggleCfg": {
+              "table": true
+            },
+            "input": {
+              "table": "wkto_failed_jobs_element",
+              "columns": {
+                "failed_job_id": "#{_('data.mysql.insert_row.inserted_id')}",
+                "element_value": "=_('data.workato_service.receive_request.request.element_ns_contact_internal_id').slice(0,200)",
+                "element_name": "NS Contact Internal ID"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "columns",
+                "label": "Columns",
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "failed_job_id",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "failed_job_id"
+                    },
+                    "render_input": "parse_integer_output",
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "int(11), primary key",
+                    "type": "integer",
+                    "name": "failed_job_id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "element_name",
+                    "details": {
+                      "data_type": "varchar(45)",
+                      "column_name": "element_name"
+                    },
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "varchar(45), primary key",
+                    "type": "string",
+                    "name": "element_name"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "element_value",
+                    "details": {
+                      "data_type": "varchar(200)",
+                      "column_name": "element_value"
+                    },
+                    "optional": true,
+                    "hint": "varchar(200)",
+                    "type": "string",
+                    "name": "element_value"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "table",
+              "columns",
+              "columns.failed_job_id",
+              "columns.element_name",
+              "columns.element_value"
+            ],
+            "comment": "NS Contact Internal ID",
+            "uuid": "32ea31b1-bac4-4fa4-8b00-9b4771bbf115"
+          }
+        ],
+        "uuid": "582e8b10-86eb-4519-acfd-e9473d36df3a"
+      },
+      {
+        "number": 6,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "present",
+              "lhs": "#{_('data.workato_service.receive_request.request.element_ns_customer_internal_id')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 7,
+            "provider": "mysql",
+            "name": "insert_row",
+            "as": "insert_row__2",
+            "title": "Insert row in wkto_failed_jobs_element",
+            "description": "Insert <span class=\"provider\">row</span> in <span class=\"provider\">wkto_failed_jobs_element</span> table in <span class=\"provider\">MySQL</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "table": "wkto_failed_jobs_element"
+            },
+            "toggleCfg": {
+              "table": true
+            },
+            "input": {
+              "table": "wkto_failed_jobs_element",
+              "columns": {
+                "failed_job_id": "#{_('data.mysql.insert_row.inserted_id')}",
+                "element_value": "=_('data.workato_service.receive_request.request.element_ns_customer_internal_id').slice(0,200)",
+                "element_name": "NS Customer Internal ID"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "columns",
+                "label": "Columns",
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "failed_job_id",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "failed_job_id"
+                    },
+                    "render_input": "parse_integer_output",
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "int(11), primary key",
+                    "type": "integer",
+                    "name": "failed_job_id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "element_name",
+                    "details": {
+                      "data_type": "varchar(45)",
+                      "column_name": "element_name"
+                    },
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "varchar(45), primary key",
+                    "type": "string",
+                    "name": "element_name"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "element_value",
+                    "details": {
+                      "data_type": "varchar(200)",
+                      "column_name": "element_value"
+                    },
+                    "optional": true,
+                    "hint": "varchar(200)",
+                    "type": "string",
+                    "name": "element_value"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "table",
+              "columns",
+              "columns.failed_job_id",
+              "columns.element_name",
+              "columns.element_value"
+            ],
+            "comment": "NS Customer Internal ID",
+            "uuid": "ca92b92d-fc42-45d2-bda5-1b255b6a68f6"
+          }
+        ],
+        "uuid": "f64ed62e-8bfb-4eb2-a722-5d8fbaaf9633"
+      },
+      {
+        "number": 8,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "present",
+              "lhs": "#{_('data.workato_service.receive_request.request.element_ns_employee_id')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 9,
+            "provider": "mysql",
+            "name": "insert_row",
+            "as": "insert_row__8",
+            "title": "Insert row in wkto_failed_jobs_element",
+            "description": "Insert <span class=\"provider\">row</span> in <span class=\"provider\">wkto_failed_jobs_element</span> table in <span class=\"provider\">MySQL</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "table": "wkto_failed_jobs_element"
+            },
+            "toggleCfg": {
+              "table": true
+            },
+            "input": {
+              "table": "wkto_failed_jobs_element",
+              "columns": {
+                "failed_job_id": "#{_('data.mysql.insert_row.inserted_id')}",
+                "element_value": "=_('data.workato_service.receive_request.request.element_ns_employee_id').slice(0,200)",
+                "element_name": "NS Employee ID"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "columns",
+                "label": "Columns",
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "failed_job_id",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "failed_job_id"
+                    },
+                    "render_input": "parse_integer_output",
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "int(11), primary key",
+                    "type": "integer",
+                    "name": "failed_job_id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "element_name",
+                    "details": {
+                      "data_type": "varchar(45)",
+                      "column_name": "element_name"
+                    },
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "varchar(45), primary key",
+                    "type": "string",
+                    "name": "element_name"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "element_value",
+                    "details": {
+                      "data_type": "varchar(200)",
+                      "column_name": "element_value"
+                    },
+                    "optional": true,
+                    "hint": "varchar(200)",
+                    "type": "string",
+                    "name": "element_value"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "table",
+              "columns",
+              "columns.failed_job_id",
+              "columns.element_name",
+              "columns.element_value"
+            ],
+            "comment": "NS Employee ID",
+            "uuid": "ec86338c-5418-436c-b850-b0f95eadacb7"
+          }
+        ],
+        "uuid": "af6c51b2-ab71-4411-9f1d-971d8448cd01"
+      },
+      {
+        "number": 10,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "present",
+              "lhs": "#{_('data.workato_service.receive_request.request.element_sfdc_account_id')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 11,
+            "provider": "mysql",
+            "name": "insert_row",
+            "as": "insert_row__7",
+            "title": "Insert row in wkto_failed_jobs_element",
+            "description": "Insert <span class=\"provider\">row</span> in <span class=\"provider\">wkto_failed_jobs_element</span> table in <span class=\"provider\">MySQL</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "table": "wkto_failed_jobs_element"
+            },
+            "toggleCfg": {
+              "table": true
+            },
+            "input": {
+              "table": "wkto_failed_jobs_element",
+              "columns": {
+                "failed_job_id": "#{_('data.mysql.insert_row.inserted_id')}",
+                "element_value": "=_('data.workato_service.receive_request.request.element_sfdc_account_id').slice(0,200)",
+                "element_name": "SFDC Account ID"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "columns",
+                "label": "Columns",
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "failed_job_id",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "failed_job_id"
+                    },
+                    "render_input": "parse_integer_output",
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "int(11), primary key",
+                    "type": "integer",
+                    "name": "failed_job_id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "element_name",
+                    "details": {
+                      "data_type": "varchar(45)",
+                      "column_name": "element_name"
+                    },
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "varchar(45), primary key",
+                    "type": "string",
+                    "name": "element_name"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "element_value",
+                    "details": {
+                      "data_type": "varchar(200)",
+                      "column_name": "element_value"
+                    },
+                    "optional": true,
+                    "hint": "varchar(200)",
+                    "type": "string",
+                    "name": "element_value"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "table",
+              "columns",
+              "columns.failed_job_id",
+              "columns.element_name",
+              "columns.element_value"
+            ],
+            "comment": "SFDC Account ID",
+            "uuid": "479d463f-2d25-4837-8e8a-73e437a33667"
+          }
+        ],
+        "uuid": "d33a74fd-665c-4b43-97d9-bb0951d1a42e"
+      },
+      {
+        "number": 12,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "present",
+              "lhs": "#{_('data.workato_service.receive_request.request.element_sfdc_case_id')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 13,
+            "provider": "mysql",
+            "name": "insert_row",
+            "as": "7b3baf78",
+            "title": "Insert row in wkto_failed_jobs_element",
+            "description": "Insert <span class=\"provider\">row</span> in <span class=\"provider\">wkto_failed_jobs_element</span> table in <span class=\"provider\">MySQL</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "table": "wkto_failed_jobs_element"
+            },
+            "toggleCfg": {
+              "table": true
+            },
+            "input": {
+              "table": "wkto_failed_jobs_element",
+              "columns": {
+                "failed_job_id": "#{_('data.mysql.insert_row.inserted_id')}",
+                "element_value": "=_('data.workato_service.receive_request.request.element_sfdc_case_id').slice(0,200)",
+                "element_name": "SFDC Case ID"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "columns",
+                "label": "Columns",
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "failed_job_id",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "failed_job_id"
+                    },
+                    "render_input": "parse_integer_output",
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "int(11), primary key",
+                    "type": "integer",
+                    "name": "failed_job_id",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "element_name",
+                    "details": {
+                      "data_type": "varchar(45)",
+                      "column_name": "element_name"
+                    },
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "varchar(45), primary key",
+                    "type": "string",
+                    "name": "element_name",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "element_value",
+                    "details": {
+                      "data_type": "varchar(200)",
+                      "column_name": "element_value"
+                    },
+                    "optional": true,
+                    "hint": "varchar(200)",
+                    "type": "string",
+                    "name": "element_value",
+                    "parent": "columns"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "table",
+              "columns",
+              "columns.failed_job_id",
+              "columns.element_name",
+              "columns.element_value"
+            ],
+            "comment": "SFDC Case ID",
+            "uuid": "77eb645b-52e5-49cb-b9d8-de3b5454170e"
+          }
+        ],
+        "uuid": "bf02930e-5e65-43b9-a595-e930265ebae2"
+      },
+      {
+        "number": 14,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "present",
+              "lhs": "#{_('data.workato_service.receive_request.request.element_sfdc_case_attachment_id')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 15,
+            "provider": "mysql",
+            "name": "insert_row",
+            "as": "80916351",
+            "title": "Insert row in wkto_failed_jobs_element",
+            "description": "Insert <span class=\"provider\">row</span> in <span class=\"provider\">wkto_failed_jobs_element</span> table in <span class=\"provider\">MySQL</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "table": "wkto_failed_jobs_element"
+            },
+            "toggleCfg": {
+              "table": true
+            },
+            "input": {
+              "table": "wkto_failed_jobs_element",
+              "columns": {
+                "failed_job_id": "#{_('data.mysql.insert_row.inserted_id')}",
+                "element_value": "=_('data.workato_service.receive_request.request.element_sfdc_case_attachment_id').slice(0,200)",
+                "element_name": "SFDC Case Attachment ID"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "columns",
+                "label": "Columns",
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "failed_job_id",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "failed_job_id"
+                    },
+                    "render_input": "parse_integer_output",
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "int(11), primary key",
+                    "type": "integer",
+                    "name": "failed_job_id",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "element_name",
+                    "details": {
+                      "data_type": "varchar(45)",
+                      "column_name": "element_name"
+                    },
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "varchar(45), primary key",
+                    "type": "string",
+                    "name": "element_name",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "element_value",
+                    "details": {
+                      "data_type": "varchar(200)",
+                      "column_name": "element_value"
+                    },
+                    "optional": true,
+                    "hint": "varchar(200)",
+                    "type": "string",
+                    "name": "element_value",
+                    "parent": "columns"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "table",
+              "columns",
+              "columns.failed_job_id",
+              "columns.element_name",
+              "columns.element_value"
+            ],
+            "comment": "SFDC Case Attachment ID",
+            "uuid": "7686a277-3e52-458b-a02e-a627c64123ad"
+          }
+        ],
+        "uuid": "1bc80280-3bcc-47a1-9ea5-fac277e4a0bd"
+      },
+      {
+        "number": 16,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "present",
+              "lhs": "#{_('data.workato_service.receive_request.request.element_sfdc_case_comment_id')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 17,
+            "provider": "mysql",
+            "name": "insert_row",
+            "as": "c503a3da",
+            "title": "Insert row in wkto_failed_jobs_element",
+            "description": "Insert <span class=\"provider\">row</span> in <span class=\"provider\">wkto_failed_jobs_element</span> table in <span class=\"provider\">MySQL</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "table": "wkto_failed_jobs_element"
+            },
+            "toggleCfg": {
+              "table": true
+            },
+            "input": {
+              "table": "wkto_failed_jobs_element",
+              "columns": {
+                "failed_job_id": "#{_('data.mysql.insert_row.inserted_id')}",
+                "element_value": "=_('data.workato_service.receive_request.request.element_sfdc_case_comment_id').slice(0,200)",
+                "element_name": "SFDC Case Comment ID"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "columns",
+                "label": "Columns",
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "failed_job_id",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "failed_job_id"
+                    },
+                    "render_input": "parse_integer_output",
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "int(11), primary key",
+                    "type": "integer",
+                    "name": "failed_job_id",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "element_name",
+                    "details": {
+                      "data_type": "varchar(45)",
+                      "column_name": "element_name"
+                    },
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "varchar(45), primary key",
+                    "type": "string",
+                    "name": "element_name",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "element_value",
+                    "details": {
+                      "data_type": "varchar(200)",
+                      "column_name": "element_value"
+                    },
+                    "optional": true,
+                    "hint": "varchar(200)",
+                    "type": "string",
+                    "name": "element_value",
+                    "parent": "columns"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "table",
+              "columns",
+              "columns.failed_job_id",
+              "columns.element_name",
+              "columns.element_value"
+            ],
+            "comment": "SFDC Case Comment ID",
+            "uuid": "d4175e11-19e6-4356-9c42-9cf5e8e61664"
+          }
+        ],
+        "uuid": "84243347-8f7f-4438-83c8-37b0d33ba940"
+      },
+      {
+        "number": 18,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "present",
+              "lhs": "#{_('data.workato_service.receive_request.request.element_sfdc_contact_id')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 19,
+            "provider": "mysql",
+            "name": "insert_row",
+            "as": "insert_row__5",
+            "title": "Insert row in wkto_failed_jobs_element",
+            "description": "Insert <span class=\"provider\">row</span> in <span class=\"provider\">wkto_failed_jobs_element</span> table in <span class=\"provider\">MySQL</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "table": "wkto_failed_jobs_element"
+            },
+            "toggleCfg": {
+              "table": true
+            },
+            "input": {
+              "table": "wkto_failed_jobs_element",
+              "columns": {
+                "failed_job_id": "#{_('data.mysql.insert_row.inserted_id')}",
+                "element_value": "=_('data.workato_service.receive_request.request.element_sfdc_contact_id').slice(0,200)",
+                "element_name": "SFDC Contact ID"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "columns",
+                "label": "Columns",
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "failed_job_id",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "failed_job_id"
+                    },
+                    "render_input": "parse_integer_output",
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "int(11), primary key",
+                    "type": "integer",
+                    "name": "failed_job_id",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "element_name",
+                    "details": {
+                      "data_type": "varchar(45)",
+                      "column_name": "element_name"
+                    },
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "varchar(45), primary key",
+                    "type": "string",
+                    "name": "element_name",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "element_value",
+                    "details": {
+                      "data_type": "varchar(200)",
+                      "column_name": "element_value"
+                    },
+                    "optional": true,
+                    "hint": "varchar(200)",
+                    "type": "string",
+                    "name": "element_value",
+                    "parent": "columns"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "table",
+              "columns",
+              "columns.failed_job_id",
+              "columns.element_name",
+              "columns.element_value"
+            ],
+            "comment": "SFDC Contact ID",
+            "uuid": "280f5d2d-7185-42ae-8fb1-2f23376e02b6"
+          }
+        ],
+        "uuid": "e8f7ced6-3a4b-4b63-95dd-1c6b1e3fe5d9"
+      },
+      {
+        "number": 20,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "present",
+              "lhs": "#{_('data.workato_service.receive_request.request.element_sfdc_team_role')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 21,
+            "provider": "mysql",
+            "name": "insert_row",
+            "as": "insert_row__6",
+            "title": "Insert row in wkto_failed_jobs_element",
+            "description": "Insert <span class=\"provider\">row</span> in <span class=\"provider\">wkto_failed_jobs_element</span> table in <span class=\"provider\">MySQL</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "table": "wkto_failed_jobs_element"
+            },
+            "toggleCfg": {
+              "table": true
+            },
+            "input": {
+              "table": "wkto_failed_jobs_element",
+              "columns": {
+                "failed_job_id": "#{_('data.mysql.insert_row.inserted_id')}",
+                "element_value": "=_('data.workato_service.receive_request.request.element_sfdc_team_role').slice(0,200)",
+                "element_name": "SFDC Team Role"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "columns",
+                "label": "Columns",
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "failed_job_id",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "failed_job_id"
+                    },
+                    "render_input": "parse_integer_output",
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "int(11), primary key",
+                    "type": "integer",
+                    "name": "failed_job_id",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "element_name",
+                    "details": {
+                      "data_type": "varchar(45)",
+                      "column_name": "element_name"
+                    },
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "varchar(45), primary key",
+                    "type": "string",
+                    "name": "element_name",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "element_value",
+                    "details": {
+                      "data_type": "varchar(200)",
+                      "column_name": "element_value"
+                    },
+                    "optional": true,
+                    "hint": "varchar(200)",
+                    "type": "string",
+                    "name": "element_value",
+                    "parent": "columns"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "table",
+              "columns",
+              "columns.failed_job_id",
+              "columns.element_name",
+              "columns.element_value"
+            ],
+            "comment": "SFDC Team Role",
+            "uuid": "5eedde72-53cd-474c-8621-1d0a3500c2c2"
+          }
+        ],
+        "uuid": "918ddb99-cdf8-4fa4-8636-1e88d14b6d41"
+      },
+      {
+        "number": 22,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "present",
+              "lhs": "#{_('data.workato_service.receive_request.request.element_sfdc_user_id')}",
+              "rhs": null
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 23,
+            "provider": "mysql",
+            "name": "insert_row",
+            "as": "a46cf752",
+            "title": "Insert row in wkto_failed_jobs_element",
+            "description": "Insert <span class=\"provider\">row</span> in <span class=\"provider\">wkto_failed_jobs_element</span> table in <span class=\"provider\">MySQL</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "table": "wkto_failed_jobs_element"
+            },
+            "toggleCfg": {
+              "table": true
+            },
+            "input": {
+              "table": "wkto_failed_jobs_element",
+              "columns": {
+                "failed_job_id": "#{_('data.mysql.insert_row.inserted_id')}",
+                "element_value": "=_('data.workato_service.receive_request.request.element_sfdc_user_id').slice(0,200)",
+                "element_name": "SFDC User ID"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "columns",
+                "label": "Columns",
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "failed_job_id",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "failed_job_id"
+                    },
+                    "render_input": "parse_integer_output",
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "int(11), primary key",
+                    "type": "integer",
+                    "name": "failed_job_id",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "element_name",
+                    "details": {
+                      "data_type": "varchar(45)",
+                      "column_name": "element_name"
+                    },
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "varchar(45), primary key",
+                    "type": "string",
+                    "name": "element_name",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "element_value",
+                    "details": {
+                      "data_type": "varchar(200)",
+                      "column_name": "element_value"
+                    },
+                    "optional": true,
+                    "hint": "varchar(200)",
+                    "type": "string",
+                    "name": "element_value",
+                    "parent": "columns"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "table",
+              "columns",
+              "columns.failed_job_id",
+              "columns.element_name",
+              "columns.element_value"
+            ],
+            "comment": "SFDC Team Role",
+            "uuid": "f9894547-4448-443b-8fd7-ce947912b84f"
+          }
+        ],
+        "uuid": "4aec376a-0c65-4308-be5b-2e93446171be"
+      },
+      {
+        "number": 24,
+        "provider": "workato_service",
+        "name": "send_reply",
+        "as": "send_reply",
+        "title": null,
+        "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Log Error to MySQL Failed Jobs</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "reply_type": "success",
+          "reply": {
+            "mysql_failed_job_id": "#{_('data.mysql.insert_row.inserted_id')}"
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "reply",
+            "label": "Reply",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "MySQL Failed Job ID",
+                "name": "mysql_failed_job_id",
+                "type": "string",
+                "optional": false,
+                "parent": "reply"
+              }
+            ]
+          }
+        ],
+        "uuid": "3fe34ee8-73c4-40f4-bb1e-22f47d65e3f0"
+      }
+    ],
+    "uuid": "aad875b9-bdb6-45e8-aaf0-a3cf021a4d97"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "mysql",
+      "account_id": {
+        "zip_name": "resources/mysql.connection.json",
+        "name": "MySQL",
+        "folder": "resources"
+      }
+    }
+  ]
+}

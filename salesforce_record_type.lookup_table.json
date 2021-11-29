@@ -1,0 +1,76 @@
+{
+  "name": "SALESFORCE_RECORD_TYPE",
+  "schema": [
+    {
+      "control_type": "text",
+      "label": "sobject_type",
+      "name": "col1",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "name",
+      "name": "col2",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "id",
+      "name": "col3",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 4",
+      "name": "col4",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 5",
+      "name": "col5",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 6",
+      "sticky": false,
+      "type": "string",
+      "name": "col6"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 7",
+      "sticky": false,
+      "type": "string",
+      "name": "col7"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 8",
+      "sticky": false,
+      "type": "string",
+      "name": "col8"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 9",
+      "sticky": false,
+      "type": "string",
+      "name": "col9"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 10",
+      "sticky": false,
+      "type": "string",
+      "name": "col10"
+    }
+  ],
+  "data": "Account,Partner,\nAccount,Customer,\n"
+}

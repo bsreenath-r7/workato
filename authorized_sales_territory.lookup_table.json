@@ -1,0 +1,76 @@
+{
+  "name": "AUTHORIZED_SALES_TERRITORY",
+  "schema": [
+    {
+      "control_type": "text",
+      "label": "sfdc_authorized_sales_territory",
+      "name": "col1",
+      "sticky": true,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "ns_authorized_sales_territory_id",
+      "name": "col2",
+      "sticky": true,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 3",
+      "name": "col3",
+      "sticky": false,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 4",
+      "name": "col4",
+      "sticky": false,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 5",
+      "name": "col5",
+      "sticky": false,
+      "type": "string"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 6",
+      "sticky": false,
+      "type": "string",
+      "name": "col6"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 7",
+      "sticky": false,
+      "type": "string",
+      "name": "col7"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 8",
+      "sticky": false,
+      "type": "string",
+      "name": "col8"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 9",
+      "sticky": false,
+      "type": "string",
+      "name": "col9"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 10",
+      "sticky": false,
+      "type": "string",
+      "name": "col10"
+    }
+  ],
+  "data": "United States of America,1\nAfghanistan,2\nAlbania,3\nAlgeria,4\nAmerican Samoa,5\nAndorra,6\nAngola,7\nAnguilla,8\nAntarctica,9\nAntigua and Barbuda,10\nArgentina,11\nArmenia,12\nAruba,13\nAustralia,14\nAustria,15\nAzerbaijan,16\nBahamas,17\nBahrain,18\nBangladesh,19\nBarbados,20\nBelarus,21\nBelgium,22\nBelize,23\nBenin,24\nBermuda,25\nBhutan,26\nBolivia,27\nBosnia and Herzegovina,28\nBotswana,29\nBouvet Island,30\nBrazil,31\nBritish Indian Ocean Territory,32\nBrunei Darussalam,33\nBulgaria,34\nBurkina Faso,35\nBurundi,36\nCambodia,37\nCameroon,38\nCanada,39\nCape Verde,40\nCayman Islands,41\nCentral African Republic,42\nChad,43\nChile,44\nChina,45\nChristmas Island,46\nCocos (Keeling) Islands,47\nColombia,48\nComoros,49\n\"Congo, Democratic People's Republic\",50\n\"Congo, Republic of\",51\nCook Islands,52\nCosta Rica,53\nCote d'Ivoire,54\nCroatia/Hrvatska,55\nCuba,56\nCuracao,246\nCyprus,57\nCzech Republic,58\nDenmark,59\nDjibouti,60\nDominica,61\nDominican Republic,62\nEast Timor,63\nEcuador,64\nEgypt,65\nEl Salvador,66\nEquatorial Guinea,67\nEritrea,68\nEstonia,69\nEthiopia,70\nFalkland Islands (Malvina),71\nFaroe Islands,72\nFiji,73\nFinland,74\nFrance,75\nFrench Guiana,76\nFrench Polynesia,77\nFrench Southern Territories,78\nGabon,79\nGambia,80\nGeorgia,81\nGermany,82\nGhana,83\nGibraltar,84\nGreece,85\nGreenland,86\nGrenada,87\nGuadeloupe,88\nGuam,89\nGuatemala,90\nGuernsey,91\nGuinea,92\nGuinea-Bissau,93\nGuyana,94\nHaiti,95\nHeard and McDonald Islands,96\nHoly See (City Vatican State),97\nHonduras,98\nHong Kong,99\nHungary,100\nIceland,101\nIndia,102\nIndonesia,103\nIran (Islamic Republic of),104\nIraq,105\nIreland,106\nIsle of Man,107\nIsrael,108\nItaly,109\nJamaica,110\nJapan,111\nJersey,112\nJordan,113\nKazakhstan,114\nKenya,115\nKiribati,116\n\"Korea, Democratic People's Republic\",117\n\"Korea, Republic of\",118\nKosovo,248\nKuwait,119\nKyrgyzstan,120\nLao People's Democratic Republic,121\nLatvia,122\nLebanon,123\nLesotho,124\nLiberia,125\nLibyan Arab Jamahiriya,126\nLiechtenstein,127\nLithuania,128\nLuxembourg,129\nMacau,130\nMacedonia,131\nMadagascar,132\nMalawi,133\nMalaysia,134\nMaldives,135\nMali,136\nMalta,137\nMarshall Islands,138\nMartinique,139\nMauritania,140\nMauritius,141\nMayotte,142\nMexico,143\n\"Micronesia, Federal State of\",144\n\"Moldova, Republic of\",145\nMonaco,146\nMongolia,147\nMontenegro,148\nMontserrat,149\nMorocco,150\nMozambique,151\nMyanmar,152\nNamibia,153\nNauru,154\nNepal,155\nNetherlands,156\nNetherlands Antilles (Deprecated),157\nNew Caledonia,158\nNew Zealand,159\nNicaragua,160\nNiger,161\nNigeria,162\nNiue,163\nNorfolk Island,164\nNorthern Mariana Islands,165\nNorway,166\nOman,167\nPakistan,168\nPalau,169\nPalestinian Territories,170\nPanama,171\nPapua New Guinea,172\nParaguay,173\nPeru,174\nPhilippines,175\nPitcairn Island,176\nPoland,177\nPortugal,178\nPuerto Rico,179\nQatar,180\nReunion Island,181\nRomania,182\nRussian Federation,183\nRwanda,184\nSaint Barthélemy,185\nSaint Kitts and Nevis,186\nSaint Lucia,187\nSaint Martin,188\nSaint Vincent and the Grenadines,189\nSan Marino,190\nSao Tome and Principe,191\nSaudi Arabia,192\nSenegal,193\nSerbia,194\nSeychelles,195\nSierra Leone,196\nSingapore,197\nSlovak Republic,198\nSlovenia,199\nSolomon Islands,200\nSomalia,201\nSouth Africa,202\nSouth Georgia,203\nSpain,204\nSri Lanka,205\nSt. Helena,206\nSt. Pierre and Miquelon,207\nSudan,208\nSuriname,209\nSvalbard and Jan Mayen Islands,210\nSwaziland,211\nSweden,212\nSwitzerland,213\nSyrian Arab Republic,214\nTaiwan,215\nTajikistan,216\nTanzania,217\nThailand,218\nTogo,219\nTokelau,220\nTonga,221\nTrinidad and Tobago,222\nTunisia,223\nTurkey,224\nTurkmenistan,225\nTurks and Caicos Islands,226\nTuvalu,227\nUganda,228\nUkraine,229\nUnited Arab Emirates,230\nUnited Kingdom (GB),231\nUruguay,232\nUS Minor Outlying Islands,233\nUzbekistan,234\nVanuatu,235\nVenezuela,236\nVietnam,237\nVirgin Islands (British),238\nVirgin Islands (USA),239\nWallis and Futuna Islands,240\nWestern Sahara,241\nWestern Samoa,242\nYemen,243\nZambia,244\nZimbabwe,245\nYugoslavia,249\n"
+}

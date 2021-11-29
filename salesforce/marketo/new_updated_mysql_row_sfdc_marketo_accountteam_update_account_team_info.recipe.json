@@ -1,0 +1,2127 @@
+{
+  "name": "New/Updated MySQL Row (SFDC-MARKETO-ACCOUNTTEAM) - Update Account Team Info",
+  "description": "When there is a new/updated record in Salesforce, do action",
+  "version": 7,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "mysql",
+    "name": "updated_row_v2",
+    "as": "d0748a0e",
+    "title": "New/updated row in sfdc_marketo_accountteam",
+    "description": "New/updated <span class=\"provider\">row</span> in <span class=\"provider\">sfdc_marketo_accountteam</span> table in <span class=\"provider\">MySQL</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+      "table": "sfdc_marketo_accountteam",
+      "primary_key": "sfdc_contact_id",
+      "output_columns": [
+        {
+          "label": "sfdc_account_id",
+          "value": "sfdc_account_id"
+        },
+        {
+          "label": "accountExecutive_emailAddress",
+          "value": "accountExecutive_emailAddress"
+        },
+        {
+          "label": "accountExecutive_firstName",
+          "value": "accountExecutive_firstName"
+        },
+        {
+          "label": "accountExecutive_lastName",
+          "value": "accountExecutive_lastName"
+        },
+        {
+          "label": "accountExecutive_phoneNumber",
+          "value": "accountExecutive_phoneNumber"
+        },
+        {
+          "label": "accountExecutive_title",
+          "value": "accountExecutive_title"
+        },
+        {
+          "label": "automationRep_emailAddress",
+          "value": "automationRep_emailAddress"
+        },
+        {
+          "label": "automationRep_firstName",
+          "value": "automationRep_firstName"
+        },
+        {
+          "label": "automationRep_lastName",
+          "value": "automationRep_lastName"
+        },
+        {
+          "label": "automationRep_phoneNumber",
+          "value": "automationRep_phoneNumber"
+        },
+        {
+          "label": "automationRep_title",
+          "value": "automationRep_title"
+        },
+        {
+          "label": "bdr_emailAddress",
+          "value": "bdr_emailAddress"
+        },
+        {
+          "label": "bdr_firstName",
+          "value": "bdr_firstName"
+        },
+        {
+          "label": "bdr_lastName",
+          "value": "bdr_lastName"
+        },
+        {
+          "label": "bdr_phoneNumber",
+          "value": "bdr_phoneNumber"
+        },
+        {
+          "label": "bdr_title",
+          "value": "bdr_title"
+        },
+        {
+          "label": "csm_emailAddress",
+          "value": "csm_emailAddress"
+        },
+        {
+          "label": "csm_firstName",
+          "value": "csm_firstName"
+        },
+        {
+          "label": "csm_lastName",
+          "value": "csm_lastName"
+        },
+        {
+          "label": "csm_phoneNumber",
+          "value": "csm_phoneNumber"
+        },
+        {
+          "label": "csm_title",
+          "value": "csm_title"
+        },
+        {
+          "label": "divvyCloudRep_emailAddress",
+          "value": "divvyCloudRep_emailAddress"
+        },
+        {
+          "label": "divvyCloudRep_firstName",
+          "value": "divvyCloudRep_firstName"
+        },
+        {
+          "label": "divvyCloudRep_lastName",
+          "value": "divvyCloudRep_lastName"
+        },
+        {
+          "label": "divvyCloudRep_phone",
+          "value": "divvyCloudRep_phone"
+        },
+        {
+          "label": "divvyCloudRep_title",
+          "value": "divvyCloudRep_title"
+        },
+        {
+          "label": "idrRep_emailAddress",
+          "value": "idrRep_emailAddress"
+        },
+        {
+          "label": "idrRep_firstName",
+          "value": "idrRep_firstName"
+        },
+        {
+          "label": "idrRep_lastName",
+          "value": "idrRep_lastName"
+        },
+        {
+          "label": "idrRep_phoneNumber",
+          "value": "idrRep_phoneNumber"
+        },
+        {
+          "label": "idrRep_title",
+          "value": "idrRep_title"
+        },
+        {
+          "label": "sdr_emailAddress",
+          "value": "sdr_emailAddress"
+        },
+        {
+          "label": "sdr_firstName",
+          "value": "sdr_firstName"
+        },
+        {
+          "label": "sdr_lastName",
+          "value": "sdr_lastName"
+        },
+        {
+          "label": "sdr_phoneNumber",
+          "value": "sdr_phoneNumber"
+        },
+        {
+          "label": "sdr_title",
+          "value": "sdr_title"
+        },
+        {
+          "label": "servicesSpecialistRep_emailAddress",
+          "value": "servicesSpecialistRep_emailAddress"
+        },
+        {
+          "label": "servicesSpecialistRep_firstName",
+          "value": "servicesSpecialistRep_firstName"
+        },
+        {
+          "label": "servicesSpecialistRep_lastName",
+          "value": "servicesSpecialistRep_lastName"
+        },
+        {
+          "label": "servicesSpecialistRep_phoneNumber",
+          "value": "servicesSpecialistRep_phoneNumber"
+        },
+        {
+          "label": "servicesSpecialistRep_title",
+          "value": "servicesSpecialistRep_title"
+        },
+        {
+          "label": "temRep_emailAddress",
+          "value": "temRep_emailAddress"
+        },
+        {
+          "label": "temRep_firstName",
+          "value": "temRep_firstName"
+        },
+        {
+          "label": "temRep_lastName",
+          "value": "temRep_lastName"
+        },
+        {
+          "label": "temRep_phoneNumber",
+          "value": "temRep_phoneNumber"
+        },
+        {
+          "label": "temRep_title",
+          "value": "temRep_title"
+        },
+        {
+          "label": "state",
+          "value": "state"
+        },
+        {
+          "label": "last_modified",
+          "value": "last_modified"
+        },
+        {
+          "label": "sfdc_contact_id",
+          "value": "sfdc_contact_id"
+        }
+      ],
+      "sort_column": "last_modified"
+    },
+    "toggleCfg": {
+      "table": true
+    },
+    "input": {
+      "table": "sfdc_marketo_accountteam",
+      "primary_key": "sfdc_contact_id",
+      "output_columns": "sfdc_account_id\naccountExecutive_emailAddress\naccountExecutive_firstName\naccountExecutive_lastName\naccountExecutive_phoneNumber\naccountExecutive_title\nautomationRep_emailAddress\nautomationRep_firstName\nautomationRep_lastName\nautomationRep_phoneNumber\nautomationRep_title\nbdr_emailAddress\nbdr_firstName\nbdr_lastName\nbdr_phoneNumber\nbdr_title\ncsm_emailAddress\ncsm_firstName\ncsm_lastName\ncsm_phoneNumber\ncsm_title\ndivvyCloudRep_emailAddress\ndivvyCloudRep_firstName\ndivvyCloudRep_lastName\ndivvyCloudRep_phone\ndivvyCloudRep_title\nidrRep_emailAddress\nidrRep_firstName\nidrRep_lastName\nidrRep_phoneNumber\nidrRep_title\nsdr_emailAddress\nsdr_firstName\nsdr_lastName\nsdr_phoneNumber\nsdr_title\nservicesSpecialistRep_emailAddress\nservicesSpecialistRep_firstName\nservicesSpecialistRep_lastName\nservicesSpecialistRep_phoneNumber\nservicesSpecialistRep_title\ntemRep_emailAddress\ntemRep_firstName\ntemRep_lastName\ntemRep_phoneNumber\ntemRep_title\nstate\nlast_modified\nsfdc_contact_id",
+      "sort_column": "last_modified",
+      "where": "state = 'ready'"
+    },
+    "extended_output_schema": [
+      {
+        "type": "string",
+        "name": "sfdc_account_id",
+        "control_type": "text",
+        "label": "sfdc_account_id",
+        "hint": "varchar(100), primary key",
+        "optional": true,
+        "event_title": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "sfdc_account_id"
+        }
+      },
+      {
+        "type": "string",
+        "name": "accountexecutive_emailaddress_83e91e9a",
+        "control_type": "text",
+        "label": "accountExecutive_emailAddress",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "accountExecutive_emailAddress"
+        }
+      },
+      {
+        "type": "string",
+        "name": "accountexecutive_firstname_17b3c0d3",
+        "control_type": "text",
+        "label": "accountExecutive_firstName",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "accountExecutive_firstName"
+        }
+      },
+      {
+        "type": "string",
+        "name": "accountexecutive_lastname_36592852",
+        "control_type": "text",
+        "label": "accountExecutive_lastName",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "accountExecutive_lastName"
+        }
+      },
+      {
+        "type": "string",
+        "name": "accountexecutive_phonenumber_bf69f010",
+        "control_type": "text",
+        "label": "accountExecutive_phoneNumber",
+        "hint": "varchar(25)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(25)",
+          "column_name": "accountExecutive_phoneNumber"
+        }
+      },
+      {
+        "type": "string",
+        "name": "accountexecutive_title_ce8ef25b",
+        "control_type": "text",
+        "label": "accountExecutive_title",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "accountExecutive_title"
+        }
+      },
+      {
+        "type": "string",
+        "name": "automationrep_emailaddress_88b148e0",
+        "control_type": "text",
+        "label": "automationRep_emailAddress",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "automationRep_emailAddress"
+        }
+      },
+      {
+        "type": "string",
+        "name": "automationrep_firstname_b9596e0b",
+        "control_type": "text",
+        "label": "automationRep_firstName",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "automationRep_firstName"
+        }
+      },
+      {
+        "type": "string",
+        "name": "automationrep_lastname_2e0a8380",
+        "control_type": "text",
+        "label": "automationRep_lastName",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "automationRep_lastName"
+        }
+      },
+      {
+        "type": "string",
+        "name": "automationrep_phonenumber_96aad31c",
+        "control_type": "text",
+        "label": "automationRep_phoneNumber",
+        "hint": "varchar(25)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(25)",
+          "column_name": "automationRep_phoneNumber"
+        }
+      },
+      {
+        "type": "string",
+        "name": "automationrep_title_a53ffebf",
+        "control_type": "text",
+        "label": "automationRep_title",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "automationRep_title"
+        }
+      },
+      {
+        "type": "string",
+        "name": "bdr_emailaddress_92b2db85",
+        "control_type": "text",
+        "label": "bdr_emailAddress",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "bdr_emailAddress"
+        }
+      },
+      {
+        "type": "string",
+        "name": "bdr_firstname_ae02875d",
+        "control_type": "text",
+        "label": "bdr_firstName",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "bdr_firstName"
+        }
+      },
+      {
+        "type": "string",
+        "name": "bdr_lastname_07116ea3",
+        "control_type": "text",
+        "label": "bdr_lastName",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "bdr_lastName"
+        }
+      },
+      {
+        "type": "string",
+        "name": "bdr_phonenumber_3bf56469",
+        "control_type": "text",
+        "label": "bdr_phoneNumber",
+        "hint": "varchar(25)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(25)",
+          "column_name": "bdr_phoneNumber"
+        }
+      },
+      {
+        "type": "string",
+        "name": "bdr_title",
+        "control_type": "text",
+        "label": "bdr_title",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "bdr_title"
+        }
+      },
+      {
+        "type": "string",
+        "name": "csm_emailaddress_c4bf07fe",
+        "control_type": "text",
+        "label": "csm_emailAddress",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "csm_emailAddress"
+        }
+      },
+      {
+        "type": "string",
+        "name": "csm_firstname_b3e0e12e",
+        "control_type": "text",
+        "label": "csm_firstName",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "csm_firstName"
+        }
+      },
+      {
+        "type": "string",
+        "name": "csm_lastname_f639bb77",
+        "control_type": "text",
+        "label": "csm_lastName",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "csm_lastName"
+        }
+      },
+      {
+        "type": "string",
+        "name": "csm_phonenumber_cd2fd856",
+        "control_type": "text",
+        "label": "csm_phoneNumber",
+        "hint": "varchar(25)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(25)",
+          "column_name": "csm_phoneNumber"
+        }
+      },
+      {
+        "type": "string",
+        "name": "csm_title",
+        "control_type": "text",
+        "label": "csm_title",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "csm_title"
+        }
+      },
+      {
+        "type": "string",
+        "name": "divvycloudrep_emailaddress_c892a196",
+        "control_type": "text",
+        "label": "divvyCloudRep_emailAddress",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "divvyCloudRep_emailAddress"
+        }
+      },
+      {
+        "type": "string",
+        "name": "divvycloudrep_firstname_8015f85b",
+        "control_type": "text",
+        "label": "divvyCloudRep_firstName",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "divvyCloudRep_firstName"
+        }
+      },
+      {
+        "type": "string",
+        "name": "divvycloudrep_lastname_276e5524",
+        "control_type": "text",
+        "label": "divvyCloudRep_lastName",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "divvyCloudRep_lastName"
+        }
+      },
+      {
+        "type": "string",
+        "name": "divvycloudrep_phone_0a89e246",
+        "control_type": "text",
+        "label": "divvyCloudRep_phone",
+        "hint": "varchar(25)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(25)",
+          "column_name": "divvyCloudRep_phone"
+        }
+      },
+      {
+        "type": "string",
+        "name": "divvycloudrep_title_8103819b",
+        "control_type": "text",
+        "label": "divvyCloudRep_title",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "divvyCloudRep_title"
+        }
+      },
+      {
+        "type": "string",
+        "name": "idrrep_emailaddress_74855656",
+        "control_type": "text",
+        "label": "idrRep_emailAddress",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "idrRep_emailAddress"
+        }
+      },
+      {
+        "type": "string",
+        "name": "idrrep_firstname_88523a00",
+        "control_type": "text",
+        "label": "idrRep_firstName",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "idrRep_firstName"
+        }
+      },
+      {
+        "type": "string",
+        "name": "idrrep_lastname_61389d73",
+        "control_type": "text",
+        "label": "idrRep_lastName",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "idrRep_lastName"
+        }
+      },
+      {
+        "type": "string",
+        "name": "idrrep_phonenumber_36d4c19c",
+        "control_type": "text",
+        "label": "idrRep_phoneNumber",
+        "hint": "varchar(25)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(25)",
+          "column_name": "idrRep_phoneNumber"
+        }
+      },
+      {
+        "type": "string",
+        "name": "idrrep_title_1a873933",
+        "control_type": "text",
+        "label": "idrRep_title",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "idrRep_title"
+        }
+      },
+      {
+        "type": "string",
+        "name": "sdr_emailaddress_b9c66b99",
+        "control_type": "text",
+        "label": "sdr_emailAddress",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "sdr_emailAddress"
+        }
+      },
+      {
+        "type": "string",
+        "name": "sdr_firstname_ca3329f4",
+        "control_type": "text",
+        "label": "sdr_firstName",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "sdr_firstName"
+        }
+      },
+      {
+        "type": "string",
+        "name": "sdr_lastname_28bb5f13",
+        "control_type": "text",
+        "label": "sdr_lastName",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "sdr_lastName"
+        }
+      },
+      {
+        "type": "string",
+        "name": "sdr_phonenumber_bc002a3e",
+        "control_type": "text",
+        "label": "sdr_phoneNumber",
+        "hint": "varchar(25)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(25)",
+          "column_name": "sdr_phoneNumber"
+        }
+      },
+      {
+        "type": "string",
+        "name": "sdr_title",
+        "control_type": "text",
+        "label": "sdr_title",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "sdr_title"
+        }
+      },
+      {
+        "type": "string",
+        "name": "servicesspecialistrep_emailaddress_377ae7aa",
+        "control_type": "text",
+        "label": "servicesSpecialistRep_emailAddress",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "servicesSpecialistRep_emailAddress"
+        }
+      },
+      {
+        "type": "string",
+        "name": "servicesspecialistrep_firstname_81fe1b44",
+        "control_type": "text",
+        "label": "servicesSpecialistRep_firstName",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "servicesSpecialistRep_firstName"
+        }
+      },
+      {
+        "type": "string",
+        "name": "servicesspecialistrep_lastname_52bfe1ee",
+        "control_type": "text",
+        "label": "servicesSpecialistRep_lastName",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "servicesSpecialistRep_lastName"
+        }
+      },
+      {
+        "type": "string",
+        "name": "servicesspecialistrep_phonenumber_64f27a08",
+        "control_type": "text",
+        "label": "servicesSpecialistRep_phoneNumber",
+        "hint": "varchar(25)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(25)",
+          "column_name": "servicesSpecialistRep_phoneNumber"
+        }
+      },
+      {
+        "type": "string",
+        "name": "servicesspecialistrep_title_9fe18044",
+        "control_type": "text",
+        "label": "servicesSpecialistRep_title",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "servicesSpecialistRep_title"
+        }
+      },
+      {
+        "type": "string",
+        "name": "temrep_emailaddress_a2d0fe6d",
+        "control_type": "text",
+        "label": "temRep_emailAddress",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "temRep_emailAddress"
+        }
+      },
+      {
+        "type": "string",
+        "name": "temrep_firstname_7207415a",
+        "control_type": "text",
+        "label": "temRep_firstName",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "temRep_firstName"
+        }
+      },
+      {
+        "type": "string",
+        "name": "temrep_lastname_cbc90526",
+        "control_type": "text",
+        "label": "temRep_lastName",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "temRep_lastName"
+        }
+      },
+      {
+        "type": "string",
+        "name": "temrep_phonenumber_1f151918",
+        "control_type": "text",
+        "label": "temRep_phoneNumber",
+        "hint": "varchar(25)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(25)",
+          "column_name": "temRep_phoneNumber"
+        }
+      },
+      {
+        "type": "string",
+        "name": "temrep_title_f00bc0b9",
+        "control_type": "text",
+        "label": "temRep_title",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "temRep_title"
+        }
+      },
+      {
+        "type": "string",
+        "name": "state",
+        "control_type": "text",
+        "label": "state",
+        "hint": "varchar(45)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(45)",
+          "column_name": "state"
+        }
+      },
+      {
+        "type": "date_time",
+        "name": "last_modified",
+        "control_type": "date_time",
+        "label": "last_modified",
+        "hint": "timestamp",
+        "optional": true,
+        "render_input": "convert_date_time",
+        "parse_output": "parse_time_value",
+        "details": {
+          "data_type": "timestamp",
+          "column_name": "last_modified"
+        }
+      },
+      {
+        "type": "string",
+        "name": "sfdc_contact_id",
+        "control_type": "text",
+        "label": "sfdc_contact_id",
+        "hint": "varchar(100)",
+        "optional": true,
+        "details": {
+          "data_type": "varchar(100)",
+          "column_name": "sfdc_contact_id"
+        }
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "salesforce",
+            "name": "search_sobjects",
+            "as": "cb331067",
+            "title": "Search Account team members",
+            "description": "Search for <span class=\"provider\">Account team members</span> in <span class=\"provider\">Salesforce</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "sobject_name": "Account team member",
+              "table_list": [
+                {
+                  "label": "User",
+                  "value": "User"
+                }
+              ],
+              "field_list": [
+                {
+                  "label": "User.First Name",
+                  "value": "User$User ID.FirstName"
+                },
+                {
+                  "label": "User.Last Name",
+                  "value": "User$User ID.LastName"
+                },
+                {
+                  "label": "User.Email",
+                  "value": "User$User ID.Email"
+                },
+                {
+                  "label": "User.Phone",
+                  "value": "User$User ID.Phone"
+                },
+                {
+                  "label": "Team Role",
+                  "value": "TeamMemberRole"
+                },
+                {
+                  "label": "Account Team Member ID",
+                  "value": "Id"
+                },
+                {
+                  "label": "User.Title",
+                  "value": "User$User ID.Title"
+                },
+                {
+                  "label": "Account ID",
+                  "value": "AccountId"
+                }
+              ],
+              "TeamMemberRole": "Account Executive (AE)"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "limit": "2000",
+              "sobject_name": "AccountTeamMember",
+              "field_list": "User$User ID.FirstName\nUser$User ID.LastName\nUser$User ID.Email\nUser$User ID.Phone\nTeamMemberRole\nId\nUser$User ID.Title\nAccountId",
+              "table_list": "User",
+              "AccountId": "#{_('data.mysql.d0748a0e.sfdc_account_id')}"
+            },
+            "extended_output_schema": [
+              {
+                "type": "array",
+                "name": "AccountTeamMember",
+                "label": "Account Team",
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Account ID",
+                    "custom": false,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": false,
+                    "type": "string",
+                    "name": "AccountId"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Account Team Member ID",
+                    "optional": true,
+                    "custom": false,
+                    "sfdc_createable": false,
+                    "sfdc_updateable": false,
+                    "type": "string",
+                    "name": "Id"
+                  },
+                  {
+                    "control_type": "select",
+                    "label": "Team Role",
+                    "pick_list": "sobject_field_values_list",
+                    "pick_list_params": {
+                      "sobject_name": "\"AccountTeamMember\""
+                    },
+                    "toggle_hint": "Select from list",
+                    "toggle_field": {
+                      "control_type": "text",
+                      "label": "Team Role",
+                      "toggle_hint": "Enter custom value",
+                      "optional": true,
+                      "custom": false,
+                      "sfdc_createable": true,
+                      "sfdc_updateable": true,
+                      "type": "string",
+                      "name": "TeamMemberRole"
+                    },
+                    "optional": true,
+                    "custom": false,
+                    "sfdc_createable": true,
+                    "sfdc_updateable": true,
+                    "type": "string",
+                    "name": "TeamMemberRole"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Email",
+                        "custom": false,
+                        "sfdc_createable": true,
+                        "sfdc_updateable": true,
+                        "type": "string",
+                        "name": "Email"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "First Name",
+                        "optional": true,
+                        "custom": false,
+                        "sfdc_createable": true,
+                        "sfdc_updateable": true,
+                        "type": "string",
+                        "name": "FirstName"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Last Name",
+                        "custom": false,
+                        "sfdc_createable": true,
+                        "sfdc_updateable": true,
+                        "type": "string",
+                        "name": "LastName"
+                      },
+                      {
+                        "control_type": "phone",
+                        "label": "Phone",
+                        "optional": true,
+                        "custom": false,
+                        "sfdc_createable": true,
+                        "sfdc_updateable": true,
+                        "type": "string",
+                        "name": "Phone"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Title",
+                        "optional": true,
+                        "custom": false,
+                        "sfdc_createable": true,
+                        "sfdc_updateable": true,
+                        "type": "string",
+                        "name": "Title"
+                      }
+                    ],
+                    "label": "User",
+                    "type": "object",
+                    "name": "User"
+                  }
+                ]
+              },
+              {
+                "type": "integer",
+                "name": "list_size",
+                "control_type": "number",
+                "label": "List size",
+                "parse_output": "integer_conversion"
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "AccountAccessLevel",
+                "control_type": "select",
+                "label": "Account Access",
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"AccountTeamMember\""
+                },
+                "optional": true,
+                "custom": false,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Account Access",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": false,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "AccountAccessLevel"
+                },
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "AccountId",
+                "control_type": "text",
+                "label": "Account ID",
+                "sticky": true,
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": true,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "Id",
+                "control_type": "text",
+                "label": "Account Team Member ID",
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "CaseAccessLevel",
+                "control_type": "select",
+                "label": "Case Access",
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"AccountTeamMember\""
+                },
+                "optional": true,
+                "custom": false,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Case Access",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": false,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "CaseAccessLevel"
+                },
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "ContactAccessLevel",
+                "control_type": "select",
+                "label": "Contact Access",
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"AccountTeamMember\""
+                },
+                "optional": true,
+                "custom": false,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Contact Access",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": false,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "ContactAccessLevel"
+                },
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "CreatedById",
+                "control_type": "text",
+                "label": "Created By ID",
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "date_time",
+                "name": "CreatedDate",
+                "control_type": "date_time",
+                "label": "Created Date",
+                "optional": true,
+                "custom": false,
+                "render_input": "render_iso8601_timestamp",
+                "parse_output": "parse_iso8601_timestamp",
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "boolean",
+                "name": "IsDeleted",
+                "control_type": "checkbox",
+                "label": "Deleted",
+                "optional": true,
+                "custom": false,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Deleted",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "custom": false,
+                  "sfdc_createable": false,
+                  "sfdc_updateable": false,
+                  "type": "boolean",
+                  "name": "IsDeleted"
+                },
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "LastModifiedById",
+                "control_type": "text",
+                "label": "Last Modified By ID",
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "date_time",
+                "name": "LastModifiedDate",
+                "control_type": "date_time",
+                "label": "Last Modified Date",
+                "optional": true,
+                "custom": false,
+                "render_input": "render_iso8601_timestamp",
+                "parse_output": "parse_iso8601_timestamp",
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "OpportunityAccessLevel",
+                "control_type": "select",
+                "label": "Opportunity Access",
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"AccountTeamMember\""
+                },
+                "optional": true,
+                "custom": false,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Opportunity Access",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": false,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "OpportunityAccessLevel"
+                },
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "date_time",
+                "name": "SystemModstamp",
+                "control_type": "date_time",
+                "label": "System Modstamp",
+                "optional": true,
+                "custom": false,
+                "render_input": "render_iso8601_timestamp",
+                "parse_output": "parse_iso8601_timestamp",
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "TeamMemberRole",
+                "control_type": "select",
+                "label": "Team Role",
+                "sticky": true,
+                "pick_list": "sobject_field_values_list",
+                "pick_list_params": {
+                  "sobject_name": "\"AccountTeamMember\""
+                },
+                "optional": true,
+                "custom": false,
+                "toggle_hint": "Select from list",
+                "toggle_field": {
+                  "control_type": "text",
+                  "label": "Team Role",
+                  "toggle_hint": "Enter custom value",
+                  "optional": true,
+                  "custom": false,
+                  "sfdc_createable": true,
+                  "sfdc_updateable": true,
+                  "type": "string",
+                  "name": "TeamMemberRole"
+                },
+                "sfdc_createable": true,
+                "sfdc_updateable": true
+              },
+              {
+                "type": "string",
+                "name": "Title",
+                "control_type": "text",
+                "label": "Title",
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "PhotoUrl",
+                "control_type": "url",
+                "label": "Url for thumbnail sized photo",
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": false,
+                "sfdc_updateable": false
+              },
+              {
+                "type": "string",
+                "name": "UserId",
+                "control_type": "text",
+                "label": "User ID",
+                "sticky": true,
+                "optional": true,
+                "custom": false,
+                "sfdc_createable": true,
+                "sfdc_updateable": false
+              }
+            ],
+            "visible_config_fields": [
+              "sobject_name",
+              "field_list",
+              "limit",
+              "AccountId",
+              "table_list"
+            ],
+            "hidden_config_fields": [
+              "TeamMemberRole",
+              "UserId"
+            ],
+            "comment": "Search for all the latest account team members tied to an account using the Salesforce account Id",
+            "uuid": "e7e79fb4-24a7-4fd0-8806-74238c87b40f"
+          },
+          {
+            "number": 3,
+            "provider": "mysql",
+            "name": "update_rows",
+            "as": "8463c071",
+            "title": "Update rows in sfdc_marketo_accountteam",
+            "description": "Update <span class=\"provider\">rows</span> in <span class=\"provider\">sfdc_marketo_accountteam</span> table in <span class=\"provider\">MySQL</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "table": "sfdc_marketo_accountteam"
+            },
+            "toggleCfg": {
+              "table": true
+            },
+            "input": {
+              "where": "sfdc_contact_id='#{_('data.mysql.d0748a0e.sfdc_contact_id')}'",
+              "table": "sfdc_marketo_accountteam",
+              "columns": {
+                "accountexecutive_emailaddress_83e91e9a": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Account Executive (AE)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Account Executive (AE)\").first[\"User\"][\"Email\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Account Executive (AE)\").first[\"User\"][\"Email\"]  : clear) : clear",
+                "accountexecutive_firstname_17b3c0d3": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Account Executive (AE)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Account Executive (AE)\").first[\"User\"][\"FirstName\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Account Executive (AE)\").first[\"User\"][\"FirstName\"]  : clear) : clear",
+                "accountexecutive_title_ce8ef25b": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Account Executive (AE)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Account Executive (AE)\").first[\"User\"][\"Title\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Account Executive (AE)\").first[\"User\"][\"Title\"]  : clear) : clear",
+                "accountexecutive_lastname_36592852": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Account Executive (AE)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Account Executive (AE)\").first[\"User\"][\"LastName\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Account Executive (AE)\").first[\"User\"][\"LastName\"]  : clear) : clear",
+                "accountexecutive_phonenumber_bf69f010": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Account Executive (AE)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Account Executive (AE)\").first[\"User\"][\"Phone\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Account Executive (AE)\").first[\"User\"][\"Phone\"]  : clear) : clear",
+                "automationrep_emailaddress_88b148e0": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Automation Rep(AE)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Automation Rep(AE)\").first[\"User\"][\"Email\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Automation Rep(AE)\").first[\"User\"][\"Email\"]  : clear) : clear",
+                "automationrep_firstname_b9596e0b": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Automation Rep(AE)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Automation Rep(AE)\").first[\"User\"][\"FirstName\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Automation Rep(AE)\").first[\"User\"][\"FirstName\"]  : clear) : clear",
+                "automationrep_lastname_2e0a8380": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Automation Rep(AE)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Automation Rep(AE)\").first[\"User\"][\"LastName\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Automation Rep(AE)\").first[\"User\"][\"LastName\"]  : clear) : clear",
+                "automationrep_phonenumber_96aad31c": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Automation Rep(AE)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Automation Rep(AE)\").first[\"User\"][\"Phone\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Automation Rep(AE)\").first[\"User\"][\"Phone\"]  : clear) : clear",
+                "automationrep_title_a53ffebf": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Automation Rep(AE)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Automation Rep(AE)\").first[\"User\"][\"Title\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Automation Rep(AE)\").first[\"User\"][\"Title\"]  : clear) : clear",
+                "bdr_emailaddress_92b2db85": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Business Development Rep (BDR)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Business Development Rep (BDR)\").first[\"User\"][\"Email\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Business Development Rep (BDR)\").first[\"User\"][\"Email\"]  : clear) : clear",
+                "bdr_firstname_ae02875d": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Business Development Rep (BDR)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Business Development Rep (BDR)\").first[\"User\"][\"FirstName\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Business Development Rep (BDR)\").first[\"User\"][\"FirstName\"]  : clear) : clear",
+                "bdr_lastname_07116ea3": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Business Development Rep (BDR)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Business Development Rep (BDR)\").first[\"User\"][\"LastName\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Business Development Rep (BDR)\").first[\"User\"][\"LastName\"]  : clear) : clear",
+                "bdr_phonenumber_3bf56469": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Business Development Rep (BDR)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Business Development Rep (BDR)\").first[\"User\"][\"Phone\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Business Development Rep (BDR)\").first[\"User\"][\"Phone\"]  : clear) : clear",
+                "bdr_title": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Business Development Rep (BDR)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Business Development Rep (BDR)\").first[\"User\"][\"Title\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Business Development Rep (BDR)\").first[\"User\"][\"Title\"]  : clear) : clear",
+                "csm_emailaddress_c4bf07fe": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Customer Success Manager (CSM)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Customer Success Manager (CSM)\").first[\"User\"][\"Email\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Customer Success Manager (CSM)\").first[\"User\"][\"Email\"]  : clear) : clear",
+                "csm_firstname_b3e0e12e": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Customer Success Manager (CSM)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Customer Success Manager (CSM)\").first[\"User\"][\"FirstName\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Customer Success Manager (CSM)\").first[\"User\"][\"FirstName\"]  : clear) : clear",
+                "csm_lastname_f639bb77": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Customer Success Manager (CSM)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Customer Success Manager (CSM)\").first[\"User\"][\"LastName\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Customer Success Manager (CSM)\").first[\"User\"][\"LastName\"]  : clear) : clear",
+                "csm_phonenumber_cd2fd856": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Customer Success Manager (CSM)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Customer Success Manager (CSM)\").first[\"User\"][\"Phone\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Customer Success Manager (CSM)\").first[\"User\"][\"Phone\"]  : clear) : clear",
+                "csm_title": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Customer Success Manager (CSM)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Customer Success Manager (CSM)\").first[\"User\"][\"Title\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Customer Success Manager (CSM)\").first[\"User\"][\"Title\"]  : clear) : clear",
+                "idrrep_emailaddress_74855656": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"IDR AE\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"IDR AE\").first[\"User\"][\"Email\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"IDR AE\").first[\"User\"][\"Email\"]  : clear) : clear",
+                "idrrep_firstname_88523a00": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"IDR AE\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"IDR AE\").first[\"User\"][\"FirstName\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"IDR AE\").first[\"User\"][\"FirstName\"]  : clear) : clear",
+                "idrrep_lastname_61389d73": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"IDR AE\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"IDR AE\").first[\"User\"][\"LastName\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"IDR AE\").first[\"User\"][\"LastName\"]  : clear) : clear",
+                "idrrep_phonenumber_36d4c19c": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"IDR AE\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"IDR AE\").first[\"User\"][\"Phone\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"IDR AE\").first[\"User\"][\"Phone\"]  : clear) : clear",
+                "idrrep_title_1a873933": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"IDR AE\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"IDR AE\").first[\"User\"][\"Title\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"IDR AE\").first[\"User\"][\"Title\"]  : clear) : clear",
+                "sdr_title": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Sales Development Rep (SDR)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Sales Development Rep (SDR)\").first[\"User\"][\"Title\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Sales Development Rep (SDR)\").first[\"User\"][\"Title\"]  : clear) : clear",
+                "sdr_firstname_ca3329f4": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Sales Development Rep (SDR)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Sales Development Rep (SDR)\").first[\"User\"][\"FirstName\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Sales Development Rep (SDR)\").first[\"User\"][\"FirstName\"]  : clear) : clear",
+                "sdr_lastname_28bb5f13": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Sales Development Rep (SDR)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Sales Development Rep (SDR)\") .first[\"User\"][\"LastName\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Sales Development Rep (SDR)\") .first[\"User\"][\"LastName\"]  : clear) : clear",
+                "sdr_phonenumber_bc002a3e": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Sales Development Rep (SDR)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Sales Development Rep (SDR)\").first[\"User\"][\"Phone\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Sales Development Rep (SDR)\").first[\"User\"][\"Phone\"]  : clear) : clear",
+                "sdr_emailaddress_b9c66b99": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Sales Development Rep (SDR)\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Sales Development Rep (SDR)\").first[\"User\"][\"Email\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Sales Development Rep (SDR)\").first[\"User\"][\"Email\"]  : clear) : clear",
+                "servicesspecialistrep_emailaddress_377ae7aa": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Services Specialist\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Services Specialist\").first[\"User\"][\"Email\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Services Specialist\").first[\"User\"][\"Email\"]  : clear) : clear",
+                "servicesspecialistrep_phonenumber_64f27a08": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Services Specialist\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Services Specialist\").first[\"User\"][\"Phone\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Services Specialist\").first[\"User\"][\"Phone\"]  : clear) : clear",
+                "servicesspecialistrep_lastname_52bfe1ee": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Services Specialist\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Services Specialist\").first[\"User\"][\"LastName\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Services Specialist\").first[\"User\"][\"LastName\"]  : clear) : clear",
+                "servicesspecialistrep_firstname_81fe1b44": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Services Specialist\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Services Specialist\").first[\"User\"][\"FirstName\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Services Specialist\").first[\"User\"][\"FirstName\"]  : clear) : clear",
+                "servicesspecialistrep_title_9fe18044": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Services Specialist\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Services Specialist\").first[\"User\"][\"Title\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Services Specialist\").first[\"User\"][\"Title\"]  : clear) : clear",
+                "temrep_title_f00bc0b9": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"TEM AE\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"TEM AE\").first[\"User\"][\"Title\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"TEM AE\").first[\"User\"][\"Title\"]  : clear) : clear",
+                "temrep_firstname_7207415a": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"TEM AE\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"TEM AE\").first[\"User\"][\"FirstName\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"TEM AE\").first[\"User\"][\"FirstName\"]  : clear) : clear",
+                "temrep_lastname_cbc90526": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"TEM AE\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"TEM AE\").first[\"User\"][\"LastName\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"TEM AE\").first[\"User\"][\"LastName\"]  : clear) : clear",
+                "temrep_phonenumber_1f151918": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"TEM AE\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"TEM AE\").first[\"User\"][\"Phone\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"TEM AE\").first[\"User\"][\"Phone\"]  : clear) : clear",
+                "temrep_emailaddress_a2d0fe6d": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"TEM AE\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"TEM AE\").first[\"User\"][\"Email\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"TEM AE\").first[\"User\"][\"Email\"]  : clear) : clear",
+                "state": "queued",
+                "divvycloudrep_firstname_8015f85b": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Cloud Sales Specialist\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Cloud Sales Specialist\").first[\"User\"][\"FirstName\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Cloud Sales Specialist\").first[\"User\"][\"FirstName\"]  : clear) : clear",
+                "divvycloudrep_emailaddress_c892a196": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Cloud Sales Specialist\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Cloud Sales Specialist\").first[\"User\"][\"Email\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Cloud Sales Specialist\").first[\"User\"][\"Email\"]  : clear) : clear",
+                "divvycloudrep_lastname_276e5524": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Cloud Sales Specialist\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Cloud Sales Specialist\").first[\"User\"][\"LastName\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Cloud Sales Specialist\").first[\"User\"][\"LastName\"]  : clear) : clear",
+                "divvycloudrep_phone_0a89e246": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Cloud Sales Specialist\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Cloud Sales Specialist\").first[\"User\"][\"Phone\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Cloud Sales Specialist\").first[\"User\"][\"Phone\"]  : clear) : clear",
+                "divvycloudrep_title_8103819b": "=_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Cloud Sales Specialist\").present? ? (_('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Cloud Sales Specialist\").first[\"User\"][\"Title\"].present? ? _('data.salesforce.cb331067.AccountTeamMember').where('TeamMemberRole': \"Cloud Sales Specialist\").first[\"User\"][\"Title\"]  : clear) : clear"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "columns",
+                "label": "Columns",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "accountExecutive_emailAddress",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "accountExecutive_emailAddress"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "accountexecutive_emailaddress_83e91e9a",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "accountExecutive_firstName",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "accountExecutive_firstName"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "accountexecutive_firstname_17b3c0d3",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "accountExecutive_lastName",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "accountExecutive_lastName"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "accountexecutive_lastname_36592852",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "accountExecutive_phoneNumber",
+                    "details": {
+                      "data_type": "varchar(25)",
+                      "column_name": "accountExecutive_phoneNumber"
+                    },
+                    "optional": true,
+                    "hint": "varchar(25)",
+                    "type": "string",
+                    "name": "accountexecutive_phonenumber_bf69f010",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "accountExecutive_title",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "accountExecutive_title"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "accountexecutive_title_ce8ef25b",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "automationRep_emailAddress",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "automationRep_emailAddress"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "automationrep_emailaddress_88b148e0",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "automationRep_firstName",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "automationRep_firstName"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "automationrep_firstname_b9596e0b",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "automationRep_lastName",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "automationRep_lastName"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "automationrep_lastname_2e0a8380",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "automationRep_phoneNumber",
+                    "details": {
+                      "data_type": "varchar(25)",
+                      "column_name": "automationRep_phoneNumber"
+                    },
+                    "optional": true,
+                    "hint": "varchar(25)",
+                    "type": "string",
+                    "name": "automationrep_phonenumber_96aad31c",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "automationRep_title",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "automationRep_title"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "automationrep_title_a53ffebf",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "bdr_emailAddress",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "bdr_emailAddress"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "bdr_emailaddress_92b2db85",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "bdr_firstName",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "bdr_firstName"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "bdr_firstname_ae02875d",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "bdr_lastName",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "bdr_lastName"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "bdr_lastname_07116ea3",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "bdr_phoneNumber",
+                    "details": {
+                      "data_type": "varchar(25)",
+                      "column_name": "bdr_phoneNumber"
+                    },
+                    "optional": true,
+                    "hint": "varchar(25)",
+                    "type": "string",
+                    "name": "bdr_phonenumber_3bf56469",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "bdr_title",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "bdr_title"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "bdr_title",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "csm_emailAddress",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "csm_emailAddress"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "csm_emailaddress_c4bf07fe",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "csm_firstName",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "csm_firstName"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "csm_firstname_b3e0e12e",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "csm_lastName",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "csm_lastName"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "csm_lastname_f639bb77",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "csm_phoneNumber",
+                    "details": {
+                      "data_type": "varchar(25)",
+                      "column_name": "csm_phoneNumber"
+                    },
+                    "optional": true,
+                    "hint": "varchar(25)",
+                    "type": "string",
+                    "name": "csm_phonenumber_cd2fd856",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "csm_title",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "csm_title"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "csm_title",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "divvyCloudRep_emailAddress",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "divvyCloudRep_emailAddress"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "divvycloudrep_emailaddress_c892a196",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "divvyCloudRep_firstName",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "divvyCloudRep_firstName"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "divvycloudrep_firstname_8015f85b",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "divvyCloudRep_lastName",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "divvyCloudRep_lastName"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "divvycloudrep_lastname_276e5524",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "divvyCloudRep_phone",
+                    "details": {
+                      "data_type": "varchar(25)",
+                      "column_name": "divvyCloudRep_phone"
+                    },
+                    "optional": true,
+                    "hint": "varchar(25)",
+                    "type": "string",
+                    "name": "divvycloudrep_phone_0a89e246",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "divvyCloudRep_title",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "divvyCloudRep_title"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "divvycloudrep_title_8103819b",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "idrRep_emailAddress",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "idrRep_emailAddress"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "idrrep_emailaddress_74855656",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "idrRep_firstName",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "idrRep_firstName"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "idrrep_firstname_88523a00",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "idrRep_lastName",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "idrRep_lastName"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "idrrep_lastname_61389d73",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "idrRep_phoneNumber",
+                    "details": {
+                      "data_type": "varchar(25)",
+                      "column_name": "idrRep_phoneNumber"
+                    },
+                    "optional": true,
+                    "hint": "varchar(25)",
+                    "type": "string",
+                    "name": "idrrep_phonenumber_36d4c19c",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "idrRep_title",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "idrRep_title"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "idrrep_title_1a873933",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "date_time",
+                    "label": "last_modified",
+                    "render_input": "convert_date_time",
+                    "parse_output": "parse_time_value",
+                    "details": {
+                      "data_type": "timestamp",
+                      "column_name": "last_modified"
+                    },
+                    "optional": true,
+                    "hint": "timestamp",
+                    "type": "date_time",
+                    "name": "last_modified",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "sdr_emailAddress",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "sdr_emailAddress"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "sdr_emailaddress_b9c66b99",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "sdr_firstName",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "sdr_firstName"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "sdr_firstname_ca3329f4",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "sdr_lastName",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "sdr_lastName"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "sdr_lastname_28bb5f13",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "sdr_phoneNumber",
+                    "details": {
+                      "data_type": "varchar(25)",
+                      "column_name": "sdr_phoneNumber"
+                    },
+                    "optional": true,
+                    "hint": "varchar(25)",
+                    "type": "string",
+                    "name": "sdr_phonenumber_bc002a3e",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "sdr_title",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "sdr_title"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "sdr_title",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "servicesSpecialistRep_emailAddress",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "servicesSpecialistRep_emailAddress"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "servicesspecialistrep_emailaddress_377ae7aa",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "servicesSpecialistRep_firstName",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "servicesSpecialistRep_firstName"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "servicesspecialistrep_firstname_81fe1b44",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "servicesSpecialistRep_lastName",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "servicesSpecialistRep_lastName"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "servicesspecialistrep_lastname_52bfe1ee",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "servicesSpecialistRep_phoneNumber",
+                    "details": {
+                      "data_type": "varchar(25)",
+                      "column_name": "servicesSpecialistRep_phoneNumber"
+                    },
+                    "optional": true,
+                    "hint": "varchar(25)",
+                    "type": "string",
+                    "name": "servicesspecialistrep_phonenumber_64f27a08",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "servicesSpecialistRep_title",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "servicesSpecialistRep_title"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "servicesspecialistrep_title_9fe18044",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "sfdc_account_id",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "sfdc_account_id"
+                    },
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "varchar(100), primary key",
+                    "type": "string",
+                    "name": "sfdc_account_id",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "sfdc_contact_id",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "sfdc_contact_id"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "sfdc_contact_id",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "state",
+                    "details": {
+                      "data_type": "varchar(45)",
+                      "column_name": "state"
+                    },
+                    "optional": true,
+                    "hint": "varchar(45)",
+                    "type": "string",
+                    "name": "state",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "temRep_emailAddress",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "temRep_emailAddress"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "temrep_emailaddress_a2d0fe6d",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "temRep_firstName",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "temRep_firstName"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "temrep_firstname_7207415a",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "temRep_lastName",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "temRep_lastName"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "temrep_lastname_cbc90526",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "temRep_phoneNumber",
+                    "details": {
+                      "data_type": "varchar(25)",
+                      "column_name": "temRep_phoneNumber"
+                    },
+                    "optional": true,
+                    "hint": "varchar(25)",
+                    "type": "string",
+                    "name": "temrep_phonenumber_1f151918",
+                    "parent": "columns"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "temRep_title",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "temRep_title"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "temrep_title_f00bc0b9",
+                    "parent": "columns"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "table",
+              "where",
+              "columns.accountexecutive_emailaddress_83e91e9a",
+              "columns.accountexecutive_firstname_17b3c0d3",
+              "columns.accountexecutive_lastname_36592852",
+              "columns.accountexecutive_phonenumber_bf69f010",
+              "columns.accountexecutive_title_ce8ef25b",
+              "columns.automationrep_emailaddress_88b148e0",
+              "columns.automationrep_firstname_b9596e0b",
+              "columns.automationrep_lastname_2e0a8380",
+              "columns.automationrep_phonenumber_96aad31c",
+              "columns.automationrep_title_a53ffebf",
+              "columns.bdr_emailaddress_92b2db85",
+              "columns.bdr_firstname_ae02875d",
+              "columns.bdr_lastname_07116ea3",
+              "columns.bdr_phonenumber_3bf56469",
+              "columns.bdr_title",
+              "columns.csm_emailaddress_c4bf07fe",
+              "columns.csm_firstname_b3e0e12e",
+              "columns.csm_lastname_f639bb77",
+              "columns.csm_phonenumber_cd2fd856",
+              "columns.csm_title",
+              "columns.idrrep_emailaddress_74855656",
+              "columns.idrrep_firstname_88523a00",
+              "columns.idrrep_lastname_61389d73",
+              "columns.idrrep_phonenumber_36d4c19c",
+              "columns.idrrep_title_1a873933",
+              "columns.sdr_emailaddress_b9c66b99",
+              "columns.sdr_firstname_ca3329f4",
+              "columns.sdr_lastname_28bb5f13",
+              "columns.sdr_phonenumber_bc002a3e",
+              "columns.sdr_title",
+              "columns.servicesspecialistrep_emailaddress_377ae7aa",
+              "columns.servicesspecialistrep_firstname_81fe1b44",
+              "columns.servicesspecialistrep_lastname_52bfe1ee",
+              "columns.servicesspecialistrep_phonenumber_64f27a08",
+              "columns.servicesspecialistrep_title_9fe18044",
+              "columns.temrep_emailaddress_a2d0fe6d",
+              "columns.temrep_firstname_7207415a",
+              "columns.temrep_lastname_cbc90526",
+              "columns.temrep_phonenumber_1f151918",
+              "columns.temrep_title_f00bc0b9",
+              "columns",
+              "columns.state",
+              "columns.divvycloudrep_title_8103819b",
+              "columns.divvycloudrep_phone_0a89e246",
+              "columns.divvycloudrep_lastname_276e5524",
+              "columns.divvycloudrep_firstname_8015f85b",
+              "columns.divvycloudrep_emailaddress_c892a196"
+            ],
+            "comment": "Set 'state' = queued",
+            "uuid": "6511a9df-0b31-47bc-b305-02aaa7987b61"
+          },
+          {
+            "number": 4,
+            "as": "68125cda",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "1",
+              "retry_interval": "5"
+            },
+            "block": [
+              {
+                "number": 5,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "true",
+                  "stop_reason": "#{_('data.catch.68125cda.message')}"
+                },
+                "uuid": "f991c97d-ade6-498d-bc2c-543bbe207f56"
+              }
+            ],
+            "uuid": "88025554-8202-4c3a-b463-6af3bbd73297"
+          }
+        ],
+        "uuid": "3d0a4f4f-8034-4742-947f-e9b87dbebee7"
+      }
+    ],
+    "comment": "WHEN 'state' = ready",
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "AccountId"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.mysql.d0748a0e.sfdc_account_id')}"
+    },
+    "uuid": "42c25591-3950-4f42-ac44-1c22acedeb1b"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "salesforce",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/salesforce.connection.json",
+        "name": "Salesforce",
+        "folder": "connections"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "mysql",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "resources/mysql.connection.json",
+        "name": "MySQL",
+        "folder": "resources"
+      }
+    }
+  ]
+}

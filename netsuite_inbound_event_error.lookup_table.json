@@ -1,0 +1,76 @@
+{
+  "name": "NETSUITE_INBOUND_EVENT_ERROR",
+  "schema": [
+    {
+      "control_type": "text",
+      "label": "Inbound Event Error",
+      "name": "col1",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "User Friendly Note",
+      "name": "col2",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "Example",
+      "name": "col3",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 4",
+      "name": "col4",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 5",
+      "name": "col5",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 6",
+      "sticky": false,
+      "type": "string",
+      "name": "col6"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 7",
+      "sticky": false,
+      "type": "string",
+      "name": "col7"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 8",
+      "sticky": false,
+      "type": "string",
+      "name": "col8"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 9",
+      "sticky": false,
+      "type": "string",
+      "name": "col9"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 10",
+      "sticky": false,
+      "type": "string",
+      "name": "col10"
+    }
+  ],
+  "data": "salesrep,Invalid Sales Rep\nPlease choose an item to add,Invalid SKU\nYou have entered an Invalid Field Value -1 for the following field: price,Invalid Price\ncustomer.netsuiteId,Invalid Customer\nYou must enter at least one line item for this transaction.,Missing Items on SO\nsalesRep.netsuiteId,Invalid Sales Rep\nThe field addressee contained more than the maximum number ( 100 ) of characters allowed.,Addressee too long\ncustbodyr7idrrep,Invalid IDR Rep\ncustbody_tt_billing_contact,Invalid Billing Contact\nnull,Unexpected Error\nThe field addr1 contained more than the maximum number ( 150 ) of characters allowed.,Too many characters in a field\nThe total amount is too large. Please split the transaction into multiple ones.,Transaction too large\nThe total can not be negative.,Total is negative\n"
+}

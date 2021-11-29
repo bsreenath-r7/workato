@@ -1,0 +1,76 @@
+{
+  "name": "NETSUITE_VARIABLES",
+  "schema": [
+    {
+      "control_type": "text",
+      "label": "key",
+      "name": "col1",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "value",
+      "name": "col2",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "type",
+      "name": "col3",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 4",
+      "name": "col4",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 5",
+      "name": "col5",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 6",
+      "sticky": false,
+      "type": "string",
+      "name": "col6"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 7",
+      "sticky": false,
+      "type": "string",
+      "name": "col7"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 8",
+      "sticky": false,
+      "type": "string",
+      "name": "col8"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 9",
+      "sticky": false,
+      "type": "string",
+      "name": "col9"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 10",
+      "sticky": false,
+      "type": "string",
+      "name": "col10"
+    }
+  ],
+  "data": "inactive_approver_report.inactive_employees.total_pages,18,\n1099.year,2020,\n1099.rapid7_ptin,743111935,\n1099.recipient,bsreenath@rapid7.com;,\"\"\n1099.report_runner,bsreenath@rapid7.com,\nrecipe.1099.helper.fetch_accounts,1060916,\nrecipe.1099.mysql.extract_vendor,1060911,1099.auto_start\nrecipe.1099.mysql.extract_payments_for_vendor,1060910,1099.auto_start\nrecipe.1099.pubsub.payments_for_vendor,1060913,1099.auto_start\nrecipe.1099.mysql.extract_bill,1060907,1099.auto_start\nrecipe.1099.callable.expense_ratio_calculation,1060914,1099.auto_start\nrecipe.1099.mysql.update_status_for_payment_bill,1060904,1099.auto_start\nrecipe.1099.mysql.update_status_for_payment,1060909,1099.auto_start\nrecipe.1099.mysql.update_status_for_vendor,1060906,1099.auto_start\nrecipe.1099.mysql.perform_calculations_for_payment_bill,1060908,1099.auto_start\nrecipe.1099.mysql.perform_calculations_for_payment,1060905,1099.auto_start\nrecipe.1099.mysql.perform_calculations_for_vendor,1060912,1099.auto_start\nrecipe.1099.generate_sovos_report,1060902,1099.auto_start\nrecipe.1099.initialize_report,1060903,\nrecipe.1099.helper.export_1099_vendors,1060915,\ncustomer.customer_publicity_rights.prohibited.id,2,\nnetsuite.url,https://663271.app.netsuite.com/,\ninactive_approver_report.inactive_employees.page_complete,1,\ninactive_approver_report.inactive_employees.page_complete,3,\ninactive_approver_report.inactive_employees.page_complete,4,\ninactive_approver_report.inactive_employees.page_complete,2,\ninactive_approver_report.inactive_employees.page_complete,6,\ninactive_approver_report.inactive_employees.page_complete,5,\ninactive_approver_report.inactive_employees.page_complete,7,\ninactive_approver_report.inactive_employees.page_complete,8,\ninactive_approver_report.inactive_employees.page_complete,11,\ninactive_approver_report.inactive_employees.page_complete,10,\ninactive_approver_report.inactive_employees.page_complete,9,\ninactive_approver_report.inactive_employees.page_complete,12,\ninactive_approver_report.inactive_employees.page_complete,13,\ninactive_approver_report.inactive_employees.page_complete,14,\ninactive_approver_report.inactive_employees.page_complete,16,\ninactive_approver_report.inactive_employees.page_complete,18,\ninactive_approver_report.inactive_employees.page_complete,17,\ninactive_approver_report.inactive_employees.page_complete,15,\n"
+}

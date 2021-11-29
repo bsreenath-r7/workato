@@ -1,0 +1,16 @@
+{
+  "name": "Create/Update Case",
+  "method": "POST",
+  "path": "case",
+  "legacy": false,
+  "recipe_id": {
+    "zip_name": "api/cases/api_create_update_case.recipe.json",
+    "name": "API - Create/Update Case",
+    "folder": "api/cases"
+  },
+  "api_group_id": {
+    "zip_name": "cases.api_group.json",
+    "name": "Cases",
+    "folder": ""
+  }
+}

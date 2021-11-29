@@ -1,0 +1,3003 @@
+{
+  "name": "Helper - Export 1099 Vendors List to CSV",
+  "description": "When there is a trigger event, do action",
+  "version": 5,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "clock",
+    "name": "timer",
+    "as": "e375ed2c",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "interval": "5"
+    },
+    "block": [
+      {
+        "number": 1,
+        "provider": "netsuite",
+        "name": "search_object_v2",
+        "as": "aa08c577",
+        "title": "Search Vendors",
+        "description": "Search <span class=\"provider\">Vendors</span> in <span class=\"provider\">NetSuite</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "netsuite_object": "Vendor",
+          "custom_list": [
+            {
+              "label": "Approval Status",
+              "value": "entityCustomField@10894"
+            }
+          ],
+          "field_list": [
+            {
+              "label": "Tax ID num",
+              "value": "taxIdNum"
+            },
+            {
+              "label": "Is inactive",
+              "value": "isInactive"
+            },
+            {
+              "label": "Is 1099 eligible",
+              "value": "is1099Eligible"
+            },
+            {
+              "label": "Internal ID",
+              "value": "internalId"
+            },
+            {
+              "label": "Account number",
+              "value": "accountNumber"
+            },
+            {
+              "label": "Entity ID",
+              "value": "entityId"
+            },
+            {
+              "label": "Address 1",
+              "value": "address1"
+            },
+            {
+              "label": "Bill city",
+              "value": "billCity"
+            },
+            {
+              "label": "Bill state",
+              "value": "billState"
+            },
+            {
+              "label": "Bill zip code",
+              "value": "billZipCode"
+            }
+          ]
+        },
+        "toggleCfg": {
+          "is1099Eligible": true,
+          "isInactive": true,
+          "isDefaultBilling": true
+        },
+        "input": {
+          "netsuite_object": "Vendor",
+          "limit": "200",
+          "search_settings": {
+            "string_fields": "contains",
+            "integer_fields": "equalTo",
+            "list_fields": "anyOf"
+          },
+          "custom_list": "entityCustomField@10894",
+          "field_list": "taxIdNum\nisInactive\nis1099Eligible\ninternalId\naccountNumber\nentityId\naddress1\nbillCity\nbillState\nbillZipCode",
+          "is1099Eligible": "true",
+          "isInactive": "false",
+          "isDefaultBilling": "true"
+        },
+        "extended_output_schema": [
+          {
+            "type": "array",
+            "name": "Vendors",
+            "label": "Vendors",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Account number",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchColumnStringField",
+                "type": "string",
+                "name": "accountNumber"
+              },
+              {
+                "control_type": "text",
+                "label": "Address 1",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchColumnStringField",
+                "type": "string",
+                "name": "address1"
+              },
+              {
+                "control_type": "text",
+                "label": "Bill city",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchColumnStringField",
+                "type": "string",
+                "name": "billCity"
+              },
+              {
+                "control_type": "text",
+                "label": "Bill state",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchColumnStringField",
+                "type": "string",
+                "name": "billState"
+              },
+              {
+                "control_type": "text",
+                "label": "Bill zip code",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchColumnStringField",
+                "type": "string",
+                "name": "billZipCode"
+              },
+              {
+                "control_type": "text",
+                "label": "Entity ID",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchColumnStringField",
+                "type": "string",
+                "name": "entityId"
+              },
+              {
+                "control_type": "text",
+                "label": "Internal ID",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchColumnSelectField",
+                "type": "string",
+                "name": "internalId"
+              },
+              {
+                "control_type": "checkbox",
+                "label": "Is 1099 eligible",
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Is 1099 eligible",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "platformCommon",
+                  "ns_search_type": "SearchColumnBooleanField",
+                  "type": "boolean",
+                  "name": "is1099Eligible"
+                },
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchColumnBooleanField",
+                "type": "boolean",
+                "name": "is1099Eligible"
+              },
+              {
+                "control_type": "checkbox",
+                "label": "Is inactive",
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Is inactive",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "platformCommon",
+                  "ns_search_type": "SearchColumnBooleanField",
+                  "type": "boolean",
+                  "name": "isInactive"
+                },
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchColumnBooleanField",
+                "type": "boolean",
+                "name": "isInactive"
+              },
+              {
+                "control_type": "text",
+                "label": "Tax ID num",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchColumnStringField",
+                "type": "string",
+                "name": "taxIdNum"
+              },
+              {
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Approval Status ID",
+                    "ns_custom_type": "SelectCustomFieldRef",
+                    "ns_search_type": "SearchSelectCustomField",
+                    "optional": true,
+                    "custom": true,
+                    "sticky": false,
+                    "toggle_hint": "Enter custom value",
+                    "toggle_field": {
+                      "control_type": "select",
+                      "label": "Approval Status ID",
+                      "toggle_hint": "Select from list",
+                      "optional": true,
+                      "custom": true,
+                      "sticky": false,
+                      "type": "string",
+                      "name": "f_10894_custentityr7_approval_status",
+                      "pick_list": [
+                        [
+                          "Pending Approval",
+                          "1"
+                        ],
+                        [
+                          "Approved",
+                          "2"
+                        ],
+                        [
+                          "Not Approved",
+                          "3"
+                        ]
+                      ]
+                    },
+                    "type": "string",
+                    "name": "f_10894_custentityr7_approval_status"
+                  }
+                ],
+                "label": "Custom fields",
+                "optional": true,
+                "type": "object",
+                "name": "custom_fields"
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "string",
+            "name": "accountNumber",
+            "control_type": "text",
+            "label": "Account number",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "string",
+            "name": "address",
+            "control_type": "text",
+            "label": "Address",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "string",
+            "name": "addressee",
+            "control_type": "text",
+            "label": "Addressee",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "string",
+            "name": "addressLabel",
+            "control_type": "text",
+            "label": "Address label",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "string",
+            "name": "addressPhone",
+            "control_type": "text",
+            "label": "Address phone",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "string",
+            "name": "attention",
+            "control_type": "text",
+            "label": "Attention",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "number",
+            "name": "balance",
+            "control_type": "text",
+            "label": "Balance",
+            "optional": true,
+            "parse_output": "float_conversion",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchDoubleField"
+          },
+          {
+            "type": "string",
+            "name": "billAddress",
+            "control_type": "text",
+            "label": "Bill address",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "string",
+            "name": "category",
+            "control_type": "text",
+            "label": "Category",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchMultiSelectField"
+          },
+          {
+            "type": "string",
+            "name": "city",
+            "control_type": "text",
+            "label": "City",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "string",
+            "name": "comments",
+            "control_type": "text",
+            "label": "Comments",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "string",
+            "name": "contact",
+            "control_type": "text",
+            "label": "Contact",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "string",
+            "name": "country",
+            "control_type": "text",
+            "label": "Country",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchEnumMultiSelectField"
+          },
+          {
+            "type": "string",
+            "name": "county",
+            "control_type": "text",
+            "label": "County",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "number",
+            "name": "creditLimit",
+            "control_type": "text",
+            "label": "Credit limit",
+            "optional": true,
+            "parse_output": "float_conversion",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchDoubleField"
+          },
+          {
+            "type": "string",
+            "name": "currency",
+            "control_type": "text",
+            "label": "Currency",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchMultiSelectField"
+          },
+          {
+            "type": "number",
+            "name": "currentExchangeRate",
+            "control_type": "text",
+            "label": "Current exchange rate",
+            "optional": true,
+            "parse_output": "float_conversion",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchDoubleField"
+          },
+          {
+            "type": "object",
+            "name": "dateCreated",
+            "label": "Date created",
+            "optional": true,
+            "properties": [
+              {
+                "control_type": "date_time",
+                "label": "From",
+                "optional": true,
+                "type": "date_time",
+                "name": "from",
+                "parse_output": "parse_iso8601_timestamp",
+                "render_input": "render_iso8601_timestamp",
+                "parent": "dateCreated"
+              },
+              {
+                "control_type": "date_time",
+                "label": "To",
+                "optional": true,
+                "type": "date_time",
+                "name": "to",
+                "parse_output": "parse_iso8601_timestamp",
+                "render_input": "render_iso8601_timestamp",
+                "parent": "dateCreated"
+              }
+            ],
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchDateField"
+          },
+          {
+            "type": "boolean",
+            "name": "eligibleForCommission",
+            "control_type": "checkbox",
+            "label": "Eligible for commission",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Eligible for commission",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "platformCommon",
+              "ns_search_type": "SearchBooleanField",
+              "type": "boolean",
+              "name": "eligibleForCommission"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchBooleanField"
+          },
+          {
+            "type": "string",
+            "name": "email",
+            "control_type": "text",
+            "label": "Email",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "string",
+            "name": "emailPreference",
+            "control_type": "text",
+            "label": "Email preference",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchEnumMultiSelectField"
+          },
+          {
+            "type": "boolean",
+            "name": "emailTransactions",
+            "control_type": "checkbox",
+            "label": "Email transactions",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Email transactions",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "platformCommon",
+              "ns_search_type": "SearchBooleanField",
+              "type": "boolean",
+              "name": "emailTransactions"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchBooleanField"
+          },
+          {
+            "type": "string",
+            "name": "entityId",
+            "control_type": "text",
+            "label": "Entity ID",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "string",
+            "name": "expenseAccount",
+            "control_type": "text",
+            "label": "Expense account",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchMultiSelectField"
+          },
+          {
+            "type": "string",
+            "name": "externalId",
+            "control_type": "text",
+            "label": "External ID",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchMultiSelectField"
+          },
+          {
+            "type": "string",
+            "name": "externalIdString",
+            "control_type": "text",
+            "label": "External ID string",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "string",
+            "name": "fax",
+            "control_type": "text",
+            "label": "Fax",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "boolean",
+            "name": "faxTransactions",
+            "control_type": "checkbox",
+            "label": "Fax transactions",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Fax transactions",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "platformCommon",
+              "ns_search_type": "SearchBooleanField",
+              "type": "boolean",
+              "name": "faxTransactions"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchBooleanField"
+          },
+          {
+            "type": "string",
+            "name": "firstName",
+            "control_type": "text",
+            "label": "First name",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "number",
+            "name": "fxBalance",
+            "control_type": "text",
+            "label": "Fx balance",
+            "optional": true,
+            "parse_output": "float_conversion",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchDoubleField"
+          },
+          {
+            "type": "number",
+            "name": "fxUnbilledOrders",
+            "control_type": "text",
+            "label": "Fx unbilled orders",
+            "optional": true,
+            "parse_output": "float_conversion",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchDoubleField"
+          },
+          {
+            "type": "boolean",
+            "name": "giveAccess",
+            "control_type": "checkbox",
+            "label": "Give access",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Give access",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "platformCommon",
+              "ns_search_type": "SearchBooleanField",
+              "type": "boolean",
+              "name": "giveAccess"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchBooleanField"
+          },
+          {
+            "type": "string",
+            "name": "globalSubscriptionStatus",
+            "control_type": "text",
+            "label": "Global subscription status",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchEnumMultiSelectField"
+          },
+          {
+            "type": "string",
+            "name": "group",
+            "control_type": "text",
+            "label": "Group",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchMultiSelectField"
+          },
+          {
+            "type": "boolean",
+            "name": "hasDuplicates",
+            "control_type": "checkbox",
+            "label": "Has duplicates",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Has duplicates",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "platformCommon",
+              "ns_search_type": "SearchBooleanField",
+              "type": "boolean",
+              "name": "hasDuplicates"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchBooleanField"
+          },
+          {
+            "type": "string",
+            "name": "image",
+            "control_type": "text",
+            "label": "Image",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "string",
+            "name": "incoterm",
+            "control_type": "text",
+            "label": "Incoterm",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchMultiSelectField"
+          },
+          {
+            "type": "string",
+            "name": "internalId",
+            "control_type": "text",
+            "label": "Internal ID",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchMultiSelectField"
+          },
+          {
+            "type": "number",
+            "name": "internalIdNumber",
+            "control_type": "text",
+            "label": "Internal ID number",
+            "optional": true,
+            "parse_output": "float_conversion",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchLongField"
+          },
+          {
+            "type": "boolean",
+            "name": "is1099Eligible",
+            "control_type": "checkbox",
+            "label": "Is 1099 eligible",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Is 1099 eligible",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "platformCommon",
+              "ns_search_type": "SearchBooleanField",
+              "type": "boolean",
+              "name": "is1099Eligible"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchBooleanField"
+          },
+          {
+            "type": "boolean",
+            "name": "isDefaultBilling",
+            "control_type": "checkbox",
+            "label": "Is default billing",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Is default billing",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "platformCommon",
+              "ns_search_type": "SearchBooleanField",
+              "type": "boolean",
+              "name": "isDefaultBilling"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchBooleanField"
+          },
+          {
+            "type": "boolean",
+            "name": "isDefaultShipping",
+            "control_type": "checkbox",
+            "label": "Is default shipping",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Is default shipping",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "platformCommon",
+              "ns_search_type": "SearchBooleanField",
+              "type": "boolean",
+              "name": "isDefaultShipping"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchBooleanField"
+          },
+          {
+            "type": "boolean",
+            "name": "isInactive",
+            "control_type": "checkbox",
+            "label": "Is inactive",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Is inactive",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "platformCommon",
+              "ns_search_type": "SearchBooleanField",
+              "type": "boolean",
+              "name": "isInactive"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchBooleanField"
+          },
+          {
+            "type": "boolean",
+            "name": "isJobResourceVend",
+            "control_type": "checkbox",
+            "label": "Is job resource vend",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Is job resource vend",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "platformCommon",
+              "ns_search_type": "SearchBooleanField",
+              "type": "boolean",
+              "name": "isJobResourceVend"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchBooleanField"
+          },
+          {
+            "type": "boolean",
+            "name": "isPerson",
+            "control_type": "checkbox",
+            "label": "Is person",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Is person",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "platformCommon",
+              "ns_search_type": "SearchBooleanField",
+              "type": "boolean",
+              "name": "isPerson"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchBooleanField"
+          },
+          {
+            "type": "number",
+            "name": "laborCost",
+            "control_type": "text",
+            "label": "Labor cost",
+            "optional": true,
+            "parse_output": "float_conversion",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchDoubleField"
+          },
+          {
+            "type": "string",
+            "name": "language",
+            "control_type": "text",
+            "label": "Language",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchEnumMultiSelectField"
+          },
+          {
+            "type": "object",
+            "name": "lastModifiedDate",
+            "label": "Last modified date",
+            "optional": true,
+            "properties": [
+              {
+                "control_type": "date_time",
+                "label": "From",
+                "optional": true,
+                "type": "date_time",
+                "name": "from",
+                "parse_output": "parse_iso8601_timestamp",
+                "render_input": "render_iso8601_timestamp",
+                "parent": "lastModifiedDate"
+              },
+              {
+                "control_type": "date_time",
+                "label": "To",
+                "optional": true,
+                "type": "date_time",
+                "name": "to",
+                "parse_output": "parse_iso8601_timestamp",
+                "render_input": "render_iso8601_timestamp",
+                "parent": "lastModifiedDate"
+              }
+            ],
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchDateField"
+          },
+          {
+            "type": "string",
+            "name": "lastName",
+            "control_type": "text",
+            "label": "Last name",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "string",
+            "name": "level",
+            "control_type": "text",
+            "label": "Level",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchEnumMultiSelectField"
+          },
+          {
+            "type": "string",
+            "name": "middleName",
+            "control_type": "text",
+            "label": "Middle name",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "string",
+            "name": "otherRelationships",
+            "control_type": "text",
+            "label": "Other relationships",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchEnumMultiSelectField"
+          },
+          {
+            "type": "string",
+            "name": "payablesAccount",
+            "control_type": "text",
+            "label": "Payables account",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchMultiSelectField"
+          },
+          {
+            "type": "string",
+            "name": "pec",
+            "control_type": "text",
+            "label": "Pec",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "string",
+            "name": "permission",
+            "control_type": "text",
+            "label": "Permission",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchEnumMultiSelectField"
+          },
+          {
+            "type": "string",
+            "name": "phone",
+            "control_type": "text",
+            "label": "Phone",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "string",
+            "name": "phoneticName",
+            "control_type": "text",
+            "label": "Phonetic name",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "boolean",
+            "name": "printTransactions",
+            "control_type": "checkbox",
+            "label": "Print transactions",
+            "optional": true,
+            "toggle_hint": "Select from option list",
+            "toggle_field": {
+              "label": "Print transactions",
+              "control_type": "text",
+              "toggle_hint": "Use custom value",
+              "optional": true,
+              "ns_content_type": "element",
+              "ns_tag": "platformCommon",
+              "ns_search_type": "SearchBooleanField",
+              "type": "boolean",
+              "name": "printTransactions"
+            },
+            "render_input": "render_boolean",
+            "parse_output": "parse_boolean",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchBooleanField"
+          },
+          {
+            "type": "number",
+            "name": "purchaseOrderAmount",
+            "control_type": "text",
+            "label": "Purchase order amount",
+            "optional": true,
+            "parse_output": "float_conversion",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchDoubleField"
+          },
+          {
+            "type": "number",
+            "name": "purchaseOrderQuantity",
+            "control_type": "text",
+            "label": "Purchase order quantity",
+            "optional": true,
+            "parse_output": "float_conversion",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchDoubleField"
+          },
+          {
+            "type": "number",
+            "name": "purchaseOrderQuantityDiff",
+            "control_type": "text",
+            "label": "Purchase order quantity diff",
+            "optional": true,
+            "parse_output": "float_conversion",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchDoubleField"
+          },
+          {
+            "type": "number",
+            "name": "receiptAmount",
+            "control_type": "text",
+            "label": "Receipt amount",
+            "optional": true,
+            "parse_output": "float_conversion",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchDoubleField"
+          },
+          {
+            "type": "number",
+            "name": "receiptQuantity",
+            "control_type": "text",
+            "label": "Receipt quantity",
+            "optional": true,
+            "parse_output": "float_conversion",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchDoubleField"
+          },
+          {
+            "type": "number",
+            "name": "receiptQuantityDiff",
+            "control_type": "text",
+            "label": "Receipt quantity diff",
+            "optional": true,
+            "parse_output": "float_conversion",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchDoubleField"
+          },
+          {
+            "type": "string",
+            "name": "salutation",
+            "control_type": "text",
+            "label": "Salutation",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "string",
+            "name": "shipAddress",
+            "control_type": "text",
+            "label": "Ship address",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "string",
+            "name": "state",
+            "control_type": "text",
+            "label": "State",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "string",
+            "name": "subsidiary",
+            "control_type": "text",
+            "label": "Subsidiary",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchMultiSelectField"
+          },
+          {
+            "type": "string",
+            "name": "taxIdNum",
+            "control_type": "text",
+            "label": "Tax ID num",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "string",
+            "name": "timeApprover",
+            "control_type": "text",
+            "label": "Time approver",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchMultiSelectField"
+          },
+          {
+            "type": "string",
+            "name": "title",
+            "control_type": "text",
+            "label": "Title",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "number",
+            "name": "unbilledOrders",
+            "control_type": "text",
+            "label": "Unbilled orders",
+            "optional": true,
+            "parse_output": "float_conversion",
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchDoubleField"
+          },
+          {
+            "type": "string",
+            "name": "url",
+            "control_type": "text",
+            "label": "URL",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "string",
+            "name": "vatRegNumber",
+            "control_type": "text",
+            "label": "Vat reg number",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "string",
+            "name": "workCalendar",
+            "control_type": "text",
+            "label": "Work calendar",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchMultiSelectField"
+          },
+          {
+            "type": "string",
+            "name": "zipCode",
+            "control_type": "text",
+            "label": "Zip code",
+            "optional": true,
+            "ns_content_type": "element",
+            "ns_tag": "platformCommon",
+            "ns_search_type": "SearchStringField"
+          },
+          {
+            "type": "object",
+            "name": "custom_fields",
+            "label": "Custom fields",
+            "optional": true,
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Approval Status ID",
+                "ns_custom_type": "SelectCustomFieldRef",
+                "ns_search_type": "SearchSelectCustomField",
+                "optional": true,
+                "custom": true,
+                "sticky": false,
+                "toggle_hint": "Enter custom value",
+                "toggle_field": {
+                  "control_type": "select",
+                  "label": "Approval Status ID",
+                  "toggle_hint": "Select from list",
+                  "optional": true,
+                  "custom": true,
+                  "sticky": false,
+                  "type": "string",
+                  "name": "f_10894_custentityr7_approval_status",
+                  "pick_list": [
+                    [
+                      "Pending Approval",
+                      "1"
+                    ],
+                    [
+                      "Approved",
+                      "2"
+                    ],
+                    [
+                      "Not Approved",
+                      "3"
+                    ]
+                  ],
+                  "parent": "custom_fields"
+                },
+                "type": "string",
+                "name": "f_10894_custentityr7_approval_status",
+                "parent": "custom_fields"
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "netsuite_object",
+          "limit",
+          "field_list",
+          "search_settings",
+          "search_settings.string_fields",
+          "search_settings.integer_fields",
+          "search_settings.list_fields",
+          "custom_list",
+          "is1099Eligible",
+          "searchId",
+          "pageIndex",
+          "isInactive",
+          "isDefaultBilling"
+        ],
+        "hidden_config_fields": [
+          "custom_column_list"
+        ],
+        "comment": "just get the number of pages",
+        "uuid": "165280b5-a6d6-41c4-9f49-dbde644b61ce"
+      },
+      {
+        "number": 2,
+        "provider": "workato_list",
+        "name": "create_list",
+        "as": "ae4f4f70",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "size": "#{_('data.netsuite.aa08c577.totalPages')}"
+        },
+        "comment": "",
+        "uuid": "0ea2d923-b3a8-4996-b23b-a7d1fb44fd02"
+      },
+      {
+        "number": 3,
+        "as": "f40b8247",
+        "keyword": "foreach",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "clear_scope": "true",
+        "input": {
+        },
+        "block": [
+          {
+            "number": 4,
+            "provider": "netsuite",
+            "name": "search_object_v2",
+            "as": "ce15cb23",
+            "title": "Search Vendors",
+            "description": "Search <span class=\"provider\">Vendors</span> in <span class=\"provider\">NetSuite</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "netsuite_object": "Vendor",
+              "custom_list": [
+                {
+                  "label": "Approval Status",
+                  "value": "entityCustomField@10894"
+                }
+              ],
+              "field_list": [
+                {
+                  "label": "Tax ID num",
+                  "value": "taxIdNum"
+                },
+                {
+                  "label": "Is inactive",
+                  "value": "isInactive"
+                },
+                {
+                  "label": "Is 1099 eligible",
+                  "value": "is1099Eligible"
+                },
+                {
+                  "label": "Internal ID",
+                  "value": "internalId"
+                },
+                {
+                  "label": "Account number",
+                  "value": "accountNumber"
+                },
+                {
+                  "label": "Entity ID",
+                  "value": "entityId"
+                },
+                {
+                  "label": "Address 1",
+                  "value": "address1"
+                },
+                {
+                  "label": "Bill city",
+                  "value": "billCity"
+                },
+                {
+                  "label": "Bill state",
+                  "value": "billState"
+                },
+                {
+                  "label": "Bill zip code",
+                  "value": "billZipCode"
+                }
+              ]
+            },
+            "toggleCfg": {
+              "is1099Eligible": true,
+              "isInactive": true,
+              "isDefaultBilling": true
+            },
+            "input": {
+              "netsuite_object": "Vendor",
+              "limit": "200",
+              "search_settings": {
+                "string_fields": "contains",
+                "integer_fields": "equalTo",
+                "list_fields": "anyOf"
+              },
+              "custom_list": "entityCustomField@10894",
+              "field_list": "taxIdNum\nisInactive\nis1099Eligible\ninternalId\naccountNumber\nentityId\naddress1\nbillCity\nbillState\nbillZipCode",
+              "is1099Eligible": "true",
+              "searchId": "#{_('data.netsuite.aa08c577.searchId')}",
+              "pageIndex": "#{_('data.foreach.f40b8247.seq_no')}",
+              "isInactive": "false",
+              "isDefaultBilling": "true"
+            },
+            "extended_output_schema": [
+              {
+                "type": "array",
+                "name": "Vendors",
+                "label": "Vendors",
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Account number",
+                    "optional": true,
+                    "ns_content_type": "element",
+                    "ns_tag": "platformCommon",
+                    "ns_search_type": "SearchColumnStringField",
+                    "type": "string",
+                    "name": "accountNumber"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Address 1",
+                    "optional": true,
+                    "ns_content_type": "element",
+                    "ns_tag": "platformCommon",
+                    "ns_search_type": "SearchColumnStringField",
+                    "type": "string",
+                    "name": "address1"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Bill city",
+                    "optional": true,
+                    "ns_content_type": "element",
+                    "ns_tag": "platformCommon",
+                    "ns_search_type": "SearchColumnStringField",
+                    "type": "string",
+                    "name": "billCity"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Bill state",
+                    "optional": true,
+                    "ns_content_type": "element",
+                    "ns_tag": "platformCommon",
+                    "ns_search_type": "SearchColumnStringField",
+                    "type": "string",
+                    "name": "billState"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Bill zip code",
+                    "optional": true,
+                    "ns_content_type": "element",
+                    "ns_tag": "platformCommon",
+                    "ns_search_type": "SearchColumnStringField",
+                    "type": "string",
+                    "name": "billZipCode"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Entity ID",
+                    "optional": true,
+                    "ns_content_type": "element",
+                    "ns_tag": "platformCommon",
+                    "ns_search_type": "SearchColumnStringField",
+                    "type": "string",
+                    "name": "entityId"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Internal ID",
+                    "optional": true,
+                    "ns_content_type": "element",
+                    "ns_tag": "platformCommon",
+                    "ns_search_type": "SearchColumnSelectField",
+                    "type": "string",
+                    "name": "internalId"
+                  },
+                  {
+                    "control_type": "checkbox",
+                    "label": "Is 1099 eligible",
+                    "render_input": "render_boolean",
+                    "parse_output": "parse_boolean",
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Is 1099 eligible",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "optional": true,
+                      "ns_content_type": "element",
+                      "ns_tag": "platformCommon",
+                      "ns_search_type": "SearchColumnBooleanField",
+                      "type": "boolean",
+                      "name": "is1099Eligible"
+                    },
+                    "optional": true,
+                    "ns_content_type": "element",
+                    "ns_tag": "platformCommon",
+                    "ns_search_type": "SearchColumnBooleanField",
+                    "type": "boolean",
+                    "name": "is1099Eligible"
+                  },
+                  {
+                    "control_type": "checkbox",
+                    "label": "Is inactive",
+                    "render_input": "render_boolean",
+                    "parse_output": "parse_boolean",
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Is inactive",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "optional": true,
+                      "ns_content_type": "element",
+                      "ns_tag": "platformCommon",
+                      "ns_search_type": "SearchColumnBooleanField",
+                      "type": "boolean",
+                      "name": "isInactive"
+                    },
+                    "optional": true,
+                    "ns_content_type": "element",
+                    "ns_tag": "platformCommon",
+                    "ns_search_type": "SearchColumnBooleanField",
+                    "type": "boolean",
+                    "name": "isInactive"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Tax ID num",
+                    "optional": true,
+                    "ns_content_type": "element",
+                    "ns_tag": "platformCommon",
+                    "ns_search_type": "SearchColumnStringField",
+                    "type": "string",
+                    "name": "taxIdNum"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Approval Status ID",
+                        "ns_custom_type": "SelectCustomFieldRef",
+                        "ns_search_type": "SearchSelectCustomField",
+                        "optional": true,
+                        "custom": true,
+                        "sticky": false,
+                        "toggle_hint": "Enter custom value",
+                        "toggle_field": {
+                          "control_type": "select",
+                          "label": "Approval Status ID",
+                          "toggle_hint": "Select from list",
+                          "optional": true,
+                          "custom": true,
+                          "sticky": false,
+                          "type": "string",
+                          "name": "f_10894_custentityr7_approval_status",
+                          "pick_list": [
+                            [
+                              "Pending Approval",
+                              "1"
+                            ],
+                            [
+                              "Approved",
+                              "2"
+                            ],
+                            [
+                              "Not Approved",
+                              "3"
+                            ]
+                          ]
+                        },
+                        "type": "string",
+                        "name": "f_10894_custentityr7_approval_status"
+                      }
+                    ],
+                    "label": "Custom fields",
+                    "optional": true,
+                    "type": "object",
+                    "name": "custom_fields"
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "accountNumber",
+                "control_type": "text",
+                "label": "Account number",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "address",
+                "control_type": "text",
+                "label": "Address",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "addressee",
+                "control_type": "text",
+                "label": "Addressee",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "addressLabel",
+                "control_type": "text",
+                "label": "Address label",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "addressPhone",
+                "control_type": "text",
+                "label": "Address phone",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "attention",
+                "control_type": "text",
+                "label": "Attention",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "number",
+                "name": "balance",
+                "control_type": "text",
+                "label": "Balance",
+                "optional": true,
+                "parse_output": "float_conversion",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchDoubleField"
+              },
+              {
+                "type": "string",
+                "name": "billAddress",
+                "control_type": "text",
+                "label": "Bill address",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "category",
+                "control_type": "text",
+                "label": "Category",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "city",
+                "control_type": "text",
+                "label": "City",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "comments",
+                "control_type": "text",
+                "label": "Comments",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "contact",
+                "control_type": "text",
+                "label": "Contact",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "country",
+                "control_type": "text",
+                "label": "Country",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchEnumMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "county",
+                "control_type": "text",
+                "label": "County",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "number",
+                "name": "creditLimit",
+                "control_type": "text",
+                "label": "Credit limit",
+                "optional": true,
+                "parse_output": "float_conversion",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchDoubleField"
+              },
+              {
+                "type": "string",
+                "name": "currency",
+                "control_type": "text",
+                "label": "Currency",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchMultiSelectField"
+              },
+              {
+                "type": "number",
+                "name": "currentExchangeRate",
+                "control_type": "text",
+                "label": "Current exchange rate",
+                "optional": true,
+                "parse_output": "float_conversion",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchDoubleField"
+              },
+              {
+                "type": "object",
+                "name": "dateCreated",
+                "label": "Date created",
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "date_time",
+                    "label": "From",
+                    "optional": true,
+                    "type": "date_time",
+                    "name": "from",
+                    "parse_output": "parse_iso8601_timestamp",
+                    "render_input": "render_iso8601_timestamp",
+                    "parent": "dateCreated"
+                  },
+                  {
+                    "control_type": "date_time",
+                    "label": "To",
+                    "optional": true,
+                    "type": "date_time",
+                    "name": "to",
+                    "parse_output": "parse_iso8601_timestamp",
+                    "render_input": "render_iso8601_timestamp",
+                    "parent": "dateCreated"
+                  }
+                ],
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchDateField"
+              },
+              {
+                "type": "boolean",
+                "name": "eligibleForCommission",
+                "control_type": "checkbox",
+                "label": "Eligible for commission",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Eligible for commission",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "platformCommon",
+                  "ns_search_type": "SearchBooleanField",
+                  "type": "boolean",
+                  "name": "eligibleForCommission"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchBooleanField"
+              },
+              {
+                "type": "string",
+                "name": "email",
+                "control_type": "text",
+                "label": "Email",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "emailPreference",
+                "control_type": "text",
+                "label": "Email preference",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchEnumMultiSelectField"
+              },
+              {
+                "type": "boolean",
+                "name": "emailTransactions",
+                "control_type": "checkbox",
+                "label": "Email transactions",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Email transactions",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "platformCommon",
+                  "ns_search_type": "SearchBooleanField",
+                  "type": "boolean",
+                  "name": "emailTransactions"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchBooleanField"
+              },
+              {
+                "type": "string",
+                "name": "entityId",
+                "control_type": "text",
+                "label": "Entity ID",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "expenseAccount",
+                "control_type": "text",
+                "label": "Expense account",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "externalId",
+                "control_type": "text",
+                "label": "External ID",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "externalIdString",
+                "control_type": "text",
+                "label": "External ID string",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "fax",
+                "control_type": "text",
+                "label": "Fax",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "boolean",
+                "name": "faxTransactions",
+                "control_type": "checkbox",
+                "label": "Fax transactions",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Fax transactions",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "platformCommon",
+                  "ns_search_type": "SearchBooleanField",
+                  "type": "boolean",
+                  "name": "faxTransactions"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchBooleanField"
+              },
+              {
+                "type": "string",
+                "name": "firstName",
+                "control_type": "text",
+                "label": "First name",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "number",
+                "name": "fxBalance",
+                "control_type": "text",
+                "label": "Fx balance",
+                "optional": true,
+                "parse_output": "float_conversion",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchDoubleField"
+              },
+              {
+                "type": "number",
+                "name": "fxUnbilledOrders",
+                "control_type": "text",
+                "label": "Fx unbilled orders",
+                "optional": true,
+                "parse_output": "float_conversion",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchDoubleField"
+              },
+              {
+                "type": "boolean",
+                "name": "giveAccess",
+                "control_type": "checkbox",
+                "label": "Give access",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Give access",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "platformCommon",
+                  "ns_search_type": "SearchBooleanField",
+                  "type": "boolean",
+                  "name": "giveAccess"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchBooleanField"
+              },
+              {
+                "type": "string",
+                "name": "globalSubscriptionStatus",
+                "control_type": "text",
+                "label": "Global subscription status",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchEnumMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "group",
+                "control_type": "text",
+                "label": "Group",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchMultiSelectField"
+              },
+              {
+                "type": "boolean",
+                "name": "hasDuplicates",
+                "control_type": "checkbox",
+                "label": "Has duplicates",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Has duplicates",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "platformCommon",
+                  "ns_search_type": "SearchBooleanField",
+                  "type": "boolean",
+                  "name": "hasDuplicates"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchBooleanField"
+              },
+              {
+                "type": "string",
+                "name": "image",
+                "control_type": "text",
+                "label": "Image",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "incoterm",
+                "control_type": "text",
+                "label": "Incoterm",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "internalId",
+                "control_type": "text",
+                "label": "Internal ID",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchMultiSelectField"
+              },
+              {
+                "type": "number",
+                "name": "internalIdNumber",
+                "control_type": "text",
+                "label": "Internal ID number",
+                "optional": true,
+                "parse_output": "float_conversion",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchLongField"
+              },
+              {
+                "type": "boolean",
+                "name": "is1099Eligible",
+                "control_type": "checkbox",
+                "label": "Is 1099 eligible",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Is 1099 eligible",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "platformCommon",
+                  "ns_search_type": "SearchBooleanField",
+                  "type": "boolean",
+                  "name": "is1099Eligible"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchBooleanField"
+              },
+              {
+                "type": "boolean",
+                "name": "isDefaultBilling",
+                "control_type": "checkbox",
+                "label": "Is default billing",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Is default billing",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "platformCommon",
+                  "ns_search_type": "SearchBooleanField",
+                  "type": "boolean",
+                  "name": "isDefaultBilling"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchBooleanField"
+              },
+              {
+                "type": "boolean",
+                "name": "isDefaultShipping",
+                "control_type": "checkbox",
+                "label": "Is default shipping",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Is default shipping",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "platformCommon",
+                  "ns_search_type": "SearchBooleanField",
+                  "type": "boolean",
+                  "name": "isDefaultShipping"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchBooleanField"
+              },
+              {
+                "type": "boolean",
+                "name": "isInactive",
+                "control_type": "checkbox",
+                "label": "Is inactive",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Is inactive",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "platformCommon",
+                  "ns_search_type": "SearchBooleanField",
+                  "type": "boolean",
+                  "name": "isInactive"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchBooleanField"
+              },
+              {
+                "type": "boolean",
+                "name": "isJobResourceVend",
+                "control_type": "checkbox",
+                "label": "Is job resource vend",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Is job resource vend",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "platformCommon",
+                  "ns_search_type": "SearchBooleanField",
+                  "type": "boolean",
+                  "name": "isJobResourceVend"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchBooleanField"
+              },
+              {
+                "type": "boolean",
+                "name": "isPerson",
+                "control_type": "checkbox",
+                "label": "Is person",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Is person",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "platformCommon",
+                  "ns_search_type": "SearchBooleanField",
+                  "type": "boolean",
+                  "name": "isPerson"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchBooleanField"
+              },
+              {
+                "type": "number",
+                "name": "laborCost",
+                "control_type": "text",
+                "label": "Labor cost",
+                "optional": true,
+                "parse_output": "float_conversion",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchDoubleField"
+              },
+              {
+                "type": "string",
+                "name": "language",
+                "control_type": "text",
+                "label": "Language",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchEnumMultiSelectField"
+              },
+              {
+                "type": "object",
+                "name": "lastModifiedDate",
+                "label": "Last modified date",
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "date_time",
+                    "label": "From",
+                    "optional": true,
+                    "type": "date_time",
+                    "name": "from",
+                    "parse_output": "parse_iso8601_timestamp",
+                    "render_input": "render_iso8601_timestamp",
+                    "parent": "lastModifiedDate"
+                  },
+                  {
+                    "control_type": "date_time",
+                    "label": "To",
+                    "optional": true,
+                    "type": "date_time",
+                    "name": "to",
+                    "parse_output": "parse_iso8601_timestamp",
+                    "render_input": "render_iso8601_timestamp",
+                    "parent": "lastModifiedDate"
+                  }
+                ],
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchDateField"
+              },
+              {
+                "type": "string",
+                "name": "lastName",
+                "control_type": "text",
+                "label": "Last name",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "level",
+                "control_type": "text",
+                "label": "Level",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchEnumMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "middleName",
+                "control_type": "text",
+                "label": "Middle name",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "otherRelationships",
+                "control_type": "text",
+                "label": "Other relationships",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchEnumMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "payablesAccount",
+                "control_type": "text",
+                "label": "Payables account",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "pec",
+                "control_type": "text",
+                "label": "Pec",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "permission",
+                "control_type": "text",
+                "label": "Permission",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchEnumMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "phone",
+                "control_type": "text",
+                "label": "Phone",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "phoneticName",
+                "control_type": "text",
+                "label": "Phonetic name",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "boolean",
+                "name": "printTransactions",
+                "control_type": "checkbox",
+                "label": "Print transactions",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Print transactions",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "optional": true,
+                  "ns_content_type": "element",
+                  "ns_tag": "platformCommon",
+                  "ns_search_type": "SearchBooleanField",
+                  "type": "boolean",
+                  "name": "printTransactions"
+                },
+                "render_input": "render_boolean",
+                "parse_output": "parse_boolean",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchBooleanField"
+              },
+              {
+                "type": "number",
+                "name": "purchaseOrderAmount",
+                "control_type": "text",
+                "label": "Purchase order amount",
+                "optional": true,
+                "parse_output": "float_conversion",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchDoubleField"
+              },
+              {
+                "type": "number",
+                "name": "purchaseOrderQuantity",
+                "control_type": "text",
+                "label": "Purchase order quantity",
+                "optional": true,
+                "parse_output": "float_conversion",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchDoubleField"
+              },
+              {
+                "type": "number",
+                "name": "purchaseOrderQuantityDiff",
+                "control_type": "text",
+                "label": "Purchase order quantity diff",
+                "optional": true,
+                "parse_output": "float_conversion",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchDoubleField"
+              },
+              {
+                "type": "number",
+                "name": "receiptAmount",
+                "control_type": "text",
+                "label": "Receipt amount",
+                "optional": true,
+                "parse_output": "float_conversion",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchDoubleField"
+              },
+              {
+                "type": "number",
+                "name": "receiptQuantity",
+                "control_type": "text",
+                "label": "Receipt quantity",
+                "optional": true,
+                "parse_output": "float_conversion",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchDoubleField"
+              },
+              {
+                "type": "number",
+                "name": "receiptQuantityDiff",
+                "control_type": "text",
+                "label": "Receipt quantity diff",
+                "optional": true,
+                "parse_output": "float_conversion",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchDoubleField"
+              },
+              {
+                "type": "string",
+                "name": "salutation",
+                "control_type": "text",
+                "label": "Salutation",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "shipAddress",
+                "control_type": "text",
+                "label": "Ship address",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "state",
+                "control_type": "text",
+                "label": "State",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "subsidiary",
+                "control_type": "text",
+                "label": "Subsidiary",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "taxIdNum",
+                "control_type": "text",
+                "label": "Tax ID num",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "timeApprover",
+                "control_type": "text",
+                "label": "Time approver",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "title",
+                "control_type": "text",
+                "label": "Title",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "number",
+                "name": "unbilledOrders",
+                "control_type": "text",
+                "label": "Unbilled orders",
+                "optional": true,
+                "parse_output": "float_conversion",
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchDoubleField"
+              },
+              {
+                "type": "string",
+                "name": "url",
+                "control_type": "text",
+                "label": "URL",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "vatRegNumber",
+                "control_type": "text",
+                "label": "Vat reg number",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "string",
+                "name": "workCalendar",
+                "control_type": "text",
+                "label": "Work calendar",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchMultiSelectField"
+              },
+              {
+                "type": "string",
+                "name": "zipCode",
+                "control_type": "text",
+                "label": "Zip code",
+                "optional": true,
+                "ns_content_type": "element",
+                "ns_tag": "platformCommon",
+                "ns_search_type": "SearchStringField"
+              },
+              {
+                "type": "object",
+                "name": "custom_fields",
+                "label": "Custom fields",
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Approval Status ID",
+                    "ns_custom_type": "SelectCustomFieldRef",
+                    "ns_search_type": "SearchSelectCustomField",
+                    "optional": true,
+                    "custom": true,
+                    "sticky": false,
+                    "toggle_hint": "Enter custom value",
+                    "toggle_field": {
+                      "control_type": "select",
+                      "label": "Approval Status ID",
+                      "toggle_hint": "Select from list",
+                      "optional": true,
+                      "custom": true,
+                      "sticky": false,
+                      "type": "string",
+                      "name": "f_10894_custentityr7_approval_status",
+                      "pick_list": [
+                        [
+                          "Pending Approval",
+                          "1"
+                        ],
+                        [
+                          "Approved",
+                          "2"
+                        ],
+                        [
+                          "Not Approved",
+                          "3"
+                        ]
+                      ],
+                      "parent": "custom_fields"
+                    },
+                    "type": "string",
+                    "name": "f_10894_custentityr7_approval_status",
+                    "parent": "custom_fields"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "netsuite_object",
+              "limit",
+              "field_list",
+              "search_settings",
+              "search_settings.string_fields",
+              "search_settings.integer_fields",
+              "search_settings.list_fields",
+              "custom_list",
+              "is1099Eligible",
+              "searchId",
+              "pageIndex",
+              "isInactive",
+              "isDefaultBilling"
+            ],
+            "hidden_config_fields": [
+              "custom_column_list"
+            ],
+            "comment": "",
+            "uuid": "130be3d0-681b-48f3-b6bf-307a024e145c"
+          },
+          {
+            "number": 5,
+            "as": "ed67fa73",
+            "keyword": "foreach",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "clear_scope": "true",
+            "input": {
+            },
+            "block": [
+              {
+                "number": 6,
+                "keyword": "if",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "type": "compound",
+                  "operand": "or",
+                  "conditions": [
+                    {
+                      "operand": "is_not_true",
+                      "lhs": "=_('data.foreach.ed67fa73.entityId').ljust(_('data.foreach.ed67fa73.entityId').length+1,\" \").gsub(/[.,]/, '.'=>' ', ','=>' ').gsub(\"Incorporated\", \" Inc \").titleize.include?(\" Inc \")",
+                      "rhs": null
+                    }
+                  ]
+                },
+                "block": [
+                  {
+                    "number": 7,
+                    "keyword": "if",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "type": "compound",
+                      "operand": "and",
+                      "conditions": [
+                        {
+                          "operand": "present",
+                          "lhs": "#{_('data.foreach.ed67fa73.taxIdNum')}",
+                          "rhs": null
+                        },
+                        {
+                          "operand": "equals_to",
+                          "lhs": "=_('data.foreach.ed67fa73.taxIdNum').gsub(/\\W/,\"\").gsub(/\\d/,\"\").length",
+                          "rhs": "0"
+                        }
+                      ]
+                    },
+                    "block": [
+                      {
+                        "number": 8,
+                        "provider": "workato_list",
+                        "name": "accumulate_list_items",
+                        "as": "6fe8a29e",
+                        "title": "Accumulate items to Vendors list",
+                        "description": "Accumulate <span class=\"provider\">items</span> to <span class=\"provider\">Vendors</span> list",
+                        "keyword": "action",
+                        "dynamicPickListSelection": {
+                        },
+                        "toggleCfg": {
+                        },
+                        "input": {
+                          "name": "Vendors",
+                          "list_item": {
+                            "schema": "[{\"name\":\"internal_id\",\"type\":\"integer\",\"optional\":false,\"label\":\"internal_id\",\"control_type\":\"integer\"},{\"name\":\"name\",\"type\":\"string\",\"optional\":false,\"label\":\"name\",\"control_type\":\"text\"}]",
+                            "data": {
+                              "name": "#{_('data.foreach.ed67fa73.entityId')}",
+                              "internal_id": "#{_('data.foreach.ed67fa73.internalId')}"
+                            }
+                          }
+                        },
+                        "extended_output_schema": [
+                          {
+                            "type": "array",
+                            "name": "list_items",
+                            "label": "Items",
+                            "of": "object",
+                            "properties": [
+                              {
+                                "control_type": "integer",
+                                "label": "internal_id",
+                                "parse_output": "integer_conversion",
+                                "name": "internal_id",
+                                "type": "integer",
+                                "optional": false
+                              },
+                              {
+                                "control_type": "text",
+                                "label": "name",
+                                "name": "name",
+                                "type": "string",
+                                "optional": false
+                              }
+                            ]
+                          }
+                        ],
+                        "extended_input_schema": [
+                          {
+                            "type": "object",
+                            "name": "list_item",
+                            "control_type": "form-schema-builder",
+                            "label": "List item fields",
+                            "properties": [
+                              {
+                                "control_type": "text",
+                                "label": "Schema",
+                                "extends_schema": true,
+                                "type": "string",
+                                "name": "schema",
+                                "parent": "list_item"
+                              },
+                              {
+                                "properties": [
+                                  {
+                                    "control_type": "integer",
+                                    "label": "internal_id",
+                                    "parse_output": "integer_conversion",
+                                    "name": "internal_id",
+                                    "type": "integer",
+                                    "optional": false,
+                                    "parent": "list_item.data"
+                                  },
+                                  {
+                                    "control_type": "text",
+                                    "label": "name",
+                                    "name": "name",
+                                    "type": "string",
+                                    "optional": false,
+                                    "parent": "list_item.data"
+                                  }
+                                ],
+                                "label": "Data",
+                                "type": "object",
+                                "name": "data",
+                                "parent": "list_item"
+                              }
+                            ],
+                            "override": true
+                          }
+                        ],
+                        "visible_config_fields": [
+                          "name",
+                          "list_item.data.name",
+                          "list_item",
+                          "list_item.schema",
+                          "list_item.data",
+                          "list_item.data.internal_id"
+                        ],
+                        "uuid": "f3e09572-b6ed-4048-91f5-360328a7ae31"
+                      }
+                    ],
+                    "uuid": "a039ed83-ee66-4616-8670-eb05e66b3d5e"
+                  }
+                ],
+                "uuid": "7b5c2f34-6b53-4bb5-bcee-accdbd938568"
+              }
+            ],
+            "source": "#{_('data.netsuite.ce15cb23.Vendors')}",
+            "uuid": "6ff33ccc-4884-4469-b9b1-72fbdfa932e4"
+          }
+        ],
+        "source": "#{_('data.workato_list.ae4f4f70.list')}",
+        "uuid": "2674e3d2-35c4-495e-a392-8c2867e5572f"
+      },
+      {
+        "number": 9,
+        "provider": "csv_parser",
+        "name": "create_csv_lines",
+        "as": "f9d06ba4",
+        "title": null,
+        "description": null,
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+          "create_header_line": true,
+          "force_quotes": true
+        },
+        "input": {
+          "create_header_line": "true",
+          "column_separator": ",",
+          "force_quotes": "true",
+          "column_labels": "Name\nInternal ID",
+          "lines": {
+            "____source": "#{_('data.workato_list.6fe8a29e.list_items')}",
+            "column_0": "#{_('data.workato_list.6fe8a29e.list_items.first.name')}",
+            "column_1": "#{_('data.workato_list.6fe8a29e.list_items.first.internal_id')}"
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "array",
+            "name": "lines",
+            "label": "CSV data lines",
+            "hint": "Provide field mappings for the CSV data below.",
+            "of": "object",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Name",
+                "optional": true,
+                "sticky": true,
+                "type": "string",
+                "name": "column_0",
+                "parent": "lines"
+              },
+              {
+                "control_type": "text",
+                "label": "Internal ID",
+                "optional": true,
+                "sticky": true,
+                "type": "string",
+                "name": "column_1",
+                "parent": "lines"
+              }
+            ]
+          }
+        ],
+        "uuid": "ae28f7c4-ad74-4c3c-9380-a16a7b7c1d7b"
+      },
+      {
+        "number": 10,
+        "provider": "email",
+        "name": "send_mail",
+        "as": "86c5eaa4",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "email_type": "text",
+          "to": "=lookup(\"NETSUITE_VARIABLES\", key: \"1099.report_runner\")[\"value\"]",
+          "subject": "List of 1099 Vendors",
+          "attachments": {
+            "file_binary_content": "#{_('data.csv_parser.f9d06ba4.csv_lines')}",
+            "file_name": "1099_Vendors.csv"
+          },
+          "body": "Here is the list of 1099 Vendors from NetSuite."
+        },
+        "visible_config_fields": [
+          "email_type",
+          "attachments.file_binary_content",
+          "attachments.file_name"
+        ],
+        "comment": "The email address should be of the person who runs the report. After receiving the report over mail, it should be forwarded to concerned person for review.",
+        "uuid": "61fc23a8-dee7-4442-a15f-9e9c9f01efdb"
+      },
+      {
+        "number": 11,
+        "provider": "workato_app",
+        "name": "stop_recipe",
+        "as": "c85a3d78",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "recipe_id": "Helper - Export 1099 Vendors List to CSV"
+        },
+        "toggleCfg": {
+          "recipe_id": false,
+          "force_stop": true
+        },
+        "input": {
+          "force_stop": "false",
+          "recipe_id": "=lookup(\"NETSUITE_VARIABLES\", key: \"recipe.1099.helper.export_1099_vendors\")[\"value\"]"
+        },
+        "comment": "Stop this recipe",
+        "uuid": "d83ace4d-cbf4-421c-a3bd-06da062cc47e"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_3",
+        "label": "# Results"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_3": "#{_('data.workato_list.6fe8a29e.list_items.first.____Size', 'list_meta', '____Size', 'data.workato_list.6fe8a29e.list_items')}"
+    },
+    "uuid": "b252e7d4-2c05-4b59-9f0f-9100ea45443f"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "netsuite",
+      "account_id": {
+        "zip_name": "resources/netsuite.connection.json",
+        "name": "NetSuite",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_list",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "clock",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "csv_parser",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "email",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_app",
+      "account_id": {
+        "zip_name": "resources/recipeops.connection.json",
+        "name": "RecipeOps",
+        "folder": "resources"
+      }
+    }
+  ]
+}

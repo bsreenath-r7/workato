@@ -1,0 +1,1131 @@
+{
+  "name": "Callable - DivvySlack - Get conversation/channel details",
+  "description": "When there is a new call for callable recipe, do action",
+  "version": 1,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "3934fc45",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">Callable - DivvySlack - Get conversation/channel details</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "reply_schema_json": "[{\"control_type\":\"text\",\"label\":\"Ok\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Ok\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"ok\"},\"type\":\"boolean\",\"name\":\"ok\"},{\"properties\":[{\"control_type\":\"text\",\"label\":\"ID\",\"type\":\"string\",\"name\":\"id\"},{\"control_type\":\"text\",\"label\":\"Name\",\"type\":\"string\",\"name\":\"name\"},{\"control_type\":\"text\",\"label\":\"Is channel\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is channel\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_channel\"},\"type\":\"boolean\",\"name\":\"is_channel\"},{\"control_type\":\"text\",\"label\":\"Is group\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is group\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_group\"},\"type\":\"boolean\",\"name\":\"is_group\"},{\"control_type\":\"text\",\"label\":\"Is im\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is im\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_im\"},\"type\":\"boolean\",\"name\":\"is_im\"},{\"control_type\":\"number\",\"label\":\"Created\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"created\"},{\"control_type\":\"text\",\"label\":\"Creator\",\"type\":\"string\",\"name\":\"creator\"},{\"control_type\":\"text\",\"label\":\"Is archived\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is archived\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_archived\"},\"type\":\"boolean\",\"name\":\"is_archived\"},{\"control_type\":\"text\",\"label\":\"Is general\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is general\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_general\"},\"type\":\"boolean\",\"name\":\"is_general\"},{\"control_type\":\"number\",\"label\":\"Unlinked\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"unlinked\"},{\"control_type\":\"text\",\"label\":\"Name normalized\",\"type\":\"string\",\"name\":\"name_normalized\"},{\"control_type\":\"text\",\"label\":\"Is read only\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is read only\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_read_only\"},\"type\":\"boolean\",\"name\":\"is_read_only\"},{\"control_type\":\"text\",\"label\":\"Is shared\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is shared\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_shared\"},\"type\":\"boolean\",\"name\":\"is_shared\"},{\"control_type\":\"text\",\"label\":\"Parent conversation\",\"type\":\"string\",\"name\":\"parent_conversation\"},{\"control_type\":\"text\",\"label\":\"Is ext shared\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is ext shared\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_ext_shared\"},\"type\":\"boolean\",\"name\":\"is_ext_shared\"},{\"control_type\":\"text\",\"label\":\"Is org shared\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is org shared\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_org_shared\"},\"type\":\"boolean\",\"name\":\"is_org_shared\"},{\"control_type\":\"text\",\"label\":\"Is pending ext shared\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is pending ext shared\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_pending_ext_shared\"},\"type\":\"boolean\",\"name\":\"is_pending_ext_shared\"},{\"control_type\":\"text\",\"label\":\"Is member\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is member\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_member\"},\"type\":\"boolean\",\"name\":\"is_member\"},{\"control_type\":\"text\",\"label\":\"Is private\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is private\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_private\"},\"type\":\"boolean\",\"name\":\"is_private\"},{\"control_type\":\"text\",\"label\":\"Is mpim\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is mpim\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_mpim\"},\"type\":\"boolean\",\"name\":\"is_mpim\"},{\"control_type\":\"text\",\"label\":\"Last read\",\"type\":\"string\",\"name\":\"last_read\"},{\"properties\":[{\"control_type\":\"text\",\"label\":\"Value\",\"type\":\"string\",\"name\":\"value\"},{\"control_type\":\"text\",\"label\":\"Creator\",\"type\":\"string\",\"name\":\"creator\"},{\"control_type\":\"number\",\"label\":\"Last set\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"last_set\"}],\"label\":\"Topic\",\"type\":\"object\",\"name\":\"topic\"},{\"properties\":[{\"control_type\":\"text\",\"label\":\"Value\",\"type\":\"string\",\"name\":\"value\"},{\"control_type\":\"text\",\"label\":\"Creator\",\"type\":\"string\",\"name\":\"creator\"},{\"control_type\":\"number\",\"label\":\"Last set\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"last_set\"}],\"label\":\"Purpose\",\"type\":\"object\",\"name\":\"purpose\"},{\"name\":\"previous_names\",\"type\":\"array\",\"of\":\"string\",\"control_type\":\"text\",\"label\":\"Previous names\"},{\"control_type\":\"text\",\"label\":\"Locale\",\"type\":\"string\",\"name\":\"locale\"}],\"label\":\"Channel\",\"type\":\"object\",\"name\":\"channel\"}]",
+      "request_schema_json": "[{\"name\":\"channelId_or_conversationId\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]",
+      "service_name": "Callable - DivvySlack - Get conversation/channel details"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Channel ID or conversation ID",
+            "name": "channelId_or_conversationId",
+            "type": "string",
+            "optional": false
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "slack_bot",
+            "name": "__adhoc_http_action",
+            "as": "b1da4c13",
+            "title": "Get DivvySlack conversation info by it's id",
+            "description": "Get <span class=\"provider\">DivvySlack conversation info by it's id</span> in <span class=\"provider\">Workbot  for  Slack</span> (Custom)",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "mnemonic": "Get DivvySlack conversation info by it's id",
+              "verb": "get",
+              "response_type": "json",
+              "path": "conversations.info",
+              "output": "[{\"control_type\":\"text\",\"label\":\"Ok\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Ok\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"ok\"},\"type\":\"boolean\",\"name\":\"ok\"},{\"properties\":[{\"control_type\":\"text\",\"label\":\"ID\",\"type\":\"string\",\"name\":\"id\"},{\"control_type\":\"text\",\"label\":\"Name\",\"type\":\"string\",\"name\":\"name\"},{\"control_type\":\"text\",\"label\":\"Is channel\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is channel\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_channel\"},\"type\":\"boolean\",\"name\":\"is_channel\"},{\"control_type\":\"text\",\"label\":\"Is group\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is group\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_group\"},\"type\":\"boolean\",\"name\":\"is_group\"},{\"control_type\":\"text\",\"label\":\"Is im\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is im\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_im\"},\"type\":\"boolean\",\"name\":\"is_im\"},{\"control_type\":\"number\",\"label\":\"Created\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"created\"},{\"control_type\":\"text\",\"label\":\"Creator\",\"type\":\"string\",\"name\":\"creator\"},{\"control_type\":\"text\",\"label\":\"Is archived\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is archived\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_archived\"},\"type\":\"boolean\",\"name\":\"is_archived\"},{\"control_type\":\"text\",\"label\":\"Is general\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is general\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_general\"},\"type\":\"boolean\",\"name\":\"is_general\"},{\"control_type\":\"number\",\"label\":\"Unlinked\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"unlinked\"},{\"control_type\":\"text\",\"label\":\"Name normalized\",\"type\":\"string\",\"name\":\"name_normalized\"},{\"control_type\":\"text\",\"label\":\"Is read only\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is read only\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_read_only\"},\"type\":\"boolean\",\"name\":\"is_read_only\"},{\"control_type\":\"text\",\"label\":\"Is shared\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is shared\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_shared\"},\"type\":\"boolean\",\"name\":\"is_shared\"},{\"control_type\":\"text\",\"label\":\"Parent conversation\",\"type\":\"string\",\"name\":\"parent_conversation\"},{\"control_type\":\"text\",\"label\":\"Is ext shared\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is ext shared\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_ext_shared\"},\"type\":\"boolean\",\"name\":\"is_ext_shared\"},{\"control_type\":\"text\",\"label\":\"Is org shared\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is org shared\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_org_shared\"},\"type\":\"boolean\",\"name\":\"is_org_shared\"},{\"control_type\":\"text\",\"label\":\"Is pending ext shared\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is pending ext shared\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_pending_ext_shared\"},\"type\":\"boolean\",\"name\":\"is_pending_ext_shared\"},{\"control_type\":\"text\",\"label\":\"Is member\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is member\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_member\"},\"type\":\"boolean\",\"name\":\"is_member\"},{\"control_type\":\"text\",\"label\":\"Is private\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is private\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_private\"},\"type\":\"boolean\",\"name\":\"is_private\"},{\"control_type\":\"text\",\"label\":\"Is mpim\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Is mpim\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"is_mpim\"},\"type\":\"boolean\",\"name\":\"is_mpim\"},{\"control_type\":\"text\",\"label\":\"Last read\",\"type\":\"string\",\"name\":\"last_read\"},{\"properties\":[{\"control_type\":\"text\",\"label\":\"Value\",\"type\":\"string\",\"name\":\"value\"},{\"control_type\":\"text\",\"label\":\"Creator\",\"type\":\"string\",\"name\":\"creator\"},{\"control_type\":\"number\",\"label\":\"Last set\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"last_set\"}],\"label\":\"Topic\",\"type\":\"object\",\"name\":\"topic\"},{\"properties\":[{\"control_type\":\"text\",\"label\":\"Value\",\"type\":\"string\",\"name\":\"value\"},{\"control_type\":\"text\",\"label\":\"Creator\",\"type\":\"string\",\"name\":\"creator\"},{\"control_type\":\"number\",\"label\":\"Last set\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"last_set\"}],\"label\":\"Purpose\",\"type\":\"object\",\"name\":\"purpose\"},{\"name\":\"previous_names\",\"type\":\"array\",\"of\":\"string\",\"control_type\":\"text\",\"label\":\"Previous names\"},{\"control_type\":\"text\",\"label\":\"Locale\",\"type\":\"string\",\"name\":\"locale\"}],\"label\":\"Channel\",\"type\":\"object\",\"name\":\"channel\"}]",
+              "input": {
+                "schema": "[{\"name\":\"channel\",\"type\":\"string\",\"optional\":true,\"label\":\"channel\",\"control_type\":\"text\"}]",
+                "data": {
+                  "channel": "#{_('data.workato_service.3934fc45.request.channelId_or_conversationId')}"
+                }
+              }
+            },
+            "extended_output_schema": [
+              {
+                "type": "number",
+                "name": "ok",
+                "control_type": "text",
+                "label": "Ok",
+                "optional": true,
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Ok",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "type": "boolean",
+                  "name": "ok"
+                },
+                "render_input": {
+                },
+                "parse_output": {
+                }
+              },
+              {
+                "type": "object",
+                "name": "channel",
+                "label": "Channel",
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "ID",
+                    "optional": true,
+                    "type": "string",
+                    "name": "id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "optional": true,
+                    "type": "string",
+                    "name": "name"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Is channel",
+                    "parse_output": {
+                    },
+                    "render_input": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Is channel",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "is_channel"
+                    },
+                    "optional": true,
+                    "type": "number",
+                    "name": "is_channel"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Is group",
+                    "parse_output": {
+                    },
+                    "render_input": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Is group",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "is_group"
+                    },
+                    "optional": true,
+                    "type": "number",
+                    "name": "is_group"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Is im",
+                    "parse_output": {
+                    },
+                    "render_input": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Is im",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "is_im"
+                    },
+                    "optional": true,
+                    "type": "number",
+                    "name": "is_im"
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "Created",
+                    "parse_output": "float_conversion",
+                    "optional": true,
+                    "type": "number",
+                    "name": "created"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Creator",
+                    "optional": true,
+                    "type": "string",
+                    "name": "creator"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Is archived",
+                    "parse_output": {
+                    },
+                    "render_input": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Is archived",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "is_archived"
+                    },
+                    "optional": true,
+                    "type": "number",
+                    "name": "is_archived"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Is general",
+                    "parse_output": {
+                    },
+                    "render_input": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Is general",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "is_general"
+                    },
+                    "optional": true,
+                    "type": "number",
+                    "name": "is_general"
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "Unlinked",
+                    "parse_output": "float_conversion",
+                    "optional": true,
+                    "type": "number",
+                    "name": "unlinked"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Name normalized",
+                    "optional": true,
+                    "type": "string",
+                    "name": "name_normalized"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Is read only",
+                    "parse_output": {
+                    },
+                    "render_input": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Is read only",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "is_read_only"
+                    },
+                    "optional": true,
+                    "type": "number",
+                    "name": "is_read_only"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Is shared",
+                    "parse_output": {
+                    },
+                    "render_input": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Is shared",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "is_shared"
+                    },
+                    "optional": true,
+                    "type": "number",
+                    "name": "is_shared"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Parent conversation",
+                    "optional": true,
+                    "type": "string",
+                    "name": "parent_conversation"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Is ext shared",
+                    "parse_output": {
+                    },
+                    "render_input": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Is ext shared",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "is_ext_shared"
+                    },
+                    "optional": true,
+                    "type": "number",
+                    "name": "is_ext_shared"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Is org shared",
+                    "parse_output": {
+                    },
+                    "render_input": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Is org shared",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "is_org_shared"
+                    },
+                    "optional": true,
+                    "type": "number",
+                    "name": "is_org_shared"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Is pending ext shared",
+                    "parse_output": {
+                    },
+                    "render_input": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Is pending ext shared",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "is_pending_ext_shared"
+                    },
+                    "optional": true,
+                    "type": "number",
+                    "name": "is_pending_ext_shared"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Is member",
+                    "parse_output": {
+                    },
+                    "render_input": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Is member",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "is_member"
+                    },
+                    "optional": true,
+                    "type": "number",
+                    "name": "is_member"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Is private",
+                    "parse_output": {
+                    },
+                    "render_input": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Is private",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "is_private"
+                    },
+                    "optional": true,
+                    "type": "number",
+                    "name": "is_private"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Is mpim",
+                    "parse_output": {
+                    },
+                    "render_input": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Is mpim",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "is_mpim"
+                    },
+                    "optional": true,
+                    "type": "number",
+                    "name": "is_mpim"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Last read",
+                    "optional": true,
+                    "type": "string",
+                    "name": "last_read"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Value",
+                        "optional": true,
+                        "type": "string",
+                        "name": "value"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Creator",
+                        "optional": true,
+                        "type": "string",
+                        "name": "creator"
+                      },
+                      {
+                        "control_type": "number",
+                        "label": "Last set",
+                        "parse_output": "float_conversion",
+                        "optional": true,
+                        "type": "number",
+                        "name": "last_set"
+                      }
+                    ],
+                    "label": "Topic",
+                    "optional": true,
+                    "type": "object",
+                    "name": "topic"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Value",
+                        "optional": true,
+                        "type": "string",
+                        "name": "value"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Creator",
+                        "optional": true,
+                        "type": "string",
+                        "name": "creator"
+                      },
+                      {
+                        "control_type": "number",
+                        "label": "Last set",
+                        "parse_output": "float_conversion",
+                        "optional": true,
+                        "type": "number",
+                        "name": "last_set"
+                      }
+                    ],
+                    "label": "Purpose",
+                    "optional": true,
+                    "type": "object",
+                    "name": "purpose"
+                  },
+                  {
+                    "name": "previous_names",
+                    "type": "array",
+                    "of": "string",
+                    "label": "Previous names",
+                    "optional": true
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Locale",
+                    "optional": true,
+                    "type": "string",
+                    "name": "locale"
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "path",
+                "control_type": "text",
+                "label": "Path",
+                "hint": "Base URI is <b>https://slack.com/api/</b> - path will be appended to this URI. Use absolute URI to override this base URI.",
+                "optional": false
+              },
+              {
+                "type": "string",
+                "name": "response_type",
+                "control_type": "select",
+                "label": "Response type",
+                "default": "json",
+                "sticky": false,
+                "pick_list": [
+                  [
+                    "JSON response",
+                    "json"
+                  ],
+                  [
+                    "Raw response",
+                    "raw"
+                  ]
+                ],
+                "optional": true,
+                "extends_schema": true
+              },
+              {
+                "type": "object",
+                "name": "input",
+                "control_type": "form-schema-builder",
+                "label": "Request URL parameters",
+                "sticky": false,
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Schema",
+                    "extends_schema": true,
+                    "sticky": false,
+                    "optional": true,
+                    "type": "string",
+                    "name": "schema"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "channel",
+                        "optional": true,
+                        "sticky": true,
+                        "type": "string",
+                        "name": "channel"
+                      }
+                    ],
+                    "label": "Data",
+                    "optional": true,
+                    "type": "object",
+                    "name": "data"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "name": "request_headers",
+                "control_type": "key_value",
+                "label": "Request headers",
+                "optional": true,
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "optional": true,
+                    "type": "string",
+                    "name": "name"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Value",
+                    "optional": true,
+                    "type": "string",
+                    "name": "value"
+                  }
+                ]
+              },
+              {
+                "type": "string",
+                "name": "output",
+                "control_type": "schema-designer",
+                "label": "Response body",
+                "sticky": true,
+                "optional": true,
+                "extends_schema": true,
+                "schema_neutral": true
+              },
+              {
+                "type": "string",
+                "name": "response_headers",
+                "control_type": "schema-designer",
+                "label": "Response headers",
+                "sticky": false,
+                "optional": true,
+                "extends_schema": true,
+                "schema_neutral": true
+              }
+            ],
+            "visible_config_fields": [
+              "mnemonic",
+              "verb",
+              "path",
+              "response_type",
+              "input",
+              "input.schema",
+              "output",
+              "input.data.channel"
+            ],
+            "uuid": "347bfe52-3ec7-4535-a535-af440e5a7587"
+          },
+          {
+            "number": 3,
+            "provider": "workato_service",
+            "name": "send_reply",
+            "as": "9de7d98d",
+            "title": null,
+            "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Callable - DivvySlack - Get conversation/channel details</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+              "reply.ok": true,
+              "reply.channel.is_channel": true,
+              "reply.channel.is_group": true,
+              "reply.channel.is_im": true,
+              "reply.channel.is_archived": true,
+              "reply.channel.is_general": true,
+              "reply.channel.is_read_only": true,
+              "reply.channel.is_shared": true,
+              "reply.channel.is_ext_shared": true,
+              "reply.channel.is_org_shared": true,
+              "reply.channel.is_pending_ext_shared": true,
+              "reply.channel.is_member": true,
+              "reply.channel.is_private": true,
+              "reply.channel.is_mpim": true
+            },
+            "input": {
+              "reply_type": "success",
+              "reply": {
+                "ok": "#{_('data.slack_bot.b1da4c13.ok')}",
+                "channel": {
+                  "id": "#{_('data.slack_bot.b1da4c13.channel.id')}",
+                  "name": "#{_('data.slack_bot.b1da4c13.channel.name')}",
+                  "is_channel": "#{_('data.slack_bot.b1da4c13.channel.is_channel')}",
+                  "is_group": "#{_('data.slack_bot.b1da4c13.channel.is_group')}",
+                  "is_im": "#{_('data.slack_bot.b1da4c13.channel.is_im')}",
+                  "created": "#{_('data.slack_bot.b1da4c13.channel.created')}",
+                  "creator": "#{_('data.slack_bot.b1da4c13.channel.creator')}",
+                  "is_archived": "#{_('data.slack_bot.b1da4c13.channel.is_archived')}",
+                  "is_general": "#{_('data.slack_bot.b1da4c13.channel.is_general')}",
+                  "unlinked": "#{_('data.slack_bot.b1da4c13.channel.unlinked')}",
+                  "name_normalized": "#{_('data.slack_bot.b1da4c13.channel.name_normalized')}",
+                  "is_read_only": "#{_('data.slack_bot.b1da4c13.channel.is_read_only')}",
+                  "is_shared": "#{_('data.slack_bot.b1da4c13.channel.is_shared')}",
+                  "parent_conversation": "#{_('data.slack_bot.b1da4c13.channel.parent_conversation')}",
+                  "is_ext_shared": "#{_('data.slack_bot.b1da4c13.channel.is_ext_shared')}",
+                  "is_org_shared": "#{_('data.slack_bot.b1da4c13.channel.is_org_shared')}",
+                  "is_pending_ext_shared": "#{_('data.slack_bot.b1da4c13.channel.is_pending_ext_shared')}",
+                  "is_member": "#{_('data.slack_bot.b1da4c13.channel.is_member')}",
+                  "is_private": "#{_('data.slack_bot.b1da4c13.channel.is_private')}",
+                  "is_mpim": "#{_('data.slack_bot.b1da4c13.channel.is_mpim')}",
+                  "last_read": "#{_('data.slack_bot.b1da4c13.channel.last_read')}",
+                  "topic": {
+                    "value": "#{_('data.slack_bot.b1da4c13.channel.topic.value')}",
+                    "creator": "#{_('data.slack_bot.b1da4c13.channel.topic.creator')}",
+                    "last_set": "#{_('data.slack_bot.b1da4c13.channel.topic.last_set')}"
+                  },
+                  "purpose": {
+                    "value": "#{_('data.slack_bot.b1da4c13.channel.purpose.value')}",
+                    "creator": "#{_('data.slack_bot.b1da4c13.channel.purpose.creator')}",
+                    "last_set": "#{_('data.slack_bot.b1da4c13.channel.purpose.last_set')}"
+                  },
+                  "previous_names": "#{_('data.slack_bot.b1da4c13.channel.previous_names')}",
+                  "locale": "#{_('data.slack_bot.b1da4c13.channel.locale')}"
+                }
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "reply",
+                "label": "Reply",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Ok",
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Ok",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "ok"
+                    },
+                    "type": "boolean",
+                    "name": "ok"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "ID",
+                        "type": "string",
+                        "name": "id"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Name",
+                        "type": "string",
+                        "name": "name"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Is channel",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is channel",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "type": "boolean",
+                          "name": "is_channel"
+                        },
+                        "type": "boolean",
+                        "name": "is_channel"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Is group",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is group",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "type": "boolean",
+                          "name": "is_group"
+                        },
+                        "type": "boolean",
+                        "name": "is_group"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Is im",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is im",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "type": "boolean",
+                          "name": "is_im"
+                        },
+                        "type": "boolean",
+                        "name": "is_im"
+                      },
+                      {
+                        "control_type": "number",
+                        "label": "Created",
+                        "parse_output": "float_conversion",
+                        "type": "number",
+                        "name": "created"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Creator",
+                        "type": "string",
+                        "name": "creator"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Is archived",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is archived",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "type": "boolean",
+                          "name": "is_archived"
+                        },
+                        "type": "boolean",
+                        "name": "is_archived"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Is general",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is general",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "type": "boolean",
+                          "name": "is_general"
+                        },
+                        "type": "boolean",
+                        "name": "is_general"
+                      },
+                      {
+                        "control_type": "number",
+                        "label": "Unlinked",
+                        "parse_output": "float_conversion",
+                        "type": "number",
+                        "name": "unlinked"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Name normalized",
+                        "type": "string",
+                        "name": "name_normalized"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Is read only",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is read only",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "type": "boolean",
+                          "name": "is_read_only"
+                        },
+                        "type": "boolean",
+                        "name": "is_read_only"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Is shared",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is shared",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "type": "boolean",
+                          "name": "is_shared"
+                        },
+                        "type": "boolean",
+                        "name": "is_shared"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Parent conversation",
+                        "type": "string",
+                        "name": "parent_conversation"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Is ext shared",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is ext shared",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "type": "boolean",
+                          "name": "is_ext_shared"
+                        },
+                        "type": "boolean",
+                        "name": "is_ext_shared"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Is org shared",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is org shared",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "type": "boolean",
+                          "name": "is_org_shared"
+                        },
+                        "type": "boolean",
+                        "name": "is_org_shared"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Is pending ext shared",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is pending ext shared",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "type": "boolean",
+                          "name": "is_pending_ext_shared"
+                        },
+                        "type": "boolean",
+                        "name": "is_pending_ext_shared"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Is member",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is member",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "type": "boolean",
+                          "name": "is_member"
+                        },
+                        "type": "boolean",
+                        "name": "is_member"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Is private",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is private",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "type": "boolean",
+                          "name": "is_private"
+                        },
+                        "type": "boolean",
+                        "name": "is_private"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Is mpim",
+                        "render_input": {
+                        },
+                        "parse_output": {
+                        },
+                        "toggle_hint": "Select from option list",
+                        "toggle_field": {
+                          "label": "Is mpim",
+                          "control_type": "text",
+                          "toggle_hint": "Use custom value",
+                          "type": "boolean",
+                          "name": "is_mpim"
+                        },
+                        "type": "boolean",
+                        "name": "is_mpim"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Last read",
+                        "type": "string",
+                        "name": "last_read"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Value",
+                            "type": "string",
+                            "name": "value"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Creator",
+                            "type": "string",
+                            "name": "creator"
+                          },
+                          {
+                            "control_type": "number",
+                            "label": "Last set",
+                            "parse_output": "float_conversion",
+                            "type": "number",
+                            "name": "last_set"
+                          }
+                        ],
+                        "label": "Topic",
+                        "type": "object",
+                        "name": "topic"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Value",
+                            "type": "string",
+                            "name": "value"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Creator",
+                            "type": "string",
+                            "name": "creator"
+                          },
+                          {
+                            "control_type": "number",
+                            "label": "Last set",
+                            "parse_output": "float_conversion",
+                            "type": "number",
+                            "name": "last_set"
+                          }
+                        ],
+                        "label": "Purpose",
+                        "type": "object",
+                        "name": "purpose"
+                      },
+                      {
+                        "name": "previous_names",
+                        "type": "array",
+                        "of": "string",
+                        "label": "Previous names"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Locale",
+                        "type": "string",
+                        "name": "locale"
+                      }
+                    ],
+                    "label": "Channel",
+                    "type": "object",
+                    "name": "channel"
+                  }
+                ]
+              }
+            ],
+            "uuid": "ba2d92af-f224-48e9-a129-391fd96dfe33"
+          },
+          {
+            "number": 4,
+            "as": "33c4d877",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "0",
+              "retry_interval": "2"
+            },
+            "block": [
+              {
+                "number": 5,
+                "provider": "logger",
+                "name": "log_message",
+                "as": "7d6214dc",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "message": "#{_('data.catch.33c4d877.message')}"
+                },
+                "uuid": "ca4a9a0a-7b91-4c39-8e30-683732f987bb"
+              }
+            ],
+            "uuid": "faaf53b7-9654-4706-99b7-7fcd78e7095d"
+          }
+        ],
+        "uuid": "bbb10bd2-31f3-4887-b298-1da565bfe0ae"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Channel/Coversation Id"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Name"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_service.3934fc45.request.channelId_or_conversationId')}",
+      "custom_column_2": "#{_('data.slack_bot.b1da4c13.channel.name')}"
+    },
+    "uuid": "6293f54e-442d-4b7a-8af7-f75f93c8f4dc"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "slack_bot",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "resources/workbot_divvycloud.connection.json",
+        "name": "Workbot(DivvyCloud)",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "logger",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

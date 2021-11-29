@@ -1,0 +1,122 @@
+{
+  "name": "Callable - Snowflake Slack Alerts For Data Changes and Errors",
+  "description": "When there is a trigger event, do action",
+  "version": 2,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "9c01fa08",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">Callable - Snowflake Slack Alerts and Data Logs</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "service_name": "Callable - Snowflake Slack Alerts and Data Logs",
+      "request_schema_json": "[{\"name\":\"type\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"},{\"name\":\"msg\",\"type\":\"string\",\"optional\":true,\"control_type\":\"text\"}]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Type",
+            "name": "type",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Msg",
+            "name": "msg",
+            "type": "string",
+            "optional": true
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "slack_bot",
+        "name": "post_bot_message",
+        "as": "e166cc62",
+        "title": null,
+        "description": null,
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "channel": "ref_data_management"
+        },
+        "toggleCfg": {
+          "channel": true
+        },
+        "input": {
+          "text": "`#{_('data.workato_service.9c01fa08.request.type')}`\n#{_('data.workato_service.9c01fa08.request.msg')}",
+          "channel": "#ref_data_management"
+        },
+        "uuid": "9f16d57c-28ab-4aa5-87d8-523183308199"
+      },
+      {
+        "number": 2,
+        "provider": "slack_bot",
+        "name": "post_bot_message",
+        "as": "7225965d",
+        "title": null,
+        "description": null,
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "channel": "it_snowflake"
+        },
+        "toggleCfg": {
+          "channel": true
+        },
+        "input": {
+          "text": "`#{_('data.workato_service.9c01fa08.request.type')}`\n#{_('data.workato_service.9c01fa08.request.msg')}",
+          "channel": "#it_snowflake"
+        },
+        "uuid": "8f647d8f-9824-4ebf-bc32-e08c50b3ca2f"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Type"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Msg"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_service.9c01fa08.request.type')}",
+      "custom_column_2": "#{_('data.workato_service.9c01fa08.request.msg')}"
+    },
+    "uuid": "7583e73f-fb67-4a68-82a2-f23b59cfbf68"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "slack_bot",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/workatointegrations.connection.json",
+        "name": "workatointegrations",
+        "folder": "connections"
+      }
+    }
+  ]
+}

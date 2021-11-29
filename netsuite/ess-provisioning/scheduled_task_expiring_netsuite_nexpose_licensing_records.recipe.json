@@ -1,0 +1,207 @@
+{
+  "name": "Scheduled Task - Expiring NetSuite Nexpose Licensing Records",
+  "description": "When there is a trigger event, do action",
+  "version": 1,
+  "private": true,
+  "concurrency": 1,
+  "code": {
+    "number": 0,
+    "provider": "clock",
+    "name": "daily_task",
+    "as": "60f85756",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+      "sunday": true,
+      "monday": true,
+      "tuesday": true,
+      "wednesday": true,
+      "thursday": true,
+      "friday": true,
+      "saturday": true
+    },
+    "input": {
+      "sunday": "true",
+      "monday": "true",
+      "tuesday": "true",
+      "wednesday": "true",
+      "thursday": "true",
+      "friday": "true",
+      "saturday": "true",
+      "hour": "23",
+      "minute": "59",
+      "time_zone": "Pacific Time (US & Canada)"
+    },
+    "block": [
+      {
+        "number": 1,
+        "provider": "workato_variable",
+        "name": "declare_variable",
+        "as": "57e211a3",
+        "title": "  Create variable expiration_day",
+        "description": "Create variable <span class=\"provider\">expiration_day</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "date",
+          "name": "expiration_day",
+          "value": "=_('data.clock.60f85756.scheduled_time').beginning_of_day"
+        },
+        "extended_output_schema": [
+          {
+            "type": "date_time",
+            "name": "value",
+            "control_type": "date",
+            "label": "expiration_day",
+            "render_input": "date_conversion",
+            "parse_output": "date_conversion"
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "date_time",
+            "name": "value",
+            "control_type": "date",
+            "label": "Default value",
+            "hint": "Default value for the variable",
+            "sticky": true,
+            "optional": true,
+            "render_input": "date_conversion",
+            "parse_output": "date_conversion",
+            "strip_interpolation": true
+          }
+        ],
+        "uuid": "3d4efab7-549a-4938-b20e-b7c2b0dd8b86"
+      },
+      {
+        "number": 2,
+        "provider": "workato_pub_sub",
+        "name": "publish_to_topic",
+        "as": "39f90f8f",
+        "title": null,
+        "description": "Publish <span class=\"provider\">message</span> to <span class=\"provider\">NetSuite Search Request</span> PubSub topic",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+          "topic_id": "NetSuite Search Request"
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "topic_id": {
+            "zip_name": "netsuite_search_request.topic.json",
+            "name": "NetSuite Search Request",
+            "folder": ""
+          },
+          "message": {
+            "type": "expiring-nexpose-licenses",
+            "filter": {
+              "key": "day",
+              "value": "=_('data.workato_variable.57e211a3.value')"
+            }
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "message",
+            "label": "Message",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Type",
+                "name": "type",
+                "type": "string",
+                "optional": false,
+                "hint": "inactive-employee",
+                "parent": "message"
+              },
+              {
+                "control_type": "text",
+                "label": "Search ID",
+                "name": "search_id",
+                "type": "string",
+                "optional": true,
+                "hint": "The Search ID for a specific search you want to use",
+                "parent": "message"
+              },
+              {
+                "control_type": "text",
+                "label": "Page number",
+                "name": "page_number",
+                "type": "string",
+                "optional": true,
+                "hint": "The specific page to retrieve when specifying the Search ID",
+                "parent": "message"
+              },
+              {
+                "name": "filter",
+                "type": "array",
+                "of": "object",
+                "label": "Filter",
+                "optional": true,
+                "hint": "",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Key",
+                    "name": "key",
+                    "type": "string",
+                    "optional": true,
+                    "parent": "message.filter"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Value",
+                    "name": "value",
+                    "type": "string",
+                    "optional": true,
+                    "parent": "message.filter"
+                  }
+                ],
+                "parent": "message"
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "topic_id",
+          "message.filter.key",
+          "message.filter.value"
+        ],
+        "comment": "Kick off the search for expired Nexpose Licensing Records",
+        "uuid": "7b508f48-d680-4339-8ce5-7510b95affa4"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Expiration Day"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "=_('data.workato_variable.57e211a3.value')"
+    },
+    "uuid": "59933475-a343-4157-925b-c895af537bb4"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "clock",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_pub_sub",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_variable",
+      "account_id": null
+    }
+  ]
+}

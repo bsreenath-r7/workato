@@ -1,0 +1,982 @@
+{
+  "name": "Callable - Post Workday Manager Changes",
+  "description": "When there is a trigger event, do action",
+  "version": 5,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "e0cde78f",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">Callable - Post Workday Manager Changes</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "service_name": "Callable - Post Workday Manager Changes",
+      "request_schema_json": "[{\"name\":\"manager_change_start_date\",\"type\":\"date_time\",\"optional\":false,\"hint\":\"Filter that will only find management changes after the specified date.\",\"control_type\":\"date\"}]",
+      "reply_schema_json": "[{\"name\":\"status\",\"type\":\"string\",\"optional\":false,\"control_type\":\"text\"}]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "control_type": "date",
+            "label": "Manager change start date",
+            "render_input": "date_conversion",
+            "parse_output": "date_conversion",
+            "name": "manager_change_start_date",
+            "type": "date_time",
+            "optional": false,
+            "hint": "Filter that will only find management changes after the specified date."
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "provider": "rest",
+        "name": "make_request_v2",
+        "as": "dd55b40b",
+        "title": null,
+        "description": "<span class=\"provider\">Get manager chain</span> via <span class=\"provider\">HTTP</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+          "response.ignore_http_errors": true
+        },
+        "input": {
+          "request_name": "Get Manager Chain",
+          "request": {
+            "method": "GET",
+            "content_type": "application/json",
+            "url": "=lookup(\"WORKDAY_VARIABLES\", \"key\": \"report.manager_change\")[\"value\"]",
+            "parameters": [
+              {
+                "param": "format",
+                "value": "json"
+              },
+              {
+                "param": "From_Entry_Date",
+                "value": "=_('data.workato_service.e0cde78f.request.manager_change_start_date')"
+              }
+            ]
+          },
+          "response": {
+            "output_type": "json",
+            "expected_encoding": "UTF-8",
+            "ignore_http_errors": "false",
+            "response_schema": "[{\"name\":\"Report_Entry\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Report entry\",\"properties\":[{\"control_type\":\"text\",\"label\":\"Manager change date\",\"type\":\"string\",\"name\":\"ManagerChangeDate\"},{\"control_type\":\"text\",\"label\":\"Long email\",\"type\":\"string\",\"name\":\"Long_Email\"},{\"control_type\":\"text\",\"label\":\"Worker emp ID\",\"type\":\"string\",\"name\":\"Worker_EmpID\"},{\"name\":\"Management_Chain_group\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Management chain group\",\"properties\":[{\"control_type\":\"text\",\"label\":\"MC name\",\"type\":\"string\",\"name\":\"MC_Name\"},{\"control_type\":\"text\",\"label\":\"MC employee ID\",\"type\":\"string\",\"name\":\"MC_Employee_ID\"},{\"control_type\":\"text\",\"label\":\"MC title\",\"type\":\"string\",\"name\":\"MC_Title\"},{\"control_type\":\"text\",\"label\":\"MC net suite ID\",\"type\":\"string\",\"name\":\"MC_NetSuite_ID\"},{\"control_type\":\"text\",\"label\":\"MC level\",\"type\":\"string\",\"name\":\"MC_Level\"}]},{\"control_type\":\"text\",\"label\":\"Sup net suite ID\",\"type\":\"string\",\"name\":\"Sup_NetSuiteID\"},{\"control_type\":\"text\",\"label\":\"Worker title\",\"type\":\"string\",\"name\":\"Worker_Title\"},{\"control_type\":\"text\",\"label\":\"Short email\",\"type\":\"string\",\"name\":\"Short_Email\"},{\"control_type\":\"text\",\"label\":\"Sup name\",\"type\":\"string\",\"name\":\"Sup_Name\"},{\"control_type\":\"text\",\"label\":\"Worker net suite ID\",\"type\":\"string\",\"name\":\"Worker_NetSuiteID\"},{\"control_type\":\"text\",\"label\":\"Worker name\",\"type\":\"string\",\"name\":\"Worker_Name\"},{\"control_type\":\"text\",\"label\":\"Sup emp ID\",\"type\":\"string\",\"name\":\"Sup_EmpID\"},{\"control_type\":\"text\",\"label\":\"Manager changed to\",\"type\":\"string\",\"name\":\"ManagerChangedTo\"}]}]",
+            "headers_schema": "[{\"control_type\":\"text\",\"label\":\"Content encoding\",\"type\":\"string\",\"name\":\"content_encoding\"},{\"control_type\":\"text\",\"label\":\"Content disposition\",\"type\":\"string\",\"name\":\"content_disposition\"},{\"control_type\":\"text\",\"label\":\"Date\",\"render_input\":\"date_time_conversion\",\"parse_output\":\"date_time_conversion\",\"type\":\"date_time\",\"name\":\"date\"},{\"control_type\":\"text\",\"label\":\"Content type\",\"type\":\"string\",\"name\":\"content_type\"},{\"control_type\":\"text\",\"label\":\"Set cookie\",\"type\":\"string\",\"name\":\"set_cookie\"},{\"control_type\":\"text\",\"label\":\"Strict transport security\",\"type\":\"string\",\"name\":\"strict_transport_security\"},{\"control_type\":\"text\",\"label\":\"Transfer encoding\",\"type\":\"string\",\"name\":\"transfer_encoding\"}]"
+          }
+        },
+        "extended_output_schema": [
+          {
+            "type": "object",
+            "name": "headers",
+            "label": "Headers",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Content encoding",
+                "type": "string",
+                "name": "content_encoding"
+              },
+              {
+                "control_type": "text",
+                "label": "Content disposition",
+                "type": "string",
+                "name": "content_disposition"
+              },
+              {
+                "control_type": "text",
+                "label": "Date",
+                "render_input": "date_time_conversion",
+                "parse_output": "date_time_conversion",
+                "type": "date_time",
+                "name": "date"
+              },
+              {
+                "control_type": "text",
+                "label": "Content type",
+                "type": "string",
+                "name": "content_type"
+              },
+              {
+                "control_type": "text",
+                "label": "Set cookie",
+                "type": "string",
+                "name": "set_cookie"
+              },
+              {
+                "control_type": "text",
+                "label": "Strict transport security",
+                "type": "string",
+                "name": "strict_transport_security"
+              },
+              {
+                "control_type": "text",
+                "label": "Transfer encoding",
+                "type": "string",
+                "name": "transfer_encoding"
+              }
+            ]
+          },
+          {
+            "type": "object",
+            "name": "response",
+            "label": "Response",
+            "properties": [
+              {
+                "name": "Report_Entry",
+                "type": "array",
+                "of": "object",
+                "label": "Report entry",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Manager change date",
+                    "type": "string",
+                    "name": "ManagerChangeDate"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Long email",
+                    "type": "string",
+                    "name": "Long_Email"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Worker emp ID",
+                    "type": "string",
+                    "name": "Worker_EmpID"
+                  },
+                  {
+                    "name": "Management_Chain_group",
+                    "type": "array",
+                    "of": "object",
+                    "label": "Management chain group",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "MC name",
+                        "type": "string",
+                        "name": "MC_Name"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "MC employee ID",
+                        "type": "string",
+                        "name": "MC_Employee_ID"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "MC title",
+                        "type": "string",
+                        "name": "MC_Title"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "MC net suite ID",
+                        "type": "string",
+                        "name": "MC_NetSuite_ID"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "MC level",
+                        "type": "string",
+                        "name": "MC_Level"
+                      }
+                    ]
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Sup net suite ID",
+                    "type": "string",
+                    "name": "Sup_NetSuiteID"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Worker title",
+                    "type": "string",
+                    "name": "Worker_Title"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Short email",
+                    "type": "string",
+                    "name": "Short_Email"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Sup name",
+                    "type": "string",
+                    "name": "Sup_Name"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Worker net suite ID",
+                    "type": "string",
+                    "name": "Worker_NetSuiteID"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Worker name",
+                    "type": "string",
+                    "name": "Worker_Name"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Sup emp ID",
+                    "type": "string",
+                    "name": "Sup_EmpID"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Manager changed to",
+                    "type": "string",
+                    "name": "ManagerChangedTo"
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "response",
+            "label": "Response",
+            "properties": [
+              {
+                "control_type": "select",
+                "label": "Response content type",
+                "pick_list": [
+                  [
+                    "Text",
+                    "rawdatatxt"
+                  ],
+                  [
+                    "Binary",
+                    "rawdata"
+                  ],
+                  [
+                    "JSON",
+                    "json"
+                  ],
+                  [
+                    "XML",
+                    "xml2"
+                  ]
+                ],
+                "hint": "Select expected format of data response type, e.g. JSON or XML. <a href=\"https://docs.workato.com/developing-connectors/http.html#response-type\" target=\"_blank\">Learn more</a>",
+                "default": "json",
+                "extends_schema": true,
+                "type": "string",
+                "name": "output_type"
+              },
+              {
+                "control_type": "select",
+                "label": "Encoding",
+                "pick_list": [
+                  [
+                    "UTF-8",
+                    "UTF-8"
+                  ],
+                  [
+                    "US-ASCII",
+                    "US-ASCII"
+                  ],
+                  [
+                    "UTF-16BE",
+                    "UTF-16BE"
+                  ],
+                  [
+                    "UTF-16LE",
+                    "UTF-16LE"
+                  ],
+                  [
+                    "UTF-32BE",
+                    "UTF-32BE"
+                  ],
+                  [
+                    "UTF-32LE",
+                    "UTF-32LE"
+                  ],
+                  [
+                    "UTF-16",
+                    "UTF-16"
+                  ],
+                  [
+                    "UTF-32",
+                    "UTF-32"
+                  ],
+                  [
+                    "UTF8-MAC",
+                    "UTF8-MAC"
+                  ],
+                  [
+                    "EUC-JP",
+                    "EUC-JP"
+                  ],
+                  [
+                    "Windows-31J",
+                    "Windows-31J"
+                  ],
+                  [
+                    "Big5",
+                    "Big5"
+                  ],
+                  [
+                    "Big5-HKSCS",
+                    "Big5-HKSCS"
+                  ],
+                  [
+                    "Big5-UAO",
+                    "Big5-UAO"
+                  ],
+                  [
+                    "CP949",
+                    "CP949"
+                  ],
+                  [
+                    "Emacs-Mule",
+                    "Emacs-Mule"
+                  ],
+                  [
+                    "EUC-KR",
+                    "EUC-KR"
+                  ],
+                  [
+                    "EUC-TW",
+                    "EUC-TW"
+                  ],
+                  [
+                    "GB2312",
+                    "GB2312"
+                  ],
+                  [
+                    "GB18030",
+                    "GB18030"
+                  ],
+                  [
+                    "GBK",
+                    "GBK"
+                  ],
+                  [
+                    "ISO-8859-1",
+                    "ISO-8859-1"
+                  ],
+                  [
+                    "ISO-8859-2",
+                    "ISO-8859-2"
+                  ],
+                  [
+                    "ISO-8859-3",
+                    "ISO-8859-3"
+                  ],
+                  [
+                    "ISO-8859-4",
+                    "ISO-8859-4"
+                  ],
+                  [
+                    "ISO-8859-5",
+                    "ISO-8859-5"
+                  ],
+                  [
+                    "ISO-8859-6",
+                    "ISO-8859-6"
+                  ],
+                  [
+                    "ISO-8859-7",
+                    "ISO-8859-7"
+                  ],
+                  [
+                    "ISO-8859-8",
+                    "ISO-8859-8"
+                  ],
+                  [
+                    "ISO-8859-9",
+                    "ISO-8859-9"
+                  ],
+                  [
+                    "ISO-8859-10",
+                    "ISO-8859-10"
+                  ],
+                  [
+                    "ISO-8859-11",
+                    "ISO-8859-11"
+                  ],
+                  [
+                    "ISO-8859-13",
+                    "ISO-8859-13"
+                  ],
+                  [
+                    "ISO-8859-14",
+                    "ISO-8859-14"
+                  ],
+                  [
+                    "ISO-8859-15",
+                    "ISO-8859-15"
+                  ],
+                  [
+                    "ISO-8859-16",
+                    "ISO-8859-16"
+                  ],
+                  [
+                    "KOI8-R",
+                    "KOI8-R"
+                  ],
+                  [
+                    "KOI8-U",
+                    "KOI8-U"
+                  ],
+                  [
+                    "Shift_JIS",
+                    "Shift_JIS"
+                  ],
+                  [
+                    "Windows-1250",
+                    "Windows-1250"
+                  ],
+                  [
+                    "Windows-1251",
+                    "Windows-1251"
+                  ],
+                  [
+                    "Windows-1252",
+                    "Windows-1252"
+                  ],
+                  [
+                    "Windows-1253",
+                    "Windows-1253"
+                  ],
+                  [
+                    "Windows-1254",
+                    "Windows-1254"
+                  ],
+                  [
+                    "Windows-1257",
+                    "Windows-1257"
+                  ],
+                  [
+                    "IBM437",
+                    "IBM437"
+                  ],
+                  [
+                    "IBM737",
+                    "IBM737"
+                  ],
+                  [
+                    "IBM775",
+                    "IBM775"
+                  ],
+                  [
+                    "CP850",
+                    "CP850"
+                  ],
+                  [
+                    "IBM852",
+                    "IBM852"
+                  ],
+                  [
+                    "CP852",
+                    "CP852"
+                  ],
+                  [
+                    "IBM855",
+                    "IBM855"
+                  ],
+                  [
+                    "CP855",
+                    "CP855"
+                  ],
+                  [
+                    "IBM857",
+                    "IBM857"
+                  ],
+                  [
+                    "IBM860",
+                    "IBM860"
+                  ],
+                  [
+                    "IBM861",
+                    "IBM861"
+                  ],
+                  [
+                    "IBM862",
+                    "IBM862"
+                  ],
+                  [
+                    "IBM863",
+                    "IBM863"
+                  ],
+                  [
+                    "IBM864",
+                    "IBM864"
+                  ],
+                  [
+                    "IBM865",
+                    "IBM865"
+                  ],
+                  [
+                    "IBM866",
+                    "IBM866"
+                  ],
+                  [
+                    "IBM869",
+                    "IBM869"
+                  ],
+                  [
+                    "Windows-1258",
+                    "Windows-1258"
+                  ],
+                  [
+                    "GB1988",
+                    "GB1988"
+                  ],
+                  [
+                    "macCentEuro",
+                    "macCentEuro"
+                  ],
+                  [
+                    "macCroatian",
+                    "macCroatian"
+                  ],
+                  [
+                    "macCyrillic",
+                    "macCyrillic"
+                  ],
+                  [
+                    "macGreek",
+                    "macGreek"
+                  ],
+                  [
+                    "macIceland",
+                    "macIceland"
+                  ],
+                  [
+                    "macRoman",
+                    "macRoman"
+                  ],
+                  [
+                    "macRomania",
+                    "macRomania"
+                  ],
+                  [
+                    "macThai",
+                    "macThai"
+                  ],
+                  [
+                    "macTurkish",
+                    "macTurkish"
+                  ],
+                  [
+                    "macUkraine",
+                    "macUkraine"
+                  ],
+                  [
+                    "CP950",
+                    "CP950"
+                  ],
+                  [
+                    "CP951",
+                    "CP951"
+                  ],
+                  [
+                    "IBM037",
+                    "IBM037"
+                  ],
+                  [
+                    "stateless-ISO-2022-JP",
+                    "stateless-ISO-2022-JP"
+                  ],
+                  [
+                    "eucJP-ms",
+                    "eucJP-ms"
+                  ],
+                  [
+                    "CP51932",
+                    "CP51932"
+                  ],
+                  [
+                    "EUC-JIS-2004",
+                    "EUC-JIS-2004"
+                  ],
+                  [
+                    "GB12345",
+                    "GB12345"
+                  ],
+                  [
+                    "ISO-2022-JP",
+                    "ISO-2022-JP"
+                  ],
+                  [
+                    "ISO-2022-JP-2",
+                    "ISO-2022-JP-2"
+                  ],
+                  [
+                    "CP50220",
+                    "CP50220"
+                  ],
+                  [
+                    "CP50221",
+                    "CP50221"
+                  ],
+                  [
+                    "Windows-1256",
+                    "Windows-1256"
+                  ],
+                  [
+                    "Windows-1255",
+                    "Windows-1255"
+                  ],
+                  [
+                    "TIS-620",
+                    "TIS-620"
+                  ],
+                  [
+                    "Windows-874",
+                    "Windows-874"
+                  ],
+                  [
+                    "MacJapanese",
+                    "MacJapanese"
+                  ],
+                  [
+                    "UTF-7",
+                    "UTF-7"
+                  ],
+                  [
+                    "UTF8-DoCoMo",
+                    "UTF8-DoCoMo"
+                  ],
+                  [
+                    "SJIS-DoCoMo",
+                    "SJIS-DoCoMo"
+                  ],
+                  [
+                    "UTF8-KDDI",
+                    "UTF8-KDDI"
+                  ],
+                  [
+                    "SJIS-KDDI",
+                    "SJIS-KDDI"
+                  ],
+                  [
+                    "ISO-2022-JP-KDDI",
+                    "ISO-2022-JP-KDDI"
+                  ],
+                  [
+                    "stateless-ISO-2022-JP-KDDI",
+                    "stateless-ISO-2022-JP-KDDI"
+                  ],
+                  [
+                    "UTF8-SoftBank",
+                    "UTF8-SoftBank"
+                  ],
+                  [
+                    "SJIS-SoftBank",
+                    "SJIS-SoftBank"
+                  ]
+                ],
+                "optional": true,
+                "default": "UTF-8",
+                "hint": "Default encoding type is set to UTF-8, and typically doesn't need to be changed. <a href=\"https://docs.workato.com/developing-connectors/http.html#expected-encoding\" target=\"_blank\">Learn more</a>",
+                "type": "string",
+                "name": "expected_encoding"
+              },
+              {
+                "control_type": "schema-designer",
+                "label": "Response schema",
+                "sample_data_type": "json_http",
+                "extends_schema": true,
+                "empty_schema_title": "Describe all fields in your response.",
+                "optional": true,
+                "sticky": true,
+                "type": "string",
+                "name": "response_schema"
+              },
+              {
+                "control_type": "schema-designer",
+                "label": "HTTP response headers",
+                "extends_schema": true,
+                "empty_schema_title": "Describe all the response headers",
+                "optional": true,
+                "sticky": true,
+                "type": "string",
+                "name": "headers_schema"
+              },
+              {
+                "control_type": "checkbox",
+                "label": "Mark non-2xx response codes as success?",
+                "render_input": {
+                },
+                "parse_output": {
+                },
+                "toggle_hint": "Select from option list",
+                "toggle_field": {
+                  "label": "Mark non-2xx response codes as success?",
+                  "control_type": "text",
+                  "toggle_hint": "Use custom value",
+                  "default": false,
+                  "hint": "If <b>yes</b>, non 2xx response codes returned will be marked as a successful action. If <b>no</b>, non 2xx response codes returned will be marked as an error.",
+                  "optional": true,
+                  "type": "boolean",
+                  "name": "ignore_http_errors"
+                },
+                "default": "false",
+                "hint": "If <b>yes</b>, non 2xx response codes returned will be marked as a successful action. If <b>no</b>, non 2xx response codes returned will be marked as an error.",
+                "optional": true,
+                "type": "boolean",
+                "name": "ignore_http_errors"
+              }
+            ],
+            "override": true
+          }
+        ],
+        "uuid": "8e0dec9e-1e23-4b08-9208-d1adff8b6c50",
+        "wizardFinished": true
+      },
+      {
+        "number": 2,
+        "as": "b20d3833",
+        "keyword": "foreach",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "repeat_mode": "simple",
+        "clear_scope": "false",
+        "input": {
+        },
+        "block": [
+          {
+            "number": 3,
+            "provider": "workato_pub_sub",
+            "name": "publish_to_topic",
+            "as": "74b4e1fb",
+            "title": null,
+            "description": "Publish <span class=\"provider\">message</span> to <span class=\"provider\">Workday Manager Change</span> PubSub topic",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "topic_id": "Workday Manager Change"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "topic_id": {
+                "zip_name": "workday_manager_change.topic.json",
+                "name": "Workday Manager Change",
+                "folder": ""
+              },
+              "message": {
+                "worker": {
+                  "name": "#{_('data.foreach.b20d3833.Worker_Name')}",
+                  "netsuite_id": "#{_('data.foreach.b20d3833.Worker_NetSuiteID')}",
+                  "employee_number": "#{_('data.foreach.b20d3833.Worker_EmpID')}"
+                },
+                "management_chain": {
+                  "____source": "#{_('data.foreach.b20d3833.Management_Chain_group')}",
+                  "manager": {
+                    "name": "#{_('data.foreach.b20d3833.Management_Chain_group.first.MC_Name')}",
+                    "netsuite_id": "#{_('data.foreach.b20d3833.Management_Chain_group.first.MC_NetSuite_ID')}",
+                    "employee_number": "#{_('data.foreach.b20d3833.Management_Chain_group.first.MC_Employee_ID')}"
+                  }
+                }
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "message",
+                "label": "Message",
+                "properties": [
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "Name",
+                        "type": "string",
+                        "name": "name",
+                        "optional": true,
+                        "parent": "message.worker"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Employee Number",
+                        "name": "employee_number",
+                        "type": "string",
+                        "optional": false,
+                        "parent": "message.worker"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Netsuite ID",
+                        "type": "string",
+                        "name": "netsuite_id",
+                        "optional": true,
+                        "hint": "",
+                        "parent": "message.worker"
+                      }
+                    ],
+                    "label": "Worker",
+                    "type": "object",
+                    "name": "worker",
+                    "optional": false,
+                    "hint": "Worker that has had their manager changed in Workday.",
+                    "parent": "message"
+                  },
+                  {
+                    "name": "management_chain",
+                    "type": "array",
+                    "of": "object",
+                    "label": "Management chain",
+                    "optional": true,
+                    "properties": [
+                      {
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "Name",
+                            "type": "string",
+                            "name": "name",
+                            "optional": true,
+                            "parent": "message.management_chain.manager"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Employee Number",
+                            "name": "employee_number",
+                            "type": "string",
+                            "optional": true,
+                            "parent": "message.management_chain.manager"
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "Netsuite ID",
+                            "type": "string",
+                            "name": "netsuite_id",
+                            "optional": true,
+                            "parent": "message.management_chain.manager"
+                          }
+                        ],
+                        "label": "Manager",
+                        "type": "object",
+                        "name": "manager",
+                        "optional": true,
+                        "parent": "message.management_chain"
+                      }
+                    ],
+                    "parent": "message"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "topic_id",
+              "message",
+              "message.worker",
+              "message.worker.netsuite_id",
+              "message.management_chain",
+              "message.management_chain.manager",
+              "message.management_chain.manager.name",
+              "message.management_chain.manager.worker_id",
+              "message.management_chain.manager.netsuite_id",
+              "message.worker.name",
+              "message.worker.employee_number",
+              "message.management_chain.manager.employee_number"
+            ],
+            "uuid": "a745ee24-9d08-4ce4-83d8-d73dd7bc3b52"
+          }
+        ],
+        "source": "#{_('data.rest.dd55b40b.response.Report_Entry')}",
+        "uuid": "5ba91f97-3632-426b-9fb7-737ca6a635f4"
+      },
+      {
+        "number": 4,
+        "provider": "workato_service",
+        "name": "send_reply",
+        "as": "9c07a84e",
+        "title": null,
+        "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Callable - Post Workday Manager Changes</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "reply_type": "success",
+          "reply": {
+            "status": "SUCCESS"
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "reply",
+            "label": "Reply",
+            "properties": [
+              {
+                "control_type": "text",
+                "label": "Status",
+                "name": "status",
+                "type": "string",
+                "optional": false
+              }
+            ]
+          }
+        ],
+        "uuid": "faf3aa22-417b-450d-a8f6-d505bfe62b63"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Manager Change Start Date"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Total Manager Changes Posted"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_service.e0cde78f.request.manager_change_start_date')}",
+      "custom_column_2": "=_('data.rest.dd55b40b.response.Report_Entry.first.____Size', 'list_meta', '____Size', 'data.rest.dd55b40b.response.Report_Entry')"
+    },
+    "uuid": "54ec6583-c8ff-434b-9793-482308ff65d3"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "rest",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "resources/workday_http.connection.json",
+        "name": "Workday (HTTP)",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_pub_sub",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

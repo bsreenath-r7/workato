@@ -1,0 +1,540 @@
+{
+  "name": "Callable - Get employee details from Workday",
+  "description": "When there is a new call for callable recipe, do action",
+  "version": 4,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "workato_service",
+    "name": "receive_request",
+    "as": "03f2280a",
+    "title": null,
+    "description": "New <span class=\"provider\">call</span> for <span class=\"provider\">Callable - Get employee details from Workday</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "service_name": "Callable - Get employee details from Workday",
+      "request_schema_json": "[{\"name\":\"shortEmail\",\"type\":\"string\",\"optional\":true,\"control_type\":\"text\"},{\"name\":\"longEmail\",\"type\":\"string\",\"optional\":true,\"control_type\":\"text\"},{\"name\":\"employeeId\",\"type\":\"string\",\"optional\":true,\"control_type\":\"text\"}]",
+      "reply_schema_json": "[{\"name\":\"report\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Report\",\"properties\":[{\"control_type\":\"text\",\"label\":\"Employee ID\",\"type\":\"string\",\"name\":\"Employee_ID\"},{\"control_type\":\"text\",\"label\":\"Short email\",\"type\":\"string\",\"name\":\"shortEmail\"},{\"control_type\":\"text\",\"label\":\"Long email\",\"type\":\"string\",\"name\":\"longEmail\"},{\"control_type\":\"text\",\"label\":\"Username\",\"type\":\"string\",\"name\":\"username\"},{\"control_type\":\"text\",\"label\":\"Slack user ID\",\"name\":\"slackUserID\",\"type\":\"string\",\"optional\":true}]}]"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "request",
+        "label": "Recipe input",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Short email",
+            "name": "shortEmail",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Long email",
+            "name": "longEmail",
+            "type": "string",
+            "optional": true
+          },
+          {
+            "control_type": "text",
+            "label": "Employee ID",
+            "name": "employeeId",
+            "type": "string",
+            "optional": true
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "workday",
+            "name": "get_report",
+            "as": "f06acd6d",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+              "remove_empty": true,
+              "replace_with_additional": true
+            },
+            "input": {
+              "remove_empty": "true",
+              "replace_with_additional": "false",
+              "report_url": "https://services1.myworkday.com/ccx/service/customreport2/mymoose/ISU_Workato/RPT_EmployeeID_from_Email",
+              "additional_fields": "[]",
+              "employeeID": "#{_('data.workato_service.03f2280a.request.employeeId')}",
+              "longEmail": "=_('data.workato_service.03f2280a.request.shortEmail') or _('data.workato_service.03f2280a.request.longEmail')",
+              "shortEmail": "=_('data.workato_service.03f2280a.request.shortEmail') or _('data.workato_service.03f2280a.request.longEmail')"
+            },
+            "extended_output_schema": [
+              {
+                "type": "array",
+                "name": "report",
+                "label": "Rows",
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Employee ID",
+                    "type": "string",
+                    "name": "Employee_ID"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Short email",
+                    "type": "string",
+                    "name": "shortEmail"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Long email",
+                    "type": "string",
+                    "name": "longEmail"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Username",
+                    "type": "string",
+                    "name": "username"
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "shortEmail",
+                "control_type": "text",
+                "label": "Short email",
+                "sticky": true,
+                "optional": true
+              },
+              {
+                "type": "string",
+                "name": "longEmail",
+                "control_type": "text",
+                "label": "Long email",
+                "sticky": true,
+                "optional": true
+              },
+              {
+                "type": "string",
+                "name": "employeeID",
+                "control_type": "text",
+                "label": "Employee ID",
+                "sticky": true,
+                "optional": true
+              }
+            ],
+            "comment": "ISU_Workato",
+            "uuid": "a9ae9a73-3af1-4d2f-b0d2-f0f138acfc2e"
+          },
+          {
+            "number": 3,
+            "as": "4948ac3e",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "3",
+              "retry_interval": "4"
+            },
+            "block": [
+              {
+                "number": 4,
+                "provider": "workato_service",
+                "name": "send_reply",
+                "as": "e52479a8",
+                "title": null,
+                "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Callable - Get employee details from Workday</span>",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "reply_type": "error",
+                  "message": "#{_('data.catch.4948ac3e.message')}"
+                },
+                "extended_input_schema": [
+                  {
+                    "type": "string",
+                    "name": "message",
+                    "control_type": "text",
+                    "label": "Message",
+                    "hint": "Error message"
+                  },
+                  {
+                    "type": "string",
+                    "name": "code",
+                    "control_type": "text",
+                    "label": "Error code",
+                    "hint": "Use this field to set custom HTTP error code for service replies. E.g: 404/422 etc. This field is applicable to REST service recipes.",
+                    "optional": true
+                  },
+                  {
+                    "type": "boolean",
+                    "name": "custom_error_response",
+                    "control_type": "checkbox",
+                    "label": "Custom error response?",
+                    "hint": "By default, Workato sends 'reply_type' and 'message' fields in response. When set to 'Yes', the content of the 'Message' field is sent as response body. This field is applicable to REST service recipes.",
+                    "optional": true,
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Custom error response?",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "optional": true,
+                      "hint": "By default, Workato sends 'reply_type' and 'message' fields in response. When set to 'Yes', the content of the 'Message' field is sent as response body. This field is applicable to REST service recipes.",
+                      "type": "boolean",
+                      "name": "custom_error_response"
+                    },
+                    "render_input": {
+                    },
+                    "parse_output": {
+                    }
+                  }
+                ],
+                "uuid": "44168125-cc23-472f-9f46-bd69058135b1"
+              },
+              {
+                "number": 5,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "true",
+                  "stop_reason": "#{_('data.catch.4948ac3e.message')}"
+                },
+                "uuid": "e4b850f6-f041-4f1f-9bd9-cfecbd9e064c"
+              }
+            ],
+            "uuid": "da3a1522-8172-4347-b586-92ffcfb87a35"
+          }
+        ],
+        "uuid": "40bd400d-4c7a-481a-afd6-8df26249a0e8"
+      },
+      {
+        "number": 6,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 7,
+            "provider": "slack",
+            "name": "get_user_by_email",
+            "as": "5c080f8f",
+            "title": null,
+            "description": null,
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "email": "#{_('data.workday.f06acd6d.report.first.shortEmail')}"
+            },
+            "uuid": "99ed2a23-92c2-438d-9b5c-0c74c1c0cb33"
+          },
+          {
+            "number": 8,
+            "as": "3199400c",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "2",
+              "retry_interval": "4"
+            },
+            "block": [
+              {
+                "number": 9,
+                "provider": "logger",
+                "name": "log_message",
+                "as": "13a4bd5d",
+                "title": null,
+                "description": null,
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "message": "#{_('data.catch.3199400c.message')}"
+                },
+                "uuid": "7d6db979-771c-44b0-b321-7deda18a6502"
+              }
+            ],
+            "uuid": "78d121f3-b14d-4bb5-bb25-8d48a743506a"
+          }
+        ],
+        "uuid": "7fa65d57-a839-48b3-95eb-7465b6b755ae"
+      },
+      {
+        "number": 10,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "blank",
+              "lhs": "#{_('data.slack.5c080f8f.id')}",
+              "rhs": "",
+              "uuid": "condition-0ccd93bf-2bbd-408b-a1a4-b86687dc29c6"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 11,
+            "keyword": "try",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+            },
+            "block": [
+              {
+                "number": 12,
+                "provider": "slack",
+                "name": "get_user_by_email",
+                "as": "14a5bd2c",
+                "title": null,
+                "description": null,
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "email": "#{_('data.workday.f06acd6d.report.first.longEmail')}"
+                },
+                "uuid": "6ad01836-a607-4ba3-ab07-614e6f267219"
+              },
+              {
+                "number": 13,
+                "as": "ef7efb3f",
+                "keyword": "catch",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "max_retry_count": "2",
+                  "retry_interval": "4"
+                },
+                "block": [
+                  {
+                    "number": 14,
+                    "provider": "logger",
+                    "name": "log_message",
+                    "as": "b5ed74bf",
+                    "title": null,
+                    "description": null,
+                    "keyword": "action",
+                    "dynamicPickListSelection": {
+                    },
+                    "toggleCfg": {
+                    },
+                    "input": {
+                      "message": "#{_('data.catch.ef7efb3f.message')}"
+                    },
+                    "uuid": "1dcaa5f8-7db4-455a-9fcb-bd68afbb8a68"
+                  }
+                ],
+                "uuid": "69176714-cdf3-446e-9469-a1efede404da"
+              }
+            ],
+            "uuid": "817230d6-a1b9-459e-8434-e84a41a36dd5"
+          }
+        ],
+        "uuid": "e7da808d-9adc-4c46-b0d7-b96333af21aa"
+      },
+      {
+        "number": 15,
+        "provider": "workato_service",
+        "name": "send_reply",
+        "as": "f62b6cc3",
+        "title": null,
+        "description": "Return <span class=\"provider\">response</span> from <span class=\"provider\">Callable - Get employee details from Workday</span>",
+        "keyword": "action",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "reply_type": "success",
+          "reply": {
+            "report": {
+              "____source": "#{_('data.workday.f06acd6d.report')}",
+              "Employee_ID": "#{_('data.workday.f06acd6d.report.first.Employee_ID')}",
+              "shortEmail": "#{_('data.workday.f06acd6d.report.first.shortEmail')}",
+              "longEmail": "#{_('data.workday.f06acd6d.report.first.longEmail')}",
+              "username": "#{_('data.workday.f06acd6d.report.first.username')}",
+              "slackUserID": "=_('data.slack.5c080f8f.id') or _('data.slack.14a5bd2c.id')"
+            }
+          }
+        },
+        "extended_input_schema": [
+          {
+            "type": "object",
+            "name": "reply",
+            "label": "Reply",
+            "properties": [
+              {
+                "name": "report",
+                "type": "array",
+                "of": "object",
+                "label": "Report",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Employee ID",
+                    "type": "string",
+                    "name": "Employee_ID"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Short email",
+                    "type": "string",
+                    "name": "shortEmail"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Long email",
+                    "type": "string",
+                    "name": "longEmail"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Username",
+                    "type": "string",
+                    "name": "username"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Slack user ID",
+                    "name": "slackUserID",
+                    "type": "string",
+                    "optional": true
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "visible_config_fields": [
+          "reply_type",
+          "reply",
+          "reply.report",
+          "reply.report.Employee_ID",
+          "reply.report.shortEmail",
+          "reply.report.longEmail",
+          "reply.report.username",
+          "reply.report.slackUserID"
+        ],
+        "uuid": "506dff65-53a2-4dbd-a666-d2696b8f5658"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "longEmail"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "shortEmail"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "employeeID"
+      },
+      {
+        "name": "custom_column_4",
+        "label": "username"
+      },
+      {
+        "name": "custom_column_5",
+        "label": "slackId"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_service.03f2280a.request.longEmail')}",
+      "custom_column_2": "#{_('data.workato_service.03f2280a.request.shortEmail')}",
+      "custom_column_3": "#{_('data.workato_service.03f2280a.request.employeeId')}",
+      "custom_column_4": "#{_('data.workday.f06acd6d.report.first.username')}",
+      "custom_column_5": "=_('data.slack.5c080f8f.id') or _('data.slack.14a5bd2c.id')"
+    },
+    "uuid": "69980c2d-f695-46a2-9f5b-37f40f4d7d36"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_service",
+      "skip_validation": false,
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "workday",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "resources/workday.connection.json",
+        "name": "Workday",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "slack",
+      "skip_validation": false,
+      "account_id": {
+        "zip_name": "connections/slack.connection.json",
+        "name": "Slack",
+        "folder": "connections"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "logger",
+      "skip_validation": false,
+      "account_id": null
+    }
+  ]
+}

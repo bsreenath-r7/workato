@@ -1,0 +1,76 @@
+{
+  "name": "GURU_CARD_VERIFY_ACCESS_LIST",
+  "schema": [
+    {
+      "control_type": "text",
+      "label": "first_name",
+      "name": "col1",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "last_name",
+      "name": "col2",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "email",
+      "name": "col3",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 4",
+      "name": "col4",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 5",
+      "name": "col5",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 6",
+      "name": "col6",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 7",
+      "name": "col7",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 8",
+      "name": "col8",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 9",
+      "name": "col9",
+      "type": "string",
+      "sticky": false
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 10",
+      "name": "col10",
+      "type": "string",
+      "sticky": false
+    }
+  ],
+  "data": "Barry,Curran,Barry_Curran@rapid7.com\nBrady,Russell,Brady_Russell@rapid7.com\nBrian,Deegan,brian_deegan@rapid7.com\nConall,Heffernan,conall_heffernan@rapid7.com\nCory,Sharpe,Cory_Sharpe@rapid7.com\nDavid,Smith,David_Smith@rapid7.com\nElijah,Martin-Merrill,elijah_martin-merrill@rapid7.com\nGina,Seiber,regina_seiber@rapid7.com\nIvan,Quintanilla,ivan_quintanilla@rapid7.com\nJames,Voong,james_voong@rapid7.com\nJenni,Natiw,jennifer_natiw@rapid7.com\nJordan,Richman,Jordan_Richman@rapid7.com\nKeith,Marburger,keith_marburger@rapid7.com\nMark,Higgins,mark_higgins@rapid7.com\nMark,Laverty,Mark_Laverty@rapid7.com\nMatt,Pardo,matt_pardo@rapid7.com\nMike,Johannsen,Mike_Johannsen@rapid7.com\nRyan,Sopko,ryan_sopko@rapid7.com\nRyan,Caren,Ryan_Caren@rapid7.com\nSimon,Osorio,simon_osorio@rapid7.com\nSohil,Forghani,Sohil_Forghani@rapid7.com\nSteven,Annett,Steven_Annett@rapid7.com\nSteven,Taylor,steven_taylor@rapid7.com\nTomek,Krajewski,tomasz_krajewski@rapid7.com\nRajandeep,Singh,Rajandeep_Singh@rapid7.com\nAndrea,Gregory,agregory@rapid7.com\nBen,Sykes,bsykes@rapid7.com\nishu,singh,ishu_singh@rapid7.com\nThiago,Maia,Thiago_Maia@rapid7.com\nJordan,Farrell,jordan_farrell@rapid7.com\nRory,McDonnell,rory_mcdonnell@rapid7.com\nAndrew,Owens,andrew_owens@rapid7.com\nAmr,Saleh,amr_saleh@rapid7.com\nAndrew,Won,andrew_won@rapid7.com\nErik,Castellanos,erik_castellanos@rapid7.com\nJames,Langdon,james_langdon@rapid7.com\nJames,Mason,James_Mason@rapid7.com\nJayashri,Tewari Rutt,Jayashri_tewarirutt@rapid7.com\nJeffery,Ma,jeffery_ma@rapid7.com\nJennifer,Cashman,Jennifer_Cashman@rapid7.com\nKatie,Wade,katie_wade@rapid7.com\nLiam,Madden,liam_madden@rapid7.com\nOlaf,Doemer,Olaf_Doemer@rapid7.com\nRahat,Nehal,Rahat_Nehal@rapid7.com\nRick,Bremer,richard_bremer@rapid7.com\nStephen,Hynes,Stephen_Hynes@rapid7.com\n"
+}

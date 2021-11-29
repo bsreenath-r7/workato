@@ -1,0 +1,1461 @@
+{
+  "name": "Coupa Request Pub/Sub - Fetch Open POs",
+  "description": "When there is a trigger event, do action",
+  "version": 1,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "workato_pub_sub",
+    "name": "subscribe_to_topic",
+    "as": "9114c6e7",
+    "title": null,
+    "description": "New <span class=\"provider\">message</span> in <span class=\"provider\">Coupa Requests</span> PubSub topic",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+      "topic_id": "Coupa Requests"
+    },
+    "toggleCfg": {
+    },
+    "input": {
+      "since_offset": "-3600",
+      "topic_id": {
+        "zip_name": "coupa_requests.topic.json",
+        "name": "Coupa Requests",
+        "folder": ""
+      }
+    },
+    "filter": {
+      "conditions": [
+        {
+          "operand": "equals_to",
+          "lhs": "#{_('data.workato_pub_sub.9114c6e7.message.type')}",
+          "rhs": "fetch-open-pos"
+        }
+      ],
+      "operand": "and",
+      "type": "compound"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "message",
+        "label": "Message",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Type",
+            "name": "type",
+            "type": "string",
+            "optional": false,
+            "hint": "fetch-open-pos, fetch-po-req, fetch-po-lines"
+          },
+          {
+            "control_type": "integer",
+            "label": "fetch-open-pos: Offset",
+            "parse_output": "integer_conversion",
+            "name": "fetch_open_pos_offset",
+            "type": "integer",
+            "optional": true,
+            "hint": "offset for the next 50 POs to fetch"
+          },
+          {
+            "control_type": "integer",
+            "label": "fetch-open-pos: Thread Number",
+            "parse_output": "float_conversion",
+            "name": "fetch_open_pos_thread",
+            "type": "integer",
+            "optional": true,
+            "hint": "identifier for the thread so we can track its status"
+          },
+          {
+            "control_type": "integer",
+            "label": "fetch-po-req: Purchase Order ID",
+            "parse_output": "float_conversion",
+            "name": "fetch_po_req_po_id",
+            "type": "integer",
+            "optional": true,
+            "hint": "ID of the PO related to the Requisition"
+          },
+          {
+            "control_type": "integer",
+            "label": "fetch-po-req: Requisition ID",
+            "parse_output": "integer_conversion",
+            "name": "fetch_po_req_req_id",
+            "type": "integer",
+            "optional": true,
+            "hint": "ID of the Requisition Header to fetch"
+          },
+          {
+            "control_type": "integer",
+            "label": "fetch-po-lines: Purchase Order ID",
+            "parse_output": "integer_conversion",
+            "name": "fetch_po_lines_po_id",
+            "type": "integer",
+            "optional": true,
+            "hint": "ID of the Purchase Order related to the PO lines"
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "coupa",
+            "name": "__adhoc_http_action",
+            "as": "c365a318",
+            "title": "Custom action",
+            "description": "Custom <span class=\"provider\">action</span> in <span class=\"provider\">Coupa</span> (Custom)",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "object": "Purchase order"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "mnemonic": "Custom action",
+              "verb": "get",
+              "path": "api/purchase_orders",
+              "input": {
+                "schema": "[{\"name\":\"return_object\",\"type\":\"string\",\"optional\":true,\"label\":\"return_object\",\"control_type\":\"text\"},{\"name\":\"status\",\"type\":\"string\",\"optional\":true,\"label\":\"status\",\"control_type\":\"text\"},{\"name\":\"offset\",\"type\":\"string\",\"optional\":true,\"label\":\"offset\",\"control_type\":\"text\"}]",
+                "data": {
+                  "return_object": "shallow",
+                  "status": "issued",
+                  "offset": "#{_('data.workato_pub_sub.9114c6e7.message.fetch_open_pos_offset')}"
+                }
+              },
+              "request_headers": [
+                {
+                  "name": "ACCEPT",
+                  "value": "application/json"
+                }
+              ],
+              "output": "[{\"name\":\"array\",\"type\":\"array\",\"of\":\"object\",\"label\":\"Array\",\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\"},{\"control_type\":\"text\",\"label\":\"Created-at\",\"render_input\":\"date_time_conversion\",\"parse_output\":\"date_time_conversion\",\"type\":\"date_time\",\"name\":\"created-at\"},{\"control_type\":\"text\",\"label\":\"Updated-at\",\"render_input\":\"date_time_conversion\",\"parse_output\":\"date_time_conversion\",\"type\":\"date_time\",\"name\":\"updated-at\"},{\"control_type\":\"text\",\"label\":\"Po-number\",\"type\":\"string\",\"name\":\"po-number\"},{\"control_type\":\"text\",\"label\":\"Price-hidden\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Price-hidden\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"price-hidden\"},\"type\":\"boolean\",\"name\":\"price-hidden\"},{\"control_type\":\"text\",\"label\":\"Acknowledged-flag\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Acknowledged-flag\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"acknowledged-flag\"},\"type\":\"boolean\",\"name\":\"acknowledged-flag\"},{\"control_type\":\"text\",\"label\":\"Acknowledged-at\",\"type\":\"string\",\"name\":\"acknowledged-at\"},{\"control_type\":\"text\",\"label\":\"Status\",\"type\":\"string\",\"name\":\"status\"},{\"control_type\":\"text\",\"label\":\"Transmission-status\",\"type\":\"string\",\"name\":\"transmission-status\"},{\"control_type\":\"number\",\"label\":\"Version\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"version\"},{\"control_type\":\"text\",\"label\":\"Internal-revision\",\"type\":\"string\",\"name\":\"internal-revision\"},{\"control_type\":\"text\",\"label\":\"Exported\",\"render_input\":{},\"parse_output\":{},\"toggle_hint\":\"Select from option list\",\"toggle_field\":{\"label\":\"Exported\",\"control_type\":\"text\",\"toggle_hint\":\"Use custom value\",\"type\":\"boolean\",\"name\":\"exported\"},\"type\":\"boolean\",\"name\":\"exported\"},{\"control_type\":\"text\",\"label\":\"Last-exported-at\",\"type\":\"string\",\"name\":\"last-exported-at\"},{\"control_type\":\"text\",\"label\":\"Payment-method\",\"type\":\"string\",\"name\":\"payment-method\"},{\"control_type\":\"text\",\"label\":\"Ship-to-attention\",\"type\":\"string\",\"name\":\"ship-to-attention\"},{\"control_type\":\"text\",\"label\":\"Coupa-accelerate-status\",\"type\":\"string\",\"name\":\"coupa-accelerate-status\"},{\"control_type\":\"text\",\"label\":\"Change-type\",\"type\":\"string\",\"name\":\"change-type\"},{\"control_type\":\"text\",\"label\":\"Transmission-method-override\",\"type\":\"string\",\"name\":\"transmission-method-override\"},{\"control_type\":\"text\",\"label\":\"Transmission-emails\",\"type\":\"string\",\"name\":\"transmission-emails\"},{\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\"},{\"control_type\":\"text\",\"label\":\"Login\",\"type\":\"string\",\"name\":\"login\"},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\"}],\"label\":\"Created-by\",\"type\":\"object\",\"name\":\"created-by\"},{\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\"}],\"label\":\"Requisition-header\",\"type\":\"object\",\"name\":\"requisition-header\"},{\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\"},{\"control_type\":\"text\",\"label\":\"Name\",\"type\":\"string\",\"name\":\"name\"},{\"control_type\":\"text\",\"label\":\"Location-code\",\"type\":\"string\",\"name\":\"location-code\"}],\"label\":\"Ship-to-address\",\"type\":\"object\",\"name\":\"ship-to-address\"},{\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\"},{\"control_type\":\"text\",\"label\":\"Login\",\"type\":\"string\",\"name\":\"login\"},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\"}],\"label\":\"Ship-to-user\",\"type\":\"object\",\"name\":\"ship-to-user\"},{\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\"},{\"control_type\":\"text\",\"label\":\"Name\",\"type\":\"string\",\"name\":\"name\"},{\"control_type\":\"text\",\"label\":\"Number\",\"type\":\"string\",\"name\":\"number\"}],\"label\":\"Supplier\",\"type\":\"object\",\"name\":\"supplier\"},{\"name\":\"order-lines\",\"type\":\"array\",\"of\":\"object\",\"label\":\"orderlines\",\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\"}]},{\"properties\":[{\"control_type\":\"number\",\"label\":\"ID\",\"parse_output\":\"float_conversion\",\"type\":\"number\",\"name\":\"id\"},{\"control_type\":\"text\",\"label\":\"Login\",\"type\":\"string\",\"name\":\"login\"},{\"control_type\":\"text\",\"label\":\"Email\",\"type\":\"string\",\"name\":\"email\"}],\"label\":\"Updated-by\",\"type\":\"object\",\"name\":\"updated-by\"}]}]"
+            },
+            "extended_output_schema": [
+              {
+                "type": "array",
+                "name": "array",
+                "label": "Array",
+                "optional": true,
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "number",
+                    "label": "ID",
+                    "parse_output": "float_conversion",
+                    "optional": true,
+                    "type": "number",
+                    "name": "id"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Created-at",
+                    "render_input": "date_time_conversion",
+                    "parse_output": "date_time_conversion",
+                    "optional": true,
+                    "type": "date_time",
+                    "name": "created-at"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Updated-at",
+                    "render_input": "date_time_conversion",
+                    "parse_output": "date_time_conversion",
+                    "optional": true,
+                    "type": "date_time",
+                    "name": "updated-at"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Po-number",
+                    "optional": true,
+                    "type": "string",
+                    "name": "po-number"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Price-hidden",
+                    "parse_output": {
+                    },
+                    "render_input": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Price-hidden",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "price-hidden"
+                    },
+                    "optional": true,
+                    "type": "number",
+                    "name": "price-hidden"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Acknowledged-flag",
+                    "parse_output": {
+                    },
+                    "render_input": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Acknowledged-flag",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "acknowledged-flag"
+                    },
+                    "optional": true,
+                    "type": "number",
+                    "name": "acknowledged-flag"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Acknowledged-at",
+                    "optional": true,
+                    "type": "string",
+                    "name": "acknowledged-at"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Status",
+                    "optional": true,
+                    "type": "string",
+                    "name": "status"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Transmission-status",
+                    "optional": true,
+                    "type": "string",
+                    "name": "transmission-status"
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "Version",
+                    "parse_output": "float_conversion",
+                    "optional": true,
+                    "type": "number",
+                    "name": "version"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Internal-revision",
+                    "optional": true,
+                    "type": "string",
+                    "name": "internal-revision"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Exported",
+                    "parse_output": {
+                    },
+                    "render_input": {
+                    },
+                    "toggle_hint": "Select from option list",
+                    "toggle_field": {
+                      "label": "Exported",
+                      "control_type": "text",
+                      "toggle_hint": "Use custom value",
+                      "type": "boolean",
+                      "name": "exported"
+                    },
+                    "optional": true,
+                    "type": "number",
+                    "name": "exported"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Last-exported-at",
+                    "optional": true,
+                    "type": "string",
+                    "name": "last-exported-at"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Payment-method",
+                    "optional": true,
+                    "type": "string",
+                    "name": "payment-method"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Ship-to-attention",
+                    "optional": true,
+                    "type": "string",
+                    "name": "ship-to-attention"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Coupa-accelerate-status",
+                    "optional": true,
+                    "type": "string",
+                    "name": "coupa-accelerate-status"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Change-type",
+                    "optional": true,
+                    "type": "string",
+                    "name": "change-type"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Transmission-method-override",
+                    "optional": true,
+                    "type": "string",
+                    "name": "transmission-method-override"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Transmission-emails",
+                    "optional": true,
+                    "type": "string",
+                    "name": "transmission-emails"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "number",
+                        "label": "ID",
+                        "parse_output": "float_conversion",
+                        "optional": true,
+                        "type": "number",
+                        "name": "id"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Login",
+                        "optional": true,
+                        "type": "string",
+                        "name": "login"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Email",
+                        "optional": true,
+                        "type": "string",
+                        "name": "email"
+                      }
+                    ],
+                    "label": "Created-by",
+                    "optional": true,
+                    "type": "object",
+                    "name": "created-by"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "number",
+                        "label": "ID",
+                        "parse_output": "float_conversion",
+                        "optional": true,
+                        "type": "number",
+                        "name": "id"
+                      }
+                    ],
+                    "label": "Requisition-header",
+                    "optional": true,
+                    "type": "object",
+                    "name": "requisition-header"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "number",
+                        "label": "ID",
+                        "parse_output": "float_conversion",
+                        "optional": true,
+                        "type": "number",
+                        "name": "id"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Name",
+                        "optional": true,
+                        "type": "string",
+                        "name": "name"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Location-code",
+                        "optional": true,
+                        "type": "string",
+                        "name": "location-code"
+                      }
+                    ],
+                    "label": "Ship-to-address",
+                    "optional": true,
+                    "type": "object",
+                    "name": "ship-to-address"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "number",
+                        "label": "ID",
+                        "parse_output": "float_conversion",
+                        "optional": true,
+                        "type": "number",
+                        "name": "id"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Login",
+                        "optional": true,
+                        "type": "string",
+                        "name": "login"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Email",
+                        "optional": true,
+                        "type": "string",
+                        "name": "email"
+                      }
+                    ],
+                    "label": "Ship-to-user",
+                    "optional": true,
+                    "type": "object",
+                    "name": "ship-to-user"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "number",
+                        "label": "ID",
+                        "parse_output": "float_conversion",
+                        "optional": true,
+                        "type": "number",
+                        "name": "id"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Name",
+                        "optional": true,
+                        "type": "string",
+                        "name": "name"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Number",
+                        "optional": true,
+                        "type": "string",
+                        "name": "number"
+                      }
+                    ],
+                    "label": "Supplier",
+                    "optional": true,
+                    "type": "object",
+                    "name": "supplier"
+                  },
+                  {
+                    "name": "order-lines",
+                    "type": "array",
+                    "of": "object",
+                    "label": "orderlines",
+                    "optional": true,
+                    "properties": [
+                      {
+                        "control_type": "number",
+                        "label": "ID",
+                        "parse_output": "float_conversion",
+                        "optional": true,
+                        "type": "number",
+                        "name": "id"
+                      }
+                    ]
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "number",
+                        "label": "ID",
+                        "parse_output": "float_conversion",
+                        "optional": true,
+                        "type": "number",
+                        "name": "id"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Login",
+                        "optional": true,
+                        "type": "string",
+                        "name": "login"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "Email",
+                        "optional": true,
+                        "type": "string",
+                        "name": "email"
+                      }
+                    ],
+                    "label": "Updated-by",
+                    "optional": true,
+                    "type": "object",
+                    "name": "updated-by"
+                  }
+                ]
+              }
+            ],
+            "extended_input_schema": [
+              {
+                "type": "string",
+                "name": "path",
+                "control_type": "text",
+                "label": "Path",
+                "hint": "Base URI is <b>https://rapid7-test.coupahost.com/</b> - path will be appended to this URI. Use absolute URI to override this base URI.",
+                "optional": false
+              },
+              {
+                "type": "object",
+                "name": "input",
+                "control_type": "form-schema-builder",
+                "label": "URL parameters",
+                "sticky": false,
+                "optional": true,
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Schema",
+                    "extends_schema": true,
+                    "sticky": false,
+                    "optional": true,
+                    "type": "string",
+                    "name": "schema",
+                    "parent": "input"
+                  },
+                  {
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "return_object",
+                        "optional": true,
+                        "sticky": true,
+                        "type": "string",
+                        "name": "return_object",
+                        "parent": "input.data"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "status",
+                        "optional": true,
+                        "sticky": true,
+                        "type": "string",
+                        "name": "status",
+                        "parent": "input.data"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "offset",
+                        "optional": true,
+                        "sticky": true,
+                        "type": "string",
+                        "name": "offset",
+                        "parent": "input.data"
+                      }
+                    ],
+                    "label": "Data",
+                    "optional": true,
+                    "type": "object",
+                    "name": "data",
+                    "parent": "input"
+                  }
+                ]
+              },
+              {
+                "type": "array",
+                "name": "request_headers",
+                "control_type": "key_value",
+                "label": "Request headers",
+                "optional": true,
+                "of": "object",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Name",
+                    "optional": true,
+                    "type": "string",
+                    "name": "name",
+                    "parent": "request_headers"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "Value",
+                    "optional": true,
+                    "type": "string",
+                    "name": "value",
+                    "parent": "request_headers"
+                  }
+                ]
+              },
+              {
+                "type": "string",
+                "name": "output",
+                "control_type": "schema-designer",
+                "label": "Output",
+                "sticky": true,
+                "optional": true,
+                "extends_schema": true,
+                "schema_neutral": true
+              },
+              {
+                "type": "string",
+                "name": "response_headers",
+                "control_type": "schema-designer",
+                "label": "Response headers",
+                "sticky": false,
+                "optional": true,
+                "extends_schema": true,
+                "schema_neutral": true
+              }
+            ],
+            "visible_config_fields": [
+              "mnemonic",
+              "verb",
+              "input",
+              "input.schema",
+              "output",
+              "input.data.return_object",
+              "path",
+              "input.data.status",
+              "input.data.offset",
+              "input.data",
+              "request_headers"
+            ],
+            "uuid": "96e1b4f5-d64c-459c-9a37-226c50a7eca3"
+          },
+          {
+            "number": 3,
+            "as": "509dd386",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "3",
+              "retry_interval": "2"
+            },
+            "block": [
+              {
+                "number": 4,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "true",
+                  "stop_reason": "#{_('data.catch.509dd386.message')}"
+                },
+                "uuid": "9a44c604-b2a5-47a3-a55d-6c7ab2ccfd55"
+              }
+            ],
+            "uuid": "70efc3c4-29d0-46b7-a5b0-53b321349961"
+          }
+        ],
+        "uuid": "e0e6065a-1a66-4795-b822-e5c31dca03ad"
+      },
+      {
+        "number": 5,
+        "as": "7683869a",
+        "keyword": "foreach",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "clear_scope": "true",
+        "input": {
+        },
+        "block": [
+          {
+            "number": 6,
+            "provider": "mysql",
+            "name": "upsert_rows",
+            "as": "e5f79a99",
+            "title": "Upsert row in coupa_open_po_report_po",
+            "description": "Upsert <span class=\"provider\">row</span> in <span class=\"provider\">coupa_open_po_report_po</span> table in <span class=\"provider\">MySQL</span>",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "table": "coupa_open_po_report_po"
+            },
+            "toggleCfg": {
+              "table": true
+            },
+            "input": {
+              "table": "coupa_open_po_report_po",
+              "columns": {
+                "date_created": "#{_('data.foreach.7683869a.created-at')}",
+                "po_id": "#{_('data.foreach.7683869a.id')}",
+                "req_id": "#{_('data.foreach.7683869a.requisition-header.id')}",
+                "vendor_name": "#{_('data.foreach.7683869a.supplier.name')}",
+                "po_number": "#{_('data.foreach.7683869a.po-number')}"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "columns",
+                "label": "Columns",
+                "properties": [
+                  {
+                    "control_type": "date_time",
+                    "label": "date_created",
+                    "render_input": "convert_date_time",
+                    "parse_output": "convert_date_time",
+                    "details": {
+                      "data_type": "datetime",
+                      "column_name": "date_created"
+                    },
+                    "optional": true,
+                    "hint": "datetime",
+                    "type": "date_time",
+                    "name": "date_created"
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "po_id",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "po_id"
+                    },
+                    "render_input": "parse_integer_output",
+                    "event_title": true,
+                    "optional": true,
+                    "hint": "int(11), primary key",
+                    "type": "integer",
+                    "name": "po_id"
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "po_number",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "po_number"
+                    },
+                    "render_input": "parse_integer_output",
+                    "optional": true,
+                    "hint": "int(11)",
+                    "type": "integer",
+                    "name": "po_number"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "req_email",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "req_email"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "req_email"
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "req_id",
+                    "parse_output": "parse_integer_output",
+                    "details": {
+                      "data_type": "int(11)",
+                      "column_name": "req_id"
+                    },
+                    "render_input": "parse_integer_output",
+                    "optional": true,
+                    "hint": "int(11)",
+                    "type": "integer",
+                    "name": "req_id"
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "total_invoiced",
+                    "parse_output": "parse_numeric_output",
+                    "details": {
+                      "data_type": "double",
+                      "column_name": "total_invoiced"
+                    },
+                    "render_input": "parse_numeric_output",
+                    "optional": true,
+                    "hint": "double",
+                    "type": "number",
+                    "name": "total_invoiced"
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "total_po",
+                    "parse_output": "parse_numeric_output",
+                    "details": {
+                      "data_type": "double",
+                      "column_name": "total_po"
+                    },
+                    "render_input": "parse_numeric_output",
+                    "optional": true,
+                    "hint": "double",
+                    "type": "number",
+                    "name": "total_po"
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "total_remaining",
+                    "parse_output": "parse_numeric_output",
+                    "details": {
+                      "data_type": "double",
+                      "column_name": "total_remaining"
+                    },
+                    "render_input": "parse_numeric_output",
+                    "optional": true,
+                    "hint": "double",
+                    "type": "number",
+                    "name": "total_remaining"
+                  },
+                  {
+                    "control_type": "number",
+                    "label": "total_req",
+                    "parse_output": "parse_numeric_output",
+                    "details": {
+                      "data_type": "double",
+                      "column_name": "total_req"
+                    },
+                    "render_input": "parse_numeric_output",
+                    "optional": true,
+                    "hint": "double",
+                    "type": "number",
+                    "name": "total_req"
+                  },
+                  {
+                    "control_type": "text",
+                    "label": "vendor_name",
+                    "details": {
+                      "data_type": "varchar(100)",
+                      "column_name": "vendor_name"
+                    },
+                    "optional": true,
+                    "hint": "varchar(100)",
+                    "type": "string",
+                    "name": "vendor_name"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "table",
+              "columns.date_created",
+              "columns.po_id",
+              "columns.req_id",
+              "columns.vendor_name",
+              "columns",
+              "columns.po_number"
+            ],
+            "comment": "Add the PO ID, Req ID, Date Created, and Vendor Name to the report table",
+            "uuid": "4fc846a8-99a0-4fdd-a8f7-707f2a45bfa3"
+          },
+          {
+            "number": 7,
+            "provider": "workato_pub_sub",
+            "name": "publish_to_topic",
+            "as": "32e8e99d",
+            "title": null,
+            "description": "Publish <span class=\"provider\">message</span> to <span class=\"provider\">Coupa Requests</span> PubSub topic",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "topic_id": "Coupa Requests"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "topic_id": {
+                "zip_name": "coupa_requests.topic.json",
+                "name": "Coupa Requests",
+                "folder": ""
+              },
+              "message": {
+                "type": "fetch-po-req",
+                "fetch_po_req_po_id": "#{_('data.foreach.7683869a.id')}",
+                "fetch_po_req_req_id": "#{_('data.foreach.7683869a.requisition-header.id')}"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "message",
+                "label": "Message",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Type",
+                    "name": "type",
+                    "type": "string",
+                    "optional": false,
+                    "hint": "fetch-open-pos, fetch-po-req, fetch-po-lines"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "fetch-open-pos: Offset",
+                    "parse_output": "integer_conversion",
+                    "name": "fetch_open_pos_offset",
+                    "type": "integer",
+                    "optional": true,
+                    "hint": "offset for the next 50 POs to fetch"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "fetch-open-pos: Thread Number",
+                    "parse_output": "float_conversion",
+                    "name": "fetch_open_pos_thread",
+                    "type": "integer",
+                    "optional": true,
+                    "hint": "identifier for the thread so we can track its status"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "fetch-po-req: Purchase Order ID",
+                    "parse_output": "float_conversion",
+                    "name": "fetch_po_req_po_id",
+                    "type": "integer",
+                    "optional": true,
+                    "hint": "ID of the PO related to the Requisition"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "fetch-po-req: Requisition ID",
+                    "parse_output": "integer_conversion",
+                    "name": "fetch_po_req_req_id",
+                    "type": "integer",
+                    "optional": true,
+                    "hint": "ID of the Requisition Header to fetch"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "fetch-po-lines: Purchase Order ID",
+                    "parse_output": "integer_conversion",
+                    "name": "fetch_po_lines_po_id",
+                    "type": "integer",
+                    "optional": true,
+                    "hint": "ID of the Purchase Order related to the PO lines"
+                  }
+                ]
+              }
+            ],
+            "comment": "Make a request to get the requisition information from Coupa",
+            "uuid": "f9811f07-ca00-4ee6-b43c-b060c1bce268"
+          },
+          {
+            "number": 8,
+            "provider": "workato_pub_sub",
+            "name": "publish_to_topic",
+            "as": "be189d38",
+            "title": null,
+            "description": "Publish <span class=\"provider\">message</span> to <span class=\"provider\">Coupa Requests</span> PubSub topic",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "topic_id": "Coupa Requests"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "topic_id": {
+                "zip_name": "coupa_requests.topic.json",
+                "name": "Coupa Requests",
+                "folder": ""
+              },
+              "message": {
+                "type": "fetch-po-lines",
+                "fetch_po_lines_po_id": "#{_('data.foreach.7683869a.id')}"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "message",
+                "label": "Message",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Type",
+                    "name": "type",
+                    "type": "string",
+                    "optional": false,
+                    "hint": "fetch-open-pos, fetch-po-req, fetch-po-lines"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "fetch-open-pos: Offset",
+                    "parse_output": "integer_conversion",
+                    "name": "fetch_open_pos_offset",
+                    "type": "integer",
+                    "optional": true,
+                    "hint": "offset for the next 50 POs to fetch"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "fetch-open-pos: Thread Number",
+                    "parse_output": "float_conversion",
+                    "name": "fetch_open_pos_thread",
+                    "type": "integer",
+                    "optional": true,
+                    "hint": "identifier for the thread so we can track its status"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "fetch-po-req: Purchase Order ID",
+                    "parse_output": "float_conversion",
+                    "name": "fetch_po_req_po_id",
+                    "type": "integer",
+                    "optional": true,
+                    "hint": "ID of the PO related to the Requisition"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "fetch-po-req: Requisition ID",
+                    "parse_output": "integer_conversion",
+                    "name": "fetch_po_req_req_id",
+                    "type": "integer",
+                    "optional": true,
+                    "hint": "ID of the Requisition Header to fetch"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "fetch-po-lines: Purchase Order ID",
+                    "parse_output": "integer_conversion",
+                    "name": "fetch_po_lines_po_id",
+                    "type": "integer",
+                    "optional": true,
+                    "hint": "ID of the Purchase Order related to the PO lines"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "topic_id",
+              "message.fetch_po_line_line_id",
+              "message",
+              "message.type",
+              "message.fetch_po_lines_po_id"
+            ],
+            "comment": "Make a request to get the PO line information from Coupa",
+            "uuid": "71755ca4-37b5-4ca5-8457-d26f9f5a85ea"
+          }
+        ],
+        "source": "#{_('data.coupa.c365a318.array')}",
+        "uuid": "712c74d0-9633-4c51-90a9-2734ffab018f"
+      },
+      {
+        "number": 9,
+        "keyword": "if",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+          "type": "compound",
+          "operand": "and",
+          "conditions": [
+            {
+              "operand": "equals_to",
+              "lhs": "#{_('data.coupa.c365a318.array.first.____Size', 'list_meta', '____Size', 'data.coupa.c365a318.array')}",
+              "rhs": "50"
+            }
+          ]
+        },
+        "block": [
+          {
+            "number": 10,
+            "provider": "workato_pub_sub",
+            "name": "publish_to_topic",
+            "as": "a21185fc",
+            "title": null,
+            "description": "Publish <span class=\"provider\">message</span> to <span class=\"provider\">Coupa Requests</span> PubSub topic",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+              "topic_id": "Coupa Requests"
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "topic_id": {
+                "zip_name": "coupa_requests.topic.json",
+                "name": "Coupa Requests",
+                "folder": ""
+              },
+              "message": {
+                "type": "fetch-open-pos",
+                "fetch_open_pos_offset": "=_('data.workato_pub_sub.9114c6e7.message.fetch_open_pos_offset')+250",
+                "fetch_open_pos_thread": "#{_('data.workato_pub_sub.9114c6e7.message.fetch_open_pos_thread')}"
+              }
+            },
+            "extended_input_schema": [
+              {
+                "type": "object",
+                "name": "message",
+                "label": "Message",
+                "properties": [
+                  {
+                    "control_type": "text",
+                    "label": "Type",
+                    "name": "type",
+                    "type": "string",
+                    "optional": false,
+                    "hint": "fetch-open-pos, fetch-po-req, fetch-po-lines"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "fetch-open-pos: Offset",
+                    "parse_output": "integer_conversion",
+                    "name": "fetch_open_pos_offset",
+                    "type": "integer",
+                    "optional": true,
+                    "hint": "offset for the next 50 POs to fetch"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "fetch-open-pos: Thread Number",
+                    "parse_output": "float_conversion",
+                    "name": "fetch_open_pos_thread",
+                    "type": "integer",
+                    "optional": true,
+                    "hint": "identifier for the thread so we can track its status"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "fetch-po-req: Purchase Order ID",
+                    "parse_output": "float_conversion",
+                    "name": "fetch_po_req_po_id",
+                    "type": "integer",
+                    "optional": true,
+                    "hint": "ID of the PO related to the Requisition"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "fetch-po-req: Requisition ID",
+                    "parse_output": "integer_conversion",
+                    "name": "fetch_po_req_req_id",
+                    "type": "integer",
+                    "optional": true,
+                    "hint": "ID of the Requisition Header to fetch"
+                  },
+                  {
+                    "control_type": "integer",
+                    "label": "fetch-po-lines: Purchase Order ID",
+                    "parse_output": "integer_conversion",
+                    "name": "fetch_po_lines_po_id",
+                    "type": "integer",
+                    "optional": true,
+                    "hint": "ID of the Purchase Order related to the PO lines"
+                  }
+                ]
+              }
+            ],
+            "visible_config_fields": [
+              "topic_id",
+              "message",
+              "message.type",
+              "message.fetch_open_pos_offset",
+              "message.fetch_open_pos_thread"
+            ],
+            "comment": "Offset the next batch of POs by 250 since there are 5 threads fetching POs.",
+            "uuid": "e3f07cb7-5df8-472a-b06a-c8dab224d427"
+          },
+          {
+            "number": 11,
+            "keyword": "else",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+            },
+            "block": [
+              {
+                "number": 12,
+                "provider": "lookup_table",
+                "name": "search_entries",
+                "as": "0ae5caae",
+                "title": null,
+                "description": "\n      Search\n      <span class=\"provider\">entries</span>\n      in\n      <span class=\"provider\">COUPA_VARIABLES</span>\n      lookup table\n    ",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "lookup_table_id": "COUPA_VARIABLES"
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "lookup_table_id": {
+                    "zip_name": "coupa_variables.lookup_table.json",
+                    "name": "COUPA_VARIABLES",
+                    "folder": ""
+                  },
+                  "parameters": {
+                    "col1": "=\"open_po_report.fetch_po_thread_\"+_('data.workato_pub_sub.9114c6e7.message.fetch_open_pos_thread').to_i+\".status\""
+                  }
+                },
+                "extended_output_schema": [
+                  {
+                    "type": "array",
+                    "name": "entries",
+                    "label": "Entries",
+                    "of": "object",
+                    "properties": [
+                      {
+                        "control_type": "number",
+                        "label": "Entry ID",
+                        "parse_output": "integer_conversion",
+                        "type": "integer",
+                        "name": "id"
+                      },
+                      {
+                        "properties": [
+                          {
+                            "control_type": "text",
+                            "label": "key",
+                            "name": "col1",
+                            "type": "string",
+                            "sticky": true
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "value",
+                            "name": "col2",
+                            "type": "string",
+                            "sticky": true
+                          },
+                          {
+                            "control_type": "text",
+                            "label": "type",
+                            "name": "col3",
+                            "type": "string",
+                            "sticky": true
+                          }
+                        ],
+                        "label": "Entry",
+                        "type": "object",
+                        "name": "entry"
+                      }
+                    ]
+                  }
+                ],
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "parameters",
+                    "label": "Search by",
+                    "hint": "Provide one or more entry fields to search the entry",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "key",
+                        "name": "col1",
+                        "type": "string",
+                        "sticky": true,
+                        "optional": true,
+                        "parent": "parameters"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "value",
+                        "name": "col2",
+                        "type": "string",
+                        "sticky": true,
+                        "optional": true,
+                        "parent": "parameters"
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "type",
+                        "name": "col3",
+                        "type": "string",
+                        "sticky": true,
+                        "optional": true,
+                        "parent": "parameters"
+                      }
+                    ]
+                  }
+                ],
+                "visible_config_fields": [
+                  "lookup_table_id",
+                  "parameters.col1"
+                ],
+                "hidden_config_fields": [
+                  "parameters.col2",
+                  "parameters.col3"
+                ],
+                "uuid": "b61a90fc-beb3-4b21-8bff-02e14c24a276"
+              },
+              {
+                "number": 13,
+                "provider": "lookup_table",
+                "name": "update_entry",
+                "as": "ef83f003",
+                "title": null,
+                "description": "\n      Update\n      <span class=\"provider\">entry</span>\n      in\n      <span class=\"provider\">COUPA_VARIABLES</span>\n      lookup table\n    ",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                  "lookup_table_id": "COUPA_VARIABLES"
+                },
+                "toggleCfg": {
+                  "ignore_not_found": true
+                },
+                "input": {
+                  "ignore_not_found": "false",
+                  "lookup_table_id": {
+                    "zip_name": "coupa_variables.lookup_table.json",
+                    "name": "COUPA_VARIABLES",
+                    "folder": ""
+                  },
+                  "id": "#{_('data.lookup_table.0ae5caae.entries.first.id')}",
+                  "parameters": {
+                    "col2": "finished"
+                  }
+                },
+                "extended_output_schema": [
+                  {
+                    "type": "integer",
+                    "name": "id",
+                    "control_type": "number",
+                    "label": "Entry ID",
+                    "parse_output": "integer_conversion"
+                  },
+                  {
+                    "type": "object",
+                    "name": "entry",
+                    "label": "Entry",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "key",
+                        "name": "col1",
+                        "type": "string",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "value",
+                        "name": "col2",
+                        "type": "string",
+                        "sticky": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "type",
+                        "name": "col3",
+                        "type": "string",
+                        "sticky": true
+                      }
+                    ]
+                  }
+                ],
+                "extended_input_schema": [
+                  {
+                    "type": "object",
+                    "name": "parameters",
+                    "label": "Entry fields",
+                    "hint": "Fill the fields you want to update",
+                    "properties": [
+                      {
+                        "control_type": "text",
+                        "label": "key",
+                        "name": "col1",
+                        "type": "string",
+                        "sticky": true,
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "value",
+                        "name": "col2",
+                        "type": "string",
+                        "sticky": true,
+                        "optional": true
+                      },
+                      {
+                        "control_type": "text",
+                        "label": "type",
+                        "name": "col3",
+                        "type": "string",
+                        "sticky": true,
+                        "optional": true
+                      }
+                    ]
+                  }
+                ],
+                "visible_config_fields": [
+                  "lookup_table_id",
+                  "ignore_not_found",
+                  "parameters.col2"
+                ],
+                "hidden_config_fields": [
+                  "parameters.col1",
+                  "parameters.col3"
+                ],
+                "comment": "Set the status of this thread to \"finished\"",
+                "uuid": "04ae172b-81c1-475e-a56d-77f1bbafb84b"
+              }
+            ],
+            "uuid": "d36d9663-6c74-4e2e-bb20-de31ded0d7b8"
+          }
+        ],
+        "comment": "The max number of POs returned with the request is 50.  So if 50 POs were returned, request another set to be fetched with a modified offset.",
+        "uuid": "4109c0d1-b2ad-4ff2-af32-edb529fff284"
+      }
+    ],
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Current Offset"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "POs Returned"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_pub_sub.9114c6e7.message.fetch_open_pos_offset')}",
+      "custom_column_2": "#{_('data.coupa.c365a318.array.first.____Size', 'list_meta', '____Size', 'data.coupa.c365a318.array')}"
+    },
+    "uuid": "4b7319ad-737e-419a-973f-042bbd54d059"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "workato_pub_sub",
+      "account_id": null
+    },
+    {
+      "keyword": "application",
+      "provider": "coupa",
+      "account_id": {
+        "zip_name": "resources/coupa.connection.json",
+        "name": "Coupa",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "mysql",
+      "account_id": {
+        "zip_name": "resources/mysql.connection.json",
+        "name": "MySQL",
+        "folder": "resources"
+      }
+    },
+    {
+      "keyword": "application",
+      "provider": "lookup_table",
+      "account_id": null
+    }
+  ]
+}

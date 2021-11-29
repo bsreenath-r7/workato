@@ -1,0 +1,76 @@
+{
+  "name": "CURRENCY_DISPLAY",
+  "schema": [
+    {
+      "control_type": "text",
+      "label": "code",
+      "name": "col1",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "unit",
+      "name": "col2",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "separators",
+      "name": "col3",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "precision",
+      "name": "col4",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "format",
+      "name": "col5",
+      "type": "string",
+      "sticky": true
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 6",
+      "sticky": false,
+      "type": "string",
+      "name": "col6"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 7",
+      "sticky": false,
+      "type": "string",
+      "name": "col7"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 8",
+      "sticky": false,
+      "type": "string",
+      "name": "col8"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 9",
+      "sticky": false,
+      "type": "string",
+      "name": "col9"
+    },
+    {
+      "control_type": "text",
+      "label": "Untitled column 10",
+      "sticky": false,
+      "type": "string",
+      "name": "col10"
+    }
+  ],
+  "data": "CAD,CA$,\",;.\",2,%u%n\nUSD,$,\",;.\",2,%u%n\nARS,$ ,\".;,\",2,%u %n\nAUD,AU$,\",;.\",2,%u%n\nCNY,¥,\",;.\",2,%u %n\nCZK,Kč,\".;,\",2,%n %u\nEUR,€,\",;.\",2,%u%n\nGBP,£,\",;.\",2,%u%n\nHKD,HK$,\",;.\",2,%u%n\nINR,₹,\",;.\",2,%u%n\nJPY,JP¥,\",;.\",0,%u%n\nKRW,₩,\",;.\",0,%u%n\nSGD,S$,\",;.\",2,%u%n\nSEK,kr,\".;,\",2,%n %u\nBRL,R$,\".;,\",2,%u%n\nDKK,kr,\".;,\",2,%n %u\nTHB,฿,\",;.\",2,%u%n\nILS,₪,\".;,\",2,%u %n\n"
+}
