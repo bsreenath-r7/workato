@@ -1,7 +1,7 @@
 {
   "name": "Callable - Get Slack Users Data By Email",
-  "description": "When there is a new call for callable recipe, make request via HTTP",
-  "version": 27,
+  "description": "When there is a trigger event, do action",
+  "version": 42,
   "private": true,
   "concurrency": 5,
   "code": {
@@ -3947,9 +3947,9 @@
       "provider": "rest",
       "skip_validation": false,
       "account_id": {
-        "zip_name": "connections/http_connection.connection.json",
+        "zip_name": "resources/http_connection.connection.json",
         "name": "HTTP connection",
-        "folder": "connections"
+        "folder": "resources"
       }
     }
   ]

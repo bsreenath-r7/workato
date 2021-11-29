@@ -1,11 +1,3 @@
 {
-  "clariApiToken": null,
-  "productBoardToken": null,
-  "countryApiLayerAccessKey": null,
-  "salesforce.url": null,
-  "SlackProductionKey": null,
-  "SFOppProdURL": null,
-  "customerEscalationProdUrl": null,
-  "salesforceCaseProdUrl": null,
-  "salesforceServiceUrl": null
+  "SlackProductionKey": null
 }
