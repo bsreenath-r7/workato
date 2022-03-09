@@ -1,6 +1,0 @@
-{
-  "name": "workatointegrations",
-  "provider": "slack_bot",
-  "secure_gateway_tunnel_name": null,
-  "root_folder": false
-}
