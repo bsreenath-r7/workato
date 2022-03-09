@@ -1,0 +1,505 @@
+{
+  "name": "Slack Rerun Jobs",
+  "description": "When there is a new command to Slack Workbot, do action and other actions",
+  "version": 39,
+  "private": true,
+  "concurrency": 5,
+  "code": {
+    "number": 0,
+    "provider": "slack_bot",
+    "name": "bot_command_v2",
+    "as": "b9c9dfbc",
+    "title": null,
+    "description": "New <span class=\"provider\">workato_app Rerun Job</span> command to <span class=\"provider\">Slack Workbot</span>",
+    "keyword": "trigger",
+    "dynamicPickListSelection": {
+      "event_name": "Block Actions - Button (block_actions:button)",
+      "domain": "RecipeOps by Workato"
+    },
+    "toggleCfg": {
+      "domain": true,
+      "name": false,
+      "scope": false
+    },
+    "input": {
+      "allow_dialog": "true",
+      "domain": "workato_app",
+      "parameters": "[\n  {\n    \"name\": \"Recipe_ID\",\n    \"type\": \"string\",\n    \"optional\": false\n  },\n  {\n    \"name\": \"Job_ID\",\n    \"type\": \"string\",\n    \"optional\": false\n  },\n  {\n    \"name\": \"Slack_Channel_Name\",\n    \"type\": \"string\",\n    \"optional\": false\n  },\n  {\n    \"name\": \"Job_URL\",\n    \"type\": \"string\",\n    \"optional\": false\n  }\n]",
+      "hide_from_help": "false",
+      "dialog_title": "Rerun_Job",
+      "description": "TESTING",
+      "scope": "Job",
+      "name": "Rerun"
+    },
+    "extended_output_schema": [
+      {
+        "type": "object",
+        "name": "parameters",
+        "label": "Parameters",
+        "properties": [
+          {
+            "control_type": "text",
+            "label": "Recipe ID",
+            "name": "recipe_id",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Job ID",
+            "name": "job_id",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Slack channel name",
+            "name": "slack_channel_name",
+            "type": "string",
+            "optional": false
+          },
+          {
+            "control_type": "text",
+            "label": "Job URL",
+            "name": "job_url",
+            "type": "string",
+            "optional": false
+          }
+        ]
+      }
+    ],
+    "block": [
+      {
+        "number": 1,
+        "keyword": "try",
+        "dynamicPickListSelection": {
+        },
+        "toggleCfg": {
+        },
+        "input": {
+        },
+        "block": [
+          {
+            "number": 2,
+            "provider": "workato_app",
+            "name": "get_recipe",
+            "as": "e2d7b105",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+              "recipe_id": false
+            },
+            "input": {
+              "recipe_id": "#{_('data.slack_bot.b9c9dfbc.parameters.recipe_id')}"
+            },
+            "uuid": "87723f49-b8fa-4e75-a34a-26c3256c27d3"
+          },
+          {
+            "number": 3,
+            "provider": "workato_app",
+            "name": "rerun_jobs",
+            "as": "c8df25a5",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+              "recipe_id": false
+            },
+            "input": {
+              "recipe_id": "#{_('data.slack_bot.b9c9dfbc.parameters.recipe_id')}",
+              "jobs": [
+                {
+                  "job_id": "#{_('data.slack_bot.b9c9dfbc.parameters.job_id')}"
+                }
+              ]
+            },
+            "comment": "Configure what actions Workbot should do after receiving commands from the user in Slack",
+            "uuid": "7ee32e19-106d-4a90-bb23-67c6af2e83c1",
+            "skip": false
+          },
+          {
+            "number": 4,
+            "provider": "slack_bot",
+            "name": "post_bot_reply_v2",
+            "as": "77dd4751",
+            "keyword": "action",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+              "message.color": true
+            },
+            "input": {
+              "text": "*Job Rerun Details*",
+              "message": {
+                "color": "good"
+              },
+              "attachment_fields": [
+                {
+                  "title": "Recipe Name",
+                  "value": "#{_('data.workato_app.e2d7b105.name')}"
+                },
+                {
+                  "title": "Recipe ID",
+                  "value": "#{_('data.slack_bot.b9c9dfbc.parameters.recipe_id')}"
+                },
+                {
+                  "title": "Job ID",
+                  "value": "#{_('data.slack_bot.b9c9dfbc.parameters.job_id')}"
+                },
+                {
+                  "title": "Job_URL",
+                  "value": "#{_('data.slack_bot.b9c9dfbc.parameters.job_url')}"
+                }
+              ],
+              "replace_original": "true"
+            },
+            "visible_config_fields": [
+              "blocks",
+              "blocks.block_type",
+              "blocks.section_text",
+              "blocks.image_url",
+              "blocks.alt_text",
+              "blocks.button_title",
+              "blocks.url",
+              "blocks.bot_command",
+              "blocks.params",
+              "blocks.style",
+              "blocks.attachment_fields",
+              "blocks.attachment_fields.value",
+              "blocks.placeholder_text",
+              "blocks.menu_type",
+              "blocks.dynamic_menu_recipe",
+              "blocks.field_name",
+              "blocks.options",
+              "blocks.options.title",
+              "blocks.options.bot_command",
+              "blocks.options.params",
+              "blocks.options.init_value",
+              "blocks.init_option",
+              "blocks.initial_date",
+              "blocks.options.value",
+              "blocks.init_options",
+              "blocks.image_title",
+              "blocks.external_id",
+              "blocks.elements",
+              "blocks.elements.type",
+              "blocks.elements.text",
+              "blocks.elements.image_url",
+              "blocks.elements.alt_text",
+              "blocks.actions",
+              "blocks.actions.type",
+              "blocks.actions.button_title",
+              "blocks.actions.url",
+              "blocks.actions.bot_command",
+              "blocks.actions.params",
+              "blocks.actions.style",
+              "blocks.actions.placeholder_text",
+              "blocks.actions.initial_date",
+              "blocks.actions.field_name",
+              "blocks.actions.options",
+              "blocks.actions.options.params",
+              "blocks.actions.menu_type",
+              "blocks.actions.dynamic_menu_recipe",
+              "blocks.objects",
+              "blocks.objects.blocks",
+              "blocks.objects.blocks.block_type",
+              "blocks.objects.blocks.section_text",
+              "blocks.objects.blocks.image_url",
+              "blocks.objects.blocks.alt_text",
+              "blocks.objects.blocks.button_title",
+              "blocks.objects.blocks.url",
+              "blocks.objects.blocks.bot_command",
+              "blocks.objects.blocks.params",
+              "blocks.objects.blocks.style",
+              "blocks.objects.blocks.attachment_fields",
+              "blocks.objects.blocks.attachment_fields.value",
+              "blocks.objects.blocks.placeholder_text",
+              "blocks.objects.blocks.menu_type",
+              "blocks.objects.blocks.dynamic_menu_recipe",
+              "blocks.objects.blocks.field_name",
+              "blocks.objects.blocks.options",
+              "blocks.objects.blocks.options.title",
+              "blocks.objects.blocks.options.bot_command",
+              "blocks.objects.blocks.options.params",
+              "blocks.objects.blocks.options.init_value",
+              "blocks.objects.blocks.init_option",
+              "blocks.objects.blocks.initial_date",
+              "blocks.objects.blocks.image_title",
+              "blocks.objects.blocks.elements",
+              "blocks.objects.blocks.elements.type",
+              "blocks.objects.blocks.elements.text",
+              "blocks.objects.blocks.elements.image_url",
+              "blocks.objects.blocks.elements.alt_text",
+              "blocks.objects.blocks.actions",
+              "blocks.objects.blocks.actions.type",
+              "blocks.objects.blocks.actions.button_title",
+              "blocks.objects.blocks.actions.url",
+              "blocks.objects.blocks.actions.bot_command",
+              "blocks.objects.blocks.actions.params",
+              "blocks.objects.blocks.actions.style",
+              "blocks.objects.blocks.actions.placeholder_text",
+              "blocks.objects.blocks.actions.initial_date",
+              "blocks.objects.blocks.actions.field_name",
+              "blocks.objects.blocks.actions.options",
+              "blocks.objects.blocks.actions.options.params",
+              "blocks.objects.blocks.actions.menu_type",
+              "blocks.objects.blocks.actions.dynamic_menu_recipe",
+              "text",
+              "message.title",
+              "message.title_link",
+              "message.attachment_text",
+              "message.color",
+              "attachment_fields",
+              "attachment_buttons",
+              "attachment_items.message.title",
+              "attachment_items.message.title_link",
+              "attachment_items.message.attachment_text",
+              "attachment_items.message.color",
+              "attachment_items.attachment_fields",
+              "attachment_items.attachment_buttons",
+              "attachment_items.attachment_fields.value",
+              "attachment_items.attachment_fields.title",
+              "attachment_fields.value",
+              "attachment_fields.title",
+              "message",
+              "replace_original"
+            ],
+            "comment": "Decide how Workbot should respond to the user after the above actions have been performed",
+            "uuid": "880f867b-c057-4cc7-b2a7-fd7dec4f3602",
+            "skip": false
+          },
+          {
+            "number": 5,
+            "as": "ce5b46c9",
+            "keyword": "catch",
+            "dynamicPickListSelection": {
+            },
+            "toggleCfg": {
+            },
+            "input": {
+              "max_retry_count": "0",
+              "retry_interval": "2"
+            },
+            "block": [
+              {
+                "number": 6,
+                "provider": "slack_bot",
+                "name": "post_bot_reply_v2",
+                "as": "6e20a16c",
+                "keyword": "action",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                  "message.color": true
+                },
+                "input": {
+                  "text": "*Job Rerun Details*",
+                  "message": {
+                    "color": "danger"
+                  },
+                  "attachment_fields": [
+                    {
+                      "title": "Recipe Name",
+                      "value": "#{_('data.workato_app.e2d7b105.name')}"
+                    },
+                    {
+                      "title": "Recipe ID",
+                      "value": "#{_('data.slack_bot.b9c9dfbc.parameters.recipe_id')}"
+                    },
+                    {
+                      "title": "Job ID",
+                      "value": "#{_('data.slack_bot.b9c9dfbc.parameters.job_id')}"
+                    },
+                    {
+                      "title": "Job_URL",
+                      "value": "#{_('data.slack_bot.b9c9dfbc.parameters.job_url')}"
+                    },
+                    {
+                      "title": "Results",
+                      "value": "Error"
+                    },
+                    {
+                      "title": "Error Message",
+                      "value": "#{_('data.catch.ce5b46c9.message')}"
+                    }
+                  ]
+                },
+                "visible_config_fields": [
+                  "blocks",
+                  "blocks.block_type",
+                  "blocks.section_text",
+                  "blocks.image_url",
+                  "blocks.alt_text",
+                  "blocks.button_title",
+                  "blocks.url",
+                  "blocks.bot_command",
+                  "blocks.params",
+                  "blocks.style",
+                  "blocks.attachment_fields",
+                  "blocks.attachment_fields.value",
+                  "blocks.placeholder_text",
+                  "blocks.menu_type",
+                  "blocks.dynamic_menu_recipe",
+                  "blocks.field_name",
+                  "blocks.options",
+                  "blocks.options.title",
+                  "blocks.options.bot_command",
+                  "blocks.options.params",
+                  "blocks.options.init_value",
+                  "blocks.init_option",
+                  "blocks.initial_date",
+                  "blocks.options.value",
+                  "blocks.init_options",
+                  "blocks.image_title",
+                  "blocks.external_id",
+                  "blocks.elements",
+                  "blocks.elements.type",
+                  "blocks.elements.text",
+                  "blocks.elements.image_url",
+                  "blocks.elements.alt_text",
+                  "blocks.actions",
+                  "blocks.actions.type",
+                  "blocks.actions.button_title",
+                  "blocks.actions.url",
+                  "blocks.actions.bot_command",
+                  "blocks.actions.params",
+                  "blocks.actions.style",
+                  "blocks.actions.placeholder_text",
+                  "blocks.actions.initial_date",
+                  "blocks.actions.field_name",
+                  "blocks.actions.options",
+                  "blocks.actions.options.params",
+                  "blocks.actions.menu_type",
+                  "blocks.actions.dynamic_menu_recipe",
+                  "blocks.objects",
+                  "blocks.objects.blocks",
+                  "blocks.objects.blocks.block_type",
+                  "blocks.objects.blocks.section_text",
+                  "blocks.objects.blocks.image_url",
+                  "blocks.objects.blocks.alt_text",
+                  "blocks.objects.blocks.button_title",
+                  "blocks.objects.blocks.url",
+                  "blocks.objects.blocks.bot_command",
+                  "blocks.objects.blocks.params",
+                  "blocks.objects.blocks.style",
+                  "blocks.objects.blocks.attachment_fields",
+                  "blocks.objects.blocks.attachment_fields.value",
+                  "blocks.objects.blocks.placeholder_text",
+                  "blocks.objects.blocks.menu_type",
+                  "blocks.objects.blocks.dynamic_menu_recipe",
+                  "blocks.objects.blocks.field_name",
+                  "blocks.objects.blocks.options",
+                  "blocks.objects.blocks.options.title",
+                  "blocks.objects.blocks.options.bot_command",
+                  "blocks.objects.blocks.options.params",
+                  "blocks.objects.blocks.options.init_value",
+                  "blocks.objects.blocks.init_option",
+                  "blocks.objects.blocks.initial_date",
+                  "blocks.objects.blocks.image_title",
+                  "blocks.objects.blocks.elements",
+                  "blocks.objects.blocks.elements.type",
+                  "blocks.objects.blocks.elements.text",
+                  "blocks.objects.blocks.elements.image_url",
+                  "blocks.objects.blocks.elements.alt_text",
+                  "blocks.objects.blocks.actions",
+                  "blocks.objects.blocks.actions.type",
+                  "blocks.objects.blocks.actions.button_title",
+                  "blocks.objects.blocks.actions.url",
+                  "blocks.objects.blocks.actions.bot_command",
+                  "blocks.objects.blocks.actions.params",
+                  "blocks.objects.blocks.actions.style",
+                  "blocks.objects.blocks.actions.placeholder_text",
+                  "blocks.objects.blocks.actions.initial_date",
+                  "blocks.objects.blocks.actions.field_name",
+                  "blocks.objects.blocks.actions.options",
+                  "blocks.objects.blocks.actions.options.params",
+                  "blocks.objects.blocks.actions.menu_type",
+                  "blocks.objects.blocks.actions.dynamic_menu_recipe",
+                  "text",
+                  "message.title",
+                  "message.title_link",
+                  "message.attachment_text",
+                  "message.color",
+                  "attachment_fields",
+                  "attachment_buttons",
+                  "attachment_items.message.title",
+                  "attachment_items.message.title_link",
+                  "attachment_items.message.attachment_text",
+                  "attachment_items.message.color",
+                  "attachment_items.attachment_fields",
+                  "attachment_items.attachment_buttons",
+                  "attachment_items.attachment_fields.value",
+                  "attachment_items.attachment_fields.title",
+                  "attachment_fields.value",
+                  "attachment_fields.title"
+                ],
+                "comment": "Decide how Workbot should respond to the user after the above actions have been performed",
+                "uuid": "eb7acfe1-7da3-43a2-82d1-f32347fd1e90",
+                "skip": false
+              },
+              {
+                "number": 7,
+                "keyword": "stop",
+                "dynamicPickListSelection": {
+                },
+                "toggleCfg": {
+                },
+                "input": {
+                  "stop_with_error": "true",
+                  "stop_reason": "#{_('data.catch.ce5b46c9.message')}"
+                },
+                "uuid": "8051af6a-33f9-445a-b2c9-c22a765f7877"
+              }
+            ],
+            "uuid": "5740d5bc-a0c0-4473-866e-cd5ca84ad44c"
+          }
+        ],
+        "uuid": "98ac9136-990a-40be-a36c-e0d63c8a9365"
+      }
+    ],
+    "comment": "Define how users should command Workbot from Slack",
+    "job_report_schema": [
+      {
+        "name": "custom_column_1",
+        "label": "Recipe ID || Recipe Name"
+      },
+      {
+        "name": "custom_column_2",
+        "label": "Slack Channel Name"
+      },
+      {
+        "name": "custom_column_3",
+        "label": "Job URL"
+      }
+    ],
+    "job_report_config": {
+      "custom_column_1": "#{_('data.workato_app.e2d7b105.id')} || #{_('data.workato_app.e2d7b105.name')}",
+      "custom_column_2": "#{_('data.slack_bot.b9c9dfbc.parameters.slack_channel_name')}",
+      "custom_column_3": "#{_('data.slack_bot.b9c9dfbc.parameters.job_url')}"
+    },
+    "uuid": "52dca020-55da-4f0a-9930-f590b09213d7"
+  },
+  "config": [
+    {
+      "keyword": "application",
+      "provider": "slack_bot",
+      "account_id": {
+        "zip_name": "shared/connections/workatointegrations.connection.json",
+        "name": "workatointegrations",
+        "folder": "shared/connections"
+      },
+      "skip_validation": false
+    },
+    {
+      "keyword": "application",
+      "provider": "workato_app",
+      "account_id": {
+        "zip_name": "apps/resources/recipeops.connection.json",
+        "name": "RecipeOps",
+        "folder": "apps/resources"
+      },
+      "skip_validation": false
+    }
+  ]
+}
