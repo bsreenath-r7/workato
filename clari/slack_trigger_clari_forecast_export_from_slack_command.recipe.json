@@ -1,7 +1,7 @@
 {
   "name": "Slack - Trigger Clari forecast export from slack command",
   "description": "When there is a new command to Slack Workbot, do action and other actions",
-  "version": 1,
+  "version": 3,
   "private": true,
   "concurrency": 1,
   "code": {
@@ -245,25 +245,22 @@
           "text": "Clari forecast report is being exported to Snowflake"
         },
         "comment": "Decide how Workbot should respond to the user after the above actions have been performed",
-        "uuid": "9a6790b4-00df-4e6e-b443-27fb0a7ceab3",
-        "extended_output_schema": null,
-        "extended_input_schema": null
+        "uuid": "9a6790b4-00df-4e6e-b443-27fb0a7ceab3"
       }
     ],
     "comment": "Define how users should command Workbot from Slack",
-    "uuid": "c9da25a6-0434-4974-935a-ebf2852c801e",
-    "extended_input_schema": null
+    "uuid": "c9da25a6-0434-4974-935a-ebf2852c801e"
   },
   "config": [
     {
       "keyword": "application",
       "provider": "slack_bot",
-      "skip_validation": false,
       "account_id": {
         "zip_name": "connections/workatointegrations.connection.json",
         "name": "workatointegrations",
         "folder": "connections"
-      }
+      },
+      "skip_validation": false
     },
     {
       "keyword": "application",
