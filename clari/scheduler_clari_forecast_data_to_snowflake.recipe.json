@@ -1,7 +1,7 @@
 {
   "name": "Scheduler - Clari forecast data to Snowflake",
   "description": "When there is a trigger event, do action",
-  "version": 1,
+  "version": 73,
   "private": true,
   "concurrency": 1,
   "code": {
