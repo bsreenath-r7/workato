@@ -1,6 +1,0 @@
-{
-  "name": "Zendesk",
-  "provider": "zendesk",
-  "secure_gateway_tunnel_name": null,
-  "root_folder": false
-}
