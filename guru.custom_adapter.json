@@ -1,8 +1,0 @@
-{
-  "title": "Guru",
-  "description": "[Guru](https://www.getguru.com/integrations/workato?utm_source=workato&utm_medium=partner-marketplace&utm_campaign=integration) is a collaborative knowledge management solution where answers find you—everywhere, every time. Guru connects teams and people to one another and surfaces the know-how of those who know best, and turns collections of information into useful knowledge. By delivering the right knowledge at the right time, Guru reduces new-hire ramp time, drives amazing customer experiences, and makes teams more collaborative and productive.\n\n## What can you do with this connector\n1. New hire in Greenhouse creates new Member in Guru\n2. New verified card in Guru notifies teams on Slack\n3. New Airtable Record created a Card in Guru\n\nWant to leverage some pre-built recipe templates? [Review our list of recommended recipes](https://app.getguru.com/card/ixRGLEbT/Gurus-Workato-Recipe-Index)\n\n## Any bugs?\nThis connector was built and is supported by Guru. Send all your bug reports or enhancement requests through either Workato's support channels via intercom at the bottom right of your screen. Let our support team know the name of this connector or contact Guru support at support@getguru.com.",
-  "logo_file_name": "guru.png",
-  "logo_content_type": "image/png",
-  "version_no": 2,
-  "note": "- Fix for the empty output_fields on actions and triggers"
-}

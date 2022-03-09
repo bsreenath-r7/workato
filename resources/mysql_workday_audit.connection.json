@@ -1,6 +1,0 @@
-{
-  "name": "MySQL - Workday Audit",
-  "provider": "mysql",
-  "secure_gateway_tunnel_name": null,
-  "root_folder": false
-}
